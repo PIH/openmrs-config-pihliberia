@@ -25,7 +25,8 @@
     "activeVisits",
     "waitingForConsult",
     "relationships",
-    "idcardPrinting"
+    "idcardPrinting",
+    "ncd"
   ],
 
   "primaryIdentifierPrefix": "JJD",
