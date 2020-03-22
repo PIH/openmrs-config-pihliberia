@@ -1,7 +1,7 @@
 openmrs-config-pihliberia
 ==============================
 
-#### Usage
+## Usage
 
 `mvn clean compile` - Will generate your configurations into "target/openmrs-packager-config/configuration"
 `mvn clean package` - Will compile as above, and generate a zip package at "target/${artifactId}-${version}.zip"
@@ -16,3 +16,8 @@ If the configuration package you are building will be depended upon by another c
 in order for the other package to be able to pick it up.
 
 `mvn clean install` - Will compile and package as above, and install as an available dependency on your system
+
+## Notes
+
+The drug list is a copy of the one used by Zanmi Lasante, [here](https://github.com/PIH/openmrs-config-zl/tree/master/configuration/pih/drugs).
+
