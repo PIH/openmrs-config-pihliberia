@@ -3,6 +3,8 @@
           formEncounterType="ae06d311-1866-455b-8a64-126a9bd74171"
           formName="NCD Initial" formVersion="1.0">
 
+    <redirectOnSave url="/pihcore/visit/visit.page?patient={{patient.id}}&amp;encounter={{encounter.id}}#/overview"/>
+
     <style type="text/css">
         #who-when-where {
         margin-bottom: 6px;

@@ -1,11 +1,24 @@
-
 <htmlform id="liberia-ncd-followup" class="simple-form-ui"
           formUuid="8b0fb553-c59b-42c0-8d5d-1f90c04d1c02"
           formEncounterType="5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c"
           formName="NCD Followup" formVersion="1.0">
 
+    <redirectOnSave url="/pihcore/visit/visit.page?patient={{patient.id}}&amp;encounter={{encounter.id}}#/overview"/>
+
     <postSubmissionAction class="org.openmrs.module.pihcore.htmlformentry.action.CleanDiagnosisConstructAction"/>
     <postSubmissionAction class="org.openmrs.module.pihcore.htmlformentry.action.CleanPrescriptionConstructAction"/>
+
+    <macros>
+        <macro key="pt_has_htn" expression="conditionListConcepts.contains($fn.getConcept('PIH:HYPERTENSION'))"/>
+        <macro key="pt_has_dbt" expression="conditionListConcepts.contains($fn.getConcept('PIH:DIABETES'))"/>
+        <macro key="pt_has_rf" expression="conditionListConcepts.contains($fn.getConcept('PIH:RENAL FAILURE'))"/>
+        <macro key="pt_has_asthma" expression="conditionListConcepts.contains($fn.getConcept('PIH:ASTHMA'))"/>
+        <macro key="pt_has_copd"
+               expression="conditionListConcepts.contains($fn.getConcept('PIH:CHRONIC OBSTRUCTIVE PULMONARY DISEASE'))"/>
+        <macro key="pt_has_hf" expression="conditionListConcepts.contains($fn.getConcept('PIH:HEART FAILURE'))"/>
+        <macro key="pt_has_lf" expression="conditionListConcepts.contains($fn.getConcept('PIH:LIVER FAILURE'))"/>
+        <macro key="pt_has_scd" expression="conditionListConcepts.contains($fn.getConcept('PIH:SPLENOMEGALY'))"/>
+    </macros>
 
     <!-- ToDo:  Use messages.properties -->
     <translations defaultLocale="fr">
@@ -15,7 +28,8 @@
         </code>
         <code name="no">
             <variant locale="en" value="no"/>
-            <variant locale="fr" value="non"/>        </code>
+            <variant locale="fr" value="non"/>
+        </code>
     </translations>
 
     <style type="text/css">
@@ -153,6 +167,11 @@
         }
         return waistHipRatio;
         }
+
+        jq(function () {
+        var x =<lookup complexExpression="$allConditionsJson"/>;
+        console.log(x);
+        });
     </script>
 
     <ifMode mode="VIEW" include="false">
@@ -184,7 +203,6 @@
 
         </script>
     </ifMode>
-
 
 
     <ifMode mode="VIEW">
@@ -355,7 +373,7 @@
                             <obs conceptId="CIEL:163080" id="waist_cm" showUnits="true"/>
                         </span>
                     </p>
-                    <br/>
+
                     <p>
                         <label>
                             <uimessage code="pihcore.ncd.vitals.hip_cm"/>
@@ -378,701 +396,406 @@
         </section>
 
 
-
-        <includeIf velocityTest="!$conditionListConcepts.contains($fn.getConcept('PIH:HYPERTENSION')) ||
-        !$conditionListConcepts.contains($fn.getConcept('PIH:DIABETES'))">
+        <includeIf
+                velocityTest="$pt_has_htn or $pt_has_dbt or $pt_has_rf or $pt_has_asthma or $pt_has_copd or $pt_has_hf or $pt_has_lf or $pt_has_scd">
             <section sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                     headerCode="pihcore.ncd.htn.or.diabetes">
-
-                <i class="icon-arrow-down"></i>
-                <div id="hypertension" class="section-container sub-form collapsible" style="display:none;">
-
+                     headerCode="pihcore.ncd.title">
+                <div class="section-container">
                     <div class="two-columns">
                         <!-- ToDo:  UHM-3617 Add risk calculations for hypertension -->
-                        <h2>
+                        <h5>
                             <uimessage code="pihcore.ncd.last.visit.label"></uimessage>:
-                        </h2>
+                        </h5>
+
+                        <includeIf velocityTest="$pt_has_htn">
+                            <obs conceptId="PIH:Disease requiring hospitalization since last visit"
+                                 answerConceptId="PIH:HYPERTENSION" labelText="Hospitalized for HTN" answerLabel=""/>
+                        </includeIf>
+
+                        <includeIf velocityTest="$pt_has_dbt">
+                            <obs conceptId="PIH:Disease requiring hospitalization since last visit"
+                                 answerConceptId="PIH:DIABETES" labelText="Hospitalized for Diabetes" answerLabel=""/>
+                        </includeIf>
+
+                        <includeIf velocityTest="$pt_has_rf">
+                            <obs conceptId="PIH:Disease requiring hospitalization since last visit"
+                                 answerConceptId="PIH:RENAL FAILURE" labelText="Hospitalized for CKD" answerLabel=""/>
+                        </includeIf>
+
+                        <includeIf velocityTest="$pt_has_asthma">
+                            <obs conceptId="PIH:Disease requiring hospitalization since last visit"
+                                 answerConceptId="PIH:ASTHMA" labelText="Hospitalized for Asthma" answerLabel=""/>
+                        </includeIf>
+
+                        <includeIf velocityTest="$pt_has_copd">
+                            <obs conceptId="PIH:Disease requiring hospitalization since last visit"
+                                 answerConceptId="PIH:CHRONIC OBSTRUCTIVE PULMONARY DISEASE"
+                                 labelText="Hospitalized for COPD" answerLabel=""/>
+                        </includeIf>
+
+                        <includeIf velocityTest="$pt_has_hf">
+                            <obs conceptId="PIH:Disease requiring hospitalization since last visit"
+                                 answerConceptId="PIH:HEART FAILURE" labelText="Hospitalized for CHF" answerLabel=""/>
+                        </includeIf>
+
+                        <includeIf velocityTest="$pt_has_lf">
+                            <obs conceptId="PIH:Disease requiring hospitalization since last visit"
+                                 answerConceptId="PIH:LIVER FAILURE" labelText="Hospitalized for Cirrhosis"
+                                 answerLabel=""/>
+                        </includeIf>
+
+                        <includeIf velocityTest="$pt_has_scd">
+                            <obs conceptId="PIH:Disease requiring hospitalization since last visit"
+                                 answerConceptId="PIH:scd" labelText="Hospitalized for SCD" answerLabel=""/>
+                        </includeIf>
+
                         <repeat>
                             <template>
-                                <obsgroup groupingConceptId="PIH:12389">
-                                    <obs conceptId="CIEL:1728"
-                                         answerConceptId="{concept}"
-                                         style="checkbox"
-                                         labelText="{label}"
-                                         answerLabel=""
-                                         toggle="{id: '{name}-htn-dx-ynu', style: 'hide'}"/>
-                                    <br />
-                                    <span class="list-inline" id="{name}-htn-dx-ynu">
-                                        <obs conceptId="CIEL:1729"
-                                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" style="radio"/><br/><br/>
-                                    </span>
-                                </obsgroup>
-                            </template>
-                            <render concept="CIEL:70468" name="alcohol" label="Drink alcohol"/>
-                            <render concept="PIH:2545" name="tobacco" label="Smoke tobacco"/>
-                            <render concept="PIH:Disease requiring hospitalization since last visit" name="hospitalized" label="Hospitalized for HTN"/>
-                            <render concept="CIEL:165585" name="poor-diet-adherance" label="Poor diet adherence"/>
-                            <!--<render concept="CIEL:165569" name="poor-physical-activity" label="poor physical activity"/> this is only in concepts.pih-emr.org-->
-                            <render concept="PIH:SHORTNESS OF BREATH WITH EXERTION" name="sob" label="Shortness of breadth with exertion"/>
-                            <render concept="PIH:Currently taking medication" name="taking-meds" label="Currently taking medications"/>
-                            <render concept="PIH:HYPOGLYCEMIA" name="Hypoglycemia" label="Hypoglycemia"/>
-                            <render concept="PIH:HEADACHE" name="Headache" label="Headache"/>
-                            <render concept="PIH:CHEST PAIN" name="chest-pain" label="Chest pain"/>
-                            <render concept="PIH:DIZZINESS" name="dizziness" label="Dizziness"/>
-                            <render concept="PIH:Vision problem" name="vision" label="Vision changes"/>
-                            <render concept="PIH:PERIPHERAL NEUROPATHY" name="neuropathy" label="Neuropathy"/>
-                            <render concept="PIH:Ulcers (generic)" name="ulcers" label="Ulcers"/>
-                        </repeat>
-
-                        <obs conceptId="PIH:Type of hypertension diagnosis"
-                             labelCode="pih.ncd.htn.diagnosis.type"
-                             answerConceptIds="PIH:NONE, CIEL:140147, CIEL:160771, PIH:11941, PIH:11942, CIEL:160774, CIEL:160778, CIEL:161644"
-                             style="checkbox"/><br/>
-                        <obs conceptId="PIH:Type of diabetes diagnosis"
-                             labelCode="pih.ncd.diabetes.diagnosis.type"
-                             answerConceptIds="PIH:Type 1 diabetes, PIH:Type 2 diabetes, CIEL:165207, CIEL:165208, CIEL:1449, CIEL:138291"
-                             style="checkbox"/><br/>
-
-                    </div>
-
-                    <br/>
-
-                </div>
-            </section>
-        </includeIf>
-
-
-
-        <includeIf velocityTest="!$conditionListConcepts.contains($fn.getConcept('PIH:RENAL FAILURE'))">
-            <section sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                     headerCode="pihcore.ncd.kidney.disease">
-
-                <i class="icon-arrow-down"></i>
-                <div id="kidney-disease" class="section-container sub-form collapsible" style="display:none">
-                    <div class="two-columns">
-
-                        <h2>
-                            <uimessage code="pihcore.ncd.presume.etiology.label"></uimessage>
-                        </h2>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:HYPERTENSION" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:DIABETES" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="CIEL:165543" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="CIEL:138152" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="CIEL:153701" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:HEPATITIS B" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:HEPATITIS C" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="CIEL:113349" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="CIEL:119991" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="CIEL:115303" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:unknown" style="checkbox"/>
-
-                        <br/><br/>
-
-                        <h2>
-                            <uimessage code="pihcore.ncd.last.visit.label"></uimessage>:
-                        </h2>
-                        <repeat>
-                            <template>
-                                <obsgroup groupingConceptId="PIH:12389">
-                                    <obs conceptId="CIEL:1728"
-                                         answerConceptId="{concept}"
-                                         style="checkbox"
-                                         labelText="{label}"
-                                         answerLabel=""
-                                         toggle="{id: '{name}-ckd-dx-ynu', style: 'hide'}"/>
-                                    <br />
-
-                                    <span class="list-inline" id="{name}-ckd-dx-ynu">
-                                        <obs conceptId="CIEL:1729"
-                                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" style="radio"/><br/><br/>
-                                    </span>
-                                </obsgroup>
-                            </template>
-                            <render concept="PIH:2545" name="tobacco" label="Smoke tobacco"/>
-                            <render concept="PIH: HERBAL TRADITIONAL MEDICATIONS" name="herbs" label="Used traditional herbs"/>
-                            <render concept="PIH:Disease requiring hospitalization since last visit" name="hospitalized" label="Hospitalized for CKD"/>
-                            <render concept="CIEL:162306" name="nsaids" label="Took NSAIDs"/>
-                            <render concept="PIH: Retention of Urine" name="urinary-retention" label="Urinary retention"/>
-                            <render concept="PIH: FATIGUE" name="fatigue" label="Fatigue"/>
-                            <render concept="PIH:NAUSEA" name="nausea" label="Nausea"/>
-                            <render concept="PIH:PRURITIS" name="pruritis" label="Pruritis"/>
-                            <render concept="CIEL:119866" name="confusion" label="Confusion"/>
-                            <render concept="PIH:Currently taking medication" name="taking-meds" label="Currently taking medications"/>
-                            <render concept="CIEL:165193" name="facial-edema" label="Facial edema"/>
-                            <render concept="CIEL:460" name="body-edema" label="Body edema"/>
-                            <!--<render concept="CIEL:159596" name="regular-diet" label="regular diet"/>-->
-                        </repeat>
-
-                        <obs conceptId="PIH:CONJUNCTIVA"
-                             labelCode="pihcore.ncd.pale.conjunctiva"
-                             answerConceptIds="PIH:NORMAL, PIH:PALE CONJUNCTIVA"
-                             style="checkbox"/>
-
-                        <obs conceptId="CIEL:165570"
-                             labelCode="pihcore.ncd.ckd.stage"
-                             answerConceptIds="CIEL:120575,CIEL:120574,CIEL:120579,CIEL:120578,CIEL:120577"
-                             answerLabels="CKD I,CKD II,CKD III,CKD IV,CKD V"
-                             style="checkbox" answerSeparator=""/>
-                    </div>
-
-                    <br/>
-
-                    <div>
-                        <table>
-                            <repeat>
-                                <template>
-                                    <tr>
-                                        <obsgroup groupingConceptId="{groupingConcept}">
-                                            <td>
-                                                {label}
-                                            </td>
-                                            <td>
-                                                <label class="inline">
-                                                    Date of test:
-                                                </label>
-                                                <obs id="test-date-{name}" conceptId="PIH:DATE OF LABORATORY TEST"
-                                                     class="inline"/>
-                                            </td>
-                                            <td>
-                                                <label class="inline">
-                                                    Test result:
-                                                </label>
-                                                <span class="list-inline">
-                                                    <obs conceptId="{concept}" style="radio"
-                                                         answerConceptIds="CIEL:703,CIEL:664,CIEL:1138,CIEL:1067"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </template>
-                                <render groupingConcept="CIEL:161475" concept="CIEL:161472" name="hbv_spot_test"
-                                        label="HBsAg spot"/>
-                                <render groupingConcept="CIEL:161474" concept="CIEL:161471" name="hcv_spot_test"
-                                        label="HCV spot"/>
-                            </repeat>
-                            <tr>
-                                <obsgroup groupingConceptId="CIEL:1421">
-                                    <td colspan="3">
-                                        <obs conceptId="CIEL:984" answerConceptId="CIEL:782"/>
-                                        <obs conceptId="CIEL:1410"/>
-                                    </td>
-                                </obsgroup>
-                            </tr>
-                        </table>
-                    </div>
-
-                </div>
-            </section>
-        </includeIf>
-
-
-        <includeIf velocityTest="!$conditionListConcepts.contains($fn.getConcept('PIH:ASTHMA'))
-        || !$conditionListConcepts.contains($fn.getConcept('PIH:CHRONIC OBSTRUCTIVE PULMONARY DISEASE'))">
-            <section sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                     headerCode="pihcore.ncd.lung.disease">
-
-                <i class="icon-arrow-down"></i>
-                <div id="lung-disease" class="section-container sub-form collapsible" style="display:none">
-                    <div class="two-columns">
-                        <!-- ToDo:  UHM-3617 Add risk calculations for hypertension -->
-
-                        <h2>
-                            <uimessage code="pihcore.ncd.last.visit.label"></uimessage>:
-                        </h2>
-                        <repeat>
-                            <template>
-                                <obsgroup groupingConceptId="PIH:12389">
-                                    <obs conceptId="CIEL:1728"
-                                         answerConceptId="{concept}"
-                                         style="checkbox"
-                                         labelText="{label}"
-                                         answerLabel=""
-                                         toggle="{id: '{name}-copd-dx-ynu', style: 'hide'}"/>
-                                    <br />
-
-                                    <span class="list-inline" id="{name}-copd-dx-ynu">
-                                        <obs conceptId="CIEL:1729"
-                                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" style="radio"/><br/><br/>
-                                    </span>
-                                </obsgroup>
-                            </template>
-                            <render concept="PIH:Disease requiring hospitalization since last visit" name="hospitalized" label="Hospitalized for CLD"/>
-                            <render concept="PIH:ASTHMA EXACERBATION" name="asthma-exacerbation" label="Asthma exacerbation"/>
-                            <render concept="CIEL:127639" name="respiratory-distress" label="Respiratory distress"/>
-                            <render concept="PIH:CYANOSIS" name="cyanosis" label="Cyanosis"/>
-                            <render concept="PIH:COUGH" name="cough" label="Cough"/>
-                            <render concept="PIH:WHEEZE" name="wheezing" label="Wheezing"/>
-                            <render concept="PIH:Respiratory emergency action plan" name="resp-action-plan" label="Has respiratory emergency action plan"/>
-                        </repeat>
-
-                    </div>
-
-                    <br/>
-
-                </div>
-            </section>
-        </includeIf>
-
-
-        <includeIf velocityTest="!$conditionListConcepts.contains($fn.getConcept('PIH:HEART FAILURE'))">
-            <section sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                     headerCode="pihcore.ncd.heart.failure">
-                <i class="icon-arrow-down"></i>
-                <div id="heart-failure" class="section-container sub-form collapsible" style="display:none">
-                    <div class="two-columns">
-
-                        <h2>
-                            <uimessage code="pihcore.ncd.last.visit.label"></uimessage>
-                        </h2>
-                        <repeat>
-                            <template>
-                                <obsgroup groupingConceptId="PIH:12389">
-                                    <span class="inline">
+                                <includeIf velocityTest="{expression}">
+                                    <obsgroup groupingConceptId="PIH:12389">
                                         <obs conceptId="CIEL:1728"
                                              answerConceptId="{concept}"
                                              style="checkbox"
                                              labelText="{label}"
                                              answerLabel=""
-                                             toggle="{id: '{name}-hf-dx-ynu', style: 'hide'}"/>
+                                             toggle="{id: '{name}-htn-dx-ynu', style: 'hide'}"/>
                                         <br/>
-
-                                        <span class="list-inline" id="{name}-hf-dx-ynu">
-                                            <obs conceptId="CIEL:1729" answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" style="radio"/><br/><br/>
+                                        <span class="list-inline" id="{name}-htn-dx-ynu">
+                                            <obs conceptId="CIEL:1729"
+                                                 answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" style="radio"/>
+                                            <br/>
+                                            <br/>
                                         </span>
-                                    </span>
-                                </obsgroup>
+                                    </obsgroup>
+                                </includeIf>
                             </template>
-                            <render concept="PIH:Disease requiring hospitalization since last visit" name="hospitalized" label="Hospitalized for CHF"/>
-                            <render concept="PIH:2545" name="tobacco" label="Smoke tobacco"/>
-                            <render concept="CIEL:70468" name="alcohol" label="Drink alcohol"/>
-                            <render concept="CIEL:165585" name="poor-diet-adherance" label="Poor diet adherence"/>
-                            <render concept="PIH:DEPRESSION" name="depression" label="Concerns of depression"/>
-                            <render concept="PIH:CRACKLES" name="crackles" label="Crackles"/>
-                            <render concept="CIEL:140147" name="jvd-elevated" label="Elevated JVD"/>
-                            <render concept="CIEL:460" name="edema" label="Edema"/>
-                        </repeat>
 
-                        <br/>
-                        <obs conceptId="PIH:NYHA CLASS"
-                             labelCode="pihcore.ncd.hf.nyha.class"
-                             answerConceptIds="PIH:NYHA CLASS 1, PIH:NYHA CLASS 2, PIH:NYHA CLASS 3, PIH:NYHA CLASS 4"
-                             answerLabels="NYHA I, NYHA II, NYHA III, NYHA IV"
-                             style="checkbox"/>
+                            <render concept="CIEL:70468" name="alcohol" label="Drink alcohol"
+                                    expression="$pt_has_htn or $pt_has_dbt or $pt_has_hf or $pt_has_lf"/>
+                            <render concept="PIH:2545" name="tobacco" label="Smoke tobacco"
+                                    expression="$pt_has_htn or $pt_has_dbt or $pt_has_rf or $pt_has_hf"/>
+                            <render concept="CIEL:165585" name="poor-diet-adherance" label="Poor diet adherence"
+                                    expression="$pt_has_htn or $pt_has_dbt or $pt_has_hf or $pt_has_lf"/>
+                            <render concept="CIEL:165569" name="poor-physical-activity" label="Poor physical activity"
+                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                            <render concept="PIH:SHORTNESS OF BREATH WITH EXERTION" name="sob"
+                                    label="Shortness of breadth with exertion" expression="$pt_has_htn or $pt_has_dbt"/>
+                            <render concept="PIH:Currently taking medication" name="taking-meds"
+                                    label="Currently taking medications"
+                                    expression="$pt_has_htn or $pt_has_dbt or $pt_has_rf or $pt_has_lf"/>
+                            <render concept="PIH:HYPOGLYCEMIA" name="Hypoglycemia" label="Hypoglycemia"
+                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                            <render concept="PIH:HEADACHE" name="Headache" label="Headache"
+                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                            <render concept="PIH:CHEST PAIN" name="chest-pain" label="Chest pain"
+                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                            <render concept="PIH:DIZZINESS" name="dizziness" label="Dizziness"
+                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                            <render concept="PIH:Vision problem" name="vision" label="Vision changes"
+                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                            <render concept="PIH:PERIPHERAL NEUROPATHY" name="neuropathy" label="Neuropathy"
+                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                            <render concept="PIH:Ulcers (generic)" name="ulcers" label="Ulcers"
+                                    expression="$pt_has_htn or $pt_has_dbt"/>
+
+                            <render concept="PIH:HERBAL TRADITIONAL MEDICATIONS" name="herbs"
+                                    label="Used traditional herbs"
+                                    expression="$pt_has_rf or $pt_has_lf"/>
+                            <render concept="CIEL:162306" name="nsaids" label="Took NSAIDs"
+                                    expression="$pt_has_rf or $pt_has_lf"/>
+                            <render concept="PIH:Retention of Urine" name="urinary-retention" label="Urinary retention"
+                                    expression="$pt_has_rf"/>
+                            <render concept="PIH:FATIGUE" name="fatigue" label="Fatigue" expression="$pt_has_rf"/>
+                            <render concept="PIH:NAUSEA" name="nausea" label="Nausea"
+                                    expression="$pt_has_rf or $pt_has_lf"/>
+                            <render concept="PIH:PRURITIS" name="pruritis" label="Pruritis"
+                                    expression="$pt_has_rf or $pt_has_lf"/>
+                            <render concept="CIEL:119866" name="confusion" label="Confusion"
+                                    expression="$pt_has_rf or $pt_has_lf"/>
+                            <render concept="CIEL:165193" name="facial-edema" label="Facial edema"
+                                    expression="$pt_has_rf or $pt_has_lf"/>
+                            <render concept="CIEL:460" name="body-edema" label="Body edema"
+                                    expression="$pt_has_rf or $pt_has_hf"/>
+                            <render concept="CIEL:159596" name="regular-diet" label="Regular diet"
+                                    expression="$pt_has_rf"/>
+
+                            <render concept="PIH:ASTHMA EXACERBATION" name="asthma-exacerbation"
+                                    label="Asthma exacerbation"
+                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                            <render concept="CIEL:127639" name="respiratory-distress" label="Respiratory distress"
+                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                            <render concept="PIH:CYANOSIS" name="cyanosis" label="Cyanosis"
+                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                            <render concept="PIH:COUGH" name="cough" label="Cough"
+                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                            <render concept="PIH:WHEEZE" name="wheezing" label="Wheezing"
+                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                            <render concept="PIH:Respiratory emergency action plan" name="resp-action-plan"
+                                    label="Has respiratory emergency action plan"
+                                    expression="$pt_has_asthma or $pt_has_copd"/>
+
+                            <render concept="PIH:DEPRESSION" name="depression" label="Concerns of depression"
+                                    expression="$pt_has_hf or $pt_has_lf"/>
+                            <render concept="PIH:CRACKLES" name="crackles" label="Crackles" expression="$pt_has_hf"/>
+                            <render concept="CIEL:140147" name="jvd-elevated" label="Elevated JVD"
+                                    expression="$pt_has_hf"/>
+
+                            <render concept="PIH:Paracetamol" name="paracetamol" label="Taking PCM"
+                                    expression="$pt_has_lf"/>
+                            <render concept="PIH:5960" name="dyspnea" label="Dyspnea" expression="$pt_has_lf"/>
+                            <render concept="PIH:ASCITES" name="Ascites" label="Ascites"
+                                    expression="$pt_has_lf or $pt_has_scd"/>
+                            <render concept="CIEL:148276" name="Asterixis" label="Asterixis" expression="$pt_has_lf"/>
+
+                            <render concept="PIH:Pain" name="pain" label="Pain" expression="$pt_has_scd"/>
+                            <render concept="PIH:FEVER" name="fever" label="Fever" expression="$pt_has_scd"/>
+                            <render concept="CIEL:164377" name="meds-side-effects" label="Any medication side effects"
+                                    expression="$pt_has_scd"/>
+                            <render concept="PIH:ICTERIC SCLERA" name="icteric-sclera" label="Icteric sclera"
+                                    expression="$pt_has_scd"/>
+                            <render concept="CIEL:112804" name="spleen-palpable" label="Spleen palpable"
+                                    expression="$pt_has_scd"/>
+                        </repeat>
                     </div>
 
+                    <div>
+                        <includeIf velocityTest="$pt_has_htn">
+                            <span class="inline-45">
+                                <obs conceptId="PIH:Type of hypertension diagnosis"
+                                     labelCode="pih.ncd.htn.diagnosis.type"
+                                     answerConceptIds="CIEL:140147, CIEL:160771, PIH:11941, PIH:11942, CIEL:160774, CIEL:160778, CIEL:161644"
+                                     style="checkbox"/>
+                            </span>
+                        </includeIf>
+
+
+                        <includeIf velocityTest="$pt_has_dbt">
+                            <span class="inline-45">
+                                <obs conceptId="PIH:Type of diabetes diagnosis"
+                                     labelCode="pih.ncd.diabetes.diagnosis.type"
+                                     answerConceptIds="CIEL:142474, CIEL:165207, CIEL:165208, CIEL:1449, CIEL:138291"
+                                     answerLabels="Type 1 diabetes, Type 2 diabetes - insulin-dependent, Type 2 diabetes - non-insulin dependent, Gestational diabetes, Hyperglycemia"
+                                     style="checkbox"/>
+                            </span>
+                        </includeIf>
+
+
+                        <includeIf velocityTest="$pt_has_hf">
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NYHA CLASS"
+                                     labelCode="pihcore.ncd.hf.nyha.class"
+                                     answerConceptIds="PIH:NYHA CLASS 1, PIH:NYHA CLASS 2, PIH:NYHA CLASS 3, PIH:NYHA CLASS 4"
+                                     answerLabels="NYHA I, NYHA II, NYHA III, NYHA IV"
+                                     style="checkbox"/>
+                            </span>
+                        </includeIf>
+
+
+                        <includeIf velocityTest="$pt_has_rf">
+                            <span class="inline-45">
+                                <obs conceptId="CIEL:165570"
+                                     labelCode="pihcore.ncd.ckd.stage"
+                                     answerConceptIds="CIEL:120575,CIEL:120574,CIEL:120579,CIEL:120578,CIEL:120577"
+                                     answerLabels="CKD I,CKD II,CKD III,CKD IV,CKD V"
+                                     style="checkbox" answerSeparator=""/>
+                            </span>
+                        </includeIf>
+
+
+                        <includeIf velocityTest="$pt_has_rf or $pt_has_scd">
+                            <span class="inline-45">
+                                <obs conceptId="PIH:CONJUNCTIVA"
+                                     labelCode="pihcore.ncd.conjunctiva"
+                                     answerConceptIds="PIH:NORMAL, PIH:PALE CONJUNCTIVA"
+                                     style="checkbox"/>
+                            </span>
+                        </includeIf>
+
+
+                        <includeIf velocityTest="$pt_has_scd">
+                            <span class="inline-45">
+                                <obs conceptId="CIEL:160689"
+                                     labelCode="pihcore.ncd.lung.examination"
+                                     style="textarea"/>
+                            </span>
+                        </includeIf>
+                    </div>
                     <br/>
 
+                    <div>
+                        <table>
+                            <tbody>
+                                <repeat>
+                                    <template>
+                                        <includeIf velocityTest="{expression}">
+                                            <tr>
+                                                <obsgroup groupingConceptId="PIH:Radiology report construct">
+                                                    <td style="width:35%">
+                                                        <obs conceptId="PIH:Radiology procedure performed"
+                                                             labelText="{procedure}"
+                                                             answerLabel="" answerConceptId="{concept}"
+                                                             toggle="{id: '{name}', style: 'dim'}"/>
+                                                    </td>
+                                                    <td>
+                                                        <span id="{name}">
+                                                            <span class="block;">
+                                                                <label class="inline">
+                                                                    Date:
+                                                                </label>
+                                                                <obs conceptId="PIH:12847" class="inline"/>
+                                                            </span>
+                                                            <span class="block;">
+                                                                <label>
+                                                                    Impression:
+                                                                </label>
+                                                                <obs conceptId="PIH:Radiology report comments"
+                                                                     style="textarea"/>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </obsgroup>
+                                            </tr>
+                                        </includeIf>
+                                    </template>
+                                    <render name="echocardiogram" procedure="Echocardiogram"
+                                            concept="PIH:Transthoracic echocardiogram"
+                                            expression="$pt_has_htn or $pt_has_dbt or $pt_has_hf"/>
+                                    <render name="ultrasound" procedure="Ultrasound"
+                                            concept="PIH:Abdomen retroperitoneum limited (US)"
+                                            expression="$pt_has_rf or $pt_has_lf or $pt_has_scd"/>
+                                </repeat>
+                                <!-- Electrocardiogram construct -->
+                                <includeIf velocityTest="$pt_has_htn or $pt_has_dbt or $pt_has_hf">
+                                    <tr>
+                                        <obsgroup groupingConceptId="PIH:ELECTROCARDIOGRAM CONSTRUCT">
+                                            <td style="width: 35%">
+                                                <label>
+                                                    EKG Results
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <span class="block;">
+                                                    <label class="inline">
+                                                        Date:
+                                                    </label>
+                                                    <obs conceptId="PIH:12847" class="inline"/>
+                                                </span>
+                                                <span class="block;">
+                                                    <label>
+                                                        Impression:
+                                                    </label>
+                                                    <obs conceptId="CIEL:159565" style="radio" class="inline block"
+                                                         answerSeparator=""
+                                                         answerConceptIds="CIEL:1115,CIEL:135971,CIEL:148203,CIEL:115432,CIEL:5622"/>
+                                                </span>
+                                                <span class="block;">
+                                                    <label>
+                                                        Comments:
+                                                    </label>
+                                                    <obs conceptId="CIEL:159395" style="textarea"/>
+                                                </span>
+                                            </td>
+                                        </obsgroup>
+                                    </tr>
+                                </includeIf>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="inline">
+                        <h5>
+                            <uimessage code="pihcore.ncd.presume.etiology.label"></uimessage>
+                        </h5>
+                        <includeIf velocityTest="$pt_has_rf">
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="PIH:HYPERTENSION" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="PIH:DIABETES" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="CIEL:165543" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="CIEL:138152" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="CIEL:153701" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="PIH:HEPATITIS B" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="PIH:HEPATITIS C" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="CIEL:113349" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="CIEL:119991" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="CIEL:115303" style="checkbox"/>
+                            </span>
+                        </includeIf>
+                        <includeIf velocityTest="$pt_has_lf">
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="CIEL:70468" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="PIH:HEART DISEASE" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="CIEL:144223" style="checkbox"/>
+                            </span>
+                        </includeIf>
+                        <includeIf velocityTest="$pt_has_scd">
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="PIH:123" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="PIH:11563" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="CIEL:117635" style="checkbox"/>
+                            </span>
+                        </includeIf>
+
+                        <includeIf velocityTest="$pt_has_lf or $pt_has_scd">
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="PIH:Infectious Disease"
+                                     style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="CIEL:116031" style="checkbox"/>
+                            </span>
+                        </includeIf>
+
+                        <includeIf velocityTest="$pt_has_rf or $pt_has_lf or $pt_has_scd">
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="PIH:Unknown" style="checkbox"/>
+                            </span>
+                            <span class="inline-45">
+                                <obs conceptId="PIH:NCD category" answerConceptId="PIH:OTHER" style="checkbox"
+                                     commentFieldLabel=""/>
+                            </span>
+                        </includeIf>
+
+                    </div>
                 </div>
             </section>
         </includeIf>
 
-
-        <includeIf velocityTest="!$conditionListConcepts.contains($fn.getConcept('PIH:LIVER FAILURE'))">
+        <excludeIf
+                velocityTest="$pt_has_htn or $pt_has_dbt or $pt_has_rf or $pt_has_asthma or $pt_has_copd or $pt_has_hf or $pt_has_lf or $pt_has_scd">
             <section sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                     headerCode="pihcore.ncd.liver.disease">
-                <i class="icon-arrow-down"></i>
-                <div id="liver-disease" class="section-container sub-form collapsible" style="display:none">
-                    <div class="two-columns">
-                        <!-- ToDo:  UHM-3617 Add risk calculations for hypertension -->
-
-                        <h2>
-                            <uimessage code="pihcore.ncd.presume.etiology.label"></uimessage>
-                        </h2>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:Infectious Disease" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="CIEL:70468" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="CIEL:116031" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:HEART DISEASE" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="CIEL:144223" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:OTHER" style="checkbox" commentFieldLabel=""/>
-
-
-                        <br/>
-
-                        <h2>
-                            <uimessage code="pihcore.ncd.last.visit.label"></uimessage>
-                        </h2>
-                        <repeat>
-                            <template>
-                                <obsgroup groupingConceptId="PIH:12389">
-                                    <obs conceptId="CIEL:1728"
-                                         answerConceptId="{concept}"
-                                         style="checkbox"
-                                         labelText="{label}"
-                                         answerLabel=""
-                                         toggle="{id: '{name}-lvr-dx-ynu', style: 'hide'}"/>
-                                    <br/>
-
-                                    <span class="list-inline" id="{name}-lvr-dx-ynu">
-                                        <obs conceptId="CIEL:1729"
-                                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" style="radio"/><br/><br/>
-                                    </span>
-                                </obsgroup>
-                            </template>
-                            <render concept="PIH:Disease requiring hospitalization since last visit" name="hospitalized" label="Hospitalized for Cirrhosis"/>
-                            <render concept="CIEL:70468" name="alcohol" label="Drink alcohol"/>
-                            <render concept="CIEL:165585" name="poor-diet-adherance" label="Poor diet adherence"/>
-                            <render concept="PIH: HERBAL TRADITIONAL MEDICATIONS" name="herbs" label="Traditional herbs"/>
-                            <render concept="PIH: Paracetamol" name="paracetamol" label="Taking PCM"/>
-                            <render concept="CIEL:162306" name="nsaids" label="Taking NSAID"/>
-                            <render concept="PIH: 5960" name="dyspnea" label="Dyspnea"/>
-                            <render concept="PIH:NAUSEA" name="nausea" label="Nausea"/>
-                            <render concept="PIH:PRURITIS" name="pruritis" label="Pruritis"/>
-                            <render concept="CIEL:119866" name="confusion" label="Confusion"/>
-                            <render concept="PIH:Currently taking medication" name="taking-meds" label="Currently taking medication"/>
-                            <render concept="PIH:DEPRESSION" name="depression" label="Depression"/>
-                            <render concept="PIH:ASCITES" name="Ascites" label="Ascites"/>
-                            <render concept="CIEL:165193" name="facial-edema" label="Facial edema"/>
-                            <render concept="CIEL:148276" name="Asterixis" label="Asterixis"/>
-                        </repeat>
-
-                    </div>
-
-                    <br/>
-
+                     headerCode="pihcore.ncd.title">
+                <div class="section-container">
+                    <strong>The patient does not have an active condition. Please add one on the conditions page.
+                    </strong>
                 </div>
             </section>
-        </includeIf>
-
-        <includeIf velocityTest="!$patientHasNcdCondition">
-            <section sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.ncd.splenomegaly">
-                <i class="icon-arrow-down"></i>
-                <div id="splenomegaly" class="section-container sub-form collapsible" style="display:none">
-                    <div class="two-columns">
-
-                        <h2>
-                            <uimessage code="pihcore.ncd.presume.etiology.label"></uimessage>
-                        </h2>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:Infectious Disease" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:123" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:11563" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="CIEL:117635" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="CIEL:116031" style="checkbox"/>
-                        <obs conceptId="PIH:NCD category" answerConceptId="PIH:OTHER" style="checkbox" commentFieldLabel=""/>
-
-                        <br/><br/>
-
-                        <h2 class="test">
-                            <uimessage code="pihcore.ncd.last.visit.label"></uimessage>:
-                        </h2>
-                        <repeat>
-                            <template>
-                                <obsgroup groupingConceptId="PIH:12389">
-                                    <obs conceptId="CIEL:1728"
-                                         answerConceptId="{concept}"
-                                         style="checkbox"
-                                         labelText="{label}"
-                                         answerLabel=""
-                                         toggle="{id: '{name}-scd-dx-ynu', style: 'hide'}"/>
-                                    <br/>
-
-                                    <span class="list-inline" id="{name}-scd-dx-ynu">
-                                        <obs conceptId="CIEL:1729"
-                                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" style="radio"/><br/><br/>
-                                    </span>
-                                </obsgroup>
-                            </template>
-                            <render concept="PIH:Disease requiring hospitalization since last visit" name="hospitalized" label="Hospitalized for SCD"/>
-                            <render concept="PIH:Pain" name="pain" label="Pain"/>
-                            <render concept="PIH:FEVER" name="fever" label="Fever"/>
-                            <!--<render concept="PIH:Malaria Treatment" name="malaria-tx" label="malaria treatment"/>-->
-                            <render concept="CIEL:164377" name="meds-side-effects" label="Any medication side effects"/>
-                            <render concept="PIH:ASCITES" name="ascites" label="Ascites"/>
-                            <render concept="PIH:ICTERIC SCLERA" name="icteric-sclera" label="Icteric sclera"/>
-                        </repeat>
-
-                        <obs conceptId="PIH:CONJUNCTIVA"
-                             labelCode="pihcore.ncd.pale.conjunctiva"
-                             answerConceptIds="PIH:NORMAL, PIH:PALE CONJUNCTIVA"
-                             style="checkbox"/><b/><br/>
-
-                        <obs conceptId="CIEL:160689"
-                             labelCode="pihcore.ncd.lung.examination"
-                             style="textbox"/>
-                    </div>
-
-                    <br/>
-
-                </div>
-            </section>
-        </includeIf>
-
-
-        <!-- Labs Section -->
-        <section id="ncd_labs" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="pihcore.ncd.labs.title">
-            <div class="section-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Labs</th>
-                            <th>Results</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <obsgroup groupingConceptId="PIH:ISTAT CHEM8 PLUS CONSTRUCT">
-                                <td>
-                                    <obs id="test-date-iStat" conceptId="PIH:DATE OF LABORATORY TEST"
-                                         placeholder="Enter date"/>
-                                </td>
-                                <td>
-                                    <uimessage code="pihcore.lab.iStat.title"/>
-                                </td>
-                                <td>
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.sodium"/></label>
-                                        <span class="inline">
-                                            <obs id="ua-sodium" conceptId="PIH:SERUM SODIUM"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.potassium"/></label>
-                                        <span class="inline">
-                                            <obs id="ua-serum-potassium"
-                                                 conceptId="PIH:SERUM POTASSIUM"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.calcium"/></label>
-                                        <span class="inline">
-                                            <obs id="calcium" conceptId="PIH:SERUM CALCIUM"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.co2"/></label>
-                                        <span class="inline">
-                                            <obs id="carbon-dioxide" conceptId="PIH:SERUM CARBON DIOXIDE"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.urea"/> (BUN)</label>
-                                        <span class="inline">
-                                            <obs id="urea-bun" conceptId="PIH:BLOOD UREA NITROGEN"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.creatinine"/></label>
-                                        <span class="inline">
-                                            <obs id="ua-serum-creatinine"
-                                                 conceptId="PIH:SERUM CREATININE"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.glucose"/></label>
-                                        <span class="inline">
-                                            <obs id="glucose" conceptId="PIH:SERUM GLUCOSE"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.hemoglobin"/></label>
-                                        <span class="inline">
-                                            <obs id="ua-Hemoglobin"
-                                                 conceptId="PIH:HEMOGLOBIN"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.chloride"/></label>
-                                        <span class="inline">
-                                            <obs id="serum-chloride" conceptId="PIH:SERUM CHLORIDE"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline">Glomerular filtration rate</label>
-                                        <span class="inline">
-                                            <obs id="GFR" conceptId="CIEL:161132"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                </td>
-                            </obsgroup>
-                        </tr>
-                        <tr>
-                            <obsgroup groupingConceptId="PIH:12322">
-                                <td>
-                                    <obs id="test-date-ua" conceptId="PIH:DATE OF LABORATORY TEST"
-                                         placeholder="Enter date"/>
-                                </td>
-                                <td>
-                                    UA
-                                </td>
-                                <td>
-                                    <span class="inline">
-                                        <obs id="ua-ketona"
-                                             conceptId="CIEL:161442" labelText="Ketones"
-                                             answerLabel="" class="first-label-inline"/>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline">Glucose</label>
-                                        <span class="inline">
-                                            <obs id="ua-glucose" conceptId="CIEL:159733"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <obs id="ua-protein"
-                                             conceptId="CIEL:1875" labelText="Protein"
-                                             answerLabel="" class="first-label-inline"/>
-                                    </span>
-                                    <span class="inline">
-                                        <obs id="ua-blood"
-                                             conceptId="CIEL:162096" labelText="Blood"
-                                             answerConceptIds="CIEL:664,CIEL:165527,CIEL:165528,CIEL:165526,1362AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,CIEL:1363,CIEL:1364,CIEL:1365"
-                                             answerLabels="Negative,Trace non-hemolyzed,Moderate non-hemolyzed,Trace hemolyzed,1+,++,+++,++++"
-                                             answerLabel="" class="first-label-inline"/>
-                                    </span>
-                                    <span class="inline">
-                                        <obs id="ua-casts" conceptId="CIEL:163693"
-                                             labelCode="pihcore.lab.casts" answerLabel=""
-                                             class="first-label-inline"/>
-                                    </span>
-                                    <span class="inline">
-                                        <obs id="ua-nitrites"
-                                             conceptId="CIEL:161440" labelText="Nitrites"
-                                             answerLabel="" class="first-label-inline"/>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline">Spec Grav</label>
-                                        <span class="inline">
-                                            <obs id="ua-spec-grav"
-                                                 conceptId="CIEL:161439"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                </td>
-                            </obsgroup>
-                        </tr>
-                        <tr>
-                            <obsgroup groupingConceptId="PIH:LIVER FUNCTION TESTS">
-                                <td>
-                                    <obs id="test-date-lft" conceptId="PIH:DATE OF LABORATORY TEST"
-                                         placeholder="Enter date"/>
-                                </td>
-                                <td>
-                                    Liver panel
-                                </td>
-                                <td>
-                                    <span class="inline">
-                                        <label class="inline">AST</label>
-                                        <span class="inline">
-                                            <obs id="serum-glutamic-oxaloacetic-transaminase"
-                                                 conceptId="PIH:SERUM GLUTAMIC-OXALOACETIC TRANSAMINASE"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline">ALT</label>
-                                        <span class="inline">
-                                            <obs id="serum-glutamic-pyruvic-transaminase"
-                                                 conceptId="PIH:SERUM GLUTAMIC-PYRUVIC TRANSAMINASE"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.bilirubin"/></label>
-                                        <span class="inline">
-                                            <obs id="bilirubin" conceptId="PIH:TOTAL BILIRUBIN"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-
-                                    <!-- Direct bilirubin -->
-                                    <span class="inline">
-                                        <label class="inline">Direct bilirubin</label>
-                                        <span class="inline">
-                                            <obs id="direct-bilirubin" conceptId="CIEL:1297" answerLabel=""
-                                                 class="first-label-inline"/>
-                                        </span>
-                                    </span>
-
-                                    <!-- Indirect bilirubin -->
-                                    <span class="inline">
-                                        <label class="inline">Indirect bilirubin</label>
-                                        <span class="inline">
-                                            <obs id="indirect-bilirubin" conceptId="CIEL:163001" answerLabel=""
-                                                 class="first-label-inline"/>
-                                        </span>
-                                    </span>
-
-                                </td>
-                            </obsgroup>
-                        </tr>
-                        <tr>
-                            <obsgroup groupingConceptId="CIEL:164945">
-                                <td>
-                                    <obs id="test-date-iStat" conceptId="PIH:DATE OF LABORATORY TEST"
-                                         placeholder="Enter date"/>
-                                </td>
-                                <td>
-                                    GeneXpert MTB/Rif
-                                </td>
-                                <td>
-                                    <span class="inline">
-                                        <obs id="GeneXpert" conceptId="CIEL:162202"
-                                             labelCode="pihcore.lab.genexpert" answerLabel=""
-                                             class="first-label-inline"/>
-                                    </span>
-                                </td>
-                            </obsgroup>
-                        </tr>
-                        <tr>
-                            <obsgroup groupingConceptId="PIH:3646">
-                                <td>
-                                    <obs id="test-date-iStat" conceptId="PIH:DATE OF LABORATORY TEST"
-                                         placeholder="Enter date"/>
-                                </td>
-                                <td>
-                                    Hematology laboratory set
-                                </td>
-                                <td>
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.hba1c"/></label>
-                                        <span class="inline">
-                                            <obs id="hba1c" conceptId="PIH:HbA1c"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-
-                                    <span class="inline">
-                                        <label class="inline"><uimessage code="pihcore.lab.inr"/></label>
-                                        <span class="inline">
-                                            <obs id="inr" conceptId="PIH:INTERNATIONAL NORMALIZED RATIO"
-                                                 answerLabel="" class="first-label-inline"/>
-                                        </span>
-                                    </span>
-                                </td>
-                            </obsgroup>
-                        </tr>
-                        <tr>
-                            <obsgroup groupingConceptId="PIH:12468">
-                                <td>
-                                    <obs id="test-date-iStat" conceptId="PIH:DATE OF LABORATORY TEST"
-                                         placeholder="Enter date"/>
-                                </td>
-                                <td>
-                                    Stool panel
-                                </td>
-                                <td>
-                                    <span class="inline">
-                                        <obs id="stool-exam" conceptId="PIH:STOOL EXAM" labelCode="pihcore.lab.stool.exam"
-                                             answerLabel="" class="first-label-inline"/>
-                                    </span>
-                                </td>
-                            </obsgroup>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+        </excludeIf>
 
 
         <!-- Medications section -->
@@ -1082,11 +805,21 @@
                 <table>
                     <thead>
                         <tr>
-                            <th><uimessage code="pihcore.visitNote.plan.name"/></th>
-                            <th colspan="2"><uimessage code="pihcore.visitNote.plan.dose"/></th>
-                            <th><uimessage code="pihcore.drug.route"/></th>
-                            <th><uimessage code="pihcore.visitNote.plan.frequency"/></th>
-                            <th colspan="2"><uimessage code="pihcore.visitNote.plan.duration"/></th>
+                            <th>
+                                <uimessage code="pihcore.visitNote.plan.name"/>
+                            </th>
+                            <th colspan="2">
+                                <uimessage code="pihcore.visitNote.plan.dose"/>
+                            </th>
+                            <th>
+                                <uimessage code="pihcore.drug.route"/>
+                            </th>
+                            <th>
+                                <uimessage code="pihcore.visitNote.plan.frequency"/>
+                            </th>
+                            <th colspan="2">
+                                <uimessage code="pihcore.visitNote.plan.duration"/>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1164,15 +897,15 @@
                         <uimessage code="pihcore.medication.side.effects"/>
                     </label>
 
-                    <obs id="med-side-effects" conceptId="CIEL:165273" answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" >
+                    <obs id="med-side-effects" conceptId="CIEL:165273" answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
                         <controls>
-                            <when value="PIH:YES" thenDisplay = "#side-effect-section"/>
+                            <when value="PIH:YES" thenDisplay="#side-effect-section"/>
                         </controls>
                     </obs>
                 </p>
 
                 <p id="side-effect-section">
-                    <obs  id="" conceptId="CIEL:164377" style="textarea"/>
+                    <obs id="" conceptId="CIEL:164377" style="textarea"/>
                 </p>
             </div>
         </section>
@@ -1194,7 +927,8 @@
                         <uimessage code="pihcore.consult.returnVisitDate"/>:
                     </label>
                     <span class="small">
-                        <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true" required="true"/>
+                        <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true"
+                             required="true"/>
                     </span>
                 </p>
 
@@ -1225,7 +959,10 @@
                                  answerCodes="yes,no" answerSeparator=""/>
                             <obs conceptId="CIEL:162879" labelCode="pihcore.reasonHospitalized"/>
                         </p>
-                        <br/><br/><br/><br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
                     </includeIf>
                 </div>
 

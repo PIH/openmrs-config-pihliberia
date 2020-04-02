@@ -30,7 +30,10 @@
     "activeVisits",
     "waitingForConsult",
     "relationships",
-    "idcardPrinting"
+    "idcardPrinting",
+    "ncd",
+    "dispensing",
+    "labs"
   ],
 
   "primaryIdentifierPrefix": "PL",

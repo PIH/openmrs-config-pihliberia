@@ -132,3 +132,13 @@ span.tb-symptom-name {
     width: 45%;
     float: right;
 }
+
+.block {
+    display: block;
+}
+
+.inline-45 {
+    display: inline-block;
+    margin-right: 11px;
+    width:45%;
+}
