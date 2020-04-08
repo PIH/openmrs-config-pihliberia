@@ -28,7 +28,8 @@
     "idcardPrinting",
     "ncd",
     "dispensing",
-    "labs"
+    "labs",
+    "labResults"
   ],
 
   "primaryIdentifierPrefix": "JJD",
