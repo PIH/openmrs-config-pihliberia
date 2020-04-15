@@ -191,16 +191,6 @@
 
                 $('#phq9Score > input:text').attr('placeholder', '0-27');
 
-                $('#condition-status > input:radio').each(function(idx, it){
-                    if($(it).val() == 'active'){
-                        $(it).click();
-                        $(it).prop("checked", true);
-                        $(it).hide();
-                    } else {
-                        $(it).attr('disabled',true).hide();
-                        $('label[for = '+$(it).attr('id')+']').hide();
-                    }
-                });
             });
 
         </script>

@@ -51,5 +51,50 @@ jQuery(document).ready(function ($) {
         } else {
             $('#mh-epilepsy-section').hide();
         }
+
+        $(this).removeClass("error field-error");
+        if (!$('#htmlformentry-condition').find('input[placeholder="Onset Date"]').is(".error, .field-error")) {
+            $('#htmlformentry-condition').find('.custom-error').remove();
+        }
+    });
+
+    $('#htmlformentry-condition').find('.hasDatepicker').datepicker('option', 'onSelect', function (date) {
+        $(this).removeClass("error field-error");
+        if (!$('#htmlformentry-condition').find('.autoCompleteText').is(".error, .field-error")) {
+            $('#htmlformentry-condition').find('.custom-error').remove();
+        }
+    });
+
+    $('#liberia-mental-health #condition-status > input:radio, #liberia-ncd-initial #condition-status > input:radio').each(function (idx, it) {
+        if ($(it).val() == 'active') {
+            $(it).click();
+            $(it).prop("checked", true);
+            $(it).hide();
+        } else {
+            $(it).attr('disabled', true).hide();
+        }
+        $('label[for = ' + $(it).attr('id') + ']').hide();
+    });
+
+    $('#liberia-mental-health .submitButton, #liberia-ncd-initial .submitButton').click(function (e) {
+        var cndtnEl = $('#htmlformentry-condition').find('.autoCompleteText');
+        var onsetDateEl = $('#htmlformentry-condition').find('input[placeholder="Onset Date"]');
+
+        if($(cndtnEl).length || $(onsetDateEl).length){
+            if (!$(cndtnEl).val()) {
+                $(cndtnEl).addClass("error field-error");
+            }
+
+            if (!$(onsetDateEl).val()) {
+                $(onsetDateEl).addClass("error field-error");
+            }
+
+            if (!$(cndtnEl).val() || !$(onsetDateEl).val()) {
+                $('#htmlformentry-condition').find('.custom-error').remove();
+                $('#htmlformentry-condition').append("<span id='custom-error' class='custom-error'>Condition and Onset Date are required!</span>");
+                e.preventDefault();
+                e.stopImmediatePropagation();
+            }
+        }
     });
 });

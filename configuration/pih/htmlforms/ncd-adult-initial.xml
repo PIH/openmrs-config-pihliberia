@@ -86,40 +86,7 @@
             }
         </ifMode>
 
-        <ifMode mode="EDIT">
-            #disposition small {
-            font-size: 100%;
-            display: block;
-            }
-
-            #disposition span {
-            padding-left: 15px;
-            }
-        </ifMode>
     </style>
-
-
-    <ifMode mode="VIEW" include="false">
-        <script type="text/javascript">
-
-            jq(function() {
-            $('#condition-status > input:radio').each(function(idx, it){
-            if($(it).val() == 'active'){
-            $(it).click();
-            $(it).prop("checked", true);
-            $(it).unbind('click').click(function () {
-            $(this).prop("checked", true);
-            return false;
-            });
-            } else {
-            $(it).attr('disabled',true).hide();
-            $('label[for = '+$(it).attr('id')+']').hide();
-            }
-            });
-            });
-
-        </script>
-    </ifMode>
 
 
     <div class="htmlform">
@@ -741,7 +708,10 @@
                         <tr>
                             <td colspan="2">
                                 <label class="inline">
-                                    <uimessage code="pihcore.ncd.money.source.while.sick"/>
+                                    From the patient's current condition, does
+                                    <includeIf velocityTest="$patient.gender == 'F'">she</includeIf>
+                                    <includeIf velocityTest="$patient.gender == 'M'">he</includeIf>
+                                    still have the capacity to work for an income?
                                 </label>
                                 <span class="list-inline">
                                     <obs id="money-source-while-sick" conceptId="PIH:12615"
@@ -753,7 +723,7 @@
                         <tr>
                             <td colspan="2">
                                 <label class="inline">
-                                    <uimessage code="With whom do you live? (number including patient)"/>
+                                    Total number of persons (including patient) living in a household
                                 </label>
                                 &amp;nbsp
                                 <span>
@@ -868,6 +838,11 @@
                                     <obs conceptId="PIH:GENERAL EXAM FINDINGS"
                                          answerConceptId="PIH:CONFUSION" style="checkbox" class="first-label-inline"/>
                                 </span>
+                                <span class="block">
+                                    <obsgroup groupingConceptId="PIH:GENERAL EXAM FINDINGS">
+                                        <obs conceptId="CIEL:160632" labelText="Other: " style="textarea" rows="2"/>
+                                    </obsgroup>
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -909,6 +884,11 @@
                                     <obs conceptId="PIH:HEENT EXAM FINDINGS"
                                          answerConceptId="CIEL:162941" style="checkbox" class="first-label-inline"/>
                                 </span>
+                                <span class="block">
+                                    <obsgroup groupingConceptId="PIH:HEENT EXAM FINDINGS">
+                                        <obs conceptId="CIEL:160632" labelText="Other: " style="textarea" rows="2"/>
+                                    </obsgroup>
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -938,6 +918,11 @@
                                         Location of crackles
                                     </label>
                                     <obs conceptId="CIEL:159485"/>
+                                </span>
+                                <span class="block">
+                                    <obsgroup groupingConceptId="PIH:CHEST EXAM FINDINGS">
+                                        <obs conceptId="CIEL:160632" labelText="Other: " style="textarea" rows="2"/>
+                                    </obsgroup>
                                 </span>
                             </td>
                         </tr>
@@ -1022,6 +1007,11 @@
                                     <obs conceptId="PIH:CARDIAC EXAM FINDINGS"
                                          answerConceptId="PIH:S4 GALLOP" style="checkbox" class="first-label-inline"/>
                                 </span>
+                                <span class="block">
+                                    <obsgroup groupingConceptId="PIH:CARDIAC EXAM FINDINGS">
+                                        <obs conceptId="CIEL:160632" labelText="Other: " style="textarea" rows="2"/>
+                                    </obsgroup>
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -1080,6 +1070,11 @@
                                              class="first-label-inline"/>
                                     </span>
                                 </span>
+                                <span class="block">
+                                    <obsgroup groupingConceptId="PIH:ABDOMINAL EXAM FINDINGS">
+                                        <obs conceptId="CIEL:160632" labelText="Other: " style="textarea" rows="2"/>
+                                    </obsgroup>
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -1106,6 +1101,11 @@
                                     <obs conceptId="PIH:NEUROLOGIC EXAM FINDINGS"
                                          answerConceptId="CIEL:165589 " style="checkbox"
                                          class="first-label-inline"/>
+                                </span>
+                                <span class="block">
+                                    <obsgroup groupingConceptId="PIH:NEUROLOGIC EXAM FINDINGS">
+                                        <obs conceptId="CIEL:160632" labelText="Other: " style="textarea" rows="2"/>
+                                    </obsgroup>
                                 </span>
                             </td>
                         </tr>
@@ -1152,6 +1152,11 @@
                                 <span class="inline">
                                     <obs conceptId="PIH:EXTREMITY EXAM FINDINGS"
                                          answerConceptId="CIEL:588" style="checkbox" class="first-label-inline"/>
+                                </span>
+                                <span class="block">
+                                    <obsgroup groupingConceptId="PIH:EXTREMITY EXAM FINDINGS">
+                                        <obs conceptId="CIEL:160632" labelText="Other: " style="textarea" rows="2"/>
+                                    </obsgroup>
                                 </span>
                             </td>
                         </tr>

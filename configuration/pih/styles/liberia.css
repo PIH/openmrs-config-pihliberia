@@ -142,3 +142,9 @@ span.tb-symptom-name {
     margin-right: 11px;
     width:45%;
 }
+
+.custom-error {
+    color: #ff6666;
+    font-size: 1.1em;
+    display: block;
+}
