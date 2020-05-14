@@ -28,7 +28,7 @@
         <!-- TODO: is this used? -->
         <globalProperty>
             <property>emr.paperRecordIdentifierType</property>
-            <!-- Location: Sample Dossier Number -->
+            <!-- Identifier Type: Sample Dossier Number -->
             <value>c31b0dd2-b484-41f0-8fce-bbe72e07843c</value>
         </globalProperty>
 
