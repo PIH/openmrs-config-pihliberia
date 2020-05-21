@@ -1,0 +1,65 @@
+<config>
+    <globalProperties>
+        <!-- Core Global Properties -->
+        <globalProperty>
+            <property>default_locale</property>
+            <value>en</value>
+        </globalProperty>
+
+        <globalProperty>
+            <property>locale.allowed.list</property>
+            <value>en</value>
+        </globalProperty>
+
+        <globalProperty>
+            <property>emr.concept.diagnosisSetOfSets</property>
+            <!-- Concept: Liberia diagnosis set -->
+            <value>ed97232b-1a09-4260-b06c-d193107c32a7</value>
+        </globalProperty>
+
+        <!-- Core Apps Global Properties -->
+        <globalProperty>
+            <property>coreapps.defaultPatientIdentifierLocation</property>
+            <!-- Location: Health Facility -->
+            <value>5af1ffcd-5178-11ea-a500-645d86728797</value>
+        </globalProperty>
+
+        <!-- Paper Record Global Properties -->
+        <!-- TODO: is this used? -->
+        <globalProperty>
+            <property>emr.paperRecordIdentifierType</property>
+            <!-- Identifier Type: Sample Dossier Number -->
+            <value>c31b0dd2-b484-41f0-8fce-bbe72e07843c</value>
+        </globalProperty>
+
+        <!-- Order Entry OWA -->
+        <globalProperty>
+            <property>orderentryowa.labOrderablesConceptSet</property>
+            <!-- Concept: Liberia laboratory categories -->
+            <value>d75d3f5b-6777-41cf-ad9f-dce07a577eb3</value>
+        </globalProperty>
+
+        <!-- Lab Workflow OWA -->
+        <globalProperty>
+            <property>labworkflowowa.locationOfLaboratory</property>
+            <!-- Concept: Location of laboratory (Liberia) -->
+            <value>76c4e6f2-d885-4d1f-8bad-f8320f20ee85</value>
+        </globalProperty>
+
+        <!-- Check In -->
+        <globalProperty>
+            <property>mirebalais.checkIn.paymentAmounts</property>
+            <value>100,75,50,0</value>
+        </globalProperty>
+
+        <globalProperty>
+            <property>mirebalais.checkIn.paymentAmountLabels</property>
+            <value>100,75,50,Exempt</value>
+        </globalProperty>
+
+        <globalProperty>
+            <property>mirebalais.checkIn.paymentAmountDefault</property>
+            <value>75</value>
+        </globalProperty>
+    </globalProperties>
+</config>

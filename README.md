@@ -1,7 +1,39 @@
 openmrs-config-pihliberia
 ==============================
 
-## Usage
+### Prequistes
+
+Some utility scripts, "install.sh" and "watch.sh", have been written to ease having to manually run mvn install
+and watch commands on both this project and the "openmrs-config-pihemr" project.
+
+However, these scripts depend on finding your "openmrs-config-pihemr" relative to this project, so they should both be 
+checked out into the same directory, and the "openmrs-config-pihemr" directory should be named "openmrs-config-pihemr"
+or "config-pihemr".
+
+Example directory structure:
+
+openmrs-config-pihemr
+openmrs-config-pihliberia
+
+or
+
+config-pihemr
+config-pihliberia
+
+### Steps to deploy new changes to your local development server
+
+Run "./install.sh [serverId]" where [serverId] is the name of the SDK server you are deploying to.  This will first build 
+the config-pihemr project, then build the config-pihliberia project, (pulling in any changes to config-pihemr),
+and finally deploying the changes to the server specified by [serverId].
+
+#### To enable watching, you run the following:
+
+"./watch.sh [serverId]" where [serverId] is the name of the SDK server you are deploying too.  This will watch
+*both* the config-pihemr and config-pihliberia projects for changes and redeploy when there are changes.  It runs
+indefinitely, so you will need to cancel it with a "Ctrl-C".
+
+
+### General usage
 
 `mvn clean compile` - Will generate your configurations into "target/openmrs-packager-config/configuration"
 `mvn clean package` - Will compile as above, and generate a zip package at "target/${artifactId}-${version}.zip"
@@ -17,7 +49,5 @@ in order for the other package to be able to pick it up.
 
 `mvn clean install` - Will compile and package as above, and install as an available dependency on your system
 
-## Notes
-
-The drug list is a copy of the one used by Zanmi Lasante, [here](https://github.com/PIH/openmrs-config-zl/tree/master/configuration/pih/drugs).
-
+For more details regarding the available commands please see:
+https://github.com/openmrs/openmrs-contrib-packager-maven-plugin 
