@@ -29,7 +29,8 @@
     "ncd",
     "dispensing",
     "labs",
-    "labResults"
+    "labResults",
+    "mch"
   ],
 
   "primaryIdentifierPrefix": "JJD",
