@@ -12,6 +12,25 @@
   "idCardLabel": "PIH Liberia",
   "idCardLocale": "en",
 
+  "locationTags": {
+    "Appointment Location": ["Outpatient Clinic", "Mental Health Clinic", "NCD Clinic", "MCH Clinic"],
+    "Archives Location": ["Records Room"],
+    "Check-In Location": ["Records Room", "Outpatient Clinic", "Mental Health Clinic", "NCD Clinic", "MCH Clinic"],
+    "Consult Note Location": ["Outpatient Clinic", "Mental Health Clinic", "NCD Clinic", "MCH Clinic"],
+    "Dispensing Location": ["Mental Health Clinic"],
+    "Lab Results Location": ["Outpatient Clinic", "NCD Clinic", "MCH Clinic"],
+    "Login Location": ["Records Room", "Outpatient Clinic", "Mental Health Clinic", "NCD Clinic", "MCH Clinic"],
+    "Maternal and Child Location": ["MCH Clinic"],
+    "Medical Record Location": ["Records Room"],
+    "Mental Health Location": ["Mental Health Clinic"],
+    "NCD Consult Location": ["NCD Clinic"],
+    "Primary Care Consult Location": ["Outpatient Clinic", "Mental Health Clinic", "NCD Clinic", "MCH Clinic"],
+    "Program Location": ["Mental Health Clinic", "NCD Clinic", "MCH Clinic"],
+    "Provider Management Location": ["Outpatient Clinic"],
+    "Registration Location": ["Records Room", "Outpatient Clinic", "Mental Health Clinic", "NCD Clinic", "MCH Clinic"],
+    "Visit Location": ["Health Facility"],
+    "Vitals Location": ["Records Room", "Outpatient Clinic", "Mental Health Clinic", "NCD Clinic", "MCH Clinic"]
+  },
   "registrationConfig": {
     "allowUnknownPatients": false,
     "allowManualEntryOfPrimaryIdentifier": false,
