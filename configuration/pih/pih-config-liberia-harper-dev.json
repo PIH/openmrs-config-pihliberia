@@ -1,0 +1,39 @@
+{
+
+  "components": [
+    "clinicianDashboard",
+    "patientRegistration",
+    "checkIn",
+    "consult",
+    "visitNote",
+    "visitManagement",
+    "systemAdministration",
+    "myAccount",
+    "overviewReports",
+    "dataExports",
+    "checkInHomepageApp",
+    "vitals",
+    "allergies",
+    "relationships",
+    "programs",
+    "mentalHealth",
+    "patientDocuments",
+    "conditionList",
+    "primaryCare",
+    "managePrinters",
+    "bmiOnClinicianDashboard",
+    "activeVisits",
+    "waitingForConsult",
+    "relationships",
+    "idcardPrinting",
+    "ncd",
+    "dispensing",
+    "labs",
+    "labResults",
+    "mch"
+  ],
+
+  "primaryIdentifierPrefix": "YY",
+  "providerIdentifierPrefix": "YY",
+}
+
