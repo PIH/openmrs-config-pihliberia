@@ -850,7 +850,7 @@
                                              conceptId="CIEL:160855"
                                              answerConceptIds=
                                                      "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:PRN,PIH:STAT,PIH:OTHER"
-                                             answerCodes="OD,BID,TID,QID,STAT,PRN,pihcore.visitNote.plan.other"/>
+                                             answerCodes="QD,BID,TID,QID,STAT,PRN,pihcore.visitNote.plan.other"/>
                                     </td>
                                     <td id="{name}-rx-duration">
                                         <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
