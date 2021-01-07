@@ -132,7 +132,7 @@
                     <label><uimessage code="mirebalais.dispensing.dispensedBy"/></label>
                     <span><encounterProviderAndRole default="currentUser"
                                                     providerRoles="8fd1552e-6cb9-4719-b198-23a2c512a073,7ec19cca-f563-4cee-940f-effec16b3b80"
-                                                    encounterRole="bad21515-fd04-4ff6-bfcd-78456d12f168" required="true"/></span>
+                                                    encounterRole="bad21515-fd04-4ff6-bfcd-78456d12f168" required="false"/></span>
                 </td>
                 <td>
                     <label><uimessage code="emr.location"/></label>
@@ -194,8 +194,7 @@
                 </label>
 
                 <span class="select-arrow">
-                    <encounterProviderAndRole encounterRole="c458d78e-8374-4767-ad58-9f8fe276e01c"
-                                              providerRoles="3182ee51-b895-4804-a342-5f261e995222,556ceee6-d899-43d4-a98b-7973ebc85b75"/>
+                    <encounterProviderAndRole default="currentUser" encounterRole="c458d78e-8374-4767-ad58-9f8fe276e01c"/>
                 </span>
             </span>
         </div>

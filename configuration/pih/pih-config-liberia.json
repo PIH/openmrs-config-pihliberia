@@ -17,9 +17,9 @@
     "Archives Location": ["Records Room"],
     "Check-In Location": ["Records Room", "Emergency", "Outpatient Clinic", "Mental Health Clinic", "NCD Clinic", "MCH Clinic"],
     "Consult Note Location": ["Outpatient Clinic", "Emergency", "Mental Health Clinic", "NCD Clinic", "MCH Clinic"],
-    "Dispensing Location": ["Mental Health Clinic"],
+    "Dispensing Location": ["Mental Health Clinic", "Pharmacy", "MCH Clinic"],
     "Lab Results Location": ["Outpatient Clinic", "Emergency", "NCD Clinic", "MCH Clinic"],
-    "Login Location": ["Records Room", "Emergency", "Outpatient Clinic", "Mental Health Clinic", "NCD Clinic", "MCH Clinic"],
+    "Login Location": ["Records Room", "Emergency", "Outpatient Clinic", "Mental Health Clinic", "NCD Clinic", "MCH Clinic","Pharmacy"],
     "Maternal and Child Location": ["MCH Clinic"],
     "Medical Record Location": ["Records Room", "Emergency"],
     "Mental Health Location": ["Mental Health Clinic"],
@@ -42,6 +42,7 @@
       },
       "personAttributeTypes" : {
         "First Name of Mother": "3",
+
         "Telephone Number": "20"
       }
     },
@@ -56,5 +57,5 @@
       }
     }
   },
-  "extraIdentifierTypes": ["23507d1e-4f22-11ea-9717-645d86728797"]
+  "extraIdentifierTypes": ["23507d1e-4f22-11ea-9717-645d86728797", "aa81023f-400f-11eb-8334-34c93de76af3"]
 }
