@@ -436,7 +436,7 @@
         </div>
     </section>
 
-
+    <!-- ToDo:  Fix this when condition list is added
     <includeIf velocityTest="!$patientHasMentalHealthCondition">
         <section id="mh-diagnoses" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="pihcore.diagnoses.label">
@@ -445,9 +445,8 @@
             </div>
         </section>
 
-        <!-- If user doesn't have MH encounter, don't display ep section -->
-
-    </includeIf>
+        If user doesn't have MH encounter, don't display ep section
+    </includeIf> -->
 
 
     <section id="mh-epilepsy-section" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.ncd.epilepsy">
@@ -722,6 +721,11 @@
         </div>
     </section>
 
+    <!-- ToDo:  Restore logic when condition list is ready for production -->
+    <style>
+        #mh-epilepsy-section {display: block;}
+    </style>
+    <!--
     <lookup complexExpression="#set( $latestEncounter = $fn.latestEncounter(a8584ab8-cc2a-11e5-9956-625662870761) )"/>
     <includeIf velocityTest="$conditionListConcepts.contains($fn.getConcept('PIH:EPILEPSY'))">
         <style>
@@ -733,6 +737,7 @@
             #mh-epilepsy-section {display: none;}
         </style>
     </includeIf>
+    -->
 
     <section id="mh-meds" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan.medication">
@@ -814,7 +819,8 @@
                     <uimessage code="pihcore.medication.side.effects"/>
                 </label>
 
-                <obs id="med-side-effects" conceptId="CIEL:165273" answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" >
+                <obs id="med-side-effects" conceptId="CIEL:165273" style="radio"
+                     answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" >
                     <controls>
                         <when value="PIH:YES" thenDisplay = "#side-effect-section"/>
                     </controls>
