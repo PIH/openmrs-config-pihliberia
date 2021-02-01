@@ -1167,8 +1167,8 @@
             </div>
         </section>
 
-
-        <!-- Clinical Impression -->
+        <!-- ToDo:  Removed conditionList from this section
+        Clinical Impression
         <includeIf velocityTest="!$patientHasNcdCondition">
             <section id="clinical-impression" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                      headerCode="pihcore.ncd.clinical.impression.title">
@@ -1177,7 +1177,7 @@
                 </div>
             </section>
         </includeIf>
-
+        -->
 
         <!-- Disposition -->
         <section id="disposition-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"

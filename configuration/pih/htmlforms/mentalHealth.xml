@@ -448,7 +448,6 @@
         If user doesn't have MH encounter, don't display ep section
     </includeIf> -->
 
-
     <section id="mh-epilepsy-section" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.ncd.epilepsy">
         <i class="icon-arrow-down"></i>
         <div id="epilepsy" class="section-container sub-form collapsible" style="display:none">
