@@ -127,12 +127,13 @@
     </ifMode>
     <table id="who-where-when-view">
         <tr>
+
+
             <includeIf velocityTest="$user.hasRole('Application Role: sysAdmin')">
                 <td>
                     <label><uimessage code="mirebalais.dispensing.dispensedBy"/></label>
                     <span><encounterProviderAndRole default="currentUser"
-                                                    providerRoles="8fd1552e-6cb9-4719-b198-23a2c512a073,7ec19cca-f563-4cee-940f-effec16b3b80"
-                                                    encounterRole="bad21515-fd04-4ff6-bfcd-78456d12f168" required="false"/></span>
+                                                    encounterRole="bad21515-fd04-4ff6-bfcd-78456d12f168" required="true"/></span>
                 </td>
                 <td>
                     <label><uimessage code="emr.location"/></label>
@@ -143,6 +144,8 @@
                     <span><encounterDate id="encounterDate" default="today" /></span>
                 </td>
             </includeIf>
+
+
 
             <includeIf velocityTest="($user.hasRole('Application Role: pharmacist') || $user.hasRole('Application Role: pharmacyAide') || $user.hasRole('Application Role: pharmacyManager'))  and !$user.hasRole('Application Role: sysAdmin')">
                 <div style="display:none">
@@ -186,19 +189,22 @@
                     <uimessage code="dispensing.medication.locationOfPrescription"/>
                 </label>
 
-                <obs id="Discharge location" required="true" style="location" class="select-arrow" conceptId="PIH:9293" />
+                <span> <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Dispensing Location"/></span>
+
+                <!--<obs id="Discharge location" required="true" style="location" class="select-arrow" conceptId="PIH:9293" />-->
             </span>
+
             <span class="input-container provider">
                 <label>
                     <uimessage code="mirebalais.dispensing.prescriber"/>
                 </label>
 
-                <span class="select-arrow">
-                    <encounterProviderAndRole default="currentUser" encounterRole="c458d78e-8374-4767-ad58-9f8fe276e01c"/>
+                <span>
+                    <obs conceptId="PIH:6592"/>
                 </span>
             </span>
         </div>
-   </div>
+    </div>
 
     <repeat with="['1'],['2'],['3'],['4'],['5'],['6'],['7']">
         <obsgroup groupingConceptId="PIH:9070" showIfEmpty="false">
