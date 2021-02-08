@@ -189,9 +189,9 @@
                     <uimessage code="dispensing.medication.locationOfPrescription"/>
                 </label>
 
-                <span> <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Dispensing Location"/></span>
+                <!--<span> <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Dispensing Location"/></span>-->
 
-                <!--<obs id="Discharge location" required="true" style="location" class="select-arrow" conceptId="PIH:9293" />-->
+                <obs id="Discharge location" required="true" style="location" class="select-arrow" conceptId="PIH:9293" />
             </span>
 
             <span class="input-container provider">
