@@ -1,5 +1,6 @@
 /**
-
+    I *believe* we symlink a single liberia.css in both the global directory and the top-level
+    style directory so that it is included globally, *but* can also be referenced on forms
  */
 
 header {
