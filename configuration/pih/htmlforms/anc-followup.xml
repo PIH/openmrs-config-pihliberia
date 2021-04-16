@@ -183,6 +183,7 @@
             });
         </script>
     </ifMode>
+
     <div class="htmlform">
         <ifMode mode="VIEW" include="false">
             <h2>
@@ -313,118 +314,6 @@
                 <p>
                     <label><uimessage code="emr.consult.freeTextComments"/></label>
                     <obs conceptId="PIH:CLINICAL IMPRESSION COMMENTS" style="textarea" rows="5"/>
-                </p>
-            </div>
-        </section>
-
-        <!--medications section-->
-        <section id="anc-meds" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="pihcore.visitNote.plan.medication">
-            <div class="section-container toggle">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                <uimessage code="pihcore.visitNote.plan.name"/>
-                            </th>
-                            <th colspan="2">
-                                <uimessage code="pihcore.visitNote.plan.dose"/>
-                            </th>
-                            <th>
-                                <uimessage code="pihcore.drug.route"/>
-                            </th>
-                            <th>
-                                <uimessage code="pihcore.visitNote.plan.frequency"/>
-                            </th>
-                            <th colspan="2">
-                                <uimessage code="pihcore.visitNote.plan.duration"/>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <repeat with="['1'],['2'],['3'],['4'],['5'],['6'],['7']">
-                            <tr id="medication-{0}" class="medication">
-                                <obsgroup groupingConceptId="PIH:Prescription construct">
-                                    <td id="{0}-rx">
-                                        <obs id="{0}-rx-name" class="medication-name" conceptId="CIEL:1282"
-                                             style="autocomplete" answerClasses="Drug"/>
-                                    </td>
-                                    <td id="{0}-rx-dose">
-                                        <obs id="dose-{0}" class="doseInput" conceptId="CIEL:160856"/>
-                                    </td>
-                                    <td id="{0}-rx-dose-unit">
-                                        <obs id="{0}-doseUnit" class="doseInput select-arrow"
-                                             conceptId="PIH:Dosing units coded"
-                                             answerConceptIds="CIEL:161553,CIEL:162263,CIEL:1608,CIEL:1513"
-                                             answerCodes="pihcore.visitNote.plan.medication.units.mg,pihcore.visitNote.plan.medication.units.mL,pihcore.visitNote.plan.medication.units.capsule,pihcore.visitNote.plan.medication.units.tablet"/>
-                                    </td>
-                                    <td id="{name}-rx-route">
-                                        <obs id="route-{name}" class="route select-arrow"
-                                             conceptId="PIH:12651"
-                                             answerConceptIds="CIEL:160240,CIEL:160242,CIEL:160243,CIEL:160245"
-                                             answerLabels="Oral,IV,IM,SubQ"/>
-                                    </td>
-                                    <td id="{0}-rx-frequency">
-                                        <obs id="{0}-frequencyCoded" class="frequency select-arrow"
-                                             conceptId="CIEL:160855"
-                                             answerConceptIds=
-                                                     "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:PRN,PIH:STAT,PIH:OTHER"
-                                             answerCodes="OD,BID,TID,QID,STAT,PRN,pihcore.visitNote.plan.other"/>
-                                    </td>
-                                    <td id="{name}-rx-duration">
-                                        <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
-                                    </td>
-                                    <td id="{name}-rx-duration-unit">
-                                        <obs id="durationUnit-{name}" class="duration-unit select-arrow"
-                                             conceptId="PIH:TIME UNITS"
-                                             answerConceptIds="CIEL:1822,CIEL:1072,CIEL:1073,CIEL:1074"/>
-                                    </td>
-                                </obsgroup>
-                            </tr>
-                        </repeat>
-                    </tbody>
-                </table>
-
-                <div class="two-columns">
-                    <p class="radio">
-                        <label>
-                            <uimessage code="pihcore.ncd.plan.missing_meds"/>
-                        </label>
-                        <obs conceptId="PIH:10555" style="radio"
-                             answerConceptIds="PIH:YES,PIH:NO"
-                             answerCodes="pihcore.meds.goodCompliance,pihcore.meds.poorCompliance"
-                             answerSeparator=""/>
-                    </p>
-                    <div>
-                        <label>
-                            <uimessage code="pihcore.meds.reasonMissedMeds"/>
-                        </label>
-                        <obs conceptId="CIEL:160582"/>
-                    </div>
-                </div>
-
-                <p>
-                    <label>
-                        <uimessage code="pihcore.exam.comment"/>:
-                    </label>
-
-                    <obs conceptId="PIH:Medication comments (text)" style="textarea"/>
-                </p>
-
-                <p class="list-inline">
-                    <label>
-                        <uimessage code="pihcore.medication.side.effects"/>
-                    </label>
-
-                    <obs id="med-side-effects" conceptId="CIEL:165273" answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
-                        <controls>
-                            <when value="PIH:YES" thenDisplay="#side-effect-section"/>
-                        </controls>
-                    </obs>
-                </p>
-
-                <p id="side-effect-section">
-                    <obs id="" conceptId="CIEL:164377" style="textarea"/>
                 </p>
             </div>
         </section>
