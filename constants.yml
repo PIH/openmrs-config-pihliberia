@@ -1,0 +1,19 @@
+# Patient Identifier Types
+patientIdentifierType:
+  liberiaEmrId:
+    uuid: "0bc545e0-f401-11e4-b939-0800200c9a66"
+  sampleDossierNumber:
+    uuid: "c31b0dd2-b484-41f0-8fce-bbe72e07843c"
+  biometricsReferenceCode:
+    uuid: "e26ca279-8f57-44a5-9ed8-8cc16e90e559"
+  mentalHealthMrn:
+    uuid: "23507d1e-4f22-11ea-9717-645d86728797"
+  ncdMrn:
+    uuid: "aa81023f-400f-11eb-8334-34c93de76af3"
+
+# Encounter Types
+encounterType:
+  liberiaAncForm:
+    uuid: "c4ed1a17-cb3d-11ea-b84d-3c6aa7c392cc"
+  liberiaPedsForm:
+    uuid: "fac9d9a2-d0bc-11ea-9995-3c6aa7c392cc"
