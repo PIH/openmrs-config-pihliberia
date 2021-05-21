@@ -34,7 +34,8 @@
     "ncd",
     "dispensing",
     "labs",
-    "labResults"
+    "labResults",
+    "mch"
   ],
 
   "primaryIdentifierPrefix": "PL",
