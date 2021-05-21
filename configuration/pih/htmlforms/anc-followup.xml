@@ -303,34 +303,19 @@
         <!-- Program enrollment -->
         <enrollInProgram programId="MCH"/>
 
-        <!--diagnosis-->
-        <section id="diagnosis" sectionTag="fieldset" headerTag="legend"
-                 headerStyle="title" headerCode="pihcore.diagnosis.label">
-            <div id="data-collection">
-                <encounterDiagnosesByObs selectedDiagnosesTarget="#encounter-diagnoses-target"/>
-                <div id="encounter-diagnoses-target">
-                </div>
-
-                <p>
-                    <label><uimessage code="emr.consult.freeTextComments"/></label>
-                    <obs conceptId="PIH:CLINICAL IMPRESSION COMMENTS" style="textarea" rows="5"/>
-                </p>
-            </div>
-        </section>
-
         <!--follow-up section-->
         <section id="anc-followup" sectionTag="fieldset" headerTag="legend"
                  headerStyle="title" headerCode="pihcore.ancFollowup.title">
             <div class="section-container">
                 <div class="two-columns">
                     <p>
-                        <label>
+                        <h4>
                             <uimessage code="pihcore.mch.dangerSigns"/>
-                        </label>
+                        </h4>
                         <repeat>
                             <template>
                                 <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                    <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{concept}" style="checkbox" />
+                                    <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{concept}" style="checkbox"/>
                                 </obsgroup>
                             </template>
 
@@ -343,7 +328,7 @@
                             <render concept="CIEL:142412" name="diarrhea"/>
                             <render concept="CIEL:118771" name="painful urination"/>
                             <render concept="CIEL:122496" name="shortness of breathe"/>
-                            <render concept="CIEL:151"    name="abdominal pain"/>
+                            <render concept="CIEL:151" name="abdominal pain"/>
                             <render concept="CIEL:153316" name="contractions"/>
                             <render concept="CIEL:148968" name="amniotic fluid leaking"/>
                             <render concept="CIEL:113377" name="decreased fetal movement"/>
@@ -352,13 +337,14 @@
 
                     <!-- Mental Health -->
                     <p>
-                        <label>
+                        <h4>
                             <uimessage code="pihcore.mentalhealth.title"/>
-                        </label>
+                        </h4>
 
                         <obs conceptId="PIH:Mental health diagnosis" answerConceptId="PIH:DEPRESSION"
                              style="checkbox"/>
-                        <obs conceptId="PIH:Mental health diagnosis" answerConceptId="PIH:Post traumatic stress disorder"
+                        <obs conceptId="PIH:Mental health diagnosis"
+                             answerConceptId="PIH:Post traumatic stress disorder"
                              style="checkbox"/>
                         <obs conceptId="PIH:Mental health diagnosis" answerConceptId="PIH:SCHIZOPHRENIA"
                              style="checkbox"/>
@@ -369,9 +355,10 @@
 
                     <!-- Risk factors for mother -->
                     <p>
-                        <label>
+                        <h4>
+                            <br/>
                             <uimessage code="pihcore.mch.riskFactors"/>
-                        </label>
+                        </h4>
 
                         <!-- HIV -->
                         <obs conceptId="CIEL:160079" answerConceptId="CIEL:138405"
@@ -413,7 +400,8 @@
                              -->
                     </p>
 
-                    <br/><br/>
+                    <br/>
+                    <br/>
                 </div>
 
                 <br/>
@@ -464,7 +452,7 @@
                         </label>
                         <span class="small">
                             <obs conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true"
-                                 id="apptDate" required="true" />
+                                 id="apptDate" required="true"/>
                         </span>
                     </p>
 
