@@ -30,7 +30,8 @@
     "dispensing",
     "labs",
     "labResults",
-    "mch"
+    "mch",
+    "spaPreview"
   ],
 
   "primaryIdentifierPrefix": "YY",
