@@ -14,6 +14,7 @@
     "checkInHomepageApp",
     "vitals",
     "allergies",
+    "markPatientDead",
     "relationships",
     "programs",
     "mentalHealth",
