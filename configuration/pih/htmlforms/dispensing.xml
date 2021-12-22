@@ -208,7 +208,7 @@
             </includeIf>
         </tr>
     </table>
-    <div id="typePrescription" class="three-columns">
+    <div id="typePrescription" class="two-columns">
         <div>
             <label>
                 <uimessage code="dispensing.medication.typeOfPrescription"/> (<uimessage code="pihcore.required" />)
@@ -219,13 +219,10 @@
                      answerConceptIds="PIH:Discharge,PIH:INPATIENT HOSPITALIZATION,PIH:OUTPATIENT CONSULTATION"
                      answerCodes="Discharge,Inpatient,OPD"/>
             </p>
-        </div>
-        <div>
+
             <label>
                 <uimessage code="dispensing.medication.locationOfPrescription"/> (<uimessage code="pihcore.required" />)
             </label>
-
-            <!--<span> <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Dispensing Location"/></span>-->
 
             <obs id="Discharge location" required="true" class="select-arrow"
                  conceptId="PIH:9293"
@@ -239,10 +236,21 @@
                 </label>
                 <obs conceptId="PIH:6592"/>
 
-                <label>
-                    <uimessage code="License #"/>
-                </label>
-                <obs conceptId="PIH:13962"/>
+                <p class="side-by-side">
+                    <label>
+                        <uimessage code="Title" />
+                    </label>
+                    <obs conceptId="CIEL:163556" style="radio"
+                         answerConceptIds="CIEL:162591,CIEL:1577,CIEL:162592"
+                         answerCodes="Dr,RN,PA" />
+                </p>
+
+                <span>
+                    <label>
+                        <uimessage code="License #"/>
+                    </label>
+                    <obs conceptId="PIH:13962" />
+                </span>
             </obsgroup>
         </div>
     </div>
