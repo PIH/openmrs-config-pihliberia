@@ -224,7 +224,7 @@
                 <uimessage code="dispensing.medication.locationOfPrescription"/> (<uimessage code="pihcore.required" />)
             </label>
 
-            <obs id="Discharge location" required="true" class="select-arrow"
+            <obs id="Discharge location" required="true"
                  conceptId="PIH:9293"
                  style="location" answerLocationTags="Consult Note Location,Primary Care Consult Location" />
         </div>
@@ -241,8 +241,8 @@
                         <uimessage code="Title" />
                     </label>
                     <obs conceptId="CIEL:163556" style="radio"
-                         answerConceptIds="CIEL:162591,CIEL:1577,CIEL:162592"
-                         answerCodes="Dr,RN,PA" />
+                         answerConceptIds="CIEL:162591,CIEL:1577,PIH:12982,CIEL:162592"
+                         answerCodes="Dr,RN,CNA,PA" />
                 </p>
 
                 <span>
