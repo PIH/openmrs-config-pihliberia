@@ -16,6 +16,12 @@
             outline: none;
         }
 
+        p.radio > * {
+            display: inline;
+            float: none !important;
+            min-width: initial;
+        }
+
         fieldset {
             margin-top: 40px !important;
         }
@@ -26,6 +32,32 @@
 
         table#who-where-when-view{
             width: 100%;
+        }
+
+        .three-columns, .two-columns {
+            display: table;
+            height: 100%;
+            width: 100%;
+        }
+
+        .two-columns > div {
+            display: table-cell;
+            width: 50%;
+        }
+
+        .three-columns > div {
+            display: table-cell;
+            width: 33%;
+        }
+
+        .side-by-side label {
+            display: inline-block;
+        }
+
+
+        form input[type="radio"], .form input[type="radio"] {
+            float: none;
+            display: inline-block;
         }
     </style>
 
@@ -176,33 +208,50 @@
             </includeIf>
         </tr>
     </table>
-    <div id="typePrescription">
+    <div id="typePrescription" class="two-columns">
         <div>
-            <span class="input-container">
-                <label>
-                    <uimessage code="dispensing.medication.typeOfPrescription"/>
-                </label>
-                <obs id="Timing of hospital prescription" required="true" class="select-arrow" conceptId="PIH:9292"/>
-            </span>
-            <span class="input-container">
-                <label>
-                    <uimessage code="dispensing.medication.locationOfPrescription"/>
-                </label>
+            <label>
+                <uimessage code="dispensing.medication.typeOfPrescription"/> (<uimessage code="pihcore.required" />)
+            </label>
+            <p class="side-by-side">
+                <obs id="Timing of hospital prescription" required="true" style="radio"
+                     conceptId="PIH:9292"
+                     answerConceptIds="PIH:Discharge,PIH:INPATIENT HOSPITALIZATION,PIH:OUTPATIENT CONSULTATION"
+                     answerCodes="Discharge,Inpatient,OPD"/>
+            </p>
 
-                <!--<span> <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Dispensing Location"/></span>-->
+            <label>
+                <uimessage code="dispensing.medication.locationOfPrescription"/> (<uimessage code="pihcore.required" />)
+            </label>
 
-                <obs id="Discharge location" required="true" style="location" class="select-arrow" conceptId="PIH:9293" />
-            </span>
+            <obs id="Discharge location" required="true"
+                 conceptId="PIH:9293"
+                 style="location" answerLocationTags="Consult Note Location,Primary Care Consult Location" />
+        </div>
 
-            <span class="input-container provider">
+        <div class="provider">
+            <obsgroup groupingConceptId="PIH:13961">
                 <label>
                     <uimessage code="mirebalais.dispensing.prescriber"/>
                 </label>
+                <obs conceptId="PIH:6592"/>
+
+                <p class="side-by-side">
+                    <label>
+                        <uimessage code="Title" />
+                    </label>
+                    <obs conceptId="CIEL:163556" style="radio"
+                         answerConceptIds="CIEL:162591,CIEL:1577,PIH:12982,CIEL:162592"
+                         answerCodes="Dr,RN,NA,PA" />
+                </p>
 
                 <span>
-                    <obs conceptId="PIH:6592"/>
+                    <label>
+                        <uimessage code="License #"/>
+                    </label>
+                    <obs conceptId="PIH:13962" />
                 </span>
-            </span>
+            </obsgroup>
         </div>
     </div>
 
