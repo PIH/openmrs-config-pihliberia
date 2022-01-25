@@ -1,0 +1,21 @@
+key: "dispensing"
+uuid: "9837e4e1-8179-4d91-a18d-3ab24e1f0e92"
+name: "Medication dispensing"
+description: "Medication dispensing"
+datasets:
+  - key: "dispensing"
+    type: "sql"
+    config: "sql/dispensing.sql"
+designs:
+  - type: "csv"
+    properties:
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "dataExport"
+  countries:
+    - "LIBERIA"
+  components:
+    - "dataExports"
+  privilege: "Task: clinical.reports"
