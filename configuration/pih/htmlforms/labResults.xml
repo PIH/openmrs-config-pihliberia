@@ -78,7 +78,7 @@
                 </label>
                 <span class="small">
                     <field>
-                        <obs  id="test-date-hematology" conceptId="PIH:DATE OF LABORATORY TEST"
+                        <obs  id="test-date-hematology" conceptId="PIH:Date of test results"
                               placeholder="Enter date"/>
                     </field>
                 </span>
