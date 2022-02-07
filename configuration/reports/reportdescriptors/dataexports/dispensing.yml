@@ -1,7 +1,14 @@
 key: "dispensing"
 uuid: "9837e4e1-8179-4d91-a18d-3ab24e1f0e92"
-name: "Medication dispensing"
-description: "Medication dispensing"
+name: "Medication Dispensing"
+description: "Medication Dispensing"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
 datasets:
   - key: "dispensing"
     type: "sql"
