@@ -1200,7 +1200,7 @@
             <section id="clinical-impression" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                      headerCode="pihcore.ncd.clinical.impression.title">
                 <div class="section-container" data-program="NCD">
-                    <condition required="true"/>
+                    <condition required="true" controlId="condition_1"/>
                 </div>
             </section>
         </includeIf>
