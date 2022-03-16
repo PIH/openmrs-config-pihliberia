@@ -12,10 +12,10 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<htmlform id="liberia-mental-health" class="simple-form-ui"
+<htmlform id="liberia-mental-health-followup" class="simple-form-ui"
           formUuid="e1cff6a2-651a-11e8-adc0-fa7ae01bbebc"
           htmlformUuid="e1cffbf2-651a-11e8-adc0-fa7ae01bbebc"
-          formName="Mental Health (Liberia)"
+          formName="Mental Health followup (Liberia)"
           formEncounterType="a8584ab8-cc2a-11e5-9956-625662870761" formVersion="1.0">
 
     <redirectOnSave url="/pihcore/visit/visit.page?patient={{patient.id}}&amp;encounter={{encounter.id}}#/overview"/>
