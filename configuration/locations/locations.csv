@@ -1,9 +1,9 @@
-UUID,Name,Description,Parent,Tag|Appointment Location,Tag|Archives Location,Tag|Check-In Location,Tag|Consult Note Location,Tag|Dispensing Location,Tag|Lab Results Location,Tag|Login Location,Tag|Maternal and Child Location,Tag|Medical Record Location,Tag|Mental Health Location,Tag|NCD Consult Location,Tag|Primary Care Consult Location,Tag|Program Location,Tag|Provider Management Location,Tag|Registration Location,Tag|Visit Location,Tag|Vitals Location
-5af1ffcd-5178-11ea-a500-645d86728797,Health Facility,"A place where health care is provided, including hospitals, clinics and health centers",,,,,,,,,,,,,,,,,TRUE,
-9f5e452a-d323-11ea-98a0-3c6aa7c392cc,Emergency,A location for registering emergency patients,Health Facility,,,TRUE,TRUE,,TRUE,TRUE,,TRUE,,,,,,TRUE,,TRUE
-2e8c9500-bd41-11ea-aee0-3c6aa7c392cc,MCH Clinic,MCH Clinic,Health Facility,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,,TRUE
-8b8dad4c-5179-11ea-a500-645d86728797,Mental Health Clinic,Mental Health Clinic,Health Facility,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE
-b7cfea60-5179-11ea-a500-645d86728797,NCD Clinic,NCD Clinic,Health Facility,TRUE,,TRUE,TRUE,,TRUE,TRUE,,,,TRUE,TRUE,TRUE,,TRUE,,TRUE
-267a0c52-5179-11ea-a500-645d86728797,Outpatient Clinic,The outpatient clinic,Health Facility,TRUE,,TRUE,TRUE,,TRUE,TRUE,,,,,TRUE,,TRUE,TRUE,,TRUE
-0fff0fae-ff2c-11ea-85b1-3c6aa7c392cc,Pharmacy,The pharmacy where drugs will be dispensed,Health Facility,,,,,TRUE,,TRUE,,,,,,,,,,
-8a4e37e3-5178-11ea-a500-645d86728797,Records Room,The records room at a health facility,Health Facility,,TRUE,TRUE,,,,TRUE,,TRUE,,,,,,TRUE,,TRUE
+UUID,Name,Description,Parent,Tag|Appointment Location,Tag|Archives Location,Tag|Check-In Location,Tag|Consult Note Location,Tag|Dispensing Location,Tag|Labs Component Location,Tag|Lab Results Location,Tag|Login Location,Tag|Maternal and Child Location,Tag|Medical Record Location,Tag|Mental Health Location,Tag|NCD Consult Location,Tag|Primary Care Consult Location,Tag|Program Location,Tag|Provider Management Location,Tag|Registration Location,Tag|Visit Location,Tag|Vitals Location
+5af1ffcd-5178-11ea-a500-645d86728797,Health Facility,"A place where health care is provided, including hospitals, clinics and health centers",,,,,,,,,,,,,,,,,,TRUE,
+9f5e452a-d323-11ea-98a0-3c6aa7c392cc,Emergency,A location for registering emergency patients,Health Facility,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,,,,TRUE,,TRUE
+2e8c9500-bd41-11ea-aee0-3c6aa7c392cc,MCH Clinic,MCH Clinic,Health Facility,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,,TRUE
+8b8dad4c-5179-11ea-a500-645d86728797,Mental Health Clinic,Mental Health Clinic,Health Facility,TRUE,,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE
+b7cfea60-5179-11ea-a500-645d86728797,NCD Clinic,NCD Clinic,Health Facility,TRUE,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,,TRUE,,TRUE
+267a0c52-5179-11ea-a500-645d86728797,Outpatient Clinic,The outpatient clinic,Health Facility,TRUE,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,,TRUE,TRUE,,TRUE
+0fff0fae-ff2c-11ea-85b1-3c6aa7c392cc,Pharmacy,The pharmacy where drugs will be dispensed,Health Facility,,,,,TRUE,TRUE,,TRUE,,,,,,,,,,
+8a4e37e3-5178-11ea-a500-645d86728797,Records Room,The records room at a health facility,Health Facility,,TRUE,TRUE,,,TRUE	,,TRUE,,TRUE,,,,,,TRUE,,TRUE
