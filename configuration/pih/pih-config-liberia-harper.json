@@ -18,6 +18,7 @@
     "dataExports",
     "checkInHomepageApp",
     "vitals",
+    "vitalsHomepageApp",
     "allergies",
     "markPatientDead",
     "relationships",
