@@ -589,7 +589,7 @@
                                 <obs conceptId="PIH:Type of Diabetes Diagnosis" style="radio"
                                      answerSeparator=""
                                      answerConceptIds="CIEL:142474, CIEL:165207"
-                                     answerLabels="Type 1 diabete, Type 2 diabete"/>
+                                     answerLabels="Type 1 diabetes, Type 2 diabetes"/>
                             </includeIf>
                         </span>
 
@@ -613,7 +613,7 @@
                                 <obs conceptId="PIH:CONJUNCTIVA" style="radio"
                                      answerSeparator=""
                                      answerConceptIds="PIH:NORMAL, PIH:PALE CONJUNCTIVA"
-                                     answerLabels="Pale, Pink"/>
+                                     answerLabels="Normal, Pale"/>
                             </includeIf>
                         </span> <br></br>
 
