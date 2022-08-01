@@ -359,7 +359,7 @@
 
                     <span class="first-label-inline">
                         <label>
-                            Date of last hospitalization/ER visit
+                            Last date of admission
                         </label>
                         <obs conceptId="PIH:12602" labelText=""/>
                     </span>
@@ -562,8 +562,9 @@
                                     <label>
                                         Type of tobacco product:
                                     </label>
-                                    <obs conceptId="CIEL:159377" style="radio"/>
-
+                                    <obs conceptId="CIEL:159377" style="radio"
+                                         answerConceptIds="CIEL:159379, CIEL:159378, CIEL:159380"
+                                         answerLabels="Cigarette, Tobacco, Shisha"/>
                                     <br/>
 
                                     <label>
@@ -737,10 +738,9 @@
                         <tr>
                             <td colspan="2">
                                 <label class="inline">
-                                    From the patient's current condition, does
-                                    <includeIf velocityTest="$patient.gender == 'F'">she</includeIf>
-                                    <includeIf velocityTest="$patient.gender == 'M'">he</includeIf>
-                                    still have the capacity to work for an income?
+                                    Based on the Patient current condition,
+                                    can the Patient work for an income?
+
                                 </label>
                                 <span class="list-inline">
                                     <obs id="money-source-while-sick" conceptId="PIH:12615"
@@ -778,7 +778,7 @@
                                     <render concept="PIH:WALKING" label="Walk"/>
                                     <render concept="PIH:MOTORBIKE" label="Motorbike"/>
                                     <render concept="PIH:CAR" label="Vehicle"/>
-                                    <render concept="PIH:MINI BUS" label="Mini Bus"/>
+                                    <render concept="PIH:MINI BUS" label="Bus"/>
                                 </repeat>
                                 <br/>
                                 <span class="inline">
@@ -1194,7 +1194,6 @@
             </div>
         </section>
 
-
         <!-- Clinical Impression -->
         <includeIf velocityTest="!$patientHasNcdCondition">
             <section id="clinical-impression" sectionTag="fieldset" headerTag="legend" headerStyle="title"
@@ -1202,9 +1201,21 @@
                 <div class="section-container" data-program="NCD">
                     <condition required="true" controlId="condition_1"/>
                 </div>
+
+                <div class="section-container">
+                    <table>
+                        <tr>
+                            <td>
+                                <label>
+                                    Summary of clinical impression:
+                                </label>
+                                <obs id="diagnosis summary" conceptId="CIEL:159395" style="textarea"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </section>
         </includeIf>
-
 
         <!-- Disposition -->
         <section id="disposition-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"

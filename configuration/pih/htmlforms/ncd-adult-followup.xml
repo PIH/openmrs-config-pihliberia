@@ -13,11 +13,12 @@
         <macro key="pt_has_dbt" expression="conditionListConcepts.contains($fn.getConcept('PIH:DIABETES'))"/>
         <macro key="pt_has_rf" expression="conditionListConcepts.contains($fn.getConcept('PIH:RENAL FAILURE'))"/>
         <macro key="pt_has_asthma" expression="conditionListConcepts.contains($fn.getConcept('PIH:ASTHMA'))"/>
-        <macro key="pt_has_copd"
-               expression="conditionListConcepts.contains($fn.getConcept('PIH:CHRONIC OBSTRUCTIVE PULMONARY DISEASE'))"/>
+        <macro key="pt_has_copd" expression="conditionListConcepts.contains($fn.getConcept('PIH:CHRONIC OBSTRUCTIVE PULMONARY DISEASE'))"/>
         <macro key="pt_has_hf" expression="conditionListConcepts.contains($fn.getConcept('PIH:HEART FAILURE'))"/>
         <macro key="pt_has_lf" expression="conditionListConcepts.contains($fn.getConcept('PIH:LIVER FAILURE'))"/>
         <macro key="pt_has_scd" expression="conditionListConcepts.contains($fn.getConcept('PIH:SPLENOMEGALY'))"/>
+
+
     </macros>
 
     <!-- ToDo:  Use messages.properties -->
@@ -307,7 +308,8 @@
 
             </includeIf>
             <!-- all users that don't have either retro privilege, or those with retro-this-provider-only but with an active visit, can only edit location -->
-            <includeIf velocityTest="(!$user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote')) or ($user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote') and $visit.open)">
+            <includeIf
+                    velocityTest="(!$user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote')) or ($user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote') and $visit.open)">
                 <div style="display:none">
                     <encounterProviderAndRole default="currentUser" encounterRole="4f10ad1a-ec49-48df-98c7-1391c6ac7f05"
                                               required="true"/>
@@ -329,7 +331,8 @@
                                     <uimessage code="emr.locationRequired"/>
                                 </label>
                                 <span>
-                                    <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Consult Note Location"/>
+                                    <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
+                                                       tags="Consult Note Location"/>
                                 </span>
                             </td>
                             <td>
@@ -445,7 +448,7 @@
 
                         <includeIf velocityTest="$pt_has_scd">
                             <obs conceptId="PIH:Disease requiring hospitalization since last visit"
-                                 answerConceptId="PIH:scd" labelText="Hospitalized for SCD" answerLabel=""/>
+                                 answerConceptId="PIH:SPLENOMEGALY" labelText="Hospitalized for SCD" answerLabel=""/>
                         </includeIf>
 
                         <repeat>
@@ -480,7 +483,7 @@
                             <render concept="PIH:SHORTNESS OF BREATH WITH EXERTION" name="sob"
                                     label="Shortness of breadth with exertion" expression="$pt_has_htn or $pt_has_dbt"/>
                             <render concept="PIH:Currently taking medication" name="taking-meds"
-                                    label="Currently taking medications"
+                                    label="Took meds today?"
                                     expression="$pt_has_htn or $pt_has_dbt or $pt_has_rf or $pt_has_lf"/>
                             <render concept="PIH:HYPOGLYCEMIA" name="Hypoglycemia" label="Hypoglycemia"
                                     expression="$pt_has_htn or $pt_has_dbt"/>
@@ -492,11 +495,11 @@
                                     expression="$pt_has_htn or $pt_has_dbt"/>
                             <render concept="PIH:Vision problem" name="vision" label="Vision changes"
                                     expression="$pt_has_htn or $pt_has_dbt"/>
+
                             <render concept="PIH:PERIPHERAL NEUROPATHY" name="neuropathy" label="Neuropathy"
                                     expression="$pt_has_htn or $pt_has_dbt"/>
                             <render concept="PIH:Ulcers (generic)" name="ulcers" label="Ulcers"
                                     expression="$pt_has_htn or $pt_has_dbt"/>
-
                             <render concept="PIH:HERBAL TRADITIONAL MEDICATIONS" name="herbs"
                                     label="Used traditional herbs"
                                     expression="$pt_has_rf or $pt_has_lf"/>
@@ -504,7 +507,8 @@
                                     expression="$pt_has_rf or $pt_has_lf"/>
                             <render concept="PIH:Retention of Urine" name="urinary-retention" label="Urinary retention"
                                     expression="$pt_has_rf"/>
-                            <render concept="PIH:FATIGUE" name="fatigue" label="Fatigue" expression="$pt_has_rf"/>
+                            <render concept="PIH:FATIGUE" name="fatigue" label="Fatigue"
+                                    expression="$pt_has_rf or $pt_has_hf"/>
                             <render concept="PIH:NAUSEA" name="nausea" label="Nausea"
                                     expression="$pt_has_rf or $pt_has_lf"/>
                             <render concept="PIH:PRURITIS" name="pruritis" label="Pruritis"
@@ -515,9 +519,11 @@
                                     expression="$pt_has_rf or $pt_has_lf"/>
                             <render concept="CIEL:460" name="body-edema" label="Body edema"
                                     expression="$pt_has_rf or $pt_has_hf"/>
+
                             <render concept="CIEL:159596" name="regular-diet" label="Regular diet"
                                     expression="$pt_has_rf"/>
-
+                            <render concept="CIEL:141599" name="Dyspnea-on-exertion" label="DOE"
+                                    expression="$pt_has_hf"/>
                             <render concept="PIH:ASTHMA EXACERBATION" name="asthma-exacerbation"
                                     label="Asthma exacerbation"
                                     expression="$pt_has_asthma or $pt_has_copd"/>
@@ -532,20 +538,23 @@
                             <render concept="PIH:Respiratory emergency action plan" name="resp-action-plan"
                                     label="Has respiratory emergency action plan"
                                     expression="$pt_has_asthma or $pt_has_copd"/>
-
+                            <render concept="CIEL:130783" name="Paroxysmal-nocturnal-dyspnea" label="PND"
+                                    expression="$pt_has_hf"/>
                             <render concept="PIH:DEPRESSION" name="depression" label="Concerns of depression"
                                     expression="$pt_has_hf or $pt_has_lf"/>
-                            <render concept="PIH:CRACKLES" name="crackles" label="Crackles" expression="$pt_has_hf"/>
-                            <render concept="CIEL:140147" name="jvd-elevated" label="Elevated JVD"
+                            <render concept="PIH:CRACKLES" name="crackles" label="Bibasilar Crackles"
                                     expression="$pt_has_hf"/>
 
+                            <render concept="CIEL:140147" name="jvd-elevated" label="Elevated JVD"
+                                    expression="$pt_has_hf"/>
+                            <render concept="PIH:3486" name="Orthopnea" label="Orthopnea"
+                                    expression="$pt_has_hf"/>
                             <render concept="PIH:Paracetamol" name="paracetamol" label="Taking PCM"
                                     expression="$pt_has_lf"/>
                             <render concept="PIH:5960" name="dyspnea" label="Dyspnea" expression="$pt_has_lf"/>
                             <render concept="PIH:ASCITES" name="Ascites" label="Ascites"
                                     expression="$pt_has_lf or $pt_has_scd"/>
                             <render concept="CIEL:148276" name="Asterixis" label="Asterixis" expression="$pt_has_lf"/>
-
                             <render concept="PIH:Pain" name="pain" label="Pain" expression="$pt_has_scd"/>
                             <render concept="PIH:FEVER" name="fever" label="Fever" expression="$pt_has_scd"/>
                             <render concept="CIEL:164377" name="meds-side-effects" label="Any medication side effects"
@@ -554,62 +563,73 @@
                                     expression="$pt_has_scd"/>
                             <render concept="CIEL:112804" name="spleen-palpable" label="Spleen palpable"
                                     expression="$pt_has_scd"/>
+
                         </repeat>
                     </div>
 
-                    <div>
-                        <includeIf velocityTest="$pt_has_htn">
-                            <span class="inline-45">
-                                <obs conceptId="PIH:Type of hypertension diagnosis"
-                                     labelCode="pih.ncd.htn.diagnosis.type"
-                                     answerConceptIds="CIEL:140147, CIEL:160771, PIH:11941, PIH:11942, CIEL:160774, CIEL:160778, CIEL:161644"
-                                     style="checkbox"/>
-                            </span>
-                        </includeIf>
+                    <div class="section-container">
 
+                        <span class="list-inline">
+                            <includeIf velocityTest="$pt_has_htn">
+                                <label>
+                                    <uimessage code="Hypertension Diagnosis:"/>
+                                </label>
+                                <obs conceptId="PIH:Type of hypertension diagnosis" style="radio"
+                                     answerSeparator=""
+                                     answerConceptIds="PIH:6847, PIH:7166"
+                                     answerLabels="Essential HTN, Secondary HTN"/>
+                            </includeIf>
+                        </span>
 
-                        <includeIf velocityTest="$pt_has_dbt">
-                            <span class="inline-45">
-                                <obs conceptId="PIH:Type of diabetes diagnosis"
-                                     labelCode="pih.ncd.diabetes.diagnosis.type"
-                                     answerConceptIds="CIEL:142474, CIEL:165207, CIEL:165208, CIEL:1449, CIEL:138291"
-                                     answerLabels="Type 1 diabetes, Type 2 diabetes - insulin-dependent, Type 2 diabetes - non-insulin dependent, Gestational diabetes, Hyperglycemia"
-                                     style="checkbox"/>
-                            </span>
-                        </includeIf>
+                        <span class="list-inline">
+                            <includeIf velocityTest="$pt_has_dbt">
+                                <label>
+                                    <uimessage code="Diabetes Diagnosis:"/>
+                                </label>
+                                <obs conceptId="PIH:Type of Diabetes Diagnosis" style="radio"
+                                     answerSeparator=""
+                                     answerConceptIds="CIEL:142474, CIEL:165207"
+                                     answerLabels="Type 1 diabetes, Type 2 diabetes"/>
+                            </includeIf>
+                        </span>
 
+                        <span class="list-inline">
+                            <includeIf velocityTest="$pt_has_hf">
+                                <label>
+                                    <uimessage code="Volume Status:"/>
+                                </label>
+                                <obs conceptId="PIH:PATIENTS FLUID MANAGEMENT" style="radio"
+                                     answerSeparator=""
+                                     answerConceptIds="PIH:3272, PIH:3273, PIH:3274"
+                                     answerLabels="Hypo, Normal, Hyper"/>
+                            </includeIf>
+                        </span> <br></br>
 
-                        <includeIf velocityTest="$pt_has_hf">
-                            <span class="inline-45">
-                                <obs conceptId="PIH:NYHA CLASS"
-                                     labelCode="pihcore.ncd.hf.nyha.class"
-                                     answerConceptIds="PIH:NYHA CLASS 1, PIH:NYHA CLASS 2, PIH:NYHA CLASS 3, PIH:NYHA CLASS 4"
-                                     answerLabels="NYHA I, NYHA II, NYHA III, NYHA IV"
-                                     style="checkbox"/>
-                            </span>
-                        </includeIf>
-
-
-                        <includeIf velocityTest="$pt_has_rf">
-                            <span class="inline-45">
-                                <obs conceptId="CIEL:165570"
-                                     labelCode="pihcore.ncd.ckd.stage"
-                                     answerConceptIds="CIEL:120575,CIEL:120574,CIEL:120579,CIEL:120578,CIEL:120577"
-                                     answerLabels="CKD I,CKD II,CKD III,CKD IV,CKD V"
-                                     style="checkbox" answerSeparator=""/>
-                            </span>
-                        </includeIf>
-
-
-                        <includeIf velocityTest="$pt_has_rf or $pt_has_scd">
-                            <span class="inline-45">
-                                <obs conceptId="PIH:CONJUNCTIVA"
-                                     labelCode="pihcore.ncd.conjunctiva"
+                        <span class="list-inline">
+                            <includeIf velocityTest="$pt_has_rf or $pt_has_scd">
+                                <label>
+                                    <uimessage code="Conjunctiva:"/>
+                                </label>
+                                <obs conceptId="PIH:CONJUNCTIVA" style="radio"
+                                     answerSeparator=""
                                      answerConceptIds="PIH:NORMAL, PIH:PALE CONJUNCTIVA"
-                                     style="checkbox"/>
-                            </span>
-                        </includeIf>
+                                     answerLabels="Normal, Pale"/>
+                            </includeIf>
+                        </span> <br></br>
 
+                        <br>
+                        <span class="list-inline">
+                            <includeIf velocityTest="$pt_has_rf or $pt_has_hf or $pt_has_lf">
+                                <label>
+                                    <uimessage code="Body Edema:"/>
+                                </label>
+                                <obs conceptId="PIH:12636" style="radio"
+                                     answerSeparator=""
+                                     answerConceptIds="PIH:12711, PIH:12703, PIH:12996"
+                                     answerLabels="1+ Pitting, 2+ Pitting, 3+ Pitting"/>
+                            </includeIf>
+                        </span>
+                        </br>
 
                         <includeIf velocityTest="$pt_has_scd">
                             <span class="inline-45">
@@ -618,6 +638,7 @@
                                      style="textarea"/>
                             </span>
                         </includeIf>
+
                     </div>
                     <br/>
 
@@ -697,6 +718,107 @@
                                         </obsgroup>
                                     </tr>
                                 </includeIf>
+
+                                <includeIf velocityTest="$pt_has_asthma">
+                                    <tr>
+                                        <obsgroup groupingConceptId="PIH:Asthma classification">
+                                            <td style="width: 35%">
+                                                <label>
+                                                    Asthma Class
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <span class="block;">
+                                                    <obs conceptId="PIH:7405" style="radio" class="inline block"
+                                                         answerSeparator=""
+                                                         answerConceptIds="CIEL:153753, CIEL:134026, CIEL:157792, CIEL:113018"
+                                                         answerLabels="Intermittent, Moderate persistent, Mild persistent, Severe persistent"/>
+                                                </span>
+                                            </td>
+                                        </obsgroup>
+                                    </tr>
+                                </includeIf>
+
+                                <includeIf velocityTest="$pt_has_rf">
+                                    <tr>
+                                        <obsgroup groupingConceptId="PIH:12657">
+                                            <td style="width: 35%">
+                                                <label>
+                                                    Diet Recs
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <span class="block;">
+                                                    <obs conceptId="PIH:12657" style="radio" class="inline block"
+                                                         answerSeparator=""
+                                                         aanswerConceptIds="PIH:12658,CIEL:82340,PIH:12659,PIH:12660"
+                                                         answerLabels="Na,K+,Pro,Kcal"/>
+                                                </span>
+                                            </td>
+                                        </obsgroup>
+                                    </tr>
+                                </includeIf>
+
+                                <includeIf velocityTest="$pt_has_rf">
+                                    <tr>
+                                        <obsgroup groupingConceptId="CIEL:165570">
+                                            <td style="width: 35%">
+                                                <label>
+                                                    CKD Stage
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <span class="block;">
+                                                    <obs conceptId="CIEL:165570" style="radio" class="inline block"
+                                                         answerSeparator=""
+                                                         aanswerConceptIds="CIEL:120575,CIEL:120574,CIEL:120579,CIEL:120578,CIEL:120577"
+                                                         answerLabels="CKD I,CKD II,CKD III,CKD IV,CKD V"/>
+                                                </span>
+                                            </td>
+                                        </obsgroup>
+                                    </tr>
+                                </includeIf>
+
+                                <includeIf velocityTest="$pt_has_htn">
+                                    <tr>
+                                        <obsgroup groupingConceptId="PIH:12699">
+                                            <td style="width: 35%">
+                                                <label>
+                                                    HTH Stage
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <span class="block;">
+                                                    <obs conceptId="PIH:12699" style="radio" class="inline block"
+                                                         answerSeparator=""
+                                                         answerConceptIds="CIEL:165206, CIEL:165203, CIEL:165204, CIEL:165205"
+                                                         answerLabels="Stage I, Stage II, Stage III, Stage IV"/>
+                                                </span>
+                                            </td>
+                                        </obsgroup>
+                                    </tr>
+                                </includeIf>
+
+                                <includeIf velocityTest="$pt_has_hf">
+                                    <tr>
+                                        <obsgroup groupingConceptId="PIH:NYHA CLASS">
+                                            <td style="width: 35%">
+                                                <label>
+                                                    NYHA Stage
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <span class="block;">
+                                                    <obs conceptId="PIH:NYHA CLASS" style="radio" class="inline block"
+                                                         answerSeparator=""
+                                                         answerConceptIds="PIH:3135, PIH:3136, PIH:3137, PIH:3138"
+                                                         answerLabels="Class I, Class II, Class III, Class IV"/>
+                                                </span>
+                                            </td>
+                                        </obsgroup>
+                                    </tr>
+                                </includeIf>
+
                             </tbody>
                         </table>
                     </div>
