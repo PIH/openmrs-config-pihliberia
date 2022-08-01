@@ -563,7 +563,7 @@
                                         Type of tobacco product:
                                     </label>
                                     <obs conceptId="CIEL:159377" style="radio"
-                                         conceptIds="CIEL:159379, CIEL:159378, CIEL:159380"
+                                         answerConceptIds="CIEL:159379, CIEL:159378, CIEL:159380"
                                          answerLabels="Cigarette, Tobacco, Shisha"/>
                                     <br/>
 
