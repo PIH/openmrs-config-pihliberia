@@ -10971,6 +10971,7 @@ Liberia|Maryland|Harper|Woleke (2)
 Liberia|Maryland|Harper|Woleken
 Liberia|Maryland|Harper|Yookudi
 Liberia|Maryland|Harper|Yoopidi
+Liberia|Maryland|Karluway#1|Anderson Farm
 Liberia|Maryland|Karluway#1|Baiyaken
 Liberia|Maryland|Karluway#1|Bayake
 Liberia|Maryland|Karluway#1|Biabosuken
@@ -10984,6 +10985,7 @@ Liberia|Maryland|Karluway#1|Gio Village
 Liberia|Maryland|Karluway#1|Gropluken
 Liberia|Maryland|Karluway#1|Hewake
 Liberia|Maryland|Karluway#1|Hewelken
+Liberia|Maryland|Karluway#1|Jacksonville
 Liberia|Maryland|Karluway#1|Jleloken
 Liberia|Maryland|Karluway#1|Karblaken
 Liberia|Maryland|Karluway#1|Karloken
@@ -11097,6 +11099,7 @@ Liberia|Maryland|Pleebo|Zone 7
 Liberia|Maryland|Pleebo|Zone 8
 Liberia|Maryland|Pleebo|Zone 9
 Liberia|Maryland|Pleebo|Zone 10 (Diabaville)
+Liberia|Maryland|Pleebo|Zone 11
 Liberia|Maryland|Pleebo/Sodoken|Barraken
 Liberia|Maryland|Pleebo/Sodoken|Barraken Refugee Camp
 Liberia|Maryland|Pleebo/Sodoken|Blayaken
@@ -11126,6 +11129,7 @@ Liberia|Maryland|Pleebo/Sodoken|Evansville 1
 Liberia|Maryland|Pleebo/Sodoken|Evansville 2
 Liberia|Maryland|Pleebo/Sodoken|Factory Camp
 Liberia|Maryland|Pleebo/Sodoken|Gbaewen Big Town
+Liberia|Maryland|Pleebo/Sodoken|Gedetarbo
 Liberia|Maryland|Pleebo/Sodoken|Gbeken Main Town
 Liberia|Maryland|Pleebo/Sodoken|Gbloken Mission Town
 Liberia|Maryland|Pleebo/Sodoken|Gbloken Rock Town
@@ -11150,6 +11154,7 @@ Liberia|Maryland|Pleebo/Sodoken|Keken Misson
 Liberia|Maryland|Pleebo/Sodoken|Kudikudi
 Liberia|Maryland|Pleebo/Sodoken|Kumamah
 Liberia|Maryland|Pleebo/Sodoken|Kwidoken
+Liberia|Maryland|Pleebo/Sodoken|Lawrenceville
 Liberia|Maryland|Pleebo/Sodoken|Libsuco Factory
 Liberia|Maryland|Pleebo/Sodoken|Nekpachealou
 Liberia|Maryland|Pleebo/Sodoken|New Gbeken
@@ -11157,6 +11162,7 @@ Liberia|Maryland|Pleebo/Sodoken|New Sodoken
 Liberia|Maryland|Pleebo/Sodoken|Nyemah Village
 Liberia|Maryland|Pleebo/Sodoken|Old Lady Camp
 Liberia|Maryland|Pleebo/Sodoken|Rock Town Kunokudi
+Liberia|Maryland|Pleebo/Sodoken|Rubber Bed
 Liberia|Maryland|Pleebo/Sodoken|Sadeken
 Liberia|Maryland|Pleebo/Sodoken|Sawanken
 Liberia|Maryland|Pleebo/Sodoken|Sedeken Town
@@ -11166,7 +11172,7 @@ Liberia|Maryland|Pleebo/Sodoken|Sodoken Old Town
 Liberia|Maryland|Pleebo/Sodoken|Sudeken
 Liberia|Maryland|Pleebo/Sodoken|Tambo Old Town
 Liberia|Maryland|Pleebo/Sodoken|Tedeken
-Liberia|Maryland|Pleebo/Sodoken|Togba
+Liberia|Maryland|Pleebo/Sodoken|Togba Town
 Liberia|Maryland|Pleebo/Sodoken|Tombo Mission
 Liberia|Maryland|Pleebo/Sodoken|Tubaeken
 Liberia|Maryland|Pleebo/Sodoken|Tummeken
@@ -11531,9 +11537,13 @@ Liberia|Montserrado|Greater Monrovia|Barekling
 Liberia|Montserrado|Greater Monrovia|Bassa Town Caldwell
 Liberia|Montserrado|Greater Monrovia|Battery Factory
 Liberia|Montserrado|Greater Monrovia|Bertha
-Liberia|Montserrado|Greater Monrovia|Bong Mine Bridge
+Liberia|Montserrado|Greater Monrovia|Bong Mines Bridge
 Liberia|Montserrado|Greater Monrovia|Central Coffee Farm
+Liberia|Montserrado|Greater Monrovia|Central New Kru Town
 Liberia|Montserrado|Greater Monrovia|Chocalate City
+Liberia|Montserrado|Greater Monrovia|Crab Hole
+Liberia|Montserrado|Greater Monrovia|Duala Market
+Liberia|Montserrado|Greater Monrovia|Duala Mombo Town-East
 Liberia|Montserrado|Greater Monrovia|Day Break Mouth Open
 Liberia|Montserrado|Greater Monrovia|Dry Rice Market Community
 Liberia|Montserrado|Greater Monrovia|Duport
@@ -12741,7 +12751,7 @@ Liberia|Nimba|Doe|Harris
 Liberia|Nimba|Doe|James Boahn
 Liberia|Nimba|Doe|James Gohnsahn
 Liberia|Nimba|Doe|Jerry Gbartu
-Liberia|Nimba|Doe|Jesse Moore & Crab Ho
+Liberia|Nimba|Doe|Jesse Moore & Crab Hole
 Liberia|Nimba|Doe|Jimmy Tiah
 Liberia|Nimba|Doe|John Dehmie
 Liberia|Nimba|Doe|John Kollie
@@ -15090,17 +15100,47 @@ Liberia|Sinoe|Wedjah|Najor / Camp-2
 Liberia|Sinoe|Wedjah|Saywoo
 Liberia|Sinoe|Wedjah|Tjeh
 Liberia|Sinoe|Wedjah|Tuodee
-Ivory Coast|Abidjan
-Ivory Coast|Yamoussoukro
-Ivory Coast|Lacs
-Ivory Coast|Comoé
-Ivory Coast|Denguélé
-Ivory Coast|Gôh-Djiboua
-Ivory Coast|Lagunes
-Ivory Coast|Montagnes
-Ivory Coast|Sassandra-Marahoué
-Ivory Coast|Savanes
-Ivory Coast|Bas-Sassandra
-Ivory Coast|Vallée du Bandama
-Ivory Coast|Woroba
-Ivory Coast|Zanzan
+Ivory Coast|Abidjan|Bas-Sassandra|San-Pédro
+Ivory Coast|Abidjan|Comoé|Abengourou
+Ivory Coast|Abidjan|Denguélé|Odienné
+Ivory Coast|Abidjan|Gôh-Djiboua|Gagnoa
+Ivory Coast|Abidjan|Lacs|Dimbokro
+Ivory Coast|Abidjan|Lagunes|Dabou
+Ivory Coast|Abidjan|Montagnes|Man
+Ivory Coast|Abidjan|Sassandra-Marahoué|Daloa
+Ivory Coast|Abidjan|Savanes|Korhogo
+Ivory Coast|Abidjan|Vallée du Bandama|Bouaké
+Ivory Coast|Abidjan|Woroba|Séguéla
+Ivory Coast|Yamoussoukro|Zanzan|Bondoukou
+Ivory Coast|Lacs|Dimbokro|Bélier
+Ivory Coast|Lacs|Dimbokro|Iffou
+Ivory Coast|Lacs|Dimbokro|Moronou
+Ivory Coast|Lacs|Dimbokro|N'Zi
+Ivory Coast|Comoé|Abengourou|Indénié-Djuablin
+Ivory Coast|Comoé|Abengourou|Sud-Comoé
+Ivory Coast|Denguélé|Odienné|Folon
+Ivory Coast|Denguélé|Odienné|Kabadougou
+Ivory Coast|Gôh-Djiboua|Gagnoa|Gôh
+Ivory Coast|Gôh-Djiboua|Gagnoa|Lôh-Djiboua
+Ivory Coast|Lagunes|Dabou|Agnéby-Tiassa
+Ivory Coast|Lagunes|Dabou|Grands-Ponts
+Ivory Coast|Lagunes|Dabou|La Mé
+Ivory Coast|Montagnes|Man|Cavally
+Ivory Coast|Montagnes|Man|Guémon
+Ivory Coast|Montagnes|Man|Tonkpi
+Ivory Coast|Sassandra-Marahoué|Daloa|Haut-Sassandra
+Ivory Coast|Sassandra-Marahoué|Daloa|Marahoué
+Ivory Coast|Savanes|Korhogo|Bagoué
+Ivory Coast|Savanes|Korhogo|Poro
+Ivory Coast|Savanes|Korhogo|Tchologo
+Ivory Coast|Bas-Sassandra|San-Pédro|Tabou
+Ivory Coast|Bas-Sassandra|San-Pédro|Gbokle
+Ivory Coast|Bas-Sassandra|San-Pédro|Nawa
+Ivory Coast|Vallée du Bandama|Bouaké|Gbêkê
+Ivory Coast|Vallée du Bandama|Bouaké|Hambol
+Ivory Coast|Woroba|Séguéla|Béré
+Ivory Coast|Woroba|Séguéla|Bafing
+Ivory Coast|Woroba|Séguéla|Worodougou
+Ivory Coast|Zanzan|Bondoukou|Bounkani
+Ivory Coast|Zanzan|Bondoukou|Gontougo
+
