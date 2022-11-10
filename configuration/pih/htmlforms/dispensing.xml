@@ -325,15 +325,6 @@
                     </label>
                     <obs id="instructions{0}" class="medication-instructions" conceptId="PIH:9072"/>
                 </p>
-                <p>
-                    <label>
-                        <uimessage code="pihcore.status"/>
-                    </label>
-                    <obs id="stockout{0}" class="medication-status"
-                         style="checkbox"
-                         conceptId="PIH:14368" answerConceptId="CIEL:1754"
-                         answerCode="pihcore.stockout"/>
-                </p>
             </fieldset>
         </obsgroup>
     </repeat>
