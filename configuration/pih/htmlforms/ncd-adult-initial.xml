@@ -1259,8 +1259,7 @@
                                 CHW: &amp;nbsp&amp;nbsp
                             </label>
                             <span>
-                                <obs id="chw-name" conceptId="CIEL:164141" style="person"
-                                     role="Application Role: communityHealthWorker"/>
+                                <obs id="chw-name" conceptId="CIEL:164141" style="provider"/>
                             </span>
                         </p>
                         <p>
