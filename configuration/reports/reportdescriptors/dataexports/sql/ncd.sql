@@ -56,7 +56,22 @@ loc_crackles text,
 other_lungs_exam text,
 normal_heart_exam varchar(255),
 abnormal_heart_exam varchar(255),
-other_heart_exam text
+other_heart_exam text, 
+normal_abdomen_exam varchar(255),
+abnormal_abdomen_exam varchar(255),
+other_abdomen_exam text,
+normal_neuro_exam varchar(255),
+abnormal_neuro_exam varchar(255),
+other_neuro_exam text,
+normal_extremities_exam varchar(255),
+abnormal_extremities_exam varchar(255),
+other_extremities_exam text,
+social_welfare varchar(255),
+disposition varchar(255),
+disposition_comments text,
+chw varchar(255),
+chw_to_visit int,
+chw_to_visit_freq varchar(255)
 );
 
 insert into temp_ncd_encounters (
@@ -104,10 +119,16 @@ update temp_ncd_encounters tn set date_of_referral = obs_value_datetime(tn.encou
 update temp_ncd_encounters tn set symptoms_duration = obs_value_numeric(tn.encounter_id, 'CIEL','1731');
 
 -- Duration unit
-update temp_ncd_encounters tn set symptoms_duration_unit = obs_value_coded_list(tn.encounter_id, 'CIEL','1732', 'en');
+-- update temp_ncd_encounters tn set symptoms_duration_unit = obs_value_coded_list(tn.encounter_id, 'CIEL','1732', 'en');
+update temp_ncd_encounters tn left join obs o on o.voided = 0 and tn.encounter_id = o.encounter_id and concept_id = concept_from_mapping('CIEL','1732')
+and obs_group_id in (select obs_id from obs where voided = 0 and concept_id = concept_from_mapping('CIEL','1727'))
+set symptoms_duration_unit = concept_name(o.value_coded, 'en') ;
 
 -- Unknow symptoms durations
-update temp_ncd_encounters tn set unknown_symptoms_duration = obs_value_text(tn.encounter_id,'CIEL', '1067');
+-- update temp_ncd_encounters tn set unknown_symptoms_duration = obs_value_text(tn.encounter_id,'CIEL', '1067');
+update temp_ncd_encounters tn left join obs o on o.voided = 0 and tn.encounter_id = o.encounter_id and value_coded = concept_from_mapping('CIEL','1067')
+and obs_group_id in (select obs_id from obs where voided = 0 and concept_id = concept_from_mapping('CIEL','1727'))
+set unknown_symptoms_duration = concept_name(o.value_coded, 'en');
 
 -- Patient ever been hospitalized for these symptoms
 update temp_ncd_encounters tn set patient_ever_been_hospitalized_for_these_symptoms = obs_value_coded_list(tn.encounter_id, 'CIEL','163403', 'en');
@@ -228,10 +249,66 @@ concept_from_mapping('PIH', 'TACHYCARDIA'), concept_from_mapping('PIH', 'ATRIAL 
 concept_from_mapping('PIH', 'S3 GALLOP'), concept_from_mapping('PIH', 'S4 GALLOP'))
  and concept_id = concept_from_mapping('PIH', 'CARDIAC EXAM FINDINGS'));
  
-update temp_ncd_encounters tn set other_heart_exam = ( select value_text from obs o where tn.encounter_id = o.encounter_id and voided = 0 and concept_id = 
+update temp_ncd_encounters tn set other_heart_exam = (select value_text from obs o where tn.encounter_id = o.encounter_id and voided = 0 and concept_id = 
 concept_from_mapping('PIH', 'GENERAL FREE TEXT') and obs_group_id in (select obs_id from obs o2 where o2.voided = 0 and o.encounter_id = o2.encounter_id and o2.concept_id =
 concept_from_mapping('PIH', 'CARDIAC EXAM FINDINGS')));
 
+update temp_ncd_encounters tn set normal_abdomen_exam = (select group_concat(concept_name
+(value_coded, 'en') separator " | ") from obs o where tn.encounter_id = o.encounter_id and voided = 0 and value_coded in (concept_from_mapping('PIH','SOFT ABDOMEN'), 
+concept_from_mapping('PIH', 'NO ABDOMINAL TENDERNESS'), concept_from_mapping('PIH', 'NO PRESENCE OF ASCITES'), concept_from_mapping('PIH', 'NO PRESENCE OF HEPATOMEGALY'),
+concept_from_mapping('PIH', 'NO PRESENCE OF SPLENOMEGALY'))
+ and concept_id = concept_from_mapping('PIH', 'ABDOMINAL EXAM FINDINGS'));
+ 
+update temp_ncd_encounters tn set abnormal_abdomen_exam = (select group_concat(concept_name
+(value_coded, 'en') separator " | ") from obs o where tn.encounter_id = o.encounter_id and voided = 0 and value_coded in (concept_from_mapping('PIH','HEPATOMEGALY'), 
+concept_from_mapping('PIH', 'ASCITES'), concept_from_mapping('PIH', 'SPLENOMEGALY'), concept_from_mapping('PIH', 'ABDOMINAL TENDERNESS'))
+ and concept_id = concept_from_mapping('PIH', 'ABDOMINAL EXAM FINDINGS'));
+
+update temp_ncd_encounters tn set other_abdomen_exam = (select value_text from obs o where tn.encounter_id = o.encounter_id and voided = 0 and concept_id = 
+concept_from_mapping('PIH', 'GENERAL FREE TEXT') and obs_group_id in (select obs_id from obs o2 where o2.voided = 0 and o.encounter_id = o2.encounter_id and o2.concept_id =
+concept_from_mapping('PIH', 'ABDOMINAL EXAM FINDINGS')));
+
+update temp_ncd_encounters tn set normal_neuro_exam = (select group_concat(concept_name
+(value_coded, 'en') separator " | ") from obs o where tn.encounter_id = o.encounter_id and voided = 0 and value_coded = concept_from_mapping('PIH','NORMAL')
+and concept_id = concept_from_mapping('PIH', 'NEUROLOGIC EXAM FINDINGS'));
+ 
+update temp_ncd_encounters tn set abnormal_neuro_exam = (select group_concat(concept_name
+(value_coded, 'en') separator " | ") from obs o where tn.encounter_id = o.encounter_id and voided = 0 and value_coded in (concept_from_mapping('PIH','FOCAL NEUROLOGICAL DEFICIT'), 
+concept_from_mapping('CIEL', '165588'), concept_from_mapping('CIEL', '165589'))
+ and concept_id = concept_from_mapping('PIH', 'NEUROLOGIC EXAM FINDINGS'));
+
+update temp_ncd_encounters tn set other_neuro_exam = (select value_text from obs o where tn.encounter_id = o.encounter_id and voided = 0 and concept_id = 
+concept_from_mapping('PIH', 'GENERAL FREE TEXT') and obs_group_id in (select obs_id from obs o2 where o2.voided = 0 and o.encounter_id = o2.encounter_id and o2.concept_id =
+concept_from_mapping('PIH', 'NEUROLOGIC EXAM FINDINGS')));
+
+update temp_ncd_encounters tn set normal_extremities_exam = (select group_concat(concept_name
+(value_coded, 'en') separator " | ") from obs o where tn.encounter_id = o.encounter_id and voided = 0 and value_coded in (concept_from_mapping('PIH','Normal, without peripheral edema'),
+concept_from_mapping('PIH','12623'))
+and concept_id = concept_from_mapping('PIH', 'EXTREMITY EXAM FINDINGS'));
+ 
+update temp_ncd_encounters tn set abnormal_extremities_exam = (select group_concat(concept_name
+(value_coded, 'en') separator " | ") from obs o where tn.encounter_id = o.encounter_id and voided = 0 and value_coded in (concept_from_mapping('CIEL','130428'), 
+concept_from_mapping('CIEL', '130166'), concept_from_mapping('CIEL', '136522'),
+concept_from_mapping('CIEL','124823'), 
+concept_from_mapping('CIEL', '123919'), concept_from_mapping('CIEL', '588'), concept_from_mapping('PIH','CYANOSIS')
+) and concept_id = concept_from_mapping('PIH', 'EXTREMITY EXAM FINDINGS'));
+
+update temp_ncd_encounters tn set other_extremities_exam = (select value_text from obs o where tn.encounter_id = o.encounter_id and voided = 0 and concept_id = 
+concept_from_mapping('PIH', 'GENERAL FREE TEXT') and obs_group_id in (select obs_id from obs o2 where o2.voided = 0 and o.encounter_id = o2.encounter_id and o2.concept_id =
+concept_from_mapping('PIH', 'EXTREMITY EXAM FINDINGS')));
+
+-- disposition
+update temp_ncd_encounters tn set social_welfare = obs_value_coded_list(tn.encounter_id, 'PIH','SOCIO-ECONOMIC ASSISTANCE RECOMMENDED', 'en');
+update temp_ncd_encounters tn set disposition = obs_value_coded_list(tn.encounter_id, 'PIH','DISPOSITION', 'en');
+update temp_ncd_encounters tn set disposition_comments = obs_value_text(tn.encounter_id,'PIH', 'DISPOSITION COMMENTS');
+
+update temp_ncd_encounters tn set chw  = obs_value_text(tn.encounter_id, 'CIEL','164141');
+update temp_ncd_encounters tn set chw_to_visit = obs_value_numeric(tn.encounter_id, 'PIH','3451');
+update temp_ncd_encounters tn left join obs o on o.voided = 0 and tn.encounter_id = o.encounter_id and concept_id = concept_from_mapping('PIH','TIME UNITS')
+and obs_group_id in (select obs_id from obs where voided = 0 and concept_id = concept_from_mapping('PIH','12625'))
+set chw_to_visit_freq = concept_name(value_coded, 'en') ;
 
 select * from temp_ncd_encounters where person_id = 352;
+
+-- select * from temp_ncd_encounters tn where obs_group_id in (obs_group_id_of_coded_answer(tn.encounter_id, 'PIH', '12625'));
 
