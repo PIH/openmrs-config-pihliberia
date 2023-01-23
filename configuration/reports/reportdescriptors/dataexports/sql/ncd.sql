@@ -24,7 +24,6 @@ total_number_of_hospitalizations int,
 Last_date_of_admission date,
 has_the_patient_ever_received_medication_for_symptoms varchar(225),
 has_the_patient_recently_taken_medication varchar(225),
-has_patient_ever_been_to_churchyard_or_traditionalhealer varchar(225),
 visit_to_churchyard_or_traditional_healer varchar(225),
 what_was_the_diagnosis_and_treatment varchar(255),
 has_the_patient_delivered_within_the_past_five_years varchar(225),
@@ -44,6 +43,16 @@ does_the_patient_drink_alcohol varchar(225),
 type_of_alcohol_product varchar(225),
 how_many_modern_bottles_per_day int,
 how_many_traditional_bottles_per_day int,
+past_medication_or_drug_allergy varchar(25),
+medication_side_effect text,
+other_relevant_history text,
+work_for_income varchar(50),
+household_number_of_persons int,
+transportation_to_clinic_today varchar(120),
+time_to_travel_to_clinic int,
+clinic_travel_time_unit varchar(30),
+cost_of_transport int, 
+times_do_you_eat_daily int,
 normal_general_exam varchar(255),
 abnormal_general_exam varchar(255),
 other_general_exam text,
@@ -146,11 +155,10 @@ update temp_ncd_encounters tn set has_the_patient_ever_received_medication_for_s
 update temp_ncd_encounters tn set has_the_patient_recently_taken_medication = obs_value_coded_list(tn.encounter_id, 'PIH','12604', 'en');
 
 -- Patient ever been to the church yard or seen a traditional healer for these symptoms
-update temp_ncd_encounters tn set has_patient_ever_been_to_churchyard_or_traditionalhealer = obs_value_coded_list(tn.encounter_id, 'PIH','12605', 'en');
-
 -- What was the diagnosis and treatment
-update temp_ncd_encounters tn set visit_to_churchyard_or_traditional_healer = obs_value_text(tn.encounter_id,'PIH', '12606');
+update temp_ncd_encounters tn set visit_to_churchyard_or_traditional_healer = obs_value_coded_list(tn.encounter_id, 'PIH','12605', 'en');
 
+update temp_ncd_encounters tn set what_was_the_diagnosis_and_treatment = obs_value_text(tn.encounter_id,'PIH', '12606');
 -- Has the patient delivered within the past 5 years
 update temp_ncd_encounters tn set has_the_patient_delivered_within_the_past_five_years = obs_value_coded_list(tn.encounter_id, 'PIH','12722', 'en');
 
@@ -165,6 +173,10 @@ update temp_ncd_encounters tn set any_problems_during_big_belly = obs_value_code
 
  -- Did her symptoms start around the time of delivery
  update temp_ncd_encounters tn set did_her_symptoms_start_around_the_time_of_delivery = obs_value_coded_list(tn.encounter_id, 'PIH','12733', 'en');
+
+-- past medication
+create temporary table temp_past_medications
+as (select concept_id, ons_datetime, value_conded, ) where encounter_id in (select encounter_id from temp_ncd_encounters)
 
 -- Cough > 2 weeks
 update temp_ncd_encounters tn set patient_has_cough_more_than_two_weeks = obs_value_coded_list(tn.encounter_id, 'PIH', '1065', 'en');
@@ -201,6 +213,22 @@ update temp_ncd_encounters tn set how_many_modern_bottles_per_day = obs_value_nu
 
 -- How many traditional liters per day?
 update temp_ncd_encounters tn set how_many_traditional_bottles_per_day = obs_value_numeric(tn.encounter_id, 'PIH','6135');
+
+-- past medical history
+update temp_ncd_encounters tn set past_medication_or_drug_allergy = obs_value_coded_list(tn.encounter_id, 'CIEL','165273', 'en');
+update temp_ncd_encounters tn set medication_side_effect = obs_value_text(tn.encounter_id, 'CIEL','164377');
+update temp_ncd_encounters tn set other_relevant_history = obs_value_text(tn.encounter_id, 'CIEL','160632');
+
+-- social history
+update temp_ncd_encounters tn set work_for_income = obs_value_coded_list(tn.encounter_id, 'PIH','12615', 'en');
+update temp_ncd_encounters tn set  household_number_of_persons = obs_value_numeric(tn.encounter_id, 'CIEL','1474');
+update temp_ncd_encounters tn set transportation_to_clinic_today = obs_value_coded_list(tn.encounter_id, 'PIH','975', 'en');
+update temp_ncd_encounters tn set time_to_travel_to_clinic  = obs_value_numeric(tn.encounter_id, 'CIEL','159471');
+update temp_ncd_encounters tn left join obs o on o.voided = 0 and tn.encounter_id = o.encounter_id and concept_id = concept_from_mapping('CIEL','1732')
+and obs_group_id in (select obs_id from obs where voided = 0 and concept_id = concept_from_mapping('PIH','12736'))
+set  clinic_travel_time_unit  = concept_name(value_coded, 'en');
+update temp_ncd_encounters tn set cost_of_transport = obs_value_numeric(tn.encounter_id, 'PIH','TRANSPORTATION COST');
+update temp_ncd_encounters tn set times_do_you_eat_daily = obs_value_numeric(tn.encounter_id, 'CIEL','165591');
 
 -- physical exams
 update temp_ncd_encounters tn set normal_general_exam = (select group_concat(concept_name
