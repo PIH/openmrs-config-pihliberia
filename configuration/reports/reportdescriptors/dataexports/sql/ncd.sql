@@ -7,6 +7,7 @@ drop temporary table if exists temp_ncd_encounters;
 create temporary table temp_ncd_encounters
 (
 person_id int,
+emr_id varchar(255),
 encounter_id int,
 encounter_datetime date,
 reason_for_referral  text,
@@ -89,6 +90,8 @@ encounter_id,
 encounter_datetime
 ) select patient_id, encounter_id, date(encounter_datetime) from encounter where voided = 0 and
 encounter_type in (@ncd_initial, @ncd_followup);
+
+UPDATE temp_ncd_encounters SET emr_id = PATIENT_IDENTIFIER(person_id, METADATA_UUID('org.openmrs.module.emrapi', 'emr.primaryIdentifierType')); 
 
 -- Reason for Referral
 update temp_ncd_encounters tn set reason_for_referral = obs_value_text(tn.encounter_id,'CIEL', '160531');
@@ -175,8 +178,8 @@ update temp_ncd_encounters tn set any_problems_during_big_belly = obs_value_code
  update temp_ncd_encounters tn set did_her_symptoms_start_around_the_time_of_delivery = obs_value_coded_list(tn.encounter_id, 'PIH','12733', 'en');
 
 -- past medication
-create temporary table temp_past_medications
-as (select concept_id, ons_datetime, value_conded, ) where encounter_id in (select encounter_id from temp_ncd_encounters)
+-- create temporary table temp_past_medications
+-- as (select concept_id, ons_datetime, value_conded, ) where encounter_id in (select encounter_id from temp_ncd_encounters)
 
 -- Cough > 2 weeks
 update temp_ncd_encounters tn set patient_has_cough_more_than_two_weeks = obs_value_coded_list(tn.encounter_id, 'PIH', '1065', 'en');
@@ -336,7 +339,83 @@ update temp_ncd_encounters tn left join obs o on o.voided = 0 and tn.encounter_i
 and obs_group_id in (select obs_id from obs where voided = 0 and concept_id = concept_from_mapping('PIH','12625'))
 set chw_to_visit_freq = concept_name(value_coded, 'en') ;
 
-select * from temp_ncd_encounters where person_id = 352;
+select 
+person_id,
+emr_id,
+encounter_id,
+date(encounter_datetime),
+reason_for_referral,
+internal_patient_referral,
+external_patient_referral,
+other_internal_site,
+other_external_site,
+other_external_non_pih_site,
+date_of_referral,
+symptoms_duration,
+symptoms_duration_unit,
+unknown_symptoms_duration,
+patient_ever_been_hospitalized_for_these_symptoms,
+total_number_of_hospitalizations,
+Last_date_of_admission,
+has_the_patient_ever_received_medication_for_symptoms,
+has_the_patient_recently_taken_medication,
+visit_to_churchyard_or_traditional_healer,
+what_was_the_diagnosis_and_treatment,
+has_the_patient_delivered_within_the_past_five_years,
+number_of_times_with_big_belly,
+how_many_children_has_she_born,
+any_problems_during_big_belly,
+did_her_symptoms_start_around_the_time_of_delivery,
+patient_has_cough_more_than_two_weeks,
+type_of_cough,
+patient_has_fever_and_night_sweats_more_than_two_weeks,
+patient_has_weight_loss_in_less_than_four_months,
+type_of_weight_loss,
+does_the_patient_smoke,
+type_of_tobacco_product,
+how_many_cigs_or_pipes_per_day,
+does_the_patient_drink_alcohol,
+type_of_alcohol_product,
+how_many_modern_bottles_per_day,
+how_many_traditional_bottles_per_day,
+past_medication_or_drug_allergy,
+medication_side_effect,
+other_relevant_history,
+work_for_income,
+household_number_of_persons,
+transportation_to_clinic_today,
+time_to_travel_to_clinic,
+clinic_travel_time_unit,
+cost_of_transport, 
+times_do_you_eat_daily,
+normal_general_exam,
+abnormal_general_exam,
+other_general_exam,
+normal_heent_exam,
+abnormal_heent_exam,
+other_heent_exam,
+normal_lungs_exam,
+abnormal_lungs_exam,
+loc_crackles,
+other_lungs_exam,
+normal_heart_exam,
+abnormal_heart_exam,
+other_heart_exam, 
+normal_abdomen_exam,
+abnormal_abdomen_exam,
+other_abdomen_exam,
+normal_neuro_exam,
+abnormal_neuro_exam,
+other_neuro_exam,
+normal_extremities_exam,
+abnormal_extremities_exam,
+other_extremities_exam,
+social_welfare,
+disposition,
+disposition_comments,
+chw,
+chw_to_visit,
+chw_to_visit_freq
+from temp_ncd_encounters;
 
--- select * from temp_ncd_encounters tn where obs_group_id in (obs_group_id_of_coded_answer(tn.encounter_id, 'PIH', '12625'));
 
