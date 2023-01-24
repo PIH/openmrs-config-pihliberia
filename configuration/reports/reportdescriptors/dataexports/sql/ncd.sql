@@ -89,7 +89,9 @@ person_id,
 encounter_id,
 encounter_datetime
 ) select patient_id, encounter_id, date(encounter_datetime) from encounter where voided = 0 and
-encounter_type in (@ncd_initial, @ncd_followup);
+encounter_type in (@ncd_initial, @ncd_followup) 
+and (date(encounter_datetime) >= date(@startDate))
+and (date(encounter_datetime) <= date(@endDate));
 
 UPDATE temp_ncd_encounters SET emr_id = PATIENT_IDENTIFIER(person_id, METADATA_UUID('org.openmrs.module.emrapi', 'emr.primaryIdentifierType')); 
 
@@ -343,7 +345,8 @@ select
 person_id,
 emr_id,
 encounter_id,
-date(encounter_datetime),
+encounter_datetime,
+encounter_type_name(encounter_id) as 'encounter_type',
 reason_for_referral,
 internal_patient_referral,
 external_patient_referral,
