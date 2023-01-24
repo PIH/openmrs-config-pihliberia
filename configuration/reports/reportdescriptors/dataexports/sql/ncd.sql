@@ -76,6 +76,9 @@ other_neuro_exam text,
 normal_extremities_exam varchar(255),
 abnormal_extremities_exam varchar(255),
 other_extremities_exam text,
+clinical_condition varchar(255),
+clinical_status varchar(255),
+clinical_comments text,
 social_welfare varchar(255),
 disposition varchar(255),
 disposition_comments text,
@@ -330,12 +333,24 @@ update temp_ncd_encounters tn set other_extremities_exam = (select value_text fr
 concept_from_mapping('PIH', 'GENERAL FREE TEXT') and obs_group_id in (select obs_id from obs o2 where o2.voided = 0 and o.encounter_id = o2.encounter_id and o2.concept_id =
 concept_from_mapping('PIH', 'EXTREMITY EXAM FINDINGS')));
 
+-- Clinical Impression
+update temp_ncd_encounters tn set clinical_condition = (select concept_name(condition_coded, 'en') from conditions cs where cs.voided  = 0 and 
+cs.patient_id = tn.person_id and cs.encounter_id = tn.encounter_id
+);
+
+update temp_ncd_encounters tn set clinical_status = (select clinical_status from conditions cs where cs.voided  = 0 and 
+cs.patient_id = tn.person_id and cs.encounter_id = tn.encounter_id
+);
+
+update temp_ncd_encounters tn set clinical_comments =  obs_value_text(tn.encounter_id, 'PIH', 'CLINICAL IMPRESSION COMMENTS');
+
 -- disposition
 update temp_ncd_encounters tn set social_welfare = obs_value_coded_list(tn.encounter_id, 'PIH','SOCIO-ECONOMIC ASSISTANCE RECOMMENDED', 'en');
-update temp_ncd_encounters tn set disposition = obs_value_coded_list(tn.encounter_id, 'PIH','DISPOSITION', 'en');
+update temp_ncd_encounters tn set disposition = obs_value_coded_list(tn.encounter_id, 'PIH','HUM Disposition categories', 'en');
 update temp_ncd_encounters tn set disposition_comments = obs_value_text(tn.encounter_id,'PIH', 'DISPOSITION COMMENTS');
 
-update temp_ncd_encounters tn set chw  = obs_value_text(tn.encounter_id, 'CIEL','164141');
+update temp_ncd_encounters tn set chw  = (select concat(given_name, " ", family_name) from person_name where voided = 0 and person_id = 
+(select person_id from provider where retired = 0 and provider_id = obs_value_text(tn.encounter_id, 'CIEL','164141')));
 update temp_ncd_encounters tn set chw_to_visit = obs_value_numeric(tn.encounter_id, 'PIH','3451');
 update temp_ncd_encounters tn left join obs o on o.voided = 0 and tn.encounter_id = o.encounter_id and concept_id = concept_from_mapping('PIH','TIME UNITS')
 and obs_group_id in (select obs_id from obs where voided = 0 and concept_id = concept_from_mapping('PIH','12625'))
@@ -413,6 +428,9 @@ other_neuro_exam,
 normal_extremities_exam,
 abnormal_extremities_exam,
 other_extremities_exam,
+clinical_condition,
+clinical_status,
+clinical_comments,
 social_welfare,
 disposition,
 disposition_comments,
@@ -420,5 +438,4 @@ chw,
 chw_to_visit,
 chw_to_visit_freq
 from temp_ncd_encounters;
-
 
