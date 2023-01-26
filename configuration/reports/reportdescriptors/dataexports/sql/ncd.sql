@@ -118,7 +118,24 @@ respiratory_distress varchar(10),
 cyanosis varchar(10),
 cough varchar(10),
 smoke varchar(10),
-tb_related varchar(10)
+tb_related varchar(10),
+wheezing varchar(10),
+resp_action_plan varchar(10),
+pwd varchar(10),
+depression varchar(10),
+crackles varchar(10),
+jvd_elevated varchar(10),
+orthopnea varchar(10),
+pcm varchar(10),
+dyspnea varchar(10),
+ascites varchar(10),
+asterixis varchar(10),
+pain varchar(10),
+fever varchar(10),
+meds_side_effects varchar(10),
+icteric_sclera varchar(10),              
+spleen_palpable varchar(10)
+
 );
 
 insert into temp_ncd_encounters (
@@ -505,6 +522,51 @@ tn.value_coded = concept_from_mapping("PIH", "1551"));
 update temp_ncd_encounters t set tb_related = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
 tn.value_coded = concept_from_mapping("PIH", "1583"));
 
+update temp_ncd_encounters t set wheezing = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "WHEEZE"));
+update temp_ncd_encounters t set resp_action_plan = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "Respiratory emergency action plan"));
+update temp_ncd_encounters t set pwd = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "130783"));
+update temp_ncd_encounters t set depression = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "DEPRESSION"));
+
+update temp_ncd_encounters t set crackles = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "CRACKLES"));
+
+update temp_ncd_encounters t set jvd_elevated = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "140147"));
+
+update temp_ncd_encounters t set orthopnea = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "3486"));
+
+update temp_ncd_encounters t set pcm = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "Paracetamol"));
+
+update temp_ncd_encounters t set dyspnea = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "5960"));
+
+update temp_ncd_encounters t set ascites = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "ASCITES"));
+
+
+update temp_ncd_encounters t set asterixis = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "148276"));
+
+update temp_ncd_encounters t set pain = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "Pain"));
+
+update temp_ncd_encounters t set fever = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "FEVER"));
+
+update temp_ncd_encounters t set meds_side_effects = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "164377"));
+
+update temp_ncd_encounters t set icteric_sclera = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "ICTERIC SCLERA"));
+
+update temp_ncd_encounters t set spleen_palpable = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "112804"));
 
 -- final query
 select 
@@ -621,7 +683,23 @@ respiratory_distress,
 cyanosis,
 cough,
 smoke,
-tb_related
+tb_related,
+wheezing,
+resp_action_plan,
+pwd,
+depression,
+crackles,
+jvd_elevated,
+orthopnea,
+pcm,
+dyspnea,
+ascites,
+asterixis,
+pain,
+fever,
+meds_side_effects,
+icteric_sclera,              
+spleen_palpable
 from temp_ncd_encounters
 where person_id = 452;
 
