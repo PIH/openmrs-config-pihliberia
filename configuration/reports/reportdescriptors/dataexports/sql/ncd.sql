@@ -84,7 +84,41 @@ disposition varchar(255),
 disposition_comments text,
 chw varchar(255),
 chw_to_visit int,
-chw_to_visit_freq varchar(255)
+chw_to_visit_freq varchar(255),
+waist_cm double,
+hip_cm double,
+consult_note_since_lastvisit text,
+signs_symptoms text,
+drink_alcohol varchar(10),
+smoke_tobacco varchar(10),
+poor_diet_adherence varchar(10),
+poor_physical_activity varchar(10),
+shortness_of_breadth varchar(10),
+taking_meds varchar(10),
+hypoglycemia varchar(10),			
+headache varchar(10),
+chest_pain varchar(10),
+dizziness varchar(10),
+vision_changes varchar(10),
+neuropathy varchar(10),
+ulcers varchar(10),
+used_traditional_herbs varchar(10),
+took_nsaids varchar(10),
+urinary_retention varchar(10),
+fatigue varchar(10),
+nausea varchar(10),
+pruritis varchar(10),
+confusion varchar(10),
+facial_edema varchar(10),
+body_edema varchar(10),
+regular_diet varchar(10),
+doe varchar(10),
+asthma_exacerbation varchar(10),
+respiratory_distress varchar(10),
+cyanosis varchar(10),
+cough varchar(10),
+smoke varchar(10),
+tb_related varchar(10)
 );
 
 insert into temp_ncd_encounters (
@@ -356,6 +390,123 @@ update temp_ncd_encounters tn left join obs o on o.voided = 0 and tn.encounter_i
 and obs_group_id in (select obs_id from obs where voided = 0 and concept_id = concept_from_mapping('PIH','12625'))
 set chw_to_visit_freq = concept_name(value_coded, 'en') ;
 
+update temp_ncd_encounters tn set waist_cm = obs_value_numeric(tn.encounter_id, 'CIEL','163080');
+update temp_ncd_encounters tn set hip_cm = obs_value_numeric(tn.encounter_id, 'CIEL','163081');
+update temp_ncd_encounters tn set consult_note_since_lastvisit = obs_value_coded_list(tn.encounter_id, 'PIH','Disease requiring hospitalization since last visit', 'en');
+update temp_ncd_encounters tn set signs_symptoms = obs_value_coded_list(tn.encounter_id, 'PIH','11119', 'en');
+
+
+drop temporary table if exists temp_ncd_sign_symptoms;
+create temporary table temp_ncd_sign_symptoms
+(
+person_id int,
+encounter_id int,
+obs_group_id int,
+concept_id int,
+value_coded int,
+signs_symptoms text,
+signs_available varchar(10)
+);
+
+insert into temp_ncd_sign_symptoms (person_id, encounter_id, obs_group_id, concept_id, value_coded,  signs_symptoms) 
+select person_id, encounter_id, obs_group_id, concept_id, value_coded, concept_name(value_coded, 'en') from obs o where o.voided = 0 
+and o.concept_id = concept_from_mapping('PIH','11119')
+and obs_group_id in (select obs_id from obs where voided = 0 and concept_id = concept_from_mapping('PIH','12389'));
+
+update temp_ncd_sign_symptoms tn set signs_available = (select concept_name(value_coded, 'en') from obs o where voided = 0 and tn.encounter_id = o.encounter_id and tn.obs_group_id = 
+o.obs_group_id and o.concept_id = concept_from_mapping('CIEL', '1729'));
+
+update temp_ncd_encounters t set drink_alcohol = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "70468"));
+
+update temp_ncd_encounters t set smoke_tobacco = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "2545"));
+
+update temp_ncd_encounters t set poor_diet_adherence = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "165585"));
+
+update temp_ncd_encounters t set poor_physical_activity = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "165569"));
+
+update temp_ncd_encounters t set shortness_of_breadth = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "SHORTNESS OF BREATH WITH EXERTION"));
+
+update temp_ncd_encounters t set taking_meds = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "Currently taking medication"));
+
+update temp_ncd_encounters t set hypoglycemia = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "HYPOGLYCEMIA"));
+
+update temp_ncd_encounters t set headache = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "HEADACHE"));
+
+update temp_ncd_encounters t set chest_pain = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "CHEST PAIN"));
+
+
+update temp_ncd_encounters t set dizziness = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "DIZZINESS"));
+
+update temp_ncd_encounters t set vision_changes = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "Vision problem"));
+
+
+update temp_ncd_encounters t set neuropathy = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "PERIPHERAL NEUROPATHY"));
+
+update temp_ncd_encounters t set ulcers = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "Ulcers (generic)"));
+
+update temp_ncd_encounters t set used_traditional_herbs = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "HERBAL TRADITIONAL MEDICATIONS"));
+
+update temp_ncd_encounters t set took_nsaids = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "162306"));
+
+update temp_ncd_encounters t set fatigue = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "FATIGUE"));
+
+update temp_ncd_encounters t set nausea = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "NAUSEA"));
+
+update temp_ncd_encounters t set pruritis = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "PRURITIS"));
+
+update temp_ncd_encounters t set confusion = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "119866"));
+
+update temp_ncd_encounters t set facial_edema = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "165193"));
+
+update temp_ncd_encounters t set body_edema = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "460"));
+
+update temp_ncd_encounters t set regular_diet = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "159596"));
+
+update temp_ncd_encounters t set doe = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "141599"));
+
+update temp_ncd_encounters t set asthma_exacerbation = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "ASTHMA EXACERBATION"));
+
+update temp_ncd_encounters t set respiratory_distress = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("CIEL", "127639"));
+
+update temp_ncd_encounters t set cyanosis = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "CYANOSIS"));
+
+update temp_ncd_encounters t set cough = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "COUGH"));
+
+update temp_ncd_encounters t set smoke = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "1551"));
+
+update temp_ncd_encounters t set tb_related = (select signs_available from temp_ncd_sign_symptoms tn where tn.encounter_id = t.encounter_id and 
+tn.value_coded = concept_from_mapping("PIH", "1583"));
+
+
+-- final query
 select 
 person_id,
 emr_id,
@@ -436,6 +587,41 @@ disposition,
 disposition_comments,
 chw,
 chw_to_visit,
-chw_to_visit_freq
-from temp_ncd_encounters;
+chw_to_visit_freq,
+waist_cm,
+hip_cm,
+consult_note_since_lastvisit,
+signs_symptoms,
+drink_alcohol,
+smoke_tobacco,
+poor_diet_adherence,
+poor_physical_activity,
+shortness_of_breadth,
+taking_meds,
+hypoglycemia,						
+headache,
+chest_pain,
+dizziness,
+vision_changes,
+neuropathy,
+ulcers,
+used_traditional_herbs,
+took_nsaids,
+urinary_retention,
+fatigue,
+nausea,
+pruritis,
+confusion,
+facial_edema,
+body_edema,
+regular_diet,
+doe,
+asthma_exacerbation,
+respiratory_distress,
+cyanosis,
+cough,
+smoke,
+tb_related
+from temp_ncd_encounters
+where person_id = 452;
 
