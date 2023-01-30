@@ -34,7 +34,4 @@ config:
   order:
   countries:
     - "LIBERIA"
-  components:
-    - "ncd"
-    - "allDataExports"
   privilege: "Task: clinical.reports"
