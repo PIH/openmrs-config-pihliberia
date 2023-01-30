@@ -1,7 +1,7 @@
 key: "ncdexport"
 uuid: "13629220-6b9e-11e5-a837-0800200c9a66"
 name: "NCD Data"
-description: "CD Results (only)"
+description: "NCD Results (only)"
 parameters:
   - key: "startDate"
     type: "java.util.Date"
@@ -10,20 +10,30 @@ parameters:
     type: "java.util.Date"
     label: "reporting.parameter.endDate"
 datasets:
-  - key: "ncdexport"
-    type: "sql"
-    config: "sql/ncd.sql"
+  - {key: "socialHistory", type: "sql", config: "sql/ncd_social_history.sql"}
+  - {key: "physicalExamsAndDispositions", type: "sql", config: "sql/ncd_physical_exam_and_disposition.sql"}
+  - {key: "clinicalImpressions", type: "sql", config: "sql/ncd_clinical_impressions.sql"}
 designs:
   - type: "csv"
     properties:
+      "filenameBase": "ncdexport.{{ formatDate request.reportDefinition.parameterMappings.startDate \"yyyyMMdd\" }}.{{ formatDate request.reportDefinition.parameterMappings.endDate \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"HHmm\" }}"
       "characterEncoding": "ISO-8859-1"
       "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
       "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+    processors:
+      - name: "saveToDisk"
+        type: "disk"
+        runOnSuccess: "true"
+        runOnError: "false"
+        processorMode: "AUTOMATIC"
+        configuration:
+          saveLocation: "{{application_data_directory}}reports"
+          compressOutput: "true"
 config:
   category: "dataExport"
-  order: 60
+  order:
   countries:
-    - "LIBERIA"  
+    - "LIBERIA"
   components:
     - "ncd"
     - "allDataExports"
