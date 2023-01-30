@@ -10,9 +10,9 @@ parameters:
     type: "java.util.Date"
     label: "reporting.parameter.endDate"
 datasets:
-  - {key: "socialHistory", type: "sql", config: "sql/ncd_social_history.sql"}
-  - {key: "physicalExamsAndDispositions", type: "sql", config: "sql/ncd_physical_exam_and_disposition.sql"}
-  - {key: "clinicalImpressions", type: "sql", config: "sql/ncd_clinical_impressions.sql"}
+  - {key: "socialHistory", type: "sql", config: "sql/ncdSocialHistory..sql"}
+  - {key: "physicalExamsAndDispositions", type: "sql", config: "sql/ncdPhysicalExamAndDisposition.sql"}
+  - {key: "clinicalImpressions", type: "sql", config: "sql/ncdClinicalImpressions.sql"}
 designs:
   - type: "csv"
     properties:
