@@ -10,7 +10,7 @@ parameters:
     type: "java.util.Date"
     label: "reporting.parameter.endDate"
 datasets:
-  - {key: "socialHistory", type: "sql", config: "sql/ncdSocialHistory..sql"}
+  - {key: "socialHistory", type: "sql", config: "sql/ncdSocialHistory.sql"}
   - {key: "physicalExamsAndDispositions", type: "sql", config: "sql/ncdPhysicalExamAndDisposition.sql"}
   - {key: "clinicalImpressions", type: "sql", config: "sql/ncdClinicalImpressions.sql"}
 designs:
