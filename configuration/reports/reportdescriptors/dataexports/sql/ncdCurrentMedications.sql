@@ -73,9 +73,8 @@ encounter_id,
 encounter_datetime
 ) select patient_id, encounter_id, date(encounter_datetime) from encounter where voided = 0  and
 encounter_type = @ncd_followup and voided = 0
--- and (date(encounter_datetime) >= date(@startDate))
--- and (date(encounter_datetime) <= date(@endDate))
-;
+and (date(encounter_datetime) >= date(@startDate))
+and (date(encounter_datetime) <= date(@endDate));
 
 update temp_ncd_encounters_meds_followup_stage tn set offset1 = obs_id(tn.encounter_id, 'PIH', 'Prescription construct', 0);
 update temp_ncd_encounters_meds_followup_stage tn set offset2 = obs_id(tn.encounter_id, 'PIH', 'Prescription construct', 1);
@@ -204,4 +203,4 @@ route7,
 freq7,
 med7_duration,
 med7_duration_unit
-from temp_ncd_encounters_meds_followup_stage;
+from temp_ncd_encounters_meds_followup_stage where offset1 is not null;

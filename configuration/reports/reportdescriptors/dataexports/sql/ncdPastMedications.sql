@@ -118,4 +118,4 @@ med5_finish_date = (select date(value_datetime)from obs where voided = 0 and con
 
 UPDATE temp_ncd_encounters_meds_stage SET emr_id = PATIENT_IDENTIFIER(person_id, METADATA_UUID('org.openmrs.module.emrapi', 'emr.primaryIdentifierType')); 
 
-select * from temp_ncd_encounters_meds_stage;
+select * from temp_ncd_encounters_meds_stage where offset1 is not null;
