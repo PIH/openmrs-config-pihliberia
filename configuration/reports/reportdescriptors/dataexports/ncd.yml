@@ -14,7 +14,7 @@ datasets:
   - {key: "physicalExamsAndDispositions", type: "sql", config: "sql/ncdPhysicalExamAndDisposition.sql"}
   - {key: "clinicalImpressions", type: "sql", config: "sql/ncdClinicalImpressions.sql"}
   - {key: "ncdPastMedications", type: "sql", config: "sql/ncdPastMedications.sql"}
-  - {key: "ncdCurrentMedications", type: "sql", config: "sql/sql/ncdCurrentMedications.sql"}
+  - {key: "ncdCurrentMedications", type: "sql", config: "sql/ncdCurrentMedications.sql"}
 designs:
   - type: "csv"
     properties:
