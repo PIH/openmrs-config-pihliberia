@@ -15,7 +15,8 @@ datasets:
   - {key: "clinicalImpressions", type: "sql", config: "sql/ncdClinicalImpressions.sql"}
   - {key: "ncdPastMedications", type: "sql", config: "sql/ncdPastMedications.sql"}
   - {key: "ncdCurrentMedications", type: "sql", config: "sql/ncdCurrentMedications.sql"}
-designs:
+  - {key: "ncdPlans", type: "sql", config: "sql/ncdPlans.sql"}
+    designs:
   - type: "csv"
     properties:
       "filenameBase": "ncdexport.{{ formatDate request.reportDefinition.parameterMappings.startDate \"yyyyMMdd\" }}.{{ formatDate request.reportDefinition.parameterMappings.endDate \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"HHmm\" }}"
