@@ -13,6 +13,7 @@ datasets:
   - {key: "socialHistory", type: "sql", config: "sql/ncdSocialHistory.sql"}
   - {key: "physicalExamsAndDispositions", type: "sql", config: "sql/ncdPhysicalExamAndDisposition.sql"}
   - {key: "clinicalImpressions", type: "sql", config: "sql/ncdClinicalImpressions.sql"}
+  - {key: "clinicalImpressionsContinuation", type: "sql", config: "sql/ncdClinicalImpressionsAddn.sql"}
   - {key: "ncdPastMedications", type: "sql", config: "sql/ncdPastMedications.sql"}
   - {key: "ncdCurrentMedications", type: "sql", config: "sql/ncdCurrentMedications.sql"}
   - {key: "ncdPlans", type: "sql", config: "sql/ncdPlans.sql"}
