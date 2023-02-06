@@ -6,7 +6,7 @@ drop temporary table if exists temp_ncd_encounters_clinical_impressions_2;
 create temporary table temp_ncd_encounters_clinical_impressions_2
 (
 person_id int,
-emr_id varchar(255),
+emr_id varchar(25),
 encounter_id int,
 encounter_datetime date,
 
@@ -25,7 +25,7 @@ htn_stage varchar(100),
 diabetes_diagnosis varchar(100),
 night_per_week_of_symptom int,
 days_per_week_of_symptom int,
-cld_class varchar(25),
+cld_class varchar(100),
 beta_agonist_used varchar (25),
 conjunctiva varchar(100),
 types_of_body_edema varchar(100),
@@ -41,7 +41,7 @@ received_hep_b_vaccine varchar(100),
 presumed_etiology varchar(225), -- Pls do
 volumn_status varchar(100),
 nyha_stage varchar(100),
-heart_failure_diagnosis varchar(25)
+heart_failure_diagnosis varchar(100)
 );
 
 insert into temp_ncd_encounters_clinical_impressions_2 (
