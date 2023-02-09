@@ -689,7 +689,7 @@
 
                                 <includeIf velocityTest="$pt_has_rf or $pt_has_scd">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:CONJUNCTIVA">
+                                        <obsgroup groupingConceptId="PIH:12657">
                                             <td style="width: 35%">
                                                 <label>
                                                     Conjunctiva
@@ -709,7 +709,7 @@
 
                                 <includeIf velocityTest="$pt_has_rf or $pt_has_lf or $pt_has_hf">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:12636">
+                                        <obsgroup groupingConceptId="PIH:12657">
                                             <td style="width: 35%">
                                                 <label>
                                                     Body Edema
