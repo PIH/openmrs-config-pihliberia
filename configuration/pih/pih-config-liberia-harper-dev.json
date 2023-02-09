@@ -33,7 +33,8 @@
     "labs",
     "labResults",
     "mch",
-    "spaPreview"
+    "spaPreview",
+    "chwApp"
   ],
 
   "primaryIdentifierPrefix": "YY",
