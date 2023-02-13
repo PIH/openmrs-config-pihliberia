@@ -1,7 +1,6 @@
 set sql_safe_updates = 0;
 
 select encounter_type_id into @ncd_initial from encounter_type where uuid = 'ae06d311-1866-455b-8a64-126a9bd74171';
-select encounter_type_id into @ncd_followup from encounter_type where uuid = '5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c';
 
 drop temporary table if exists temp_ncd_encounters_physical;
 create temporary table temp_ncd_encounters_physical
@@ -45,7 +44,7 @@ person_id,
 encounter_id,
 encounter_datetime
 ) select patient_id, encounter_id, date(encounter_datetime) from encounter where voided = 0 and
-encounter_type in (@ncd_initial, @ncd_followup) 
+encounter_type = @ncd_initial
 and (date(encounter_datetime) >= date(@startDate))
 and (date(encounter_datetime) <= date(@endDate));
 

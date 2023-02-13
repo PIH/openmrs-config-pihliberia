@@ -1,7 +1,6 @@
 set sql_safe_updates = 0;
 
 select encounter_type_id into @ncd_initial from encounter_type where uuid = 'ae06d311-1866-455b-8a64-126a9bd74171';
-select encounter_type_id into @ncd_followup from encounter_type where uuid = '5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c';
 
 drop temporary table if exists temp_ncd_encounters_history;
 create temporary table temp_ncd_encounters_history
@@ -33,10 +32,10 @@ how_many_children_has_she_born int,
 any_problems_during_big_belly varchar (255),
 did_her_symptoms_start_around_the_time_of_delivery varchar (225),
 patient_has_cough_more_than_two_weeks varchar(225),
-type_of_cough varchar(225),
-patient_has_fever_and_night_sweats_more_than_two_weeks varchar(225),
-patient_has_weight_loss_in_less_than_four_months varchar(225),
-type_of_weight_loss varchar(225),
+symptom_present varchar(225),
+symptom_absent varchar(225),
+symptom_presence_unknown varchar(225),
+tb_symptom_present varchar(225),
 does_the_patient_smoke varchar(225),
 type_of_tobacco_product varchar(225),
 how_many_cigs_or_pipes_per_day int,
@@ -61,7 +60,7 @@ person_id,
 encounter_id,
 encounter_datetime
 ) select patient_id, encounter_id, date(encounter_datetime) from encounter where voided = 0 and
-encounter_type in (@ncd_initial, @ncd_followup) 
+encounter_type = @ncd_initial 
 and (date(encounter_datetime) >= date(@startDate))
 and (date(encounter_datetime) <= date(@endDate));
 
@@ -151,24 +150,14 @@ update temp_ncd_encounters_history tn set any_problems_during_big_belly = obs_va
  -- Did her symptoms start around the time of delivery
  update temp_ncd_encounters_history tn set did_her_symptoms_start_around_the_time_of_delivery = obs_value_coded_list(tn.encounter_id, 'PIH','12733', 'en');
 
--- past medication
--- create temporary table temp_past_medications
--- as (select concept_id, ons_datetime, value_conded, ) where encounter_id in (select encounter_id from temp_ncd_encounters_history)
-
 -- Cough > 2 weeks
 update temp_ncd_encounters_history tn set patient_has_cough_more_than_two_weeks = obs_value_coded_list(tn.encounter_id, 'PIH', '1065', 'en');
-/*
--- Cough type
-update temp_ncd_encounters_history tn set type_of_cough = obs_value_coded_list(tn.encounter_id, 'PIH','11563', 'en');
 
--- Fever and night sweats > 2 weeks
-update temp_ncd_encounters_history tn set patient_has_fever_and_night_sweats_more_than_two_weeks = obs_value_coded_list(tn.encounter_id, 'PIH', '1065', 'en');
-
--- Weight loss > 3kg in less than 4 months
-update temp_ncd_encounters_history tn set patient_has_weight_loss_in_less_than_four_months = obs_single_value_coded(tn.encounter_id, 'PIH', '1065', 'PIH', '1066', 'PIH', '1067');
-*/
--- Type of weight loss
-update temp_ncd_encounters_history tn set type_of_weight_loss = obs_value_coded_list(tn.encounter_id, 'PIH','11563', 'en');
+-- TB screening
+update temp_ncd_encounters_history tn set symptom_present = obs_value_coded_list(tn.encounter_id, 'PIH','SYMPTOM PRESENT', 'en');
+update temp_ncd_encounters_history tn set symptom_absent = obs_value_coded_list(tn.encounter_id, 'PIH','SYMPTOM ABSENT', 'en');
+update temp_ncd_encounters_history tn set symptom_presence_unknown = obs_value_coded_list(tn.encounter_id, 'PIH','SYMPTOM PRESENCE UNKNOWN', 'en');
+update temp_ncd_encounters_history tn set tb_symptom_present = obs_value_coded_list(tn.encounter_id, 'PIH','11563', 'en');
 
 -- Does the patient smoke
 update temp_ncd_encounters_history tn set does_the_patient_smoke = obs_value_coded_list(tn.encounter_id, 'CIEL','163731', 'en');
