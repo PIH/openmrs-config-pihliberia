@@ -170,10 +170,7 @@
         return waistHipRatio;
         }
 
-        jq(function () {
-        var x =<lookup complexExpression="$allConditionsJson"/>;
-        console.log(x);
-        });
+
     </script>
 
     <ifMode mode="VIEW" include="false">
