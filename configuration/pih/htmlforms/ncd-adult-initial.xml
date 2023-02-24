@@ -423,7 +423,7 @@
                             Has the patient delivered within the past 5 years?
                         </label>
                         <span class="list-inline">
-                            <obs id="delivery-within-past-5-years" conceptId="PIH:12722"
+                            <obs id="delivery-within-past-5-years" style="radio" conceptId="PIH:12722"
                                  answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
                                 <controls>
                                     <when value="PIH:YES" thenDisplay="#mch-concept-set"/>

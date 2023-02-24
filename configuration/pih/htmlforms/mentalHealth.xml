@@ -208,21 +208,12 @@
         </p>
     </div>
 
-
-
     <ifMode mode="VIEW" include="false">
         <h2>
             <label>
                 <uimessage code="pihcore.mentalhealth.liberia.title"/>
             </label>
         </h2>
-
-        <span id="mh_mrn_enter" style="float:right;">
-            <label class="inline">MRN:</label>
-            <span class="inline">
-                <patient field="identifier" identifierTypeId="23507d1e-4f22-11ea-9717-645d86728797" required="false"/>
-            </span>
-        </span>
 
         <!-- users with retroConsultNote privilege can edit provider, location, and date for both retro and active visits -->
         <includeIf velocityTest="$user.hasPrivilege('Task: emr.retroConsultNote')">
