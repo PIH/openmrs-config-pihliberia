@@ -686,7 +686,6 @@
 
                                 <includeIf velocityTest="$pt_has_rf or $pt_has_scd">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:CONJUNCTIVA">
                                             <td style="width: 35%">
                                                 <label>
                                                     Conjunctiva
@@ -700,13 +699,11 @@
                                                          answerLabels="Normal, Pale"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_rf or $pt_has_lf or $pt_has_hf">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:12636">
                                             <td style="width: 35%">
                                                 <label>
                                                     Body Edema
@@ -720,13 +717,11 @@
                                                          answerLabels="1+ Pitting, 2+ Pitting, 3+ Pitting"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_hf">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:PATIENTS FLUID MANAGEMENT">
                                             <td style="width: 35%">
                                                 <label>
                                                     Volume Status
@@ -741,13 +736,11 @@
                                                          answerLabels="Hypo, Normal, Hyper"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_hf">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:NYHA CLASS">
                                             <td style="width: 35%">
                                                 <label>
                                                     NYHA Stage
@@ -761,13 +754,11 @@
                                                          answerLabels="Class I, Class II, Class III, Class IV"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_hf">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:14323">
                                             <td style="width: 35%">
                                                 <label>
                                                     Heart Failure Diagnosis
@@ -781,13 +772,11 @@
                                                          answerLabels="Cardiomyopathy, Afib, RHD, Valvular Heart Disease, Hypertensive, RVF, Pericardial Disease, Congenital, Ischemic"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_rf">
                                     <tr>
-                                        <obsgroup groupingConceptId="CIEL:165570">
                                             <td style="width: 35%">
                                                 <label>
                                                     CKD Stage
@@ -801,13 +790,11 @@
                                                          answerLabels="CKD I,CKD II,CKD III,CKD IV,CKD V"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_rf">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:12657">
                                             <td style="width: 35%">
                                                 <label>
                                                     Diet Recs
@@ -821,13 +808,11 @@
                                                          answerLabels="Na,K+,Pro,Kcal"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_lf">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:HEPATITIS C TEST - QUALITATIVE">
                                             <td style="width: 35%">
                                                 <label>
                                                     Hep C Ab Test
@@ -849,13 +834,11 @@
                                                          answerConceptIds="PIH:703, PIH:664, PIH:1138"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_lf or $pt_has_rf">
                                     <tr>
-                                        <obsgroup groupingConceptId="CIEL:161472">
                                             <td style="width: 35%">
                                                 <label>
                                                     Hep B SAg Test
@@ -877,13 +860,11 @@
                                                          answerConceptIds="PIH:703, PIH:664, PIH:1138"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_lf">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:14348">
                                             <td style="width: 35%">
                                                 <label>
                                                     Received Hep B Vaccine
@@ -896,13 +877,11 @@
                                                          answerConceptIds="PIH:1065, PIH:1066, PIH:1067" />
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$$pt_has_rf">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:11457">
                                             <td style="width: 35%">
                                                 <label>
                                                     HCV spot test
@@ -924,13 +903,11 @@
                                                          answerConceptIds="PIH:703, PIH:664, PIH:1138"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_asthma or $pt_has_copd">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:Asthma classification">
                                             <td style="width: 35%">
                                                 <label>
                                                     CLD class
@@ -944,13 +921,11 @@
                                                          answerLabels="Intermittent, Moderate persistent, Mild persistent, Severe persistent"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_asthma or $pt_has_copd">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:11991">
                                             <td style="width: 35%">
                                                 <label>
                                                     Beta-agonist use
@@ -964,13 +939,11 @@
                                                          answerLabels="Every day, Once a week, More than once a week, Weekly, Monthly, Not at all"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_htn">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:Type of hypertension diagnosis">
                                             <td style="width: 35%">
                                                 <label>
                                                     Hypertension Diagnosis
@@ -985,13 +958,11 @@
                                                          answerLabels="Essential HTN, Secondary HTN"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
                                 <includeIf velocityTest="$pt_has_htn">
                                     <tr>
-                                        <obsgroup groupingConceptId="PIH:12699">
                                             <td style="width: 35%">
                                                 <label>
                                                     HTN Stage
@@ -1005,7 +976,6 @@
                                                          answerLabels="Stage I, Stage II, Stage III, Stage IV"/>
                                                 </span>
                                             </td>
-                                        </obsgroup>
                                     </tr>
                                 </includeIf>
 
