@@ -813,6 +813,7 @@
 
                                 <includeIf velocityTest="$pt_has_lf">
                                     <tr>
+                                           <obsgroup groupingConceptId="PIH:HEPATITIS C TEST - QUALITATIVE">
                                             <td style="width: 35%">
                                                 <label>
                                                     Hep C Ab Test
@@ -823,7 +824,7 @@
                                                     <label class="inline">
                                                         Date:
                                                     </label>
-                                                    <obs conceptId="PIH:12847" class="inline"/>
+                                                    <obs conceptId="PIH:12847" class="inline" showDate="true"/>
                                                 </span>
                                                 <span class="block;">
                                                     <label>
@@ -839,6 +840,7 @@
 
                                 <includeIf velocityTest="$pt_has_lf or $pt_has_rf">
                                     <tr>
+                                        <obsgroup groupingConceptId="CIEL:161472">
                                             <td style="width: 35%">
                                                 <label>
                                                     Hep B SAg Test
@@ -849,7 +851,7 @@
                                                     <label class="inline">
                                                         Date:
                                                     </label>
-                                                    <obs conceptId="PIH:12847" class="inline"/>
+                                                    <obs conceptId="PIH:12847" class="inline" showDate="true"/>
                                                 </span>
                                                 <span class="block;">
                                                     <label>
@@ -882,6 +884,7 @@
 
                                 <includeIf velocityTest="$$pt_has_rf">
                                     <tr>
+                                         <obsgroup groupingConceptId="PIH:11457">
                                             <td style="width: 35%">
                                                 <label>
                                                     HCV spot test
@@ -892,7 +895,7 @@
                                                     <label class="inline">
                                                         Date:
                                                     </label>
-                                                    <obs conceptId="PIH:12847" class="inline"/>
+                                                    <obs conceptId="PIH:12847" class="inline" showDate="true"/>
                                                 </span>
                                                 <span class="block;">
                                                     <label>
