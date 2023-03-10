@@ -412,7 +412,7 @@
             <span class="list-inline">
                 <p>
                     <label>
-                        <uimessage code="CGI Score"/> (0-4):
+                        <uimessage code="CGI Score"/> (0-7):
                     </label>
                     <span class="small">
                         <obs id="cgiScore" conceptId="CIEL:163223"/>
