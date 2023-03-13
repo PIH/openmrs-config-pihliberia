@@ -375,6 +375,8 @@
     <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.mentalhealth.scores">
         <div class="section-container">
+
+            <span class="list-inline">
             <p>
                 <label>
                     <uimessage code="pihcore.ncd.mental.phq9Score"/> (0-27):
@@ -383,6 +385,41 @@
                     <obs id="phq9Score" conceptId="CIEL:165137"/>
                 </span>
             </p>
+            </span>
+
+            <span class="list-inline">
+            <p>
+                <label>
+                    <uimessage code="pihcore.ncd.mental.gad7Score"/> (0-21):
+                </label>
+                <span class="small">
+                    <obs id="gad7Score" conceptId="CIEL:165185"/>
+                </span>
+            </p>
+            </span>
+
+            <span class="list-inline">
+                <p>
+                    <label>
+                        <uimessage code="WHODAS Score"/> (0-4):
+                    </label>
+                    <span class="small">
+                        <obs id="WHODASScore" conceptId="CIEL:163226"/>
+                    </span>
+                </p>
+            </span>
+
+            <span class="list-inline">
+                <p>
+                    <label>
+                        <uimessage code="CGI Score"/> (0-7):
+                    </label>
+                    <span class="small">
+                        <obs id="cgiScore" conceptId="CIEL:163223"/>
+                    </span>
+                </p>
+            </span>
+
         </div>
     </section>
 
