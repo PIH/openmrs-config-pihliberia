@@ -326,7 +326,7 @@
 
                             <obs id="duration-timeunits-id"
                                  conceptId="CIEL:1732"
-                                 answerConceptIds="CIEL:1072,CIEL:1073,CIEL:1074,CIEL:1734" style="radio" class="list-inline"/>
+                                 answerConceptIds="CIEL:1072,CIEL:1073,CIEL:1074,CIEL:1734" class="inline"/>
                         </span>
 
                         <span class="inline">
@@ -370,7 +370,7 @@
                         Has the patient ever received medication for symptoms?
                     </label>
                     <span class="list-inline">
-                        <obs id="patient-ever-received-medication" style="radio" conceptId="PIH:12603"
+                        <obs id="patient-ever-received-medication" conceptId="PIH:12603"
                              answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
                             <controls>
                                 <when value="PIH:YES" thenDisplay="#patient-recently-taken-medication"/>
@@ -385,7 +385,7 @@
                             Has the patient recently taken medication?
                         </label>
                         <span class="list-inline">
-                            <obs id="obs-patient-recently-taken-medication" style="radio" conceptId="PIH:12604"
+                            <obs id="obs-patient-recently-taken-medication" conceptId="PIH:12604"
                                  answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
                                 <controls>
                                     <when value="PIH:YES" thenDisplay="#patient-medications"/>
@@ -400,7 +400,7 @@
                         Has the patient ever been to the church yard or seen a traditional healer for these symptoms?
                     </label>
                     <span class="list-inline">
-                        <obs id="visit-to-church-yard-or-traditional-healer" style="radio" conceptId="PIH:12605"
+                        <obs id="visit-to-church-yard-or-traditional-healer" conceptId="PIH:12605"
                              answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
                             <controls>
                                 <when value="PIH:YES" thenDisplay="#church-or-traditional-healer-comment"/>
@@ -503,7 +503,7 @@
                         <span id="tb-persistent-cough-type" class="list-inline">
                             <obs conceptId="PIH:11563" answerConceptIds="CIEL:5957,CIEL:138905" style="radio"/>
                         </span>
-                    </div><br></br><br></br>
+                    </div></div><br></br><br></br>
 
                     <div class="ep-mh-section">
                         <span class="tb-symptom-name">
@@ -549,7 +549,7 @@
                                     Does the patient smoke?:
                                 </label>
                                 <span class="list-inline">
-                                    <obs id="patient-currently-smokes"  style="radio" conceptId="CIEL:163731"
+                                    <obs id="patient-currently-smokes" conceptId="CIEL:163731"
                                          answerConceptIds="PIH:IN THE PAST,PIH:CURRENTLY,PIH:NEVER,PIH:unknown"
                                          answerSeparator="">
                                         <controls>
@@ -581,7 +581,7 @@
                                 </label>
 
                                 <span class="list-inline">
-                                    <obs id="patient-currently-drinks" style="radio" conceptId="CIEL:159449"
+                                    <obs id="patient-currently-drinks" conceptId="CIEL:159449"
                                          answerConceptIds="PIH:IN THE PAST,PIH:CURRENTLY,PIH:NEVER,PIH:unknown"
                                          answerSeparator="">
                                         <controls>
@@ -594,7 +594,7 @@
                                     <label>
                                         Type of alcohol?:
                                     </label>
-                                    <obs id="type-of-alcohol-product" style="radio" conceptId="CIEL:159453">
+                                    <obs id="type-of-alcohol-product" conceptId="CIEL:159453">
                                         <controls>
                                             <when value="CIEL:159454" thenDisplay="#num-of-traditional-litres-per-day"/>
                                             <when value="CIEL:159455" thenDisplay="#num-of-modern-bottles-per-day"/>
@@ -698,7 +698,7 @@
                                     Has the patient ever had a reaction to medication/ drug allergy?
                                 </label> &amp;nbsp&amp;nbsp
                                 <span class="list-inline">
-                                    <obs id="medication-reaction" style="radio" conceptId="CIEL:165273"
+                                    <obs id="medication-reaction" conceptId="CIEL:165273"
                                          answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
                                         <controls>
                                             <when value="PIH:YES" thenDisplay="#medication-side-effect"/>
