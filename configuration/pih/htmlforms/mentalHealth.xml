@@ -388,28 +388,6 @@
             </span>
 
             <span class="list-inline">
-            <p>
-                <label>
-                    <uimessage code="pihcore.ncd.mental.gad7Score"/> (0-21):
-                </label>
-                <span class="small">
-                    <obs id="gad7Score" conceptId="CIEL:165185"/>
-                </span>
-            </p>
-            </span>
-
-            <span class="list-inline">
-                <p>
-                    <label>
-                        <uimessage code="WHODAS Score"/> (0-4):
-                    </label>
-                    <span class="small">
-                        <obs id="WHODASScore" conceptId="CIEL:163226"/>
-                    </span>
-                </p>
-            </span>
-
-            <span class="list-inline">
                 <p>
                     <label>
                         <uimessage code="CGI Score"/> (0-7):
@@ -418,6 +396,17 @@
                         <obs id="cgiScore" conceptId="CIEL:163223"/>
                     </span>
                 </p>
+            </span>
+
+            <span class="list-inline">
+            <p>
+                <label>
+                    <uimessage code="WHODAS Score"/> (0-100):
+                </label>
+                <span class="small">
+                    <obs id="whodasScore" conceptId="CIEL:163226"/>
+                </span>
+            </p>
             </span>
 
         </div>
@@ -545,6 +534,12 @@
                     <render concept="PIH:PHENYTOIN" name="Phenytoin"/>
                     <render concept="PIH:AMITRYPTILINE" name="Amitryptiline"/>
                     <render concept="PIH:FLUPHENAZINE" name="Fluphenazine"/>
+                    <render concept="PIH:DIAZEPAM" name="Diazepam"/>
+                    <render concept="PIH:DIPHENHYDRAMINE" name="Diphenhydramine"/>
+                    <render concept="CIEL:82670" name="Promethazine"/>
+                    <render concept="PIH:TRIHEXYPHENIDYL" name="Trihexyphenidyl"/>
+                    <render concept="CIEL:84997" name="Thiamine"/>
+
                 </repeat>
             </table>
 
