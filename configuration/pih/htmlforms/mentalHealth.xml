@@ -190,6 +190,8 @@
                 });
 
                 jq('#phq9Score > input:text').attr('placeholder', '0-27');
+                jq('#cgiScore > input:text').attr('placeholder', '0-7');
+                jq('#whodasScore > input:text').attr('placeholder', '0-100');
 
             });
 
@@ -535,10 +537,6 @@
                     <render concept="PIH:AMITRYPTILINE" name="Amitryptiline"/>
                     <render concept="PIH:FLUPHENAZINE" name="Fluphenazine"/>
                     <render concept="PIH:DIAZEPAM" name="Diazepam"/>
-                    <render concept="PIH:DIPHENHYDRAMINE" name="Diphenhydramine"/>
-                    <render concept="CIEL:82670" name="Promethazine"/>
-                    <render concept="PIH:TRIHEXYPHENIDYL" name="Trihexyphenidyl"/>
-                    <render concept="CIEL:84997" name="Thiamine"/>
 
                 </repeat>
             </table>
