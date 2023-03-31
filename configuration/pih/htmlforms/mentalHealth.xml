@@ -329,51 +329,7 @@
 
     <!-- Program enrollment -->
     <enrollInProgram programId="Mental Health"/>
-
-
-    <!-- The form -->
-    <section id="mh_refer" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.mentalhealth.referral">
-
-        <div class="section-container">
-            <div class="inline">
-                <div class="referral-community">
-                    <label>
-                        <uimessage code="pihcore.mentalhealth.referredBy"/>:
-                    </label>
-                    <obs id="role-of-referring-person" conceptId="PIH:Role of referring person"
-                         answerConceptIds="PIH:Teacher,PIH:TRADITIONAL HEALER,PIH:VILLAGE HEALTH WORKER,PIH:11783,CIEL:978,PIH:Other medical service"
-                         style="radio" answerSeparator=""/>
-
-                    <obs conceptId="PIH:Role of referring person" answerConceptId="PIH:OTHER"
-                         style="checkbox" answerSeparator="" commentFieldLabel=" "/>
-                </div>
-
-                <div class="referral-internal">
-                    <label>
-                        <uimessage code="pihcore.mentalhealth.internalReferredBy"/>:
-                    </label>
-
-                    <obs id="type-of-referral-role" conceptId="PIH:Type of referral role"
-                         answerConceptIds="PIH:DOCTOR,PIH:NURSE,PIH:SOCIAL WORKER SERVICE"
-                         style="radio" answerSeparator=""/>
-                    <obs conceptId="PIH:Type of referral role" answerConceptId="PIH:OTHER"
-                         style="checkbox" commentFieldLabel=" "/>
-                </div>
-            </div>
-
-            <br/>
-
-            <div class="list-inline">
-                <label><uimessage code="pihcore.ncd.plan.hospitalized"/></label>
-                <obs conceptId="PIH:PATIENT HOSPITALIZED SINCE LAST VISIT" answerConceptIds="PIH:YES,PIH:NO"
-                     style="radio" answerSeparator=""/>
-            </div>
-
-        </div>
-    </section>
-
-
+    
     <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.mentalhealth.scores">
         <div class="section-container">
