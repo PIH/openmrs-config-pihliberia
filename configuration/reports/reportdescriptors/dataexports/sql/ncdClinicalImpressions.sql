@@ -82,7 +82,7 @@ update temp_ncd_encounters_clinical_impressions tn set consult_note_since_lastvi
 update temp_ncd_encounters_clinical_impressions tn set signs_symptoms = obs_value_coded_list(tn.encounter_id, 'PIH','11119', 'en');
 
 -- Clinical Impression
-update temp_ncd_encounters_clinical_impressions tn set clinical_condition = (select concept_name(condition_coded, 'en') from conditions cs where cs.voided  = 0 and 
+update temp_ncd_encounters_clinical_impressions tn set clinical_condition = (select COALESCE(concept_name(condition_coded, 'en'),condition_non_coded) from conditions cs where cs.voided  = 0 and 
 cs.patient_id = tn.person_id and cs.encounter_id = tn.encounter_id
 );
 
