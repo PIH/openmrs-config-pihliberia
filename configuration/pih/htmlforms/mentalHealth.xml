@@ -420,7 +420,8 @@
                     <repeat>
                         <template>
                             <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{concept}" style="checkbox" />
+                                <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
+                                     answerConceptId="{concept}" answerCode="{name}"  />
                             </obsgroup>
                         </template>
                         <!-- <render concept="CIEL:115924" name="Bipolar disorder (mania)" />
@@ -430,14 +431,15 @@
                         <render concept="CIEL:112603" name="Substance abuse (drugs)" />
                         <render concept="CIEL:155"    name="Epilepsy" />
                         <render concept="CIEL:137668" name="Behavioral disorder" />
-                        <!-- <render concept="PIH:14629"   name="Emotional disorder" /> -->
+                        <render concept="PIH:14629"   name="Emotional disorder" />
                      </repeat>
                 </div>
                 <div>
                     <repeat>
                         <template>
                             <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{concept}" style="checkbox" />
+                                <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
+                                     answerConceptId="{concept}" answerCode="{name}" />
                             </obsgroup>
                         </template>
 
