@@ -439,9 +439,9 @@
                                      answerConceptId="{concept}" answerCode="{name}"  />
                             </obsgroup>
                         </template>
-                        <!-- <render concept="CIEL:115924" name="Bipolar disorder (mania)" />
+                        <render concept="CIEL:115924" name="Bipolar disorder (mania)" />
                         <render concept="CIEL:119541" name="Bipolar disorder (depressive)" />
-                        <render concept="CIEL:119566" name="Dementia" /> -->
+                        <render concept="CIEL:119566" name="Dementia" />
                         <render concept="CIEL:121725" name="Alcohol abuse" />
                         <render concept="CIEL:112603" name="Substance abuse (drugs)" />
                         <render concept="CIEL:155"    name="Epilepsy" />
@@ -457,10 +457,9 @@
                                      answerConceptId="{concept}" answerCode="{name}" />
                             </obsgroup>
                         </template>
-
                         <render concept="CIEL:121303" name="Developmental disorder (ASD)" />
                         <render concept="CIEL:156923" name="Developmental disorder (ITLD)" />
-                        <!-- <render concept="CIEL:160197" name="Psychosomatic disorder" /> -->
+                        <render concept="CIEL:160197" name="Psychosomatic disorder" />
                         <render concept="CIEL:139545" name="General anxiety (GAD)" />
                         <render concept="CIEL:113881" name="PTSD" />
                         <render concept="CIEL:130966" name="Panic disorder" />
@@ -468,13 +467,12 @@
                         <render concept="CIEL:113517" name="Psychosis" />
                         <render concept="CIEL:113155" name="Schizophrenia" />
                     </repeat>
-
-                    <label>Other diagnoses</label>
-                    <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                        <obs conceptId="CIEL:161602" style="text" />
-                    </obsgroup>
                 </div>
             </div>
+            <label>Other diagnoses</label>
+            <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                <obs conceptId="CIEL:161602" style="text" />
+            </obsgroup>
         </div>
     </section>
 
