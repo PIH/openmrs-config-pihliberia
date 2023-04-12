@@ -20,6 +20,9 @@
 
     <redirectOnSave url="/pihcore/visit/visit.page?patient={{patient.id}}&amp;encounter={{encounter.id}}#/overview"/>
 
+    <postSubmissionAction class="org.openmrs.module.pihcore.htmlformentry.action.ApplyDispositionAction"/>
+    <postSubmissionAction class="org.openmrs.module.pihcore.htmlformentry.action.CleanDiagnosisConstructAction"/>
+
     <style type="text/css">
 
         #who-when-where {
@@ -409,6 +412,55 @@
         </div>
     </section>
 
+    <section id="diagnosis-area" sectionTag="fieldset" headerTag="legend"
+             headerStyle="title" headerCode="Diagnoses">
+        <div class="section-container">
+            <div class="two-columns">
+                <div>
+                    <repeat>
+                        <template>
+                            <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                                <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{concept}" style="checkbox" />
+                            </obsgroup>
+                        </template>
+                        <!-- <render concept="CIEL:115924" name="Bipolar disorder (mania)" />
+                        <render concept="CIEL:119541" name="Bipolar disorder (depressive)" />
+                        <render concept="CIEL:119566" name="Dementia" /> -->
+                        <render concept="CIEL:121725" name="Alcohol abuse" />
+                        <render concept="CIEL:112603" name="Substance abuse (drugs)" />
+                        <render concept="CIEL:155"    name="Epilepsy" />
+                        <render concept="CIEL:137668" name="Behavioral disorder" />
+                        <!-- <render concept="PIH:14629"   name="Emotional disorder" /> -->
+                     </repeat>
+                </div>
+                <div>
+                    <repeat>
+                        <template>
+                            <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                                <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{concept}" style="checkbox" />
+                            </obsgroup>
+                        </template>
+
+                        <render concept="CIEL:121303" name="Developmental disorder (ASD)" />
+                        <render concept="CIEL:156923" name="Developmental disorder (ITLD)" />
+                        <!-- <render concept="CIEL:160197" name="Psychosomatic disorder" /> -->
+                        <render concept="CIEL:139545" name="General anxiety (GAD)" />
+                        <render concept="CIEL:113881" name="PTSD" />
+                        <render concept="CIEL:130966" name="Panic disorder" />
+                        <render concept="CIEL:119537" name="Depression" />
+                        <render concept="CIEL:113517" name="Psychosis" />
+                        <render concept="CIEL:113155" name="Schizophrenia" />
+                    </repeat>
+
+                    <label>Other diagnoses</label>
+                    <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                        <obs conceptId="CIEL:161602" style="text" />
+                    </obsgroup>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- ToDo:  Restore logic when condition list is ready for production -->
     <style>
@@ -529,37 +581,99 @@
     <section id="mh-interventions" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.mentalhealth.interventions">
         <div class="section-container">
-            <div class="two-columns">
+            <obs id="intervene" conceptId="PIH:14627" style="checkbox"
+                 answerConceptId="CIEL:1065" answerLabel="Interventions" >
+                <controls>
+                    <when value="CIEL:1065" thenDisplay="#show-interventions" />
+                </controls>
+            </obs>
+
+            <div id="show-interventions" class="two-columns">
                 <repeat with="
-            ['CIEL:165486','Supportive Psychotherapy'],
-            ['PIH:Psychotherapy'],
-            ['PIH:Psychoeducation'],
-            ['PIH:Relaxation'],
-            ['PIH:Family Support'],
-            ['PIH:Grief counseling'],
-            ['PIH:Parenting skills'],
-            ['PIH:Behavioral activation'],
-            ['PIH:Security plan'],
-            ['PIH:PSYCHOSOCIAL COUNSELING'],
-            ['CIEL:165328','HIV/AIDS counseling'],
-            ['CIEL:165479','Informing patient of diagnosis']">
+                            ['CIEL:165486','Supportive Psychotherapy'],
+                            ['PIH:Psychotherapy'],
+                            ['PIH:Psychoeducation'],
+                            ['PIH:Relaxation'],
+                            ['PIH:Family Support'],
+                            ['PIH:Grief counseling'],
+                            ['PIH:Parenting skills'],
+                            ['PIH:Behavioral activation'],
+                            ['PIH:Security plan'],
+                            ['PIH:PSYCHOSOCIAL COUNSELING'],
+                            ['CIEL:165328','HIV/AIDS counseling'],
+                            ['CIEL:165479','Informing patient of diagnosis']">
                     <div class="mh-intervention">
                         <obs conceptId="PIH:Mental health intervention" answerConceptId="{0}"/>
                     </div>
                 </repeat>
+
+                <p>
+                    <obs conceptId="PIH:Mental health intervention" answerConceptId="PIH:OTHER"
+                         commentFieldLabel=""/>
+                </p>
             </div>
 
-            <p>
-                <obs conceptId="PIH:Mental health intervention" answerConceptId="PIH:OTHER"
-                     commentFieldLabel=""/>
-            </p>
         </div>
     </section>
 
     <!-- socioeconomic assistance section -->
     <section id="socioeconomic-assistance" sectionTag="fieldset" headerTag="legend"
-             headerStyle="title" headerCode="pihcore.socioEconomic.assistance">
+             headerStyle="title" headerCode="pihcore.supportiveCare">
         <div class="section-container">
+            <p class="side-by-side">
+                <label>
+                    <uimessage code="Receiving social support" />
+                </label>
+                <obs id="supported" conceptId="CIEL:163766" style="radio"
+                     answerConceptIds="CIEL:1065,CIEL:1066"
+                     answerCodes="yes,no">
+                    <controls>
+                        <when value="CIEL:1065" thenDisplay="#support-q" />
+                    </controls>
+                </obs>
+
+                <obsgroup groupingConceptId="PIH:1395" >
+                    <div id="support-q" class="two-columns">
+                        <div>
+                            <p class="side-by-side">
+                                <label>
+                                    <uimessage code="Start date" />
+                                </label>
+                                <obs conceptId="CIEL:163526" />
+                            </p>
+                        </div>
+                        <div>
+                            <p class="side-by-side">
+                                <label>
+                                    <uimessage code="End date" />
+                                </label>
+                                <obs conceptId="CIEL:164384" />
+                            </p>
+                        </div>
+                    </div>
+
+                    <label>
+                        <uimessage code="Type of support"/>
+                    </label>
+
+                    <repeat>
+                        <template>
+                            <obs conceptId="PIH:2156" answerConceptId="{aid}"
+                                 answerLabel="{aidLabel}" style="checkbox"/>
+                        </template>
+                        <render aid="PIH:ASSISTANCE WITH TRANSPORT" aidLabel="Transportation"/>
+                        <render aid="PIH:NUTRITIONAL AID" aidLabel="Food support"/>
+                        <render aid="PIH:SCHOOL EXPENSES" aidLabel="School fees"/>
+                        <render aid="PIH:14628" aidLabel="Reintegration support"/>
+                        <render aid="PIH:FINANCIAL AID" aidLabel="Economic empowerment"/>
+                        <render aid="PIH:HOUSING EXPENSES" aidLabel="Housing or infrastructure support"/>
+                    </repeat>
+
+                </obsgroup>
+
+
+            </p>
+
             <table>
                 <tr>
                     <td></td>
@@ -631,6 +745,17 @@
     <section id="mh-plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan">
         <div class="section-container">
+
+            <div class="inline">
+                <div id="disposition">
+                    <encounterDisposition/>
+                </div>
+
+                <label>
+                    <uimessage code="pihcore.comment"/>
+                </label>
+                <obs conceptId="PIH:DISPOSITION COMMENTS" style="text"/>
+            </div>
 
             <p>
                 <label>
