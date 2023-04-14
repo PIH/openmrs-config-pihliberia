@@ -26,17 +26,17 @@
     <style type="text/css">
 
         #who-when-where {
-        margin-bottom: 6px;
-        border-bottom: 1px solid #ccc;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #ccc;
         }
 
         #who-when-where p {
-        display: inline-block;
-        padding-right: 20px;
+            display: inline-block;
+            padding-right: 20px;
         }
 
         #where > input[type=text] {
-        display: inline-block;
+            display: inline-block;
         }
 
         .narrow {
@@ -44,9 +44,9 @@
         }
 
         .field-error {
-        color: #ff6666;
-        font-size: 1.1em;
-        display: block;
+            color: #ff6666;
+            font-size: 1.1em;
+            display: block;
         }
 
         .two-columns-old {
@@ -675,7 +675,7 @@
                             <label>
                                 <uimessage code="End date" />
                             </label>
-                            <obs conceptId="CIEL:164384" />
+                            <obs conceptId="CIEL:164384" allowFutureDates="true"/>
                         </div>
                     </div>
 
@@ -711,21 +711,21 @@
     <section id="mh-plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan">
         <div class="section-container">
-
             <div class="inline">
                 <div id="disposition">
                     <encounterDisposition/>
                 </div>
 
                 <label>
-                    <uimessage code="pihcore.comment"/>
+                    <uimessage code="Disposition comments"/>
                 </label>
                 <obs conceptId="PIH:DISPOSITION COMMENTS" style="text"/>
             </div>
+            <br/><br/>
 
             <p>
                 <label>
-                    <uimessage code="pihcore.comment"/>:
+                    <uimessage code="Patient plan comments"/>
                 </label>
                 <obs conceptId="PIH:PATIENT PLAN COMMENTS" style="textarea" rows="10"/>
             </p>
