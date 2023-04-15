@@ -335,44 +335,12 @@
     <enrollInProgram programId="Mental Health"/>
 
     <!-- The form -->
-    <section id="mh_refer" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.mentalhealth.referral">
-
-        <div class="section-container">
-            <div class="inline">
-                <div class="referral-community">
-                    <label>
-                        <uimessage code="pihcore.mentalhealth.referredBy"/>:
-                    </label>
-                    <obs id="role-of-referring-person" conceptId="PIH:Role of referring person"
-                         answerConceptIds="PIH:Teacher,PIH:TRADITIONAL HEALER,PIH:VILLAGE HEALTH WORKER,PIH:11783,CIEL:978,PIH:Other medical service"
-                         style="radio" answerSeparator=""/>
-
-                    <obs conceptId="PIH:Role of referring person" answerConceptId="PIH:OTHER"
-                         style="checkbox" answerSeparator="" commentFieldLabel=" "/>
-                </div>
-
-                <div class="referral-internal">
-                    <label>
-                        <uimessage code="pihcore.mentalhealth.internalReferredBy"/>:
-                    </label>
-
-                    <obs id="type-of-referral-role" conceptId="PIH:Type of referral role"
-                         answerConceptIds="PIH:DOCTOR,PIH:NURSE,PIH:SOCIAL WORKER SERVICE"
-                         style="radio" answerSeparator=""/>
-                    <obs conceptId="PIH:Type of referral role" answerConceptId="PIH:OTHER"
-                         style="checkbox" commentFieldLabel=" "/>
-                </div>
-            </div>
-
-            <br/>
-
-            <div class="list-inline">
-                <label><uimessage code="pihcore.ncd.plan.hospitalized"/></label>
-                <obs conceptId="PIH:PATIENT HOSPITALIZED SINCE LAST VISIT" answerConceptIds="PIH:YES,PIH:NO"
-                     style="radio" answerSeparator=""/>
-            </div>
-
+    <section id="hospital" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Hospitalization">
+        <div class="list-inline section-container">
+            <label><uimessage code="pihcore.ncd.plan.hospitalized"/></label>
+            <obs conceptId="PIH:PATIENT HOSPITALIZED SINCE LAST VISIT" answerConceptIds="PIH:YES,PIH:NO"
+                 style="radio" answerSeparator=""/>
         </div>
     </section>
 
@@ -409,31 +377,72 @@
              headerCode="pihcore.habits">
         <div class="section-container">
 
+            <!-- Exposure  -->
             <p class="list-inline">
                 <label>
-                    <uimessage code="pihcore.habits.alcohol"/>
+                    <uimessage code="Illicit drugs"/>
                 </label>
-                <obs conceptId="PIH:HISTORY OF ALCOHOL USE"
-                     answerConceptIds="PIH:IN THE PAST,PIH:CURRENTLY,PIH:NEVER,PIH:unknown"
+                <obs conceptId="PIH:HISTORY OF ILLEGAL DRUGS"
+                     answerConceptIds="PIH:CURRENTLY,PIH:IN THE PAST,PIH:NEVER,PIH:unknown"
                      style="radio" answerSeparator=""/>
             </p>
 
-            <p class="list-inline">
-                <label>
-                    <uimessage code="pihcore.habits.drugs"/>
-                </label>
-                <obs conceptId="PIH:HISTORY OF ILLEGAL DRUGS"
-                     answerConceptIds="PIH:IN THE PAST,PIH:CURRENTLY,PIH:NEVER,PIH:unknown"
-                     style="radio" answerSeparator=""/>
-            </p>
+            <div id="ep-exposure-section">
+                    <repeat>
+                        <template>
+                            <obsgroup groupingConceptId="PIH:11950">
+                                <div class="ep-exposure-row">
+                                    <p id="ep-exposure-{name}-present" class="list-inline">
+                                        <label>
+                                            {label}
+                                        </label>
+                                        <obs id="ep-exposure-{name}"
+                                             conceptId="{concept}" style="radio"
+                                             answerConceptIds="CIEL:159450,CIEL:159452,CIEL:1090,CIEL:1067">
+                                            <controls>
+                                                <when value="CIEL:159450"
+                                                      thenJavaScript="omrs.toggleExposureDurationField(1, 'ep-exposure-{name}-duration-span')"/>
+                                                <when value="CIEL:159452"
+                                                      thenJavaScript="omrs.toggleExposureDurationField(1, 'ep-exposure-{name}-duration-span')"/>
+                                                <when value="CIEL:1090"
+                                                      thenJavaScript="omrs.toggleExposureDurationField(0, 'ep-exposure-{name}-duration-span')"/>
+                                                <when value="CIEL:1067"
+                                                      thenJavaScript="omrs.toggleExposureDurationField(0, 'ep-exposure-{name}-duration-span')"/>
+                                            </controls>
+                                        </obs>
+                                    </p>
+                                    <!-- This is for recording duration the patient has been practising unhealthy habits -->
+                                    <span id="ep-exposure-{name}-duration-span" class="collapsible-inline" style="display:none;">
+                                        <span class="ep-compexp-duration-span">
+                                            <label>
+                                                <uimessage code="pihcore.epilepsy.habits.duration"/>
+                                            </label>
+                                            <obs id="ep-exposure-{name}-duration" conceptId="CIEL:162603"/>
+                                        </span>
+
+                                        <span class="ep-compexp-duration-unit">
+                                            <label>
+                                                <uimessage code="pihcore.epilepsy.habits.duration.unit"/>
+                                            </label>
+                                            <obs id="ep-exposure-{name}-duration-time-unit" conceptId="CIEL:1732"/>
+                                        </span>
+                                    </span>
+                                </div>
+                            </obsgroup>
+                        </template>
+                        <render concept="PIH:12391" name="marijuana" label="Marijuana"/>
+                        <render concept="PIH:12390" name="cocaine" label="Italian White (cocaine)"/>
+                        <render concept="CIEL:159449" name="alcohol" label="Alcohol"/>
+                        <render concept="PIH:12392" name="pork" label="Pork meat"/>
+                    </repeat>
+            </div>
 
         </div>
     </section>
 
     <section id="mh-epilepsy-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.ncd.epilepsy">
-        <i class="icon-arrow-down"></i>
-        <div id="epilepsy" class="section-container sub-form collapsible" style="display:none">
+        <div id="epilepsy" class="section-container" >
             <div class="inline" style="margin-bottom: 11px;">
                 <div style="width: 50%; float:left;">
                     <span class="inline">
@@ -598,6 +607,7 @@
                     </fieldset>
                 </div>
             </div>
+            <br/>
 
             <!-- Complications (Y/N/U) -->
             <div>
@@ -641,60 +651,6 @@
                         <render concept="CIEL:118826" name="drug-related" label="Drug Related"/>
                         <render concept="CIEL:119537" name="depression" label="Depression"/>
                         <render concept="CIEL:140238" name="fever" label="Fever"/>
-                    </repeat>
-                </fieldset>
-            </div>
-
-            <!-- Exposure (Y/N/U) -->
-            <div id="ep-exposure-section">
-                <fieldset>
-                    <legend>Exposure:</legend>
-                    <repeat>
-                        <template>
-                            <obsgroup groupingConceptId="PIH:11950">
-                                <div class="ep-exposure-row">
-                                    <span id="ep-exposure-{name}-present">
-                                        <label>
-                                            {label}
-                                        </label>
-                                        <obs id="ep-exposure-{name}"
-                                             conceptId="{concept}"
-                                             answerConceptIds="CIEL:159450,CIEL:159452,CIEL:1090,CIEL:1067">
-                                            <controls>
-                                                <when value="CIEL:159450"
-                                                      thenJavaScript="omrs.toggleExposureDurationField(1, 'ep-exposure-{name}-duration-span')"/>
-                                                <when value="CIEL:159452"
-                                                      thenJavaScript="omrs.toggleExposureDurationField(1, 'ep-exposure-{name}-duration-span')"/>
-                                                <when value="CIEL:1090"
-                                                      thenJavaScript="omrs.toggleExposureDurationField(0, 'ep-exposure-{name}-duration-span')"/>
-                                                <when value="CIEL:1067"
-                                                      thenJavaScript="omrs.toggleExposureDurationField(0, 'ep-exposure-{name}-duration-span')"/>
-                                            </controls>
-                                        </obs>
-                                    </span>
-                                    <!-- This is for recording duration the patient has been practising unhealthy habits -->
-                                    <span id="ep-exposure-{name}-duration-span" class="collapsible-inline" style="display:none;">
-                                        <span class="ep-compexp-duration-span">
-                                            <label>
-                                                <uimessage code="pihcore.epilepsy.habits.duration"/>
-                                            </label>
-                                            <obs id="ep-exposure-{name}-duration" conceptId="CIEL:162603"/>
-                                        </span>
-
-                                        <span class="ep-compexp-duration-unit">
-                                            <label>
-                                                <uimessage code="pihcore.epilepsy.habits.duration.unit"/>
-                                            </label>
-                                            <obs id="ep-exposure-{name}-duration-time-unit" conceptId="CIEL:1732"/>
-                                        </span>
-                                    </span>
-                                </div>
-                            </obsgroup>
-                        </template>
-                        <render concept="PIH:12391" name="marijuana" label="Marijuana"/>
-                        <render concept="PIH:12390" name="cocaine" label="Italian White (cocaine)"/>
-                        <render concept="CIEL:159449" name="alcohol" label="Alcohol"/>
-                        <render concept="PIH:12392" name="pork" label="Pork meat"/>
                     </repeat>
                 </fieldset>
             </div>
