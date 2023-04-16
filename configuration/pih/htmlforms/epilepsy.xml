@@ -23,108 +23,108 @@
     <style type="text/css">
 
         #who-when-where {
-            margin-bottom: 6px;
-            border-bottom: 1px solid #ccc;
+        margin-bottom: 6px;
+        border-bottom: 1px solid #ccc;
         }
 
         #who-when-where p {
-            display: inline-block;
-            padding-right: 20px;
+        display: inline-block;
+        padding-right: 20px;
         }
 
         #where > input[type=text] {
-            display: inline-block;
+        display: inline-block;
         }
 
         .narrow {
-            width: 200px;
+        width: 200px;
         }
 
         .field-error {
-            color: #ff6666;
-            font-size: 1.1em;
-            display: block;
+        color: #ff6666;
+        font-size: 1.1em;
+        display: block;
         }
 
         .three-columns, .two-columns {
-            display: table;
-            height: 100%;
-            width: 100%;
+        display: table;
+        height: 100%;
+        width: 100%;
         }
 
         .two-columns > div {
-            display: table-cell;
-            width: 50%;
+        display: table-cell;
+        width: 50%;
         }
 
         .simple-form-ui input {
-            min-width: 80%
+        min-width: 80%
         }
 
         form fieldset {
-            min-width: 90%;
-            display: block;
+        min-width: 90%;
+        display: block;
         }
 
         #calculated-waist-hip-ratio {
-            font-weight: bold;
-            font-size: 1.4em;
+        font-weight: bold;
+        font-size: 1.4em;
         }
 
         .encounter-summary-container #calculated-ratio {
-            font-size: 1em;
-            font-weight: normal;
+        font-size: 1em;
+        font-weight: normal;
         }
 
         #encounterDate input {
-            min-width: 15%
+        min-width: 15%
         }
 
         .half-size-text {
-            color: #ff6666;
-            font-size: 50%;
-            display: block;
+        color: #ff6666;
+        font-size: 50%;
+        display: block;
         }
 
         .section-container {
-            background: #F2F2F2;
-            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-            padding: 10px 5px 10px 15px;
-            line-height: 1.5em; /*add this for vertical spacing between elements*/
+        background: #F2F2F2;
+        box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+        padding: 10px 5px 10px 15px;
+        line-height: 1.5em; /*add this for vertical spacing between elements*/
         }
 
         .section-container input[type="checkbox"] {
-            margin: 0px 5px; /*changed values to vertical, horizontal*/
-            top:5px; /*added to offset the checkbox position to line up*/
+        margin: 0px 5px; /*changed values to vertical, horizontal*/
+        top:5px; /*added to offset the checkbox position to line up*/
         }
 
         .section-container label { /*new definition to override labels inside section-containers*/
-            margin: 0px;
+        margin: 0px;
         }
 
-       - .section {
-            width: 100%;
+        - .section {
+        width: 100%;
         }
 
         textarea {
-            width: 95%;
+        width: 95%;
         }
 
         span.obs-field > select {
-            min-width: 0;
+        min-width: 0;
         }
 
         .list-inline label, .list-inline input[type="radio"], .list-inline span{
-            display: inline-block;
-            float: none;
+        display: inline-block;
+        float: none;
         }
 
         .list-inline label:first-child {
-            width: 220px;
+        width: 220px;
         }
 
         span.symptom-present {
-            float: right;
+        float: right;
         }
 
 
@@ -133,15 +133,15 @@
     <ifMode mode="VIEW">
         <style type="text/css">
             .collapsible {
-                display: block !important;
+            display: block !important;
             }
 
             .collapsible-inline {
-                display: inline-block !important;
+            display: inline-block !important;
             }
 
             .icon-arrow-down, .icon-arrow-up {
-                display: none;
+            display: none;
             }
         </style>
     </ifMode>
@@ -151,44 +151,48 @@
 
             jq(function() {
 
-                // return appointment date can never be before encounter date
-                var setMinReturnVisitDate = function () {
+            // return appointment date can never be before encounter date
+            var setMinReturnVisitDate = function () {
 
-                    var returnVisitDate = getValue('return-visit-date.value');
+            var returnVisitDate = getValue('return-visit-date.value');
 
-                    getField('return-visit-date.value').datepicker('option', 'minDate', getField('encounterDate.value').datepicker('getDate'));
+            getField('return-visit-date.value').datepicker('option', 'minDate',
+            getField('encounterDate.value').datepicker('getDate'));
 
-                    if (returnVisitDate  &amp;&amp; returnVisitDate != getValue('return-visit-date.value')) {
-                        setValue('return-visit-date.value','');  // reset return visit date if change to encounter date makes it invalid
-                        alert('<uimessage code="pihcore.mentalhealth.returnVisitDateResetWarning"/>');
-                    }
-                }
+            if (returnVisitDate &amp;&amp; returnVisitDate != getValue('return-visit-date.value')) {
+            setValue('return-visit-date.value',''); // reset return visit date if change to encounter date makes it
+            invalid
+            alert('<uimessage code="pihcore.mentalhealth.returnVisitDateResetWarning"/>');
+            }
+            }
 
-                getField('encounterDate.value').change(setMinReturnVisitDate);
+            getField('encounterDate.value').change(setMinReturnVisitDate);
 
-                setMinReturnVisitDate();
+            setMinReturnVisitDate();
 
-                jq('.medication-checkbox > input:checkbox').each(function(idx, it){
-                    if(jq(it).not(':checked')){
-                        jq(it).closest("td").siblings().find(":input").each(function(i, el){
-                            jq(el).attr("disabled", "disabled");
-                        });
-                    }
+            jq('.medication-checkbox > input:checkbox').each(function(idx, it){
+            if(jq(it).not(':checked')){
+            jq(it).closest("td").siblings().find(":input").each(function(i, el){
+            jq(el).attr("disabled", "disabled");
+            });
+            }
 
-                    jq(it).change(function(){
-                        if(jq(this).is(':checked')){
-                            jq(this).closest("td").siblings().find(":input").each(function(i, el){
-                                jq(el).removeAttr("disabled");
-                            });
-                        } else {
-                            jq(this).closest("td").siblings().find(":input").each(function(i, el){
-                                jq(el).val('').attr("disabled", "disabled");
-                            });
-                        }
-                    });
-                });
+            jq(it).change(function(){
+            if(jq(this).is(':checked')){
+            jq(this).closest("td").siblings().find(":input").each(function(i, el){
+            jq(el).removeAttr("disabled");
+            });
+            } else {
+            jq(this).closest("td").siblings().find(":input").each(function(i, el){
+            jq(el).val('').attr("disabled", "disabled");
+            });
+            }
+            });
+            });
 
-                jq('#phq9Score > input:text').attr('placeholder', '0-27');
+            jq('#phq9Score > input:text').attr('placeholder', '0-27');
+            jq('#cgiScore > input:text').attr('placeholder', '0-7');
+            jq('#whodasScore > input:text').attr('placeholder', '0-100');
 
             });
 
@@ -213,13 +217,6 @@
                 <uimessage code="pihcore.ncd.epilepsy"/>
             </label>
         </h2>
-
-        <span id="mh_mrn_enter" style="float:right;">
-            <label class="inline">MRN:</label>
-            <span class="inline">
-                <patient field="identifier" identifierTypeId="23507d1e-4f22-11ea-9717-645d86728797" required="false"/>
-            </span>
-        </span>
 
         <!-- users with retroConsultNote privilege can edit provider, location, and date for both retro and active visits -->
         <includeIf velocityTest="$user.hasPrivilege('Task: emr.retroConsultNote')">
@@ -292,7 +289,8 @@
         </includeIf>
 
         <!-- all users that don't have either retro privilege, or those with retro-this-provider-only but with an active visit, can only edit location -->
-        <includeIf velocityTest="(!$user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote')) or ($user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote') and $visit.open)">
+        <includeIf
+                velocityTest="(!$user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote')) or ($user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote') and $visit.open)">
             <div style="display:none">
                 <encounterProviderAndRole default="currentUser" encounterRole="4f10ad1a-ec49-48df-98c7-1391c6ac7f05"
                                           required="true"/>
@@ -314,7 +312,8 @@
                                 <uimessage code="emr.locationRequired"/>
                             </label>
                             <span>
-                                <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Consult Note Location"/>
+                                <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
+                                                   tags="Consult Note Location"/>
                             </span>
                         </td>
                         <td>
@@ -338,7 +337,9 @@
     <section id="hospital" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Hospitalization">
         <div class="list-inline section-container">
-            <label><uimessage code="pihcore.ncd.plan.hospitalized"/></label>
+            <label>
+                <uimessage code="pihcore.ncd.plan.hospitalized"/>
+            </label>
             <obs conceptId="PIH:PATIENT HOSPITALIZED SINCE LAST VISIT" answerConceptIds="PIH:YES,PIH:NO"
                  style="radio" answerSeparator=""/>
         </div>
@@ -348,17 +349,32 @@
     <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.mentalhealth.scores">
         <div class="section-container">
-            <p>
-                <label>
-                    <uimessage code="pihcore.ncd.mental.phq9Score"/> (0-27):
-                </label>
-                <span class="small">
-                    <obs id="phq9Score" conceptId="CIEL:165137"/>
-                </span>
-            </p>
+            <span class="list-inline">
+                <p>
+                    <label>
+                        <uimessage code="CGI Score"/>
+                        (0-7):
+                    </label>
+                    <span class="small">
+                        <obs id="cgiScore" conceptId="CIEL:163223"/>
+                    </span>
+                </p>
+            </span>
+
+            <span class="list-inline">
+                <p>
+                    <label>
+                        <uimessage code="WHODAS Score"/>
+                        (0-100):
+                    </label>
+                    <span class="small">
+                        <obs id="whodasScore" conceptId="CIEL:163226"/>
+                    </span>
+                </p>
+            </span>
+
         </div>
     </section>
-
 
     <!-- This include will be changed to wrap pregnancy when other exams are added to this section -->
     <includeIf velocityTest="$patient.gender == 'F' ">
@@ -372,77 +388,9 @@
         </section>
     </includeIf>
 
-
-    <section id="mh_habits" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.habits">
-        <div class="section-container">
-
-            <!-- Exposure  -->
-            <p class="list-inline">
-                <label>
-                    <uimessage code="Illicit drugs"/>
-                </label>
-                <obs conceptId="PIH:HISTORY OF ILLEGAL DRUGS"
-                     answerConceptIds="PIH:CURRENTLY,PIH:IN THE PAST,PIH:NEVER,PIH:unknown"
-                     style="radio" answerSeparator=""/>
-            </p>
-
-            <div id="ep-exposure-section">
-                    <repeat>
-                        <template>
-                            <obsgroup groupingConceptId="PIH:11950">
-                                <div class="ep-exposure-row">
-                                    <p id="ep-exposure-{name}-present" class="list-inline">
-                                        <label>
-                                            {label}
-                                        </label>
-                                        <obs id="ep-exposure-{name}"
-                                             conceptId="{concept}" style="radio"
-                                             answerConceptIds="CIEL:159450,CIEL:159452,CIEL:1090,CIEL:1067">
-                                            <controls>
-                                                <when value="CIEL:159450"
-                                                      thenJavaScript="omrs.toggleExposureDurationField(1, 'ep-exposure-{name}-duration-span')"/>
-                                                <when value="CIEL:159452"
-                                                      thenJavaScript="omrs.toggleExposureDurationField(1, 'ep-exposure-{name}-duration-span')"/>
-                                                <when value="CIEL:1090"
-                                                      thenJavaScript="omrs.toggleExposureDurationField(0, 'ep-exposure-{name}-duration-span')"/>
-                                                <when value="CIEL:1067"
-                                                      thenJavaScript="omrs.toggleExposureDurationField(0, 'ep-exposure-{name}-duration-span')"/>
-                                            </controls>
-                                        </obs>
-                                    </p>
-                                    <!-- This is for recording duration the patient has been practising unhealthy habits -->
-                                    <span id="ep-exposure-{name}-duration-span" class="collapsible-inline" style="display:none;">
-                                        <span class="ep-compexp-duration-span">
-                                            <label>
-                                                <uimessage code="pihcore.epilepsy.habits.duration"/>
-                                            </label>
-                                            <obs id="ep-exposure-{name}-duration" conceptId="CIEL:162603"/>
-                                        </span>
-
-                                        <span class="ep-compexp-duration-unit">
-                                            <label>
-                                                <uimessage code="pihcore.epilepsy.habits.duration.unit"/>
-                                            </label>
-                                            <obs id="ep-exposure-{name}-duration-time-unit" conceptId="CIEL:1732"/>
-                                        </span>
-                                    </span>
-                                </div>
-                            </obsgroup>
-                        </template>
-                        <render concept="PIH:12391" name="marijuana" label="Marijuana"/>
-                        <render concept="PIH:12390" name="cocaine" label="Italian White (cocaine)"/>
-                        <render concept="CIEL:159449" name="alcohol" label="Alcohol"/>
-                        <render concept="PIH:12392" name="pork" label="Pork meat"/>
-                    </repeat>
-            </div>
-
-        </div>
-    </section>
-
     <section id="mh-epilepsy-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.ncd.epilepsy">
-        <div id="epilepsy" class="section-container" >
+        <div id="epilepsy" class="section-container">
             <div class="inline" style="margin-bottom: 11px;">
                 <div style="width: 50%; float:left;">
                     <span class="inline">
@@ -468,7 +416,7 @@
                         <uimessage code="pihcore.ncd.epilepsy.seizure_num_1mo"/>&amp;nbsp
                     </label>
                     <span class="inline">
-                        <obs conceptId="PIH:Number of seizures in the past month" />
+                        <obs conceptId="PIH:Number of seizures in the past month"/>
                     </span>
 
                     <label class="inline">
@@ -534,7 +482,9 @@
                         </repeat>
                     </fieldset>
                 </div>
-            </div> <br/> <br />
+            </div>
+            <br/>
+            <br/>
 
             <div class="two-columns">
                 <div id="ep-trigger-section">
@@ -662,35 +612,35 @@
 
         <!-- Hide the label for the drug field in view mode -->
         .orderwidget-history-section .order-field-label.order-drug {
-            display:none;
+        display:none;
         }
         <!-- Add a colon after the Dose label in view mode -->
         .orderwidget-history-section .order-field-label.order-dose:after {
-            content: ": ";
-            white-space: pre;
+        content: ": ";
+        white-space: pre;
         }
 
         .order-field {
-            display: inline-block;
-            padding: 0px;
+        display: inline-block;
+        padding: 0px;
         }
         .order-field.action {
-            display: block;
+        display: block;
         }
         .order-field.dateActivated {
-            padding-right: 20px;
+        padding-right: 20px;
         }
         .order-field-label {
-            display: inline-block;
-            padding-right: 5px;
-            vertical-align: middle;
+        display: inline-block;
+        padding-right: 5px;
+        vertical-align: middle;
         }
         .order-field-label:after {
-            content: "";
-            white-space: pre;
+        content: "";
+        white-space: pre;
         }
         .order-field-widget {
-            display: inline-block;
+        display: inline-block;
         }
     </style>
 
@@ -725,21 +675,21 @@
                             <option value="CIEL:1513"/>    <!-- Tablet -->
                             <option value="CIEL:161553"/>  <!-- mg -->
                             <option value="CIEL:162263"/>  <!-- mL -->
-                            <option value="CIEL:1608" />   <!-- Capsule -->
+                            <option value="CIEL:1608"/>   <!-- Capsule -->
                         </orderProperty>
                         <orderProperty name="frequency" label=" ">
-                            <option value="PIH:OD" />
-                            <option value="PIH:BID" />
-                            <option value="PIH:TID" />
-                            <option value="PIH:QID" />
-                            <option value="PIH:STAT" />
-                            <option value="PIH:PRN" />
+                            <option value="PIH:OD"/>
+                            <option value="PIH:BID"/>
+                            <option value="PIH:TID"/>
+                            <option value="PIH:QID"/>
+                            <option value="PIH:STAT"/>
+                            <option value="PIH:PRN"/>
                             <!-- <option value="CIEL:5622" /> broken -->
                         </orderProperty>
                         <orderProperty name="route" value="CIEL:160240" label=" ">
-                            <option value="CIEL:160240" /> <!-- Oral -->
-                            <option value="CIEL:160242" /> <!-- Intravenous -->
-                            <option value="CIEL:160243" /> <!-- Intramuscular -->
+                            <option value="CIEL:160240"/> <!-- Oral -->
+                            <option value="CIEL:160242"/> <!-- Intravenous -->
+                            <option value="CIEL:160243"/> <!-- Intramuscular -->
                         </orderProperty>
                     </div>
                     <div style="padding:0px;">
@@ -757,7 +707,7 @@
                             <option value="CIEL:1513"/>    <!-- Tablet -->
                             <option value="CIEL:161553"/>  <!-- mg -->
                             <option value="CIEL:162263"/>  <!-- mL -->
-                            <option value="CIEL:1608" />   <!-- Capsule -->
+                            <option value="CIEL:1608"/>   <!-- Capsule -->
                         </orderProperty>
                         <orderProperty name="numRefills" value="0" label="pihcore.refills"/>
                     </div>
@@ -783,9 +733,13 @@
             </drugOrder>
         </div>
         <div class="section-container">
-            <label><b><uimessage code="pihcore.remarks"/></b></label>
+            <label>
+                <b>
+                    <uimessage code="pihcore.remarks"/>
+                </b>
+            </label>
             <p>
-                <obs conceptId="PIH:10637" cols="50" rows="5" />
+                <obs conceptId="PIH:10637" cols="50" rows="5"/>
             </p>
         </div>
     </section>
@@ -796,27 +750,27 @@
         <div class="section-container">
             <p class="list-inline">
                 <label>
-                    <uimessage code="Receiving social support" />
+                    <uimessage code="Receiving social support"/>
                 </label>
                 <obs id="supported" conceptId="CIEL:163766" style="radio"
                      answerConceptIds="CIEL:1065,CIEL:1066"
                      answerCodes="yes,no">
                     <controls>
-                        <when value="CIEL:1065" thenDisplay="#support-q" />
+                        <when value="CIEL:1065" thenDisplay="#support-q"/>
                     </controls>
                 </obs>
 
-                <obsgroup groupingConceptId="PIH:1395" >
+                <obsgroup groupingConceptId="PIH:1395">
                     <div id="support-q" class="two-columns">
                         <div>
                             <label>
-                                <uimessage code="Start date" />
+                                <uimessage code="Start date"/>
                             </label>
-                            <obs conceptId="CIEL:163526" />
+                            <obs conceptId="CIEL:163526"/>
                         </div>
                         <div>
                             <label>
-                                <uimessage code="End date" />
+                                <uimessage code="End date"/>
                             </label>
                             <obs conceptId="CIEL:164384" allowFutureDates="true"/>
                         </div>
@@ -864,7 +818,8 @@
                 </label>
                 <obs conceptId="PIH:DISPOSITION COMMENTS" style="text"/>
             </div>
-            <br/><br/>
+            <br/>
+            <br/>
 
             <p>
                 <label>
@@ -878,7 +833,8 @@
                     <uimessage code="pihcore.consult.returnVisitDate"/>:
                 </label>
                 <span class="small">
-                    <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true" required="true"/>
+                    <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true"
+                         required="true"/>
                 </span>
             </p>
         </div>
