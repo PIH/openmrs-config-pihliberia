@@ -349,19 +349,6 @@
     <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.mentalhealth.scores">
         <div class="section-container">
-
-            <span class="list-inline">
-                <p>
-                    <label>
-                        <uimessage code="pihcore.ncd.mental.phq9Score"/>
-                        (0-27):
-                    </label>
-                    <span class="small">
-                        <obs id="phq9Score" conceptId="CIEL:165137"/>
-                    </span>
-                </p>
-            </span>
-
             <span class="list-inline">
                 <p>
                     <label>
