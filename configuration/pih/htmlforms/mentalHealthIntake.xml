@@ -502,33 +502,9 @@
     </section>
 
     <section id="complaint" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Complaints">
+             headerCode="Patient complaints">
         <div class="section-container">
-            <div class="two-columns">
-                <div>
-                    <label>
-                        Patient complaints
-                    </label>
-                    <repeat>
-                        <template>
-                            <obs conceptId="CIEL:5219" style="checkbox"
-                                 answerConceptId="{concept}" answerCode="{name}"  />
-                        </template>
-                        <render concept="CIEL:113054" name="Seizures" />
-                        <render concept="CIEL:139146" name="Hallucinations" />
-                        <render concept="CIEL:142600" name="Delusions" />
-                        <render concept="PIH:12427"   name="Depressive symptoms" />
-                        <render concept="CIEL:125562" name="Suicidal ideation" />
-                    </repeat>
-
-                </div>
-                <div>
-                    <label>
-                        Other complaints
-                    </label>
-                    <obs conceptId="CIEL:160531" style="text" rows="5" />
-                </div>
-            </div>
+            <obs conceptId="CIEL:160531" style="text" rows="5" />
         </div>
     </section>
 
@@ -536,9 +512,9 @@
              headerCode="zl.consultNote.patientHistory.title">
         <div class="section-container-color">
             <p>
-                <label>
+                <strong>
                     Patient complaint history
-                </label>
+                </strong>
                 <obs conceptId="CIEL:1390" style="text" rows="5" />
             </p>
 
@@ -546,7 +522,6 @@
                 Past medical history
             </strong>
             <div class="two-columns-old">
-                <!-- Allergy is intentionally ommitted because it should be handled in more detail through the Allergy UI -->
                 <pastMedicalHistoryCheckbox concept="PIH:ASTHMA"/>
                 <pastMedicalHistoryCheckbox concept="PIH:HEART DISEASE" specify="true" class="medicalHistoryText patientHistory" />
                 <pastMedicalHistoryCheckbox concept="PIH:SURGERY" specify="true" class="medicalHistoryText patientHistory"/>
@@ -577,6 +552,11 @@
                 <pastMedicalHistoryCheckbox concept="PIH:47" />
                 <pastMedicalHistoryCheckbox concept="PIH:Eclampsia" />
             </includeIf>
+
+            <label>
+                Past medical history comments:
+            </label>
+            <obs conceptId="CIEL:160221" rows="3" />
         </div>
 
         <div class="section-container-color">
@@ -587,8 +567,7 @@
                 <div class="two-columns-old">
                     <repeat>
                         <template>
-                            <obs conceptId="CIEL:159350" style="checkbox"
-                                 answerConceptId="{concept}" answerCode="{name}"  />
+                            <pastMedicalHistoryCheckbox concept="{concept}" label="{name}"/>
                         </template>
                         <render concept="CIEL:115924" name="Bipolar disorder (mania)" />
                         <render concept="CIEL:119541" name="Bipolar disorder (depressive)" />
@@ -598,20 +577,24 @@
                         <render concept="CIEL:155"    name="Epilepsy" />
                         <render concept="CIEL:137668" name="Behavioral disorder" />
                         <render concept="PIH:14629"   name="Emotional disorder" />
-                        <render concept="CIEL:121303" name="Developmental disorder (ASD)" />
-                        <render concept="CIEL:156923" name="Developmental disorder (ITLD)" />
+                        <render concept="CIEL:121303" name="Autism spectrum disorder (ASD)" />
+                        <render concept="CIEL:156923" name="Intellectual functioning disability (ITLD)" />
                         <render concept="CIEL:160197" name="Psychosomatic disorder" />
-                        <render concept="CIEL:139545" name="General anxiety (GAD)" />
+                        <render concept="CIEL:139545" name="General anxiety disorder (GAD)" />
                         <render concept="CIEL:113881" name="PTSD" />
                         <render concept="CIEL:130966" name="Panic disorder" />
                         <render concept="CIEL:119537" name="Depression" />
                         <render concept="CIEL:113517" name="Psychosis" />
                         <render concept="CIEL:113155" name="Schizophrenia" />
+                        <!-- ToDo: Uncomment with new clinical mds pkg
+                        <render concept="CIEL:134337" name="Other psychiatric disorder" specify="true" class="medicalHistoryText patientHistory" /> -->
                     </repeat>
 
-                    <!-- Other -->
-                    <obs conceptId="CIEL:159350" style="checkbox"
-                         answerConceptId="CIEL:5622" answerCode="Other"  />
+                    <label>
+                        Past psychiatry history comments:
+                    </label>
+                    <obs conceptId="CIEL:162159" style="text" rows="3" />
+
                 </div>
             </p>
         </div>
@@ -731,6 +714,10 @@
                         </p>
                     </div>
                 </div>
+                <label>
+                    Living situation comment:
+                </label>
+                <obs conceptId="CIEL:167224" rows="3" />
             </section>
 
             <section id="edu" sectionTag="fieldset" headerTag="legend"
@@ -742,7 +729,7 @@
                     </label>
                     <br/>
                     <obs conceptId="CIEL:1712" style="radio"
-                         answerConceptIds="CIEL:1107,CIEL:1713,CIEL:1714,PIH:3396,CIEL:159785"/>
+                         answerConceptIds="CIEL:1107,CIEL:1713,CIEL:1714,CIEL:160130,CIEL:159785"/>
                 </p>
 
                 <p class="list-inline">
@@ -753,15 +740,12 @@
                     <obs conceptId="CIEL:166855" style="radio"
                          answerConceptIds="CIEL:1065,CIEL:1066"/>
                 </p>
-            </section>
 
-            <section id="work" sectionTag="fieldset" headerTag="legend"
-                     headerStyle="title" headerCode="zl.registration.patient.occupation.label">
-                <p class="list-inline">
-                    <obs conceptId="PIH:Occupation" id="occupation" style="autocomplete"
-                         answerConceptIds="PIH:BREWER,CIEL:162944,PIH:COMMERCE,PIH:DRIVER,PIH:FACTORY WORKER,PIH:FARMER,CIEL:159674,PIH:FRUIT OR VEGETABLE SELLER,PIH:HEALTH CARE WORKER,PIH:1404,PIH:HOUSEWORK/FIELDWORK,PIH:MANUAL LABORER,CIEL:162945,PIH:MINER,PIH:PROFESSIONAL,PIH:RETIRED,PIH:SHEPHERD,PIH:SHOP OWNER,PIH:STUDENT,PIH:Teacher,PIH:UNEMPLOYED,PIH:OTHER NON-CODED"
-                         answerCodes="zl.registration.patient.occupation.brewer.label,zl.registration.patient.occupation.civilServant.label,zl.registration.patient.occupation.commerce.label,zl.registration.patient.occupation.driver.label,zl.registration.patient.occupation.factoryWorker.label,zl.registration.patient.occupation.farmer.label,zl.registration.patient.occupation.fisherman.label,zl.registration.patient.occupation.fruitOrVegetableVendor.label,zl.registration.patient.occupation.healthCareWorker.label,zl.registration.patient.occupation.housework.label,zl.registration.patient.occupation.houseworkFieldwork.label,zl.registration.patient.occupation.manualLaborer.label,zl.registration.patient.occupation.marketVendor.label,zl.registration.patient.occupation.miner.label,zl.registration.patient.occupation.professional.label,zl.registration.patient.occupation.retired.label,zl.registration.patient.occupation.shepherd.label,zl.registration.patient.occupation.shopOwner.label,zl.registration.patient.occupation.student.label,zl.registration.patient.occupation.teacher.label,zl.registration.patient.occupation.unemployed.label,zl.registration.patient.occupation.other.label"
-                          />
+                <p>
+                    <label>
+                        Education comments:
+                    </label>
+                    <obs conceptId="PIH:14644" style="text" rows="2" />
                 </p>
             </section>
 
@@ -769,55 +753,52 @@
                      headerStyle="title" headerCode="zl.registration.patient.religion.label">
                 <p class="list-inline">
                     <obs conceptId="PIH:Religion" id="religion" style="radio"
-                         answerConceptIds="PIH:Voodoo,PIH:Catholic,PIH:Baptist,PIH:Islam,PIH:Pentecostal,PIH:Seventh Day Adventist,PIH:Jehovah's Witness,PIH:OTHER NON-CODED"
-                         answerCodes="zl.registration.patient.religion.voodoo.label,zl.registration.patient.religion.catholic.label,zl.registration.patient.religion.baptist.label,zl.registration.patient.religion.islam.label,zl.registration.patient.religion.pentecostal.label,zl.registration.patient.religion.adventist.label,zl.registration.patient.religion.jehovahsWitness.label,zl.registration.patient.religion.other.label"
-                         />
+                         answerConceptIds="PIH:Catholic,PIH:Islam,PIH:OTHER NON-CODED"
+                         answerCodes="Christian,Muslim,other" />
                 </p>
             </section>
 
-            <p>
-                <strong>
-                    <uimessage code="Hobbies"/>
-                </strong>
+            <section id="hobby" sectionTag="fieldset" headerTag="legend"
+                     headerStyle="title" headerCode="Hobbies">
                 <obs conceptId="PIH:1604" style="text" rows="2" />
-            </p>
+            </section>
 
-            <div class="two-columns">
-                <div>
-                    <p>
-                        <label>
-                            <uimessage code="pihcore.socioEconomic.numChild"/>
-                        </label>
-                        <span class="small">
-                            <obs conceptId="CIEL:1825"/>
-                        </span>
-                    </p>
+            <section id="child-info" sectionTag="fieldset" headerTag="legend"
+                     headerStyle="title" headerCode="Children">
+                <div class="two-columns">
+                    <div>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.numChild"/>
+                            </label>
+                            <span class="small">
+                                <obs conceptId="CIEL:1825"/>
+                            </span>
+                        </p>
 
-                    <p>
-                        <label>
-                            <uimessage code="Involvement/Relationship with children"/>
-                        </label>
-                        <obs conceptId="CIEL:167214" style="text" rows="2"/>
-                    </p>
+                        <p>
+                            <label>
+                                <uimessage code="Involvement/Relationship with children"/>
+                            </label>
+                            <obs conceptId="CIEL:167214" style="text" rows="2"/>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="list-inline">
+                            <label>
+                                <uimessage code="Children living in household"/>
+                            </label>
+                            <obs conceptId="PIH:2277" style="radio"
+                                 answerConceptIds="CIEL:1066,CIEL:1065" answerCodes="no,yes"/>
+                        </p>
+                        <p class="list-inline">
+                            <label>Ages of children</label>
+                            <obs conceptId="PIH:14638" />
+                        </p>
+                    </div>
+
                 </div>
-                <div>
-                    <p class="list-inline">
-                        <label>
-                            <uimessage code="Children living in household"/>
-                        </label>
-                        <obs conceptId="PIH:2277" style="radio"
-                             answerConceptIds="CIEL:1066,CIEL:1065" answerCodes="no,yes"/>
-                    </p>
-                    <p class="list-inline">
-                        <label>Ages of children</label>
-
-
-                        <!-- ToDo: uncomment with socioecon mds (75)
-                        <obs conceptId="PIH:14638" /> -->
-                    </p>
-                </div>
-
-            </div>
+            </section>
         </div>
     </section>
 
@@ -844,6 +825,15 @@
                         </label>
                         <span class="small">
                             <obs id="phq9Score" conceptId="CIEL:165137"/>
+                        </span>
+                    </p>
+
+                    <p>
+                        <label>
+                            <uimessage code="CAGE"/> (0-4) for alcoholism:
+                        </label>
+                        <span class="small">
+                            <obs id="cageScore" conceptId="CIEL:167217"/>
                         </span>
                     </p>
 
@@ -957,11 +947,7 @@
                     <render concept="CIEL:159449" name="alcohol" label="Alcohol"/>
                     <render concept="PIH:HISTORY OF ILLEGAL DRUGS" name="drugs" label="Illicit drugs" />
                     <render concept="CIEL:163731" name="tobacco" label="Tobacco" />
-
                     <render concept="PIH:12391" name="marijuana" label="Marijuana"/>
-                    <render concept="PIH:12390" name="cocaine" label="Italian White (cocaine)"/>
-
-                    <render concept="PIH:12392" name="pork" label="Pork meat"/>
                 </repeat>
             </div>
 
@@ -971,20 +957,27 @@
     <section id="family-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="zl.consultNote.familyHistory.title">
         <div class="section-container">
-            <familyHistoryRelativeCheckboxes concept="PIH:DEPRESSION" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
-            <familyHistoryRelativeCheckboxes concept="PIH:ANXIETY DISORDER" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528,"/>
-            <familyHistoryRelativeCheckboxes concept="PIH:PSYCHOSIS" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
-            <familyHistoryRelativeCheckboxes concept="PIH:EPILEPSY" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
-            <familyHistoryRelativeCheckboxes concept="PIH:SCHIZOPHRENIA" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
-            <familyHistoryRelativeCheckboxes concept="PIH:Bipolar disorder" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:DEPRESSION" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528,CIEL:5622"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:ANXIETY DISORDER" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528,CIEL:5622"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:PSYCHOSIS" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528,CIEL:5622"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:EPILEPSY" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528,CIEL:5622"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:SCHIZOPHRENIA" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528,CIEL:5622"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:Bipolar disorder" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528,CIEL:5622"/>
 
             <familyHistoryRelativeCheckboxes concept="PIH:HYPERTENSION" label="pihcore.medicalhistory.hypertension"
-                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
-            <familyHistoryRelativeCheckboxes concept="PIH:TUBERCULOSIS" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
+                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528,CIEL:5622"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:TUBERCULOSIS" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528,CIEL:5622"/>
             <familyHistoryRelativeCheckboxes id="familyOther" class="medicalHistoryText famHistory"
                                              concept="PIH:OTHER" code="pihcore.other"
-                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"
+                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528,CIEL:5622"
                                              specify="true"/>
+
+            <p>
+                <label>
+                    Comment
+                </label>
+                <obs conceptId="CIEL:160618	" rows="2" />
+            </p>
         </div>
     </section>
 
@@ -1431,6 +1424,10 @@
                 <div id="disposition">
                     <encounterDisposition/>
                 </div>
+                <label>
+                    <uimessage code="Disposition comments"/>
+                </label>
+                <obs conceptId="PIH:DISPOSITION COMMENTS" style="text"/>
             </div>
             <br/><br/>
 
