@@ -183,6 +183,16 @@
             vertical-align: middle;
         }
 
+        .family-history-item .label {
+            display: inline-block;
+            width: 250px;
+        }
+
+        .family-history-item .relative {
+            display: inline-block;
+            width: 120px;
+        }
+
     </style>
 
     <ifMode mode="VIEW">
@@ -261,6 +271,15 @@
             <lookup complexExpression="$formGeneratedDatetime"/>
         </p>
     </div>
+
+    <!-- special formatting when in view mode -->
+    <style type="text/css">
+        <ifMode mode="VIEW" include="false">
+            #family-history br {
+            display: none;
+            }
+        </ifMode>
+    </style>
 
     <ifMode mode="VIEW" include="false">
         <script type="text/javascript">
@@ -603,163 +622,158 @@
              headerCode="Personal history">
         <div class="section-container">
             <section id="house" sectionTag="fieldset" headerTag="legend"
-                     headerStyle="title" headerCode="pihcore.socioEconomic.housing">
-                <div class="section-container">
-                    <div class="two-columns list-inline">
-                        <div>
-                            <p>
-                                <label>
-                                    <uimessage code="pihcore.socioEconomic.numPeople"/>
-                                </label>
-                                <span class="small">
-                                    <obs conceptId="CIEL:1474"/>
-                                </span>
-                            </p>
+                     headerStyle="title" headerCode="Living situation">
+                <div class="two-columns list-inline">
+                    <div>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.numPeople"/>
+                            </label>
+                            <span class="small">
+                                <obs conceptId="CIEL:1474"/>
+                            </span>
+                        </p>
 
-                            <p>
-                                <label>
-                                    <uimessage code="pihcore.socioEconomic.numRooms"/>
-                                </label>
-                                <span class="small">
-                                    <obs conceptId="CIEL:1475"/>
-                                </span>
-                            </p>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.numRooms"/>
+                            </label>
+                            <span class="small">
+                                <obs conceptId="CIEL:1475"/>
+                            </span>
+                        </p>
 
-                            <p>
-                                <label>
-                                    <uimessage code="pihcore.socioEconomic.radio"/>
-                                </label>
-                                <obs conceptId="PIH:1318" style="radio"
-                                     answerConceptIds="PIH:YES,PIH:NO"
-                                     answerSeparator=""/>
-                            </p>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.radio"/>
+                            </label>
+                            <obs conceptId="PIH:1318" style="radio"
+                                 answerConceptIds="PIH:YES,PIH:NO"
+                                 answerSeparator=""/>
+                        </p>
 
-                            <p>
-                                <label>
-                                    <uimessage code="pihcore.socioEconomic.tv"/>
-                                </label>
-                                <obs conceptId="CIEL:159746" style="radio"
-                                     answerConceptIds="PIH:YES,PIH:NO"
-                                     answerSeparator=""/>
-                            </p>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.tv"/>
+                            </label>
+                            <obs conceptId="CIEL:159746" style="radio"
+                                 answerConceptIds="PIH:YES,PIH:NO"
+                                 answerSeparator=""/>
+                        </p>
 
-                            <p>
-                                <label>
-                                    <uimessage code="pihcore.socioEconomic.fridge"/>
-                                </label>
-                                <obs conceptId="CIEL:159745" style="radio"
-                                     answerConceptIds="PIH:YES,PIH:NO"
-                                     answerSeparator=""/>
-                            </p>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.fridge"/>
+                            </label>
+                            <obs conceptId="CIEL:159745" style="radio"
+                                 answerConceptIds="PIH:YES,PIH:NO"
+                                 answerSeparator=""/>
+                        </p>
 
-                            <p>
-                                <label>
-                                    <uimessage code="pihcore.socioEconomic.bank"/>
-                                </label>
-                                <obs conceptId="PIH:11936" style="radio"
-                                     answerConceptIds="PIH:YES,PIH:NO"
-                                     answerSeparator=""/>
-                            </p>
-                        </div>
-                        <div>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.bank"/>
+                            </label>
+                            <obs conceptId="PIH:11936" style="radio"
+                                 answerConceptIds="PIH:YES,PIH:NO"
+                                 answerSeparator=""/>
+                        </p>
+                    </div>
+                    <div>
 
-                            <p>
-                                <label>
-                                    <uimessage code="pihcore.socioEconomic.toilet"/>
-                                </label>
-                                <obs conceptId="CIEL:159389" style="radio"
-                                     answerConceptIds="PIH:YES,PIH:NO"
-                                     answerSeparator=""/>
-                            </p>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.toilet"/>
+                            </label>
+                            <obs conceptId="CIEL:159389" style="radio"
+                                 answerConceptIds="PIH:YES,PIH:NO"
+                                 answerSeparator=""/>
+                        </p>
 
-                            <p>
-                                <label>
-                                    <uimessage code="pihcore.socioEconomic.latrine"/>
-                                </label>
-                                <obs conceptId="PIH:Latrine" style="radio"
-                                     answerConceptIds="PIH:YES,PIH:NO"
-                                     answerSeparator=""/>
-                            </p>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.latrine"/>
+                            </label>
+                            <obs conceptId="PIH:Latrine" style="radio"
+                                 answerConceptIds="PIH:YES,PIH:NO"
+                                 answerSeparator=""/>
+                        </p>
 
-                            <p>
-                                <label>
-                                    <uimessage code="pihcore.socioEconomic.floor"/>
-                                </label>
-                                <br/>
-                                <obs conceptId="CIEL:159387" style="radio"
-                                     answerConceptIds="CIEL:1943,CIEL:1944,CIEL:159679,CIEL:5622"
-                                     answerSeparator="&amp;nbsp;"/>
-                                <!-- CIEL codes: 1943=Concrete, 1944=Beaten earth, 159679=Ceramic tile, 5622=Other -->
-                            </p>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.floor"/>
+                            </label>
+                            <br/>
+                            <obs conceptId="CIEL:159387" style="radio"
+                                 answerConceptIds="CIEL:1943,CIEL:1944,CIEL:159679,CIEL:5622"
+                                 answerSeparator="&amp;nbsp;"/>
+                            <!-- CIEL codes: 1943=Concrete, 1944=Beaten earth, 159679=Ceramic tile, 5622=Other -->
+                        </p>
 
-                            <p>
-                                <label>
-                                    <uimessage code="pihcore.socioEconomic.roof"/>
-                                </label>
-                                <br/>
-                                <obs conceptId="CIEL:1290" style="radio"
-                                     answerConceptIds="PIH:1320,CIEL:1942,CIEL:1943,CIEL:5622"
-                                     answerSeparator="&amp;nbsp;"/>
-                            </p>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.roof"/>
+                            </label>
+                            <br/>
+                            <obs conceptId="CIEL:1290" style="radio"
+                                 answerConceptIds="PIH:1320,CIEL:1942,CIEL:1943,CIEL:5622"
+                                 answerSeparator="&amp;nbsp;"/>
+                        </p>
 
-                            <p>
-                                <label>
-                                    <uimessage code="pihcore.socioEconomic.wall"/>
-                                </label>
-                                <br/>
-                                <obs conceptId="PIH:1668" style="radio"
-                                     answerConceptIds="CIEL:1943,PIH:11939,PIH:2937,CIEL:159685,PIH:11938,CIEL:1944,CIEL:5622"
-                                     answerSeparator="&amp;nbsp;"/>
-                            </p>
-                        </div>
+                        <p>
+                            <label>
+                                <uimessage code="pihcore.socioEconomic.wall"/>
+                            </label>
+                            <br/>
+                            <obs conceptId="PIH:1668" style="radio"
+                                 answerConceptIds="CIEL:1943,PIH:11939,PIH:2937,CIEL:159685,PIH:11938,CIEL:1944,CIEL:5622"
+                                 answerSeparator="&amp;nbsp;"/>
+                        </p>
                     </div>
                 </div>
             </section>
 
-
             <section id="edu" sectionTag="fieldset" headerTag="legend"
                      headerStyle="title" headerCode="pihcore.socioEconomic.education">
-                <div class="section-container">
-                    <p class="list-inline">
-                        <!-- Education level -->
-                        <label>
-                            <uimessage code="pihcore.socioEconomic.levelEducation" />
-                        </label>
-                        <br/>
-                        <obs conceptId="CIEL:1712" style="radio"
-                             answerConceptIds="CIEL:1107,CIEL:1713,CIEL:1714,PIH:3396,CIEL:159785"/>
-                    </p>
+                <p class="list-inline">
+                    <!-- Education level -->
+                    <label>
+                        <uimessage code="pihcore.socioEconomic.levelEducation" />
+                    </label>
+                    <br/>
+                    <obs conceptId="CIEL:1712" style="radio"
+                         answerConceptIds="CIEL:1107,CIEL:1713,CIEL:1714,PIH:3396,CIEL:159785"/>
+                </p>
 
-                    <p class="list-inline">
-                        <!-- Literacy -->
-                        <label>
-                            <uimessage code="pihcore.socioEconomic.literate" />
-                        </label>
-                        <obs conceptId="CIEL:166855" style="radio"
-                             answerConceptIds="CIEL:1065,CIEL:1066"/>
-                    </p>
-                </div>
+                <p class="list-inline">
+                    <!-- Literacy -->
+                    <label>
+                        <uimessage code="pihcore.socioEconomic.literate" />
+                    </label>
+                    <obs conceptId="CIEL:166855" style="radio"
+                         answerConceptIds="CIEL:1065,CIEL:1066"/>
+                </p>
             </section>
 
-            <p class="list-inline">
-                <strong>
-                    <uimessage code="zl.registration.patient.occupation.label"/>
-                </strong>
-                <obs conceptId="PIH:Occupation" id="occupation" style="autocomplete"
-                     answerConceptIds="PIH:BREWER,CIEL:162944,PIH:COMMERCE,PIH:DRIVER,PIH:FACTORY WORKER,PIH:FARMER,CIEL:159674,PIH:FRUIT OR VEGETABLE SELLER,PIH:HEALTH CARE WORKER,PIH:1404,PIH:HOUSEWORK/FIELDWORK,PIH:MANUAL LABORER,CIEL:162945,PIH:MINER,PIH:PROFESSIONAL,PIH:RETIRED,PIH:SHEPHERD,PIH:SHOP OWNER,PIH:STUDENT,PIH:Teacher,PIH:UNEMPLOYED,PIH:OTHER NON-CODED"
-                     answerCodes="zl.registration.patient.occupation.brewer.label,zl.registration.patient.occupation.civilServant.label,zl.registration.patient.occupation.commerce.label,zl.registration.patient.occupation.driver.label,zl.registration.patient.occupation.factoryWorker.label,zl.registration.patient.occupation.farmer.label,zl.registration.patient.occupation.fisherman.label,zl.registration.patient.occupation.fruitOrVegetableVendor.label,zl.registration.patient.occupation.healthCareWorker.label,zl.registration.patient.occupation.housework.label,zl.registration.patient.occupation.houseworkFieldwork.label,zl.registration.patient.occupation.manualLaborer.label,zl.registration.patient.occupation.marketVendor.label,zl.registration.patient.occupation.miner.label,zl.registration.patient.occupation.professional.label,zl.registration.patient.occupation.retired.label,zl.registration.patient.occupation.shepherd.label,zl.registration.patient.occupation.shopOwner.label,zl.registration.patient.occupation.student.label,zl.registration.patient.occupation.teacher.label,zl.registration.patient.occupation.unemployed.label,zl.registration.patient.occupation.other.label"
-                      />
-            </p>
+            <section id="work" sectionTag="fieldset" headerTag="legend"
+                     headerStyle="title" headerCode="zl.registration.patient.occupation.label">
+                <p class="list-inline">
+                    <obs conceptId="PIH:Occupation" id="occupation" style="autocomplete"
+                         answerConceptIds="PIH:BREWER,CIEL:162944,PIH:COMMERCE,PIH:DRIVER,PIH:FACTORY WORKER,PIH:FARMER,CIEL:159674,PIH:FRUIT OR VEGETABLE SELLER,PIH:HEALTH CARE WORKER,PIH:1404,PIH:HOUSEWORK/FIELDWORK,PIH:MANUAL LABORER,CIEL:162945,PIH:MINER,PIH:PROFESSIONAL,PIH:RETIRED,PIH:SHEPHERD,PIH:SHOP OWNER,PIH:STUDENT,PIH:Teacher,PIH:UNEMPLOYED,PIH:OTHER NON-CODED"
+                         answerCodes="zl.registration.patient.occupation.brewer.label,zl.registration.patient.occupation.civilServant.label,zl.registration.patient.occupation.commerce.label,zl.registration.patient.occupation.driver.label,zl.registration.patient.occupation.factoryWorker.label,zl.registration.patient.occupation.farmer.label,zl.registration.patient.occupation.fisherman.label,zl.registration.patient.occupation.fruitOrVegetableVendor.label,zl.registration.patient.occupation.healthCareWorker.label,zl.registration.patient.occupation.housework.label,zl.registration.patient.occupation.houseworkFieldwork.label,zl.registration.patient.occupation.manualLaborer.label,zl.registration.patient.occupation.marketVendor.label,zl.registration.patient.occupation.miner.label,zl.registration.patient.occupation.professional.label,zl.registration.patient.occupation.retired.label,zl.registration.patient.occupation.shepherd.label,zl.registration.patient.occupation.shopOwner.label,zl.registration.patient.occupation.student.label,zl.registration.patient.occupation.teacher.label,zl.registration.patient.occupation.unemployed.label,zl.registration.patient.occupation.other.label"
+                          />
+                </p>
+            </section>
 
-            <p class="list-inline">
-                <strong>
-                    <uimessage code="zl.registration.patient.religion.label"/>
-                </strong>
-                <obs conceptId="PIH:Religion" id="religion" style="radio"
-                     answerConceptIds="PIH:Voodoo,PIH:Catholic,PIH:Baptist,PIH:Islam,PIH:Pentecostal,PIH:Seventh Day Adventist,PIH:Jehovah's Witness,PIH:OTHER NON-CODED"
-                     answerCodes="zl.registration.patient.religion.voodoo.label,zl.registration.patient.religion.catholic.label,zl.registration.patient.religion.baptist.label,zl.registration.patient.religion.islam.label,zl.registration.patient.religion.pentecostal.label,zl.registration.patient.religion.adventist.label,zl.registration.patient.religion.jehovahsWitness.label,zl.registration.patient.religion.other.label"
-                     />
-            </p>
+            <section id="god" sectionTag="fieldset" headerTag="legend"
+                     headerStyle="title" headerCode="zl.registration.patient.religion.label">
+                <p class="list-inline">
+                    <obs conceptId="PIH:Religion" id="religion" style="radio"
+                         answerConceptIds="PIH:Voodoo,PIH:Catholic,PIH:Baptist,PIH:Islam,PIH:Pentecostal,PIH:Seventh Day Adventist,PIH:Jehovah's Witness,PIH:OTHER NON-CODED"
+                         answerCodes="zl.registration.patient.religion.voodoo.label,zl.registration.patient.religion.catholic.label,zl.registration.patient.religion.baptist.label,zl.registration.patient.religion.islam.label,zl.registration.patient.religion.pentecostal.label,zl.registration.patient.religion.adventist.label,zl.registration.patient.religion.jehovahsWitness.label,zl.registration.patient.religion.other.label"
+                         />
+                </p>
+            </section>
 
             <p>
                 <strong>
@@ -794,7 +808,13 @@
                         <obs conceptId="PIH:2277" style="radio"
                              answerConceptIds="CIEL:1066,CIEL:1065" answerCodes="no,yes"/>
                     </p>
-                    <p>Ages</p>
+                    <p class="list-inline">
+                        <label>Ages of children</label>
+
+
+                        <!-- ToDo: uncomment with socioecon mds (75)
+                        <obs conceptId="PIH:14638" /> -->
+                    </p>
                 </div>
 
             </div>
@@ -889,6 +909,134 @@
                 </repeat>
             </div>
 
+        </div>
+    </section>
+
+    <section id="family-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="zl.consultNote.familyHistory.title">
+        <div class="section-container">
+            <familyHistoryRelativeCheckboxes concept="PIH:DEPRESSION" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:ANXIETY DISORDER" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528,"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:PSYCHOSIS" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:EPILEPSY" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:SCHIZOPHRENIA" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:Bipolar disorder" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
+
+            <familyHistoryRelativeCheckboxes concept="PIH:HYPERTENSION" label="pihcore.medicalhistory.hypertension"
+                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:TUBERCULOSIS" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"/>
+            <familyHistoryRelativeCheckboxes id="familyOther" class="medicalHistoryText famHistory"
+                                             concept="PIH:OTHER" code="pihcore.other"
+                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,CIEL:1528"
+                                             specify="true"/>
+        </div>
+    </section>
+
+    <!---Mental state exam -->
+    <section id="mh_mentalStateExam" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.exam.mental_exam.title">
+        <div class="section-container">
+            <div class="two-columns">
+                <div>
+                    <label>
+                        Appearance
+                    </label>
+
+                    <repeat>
+                        <template>
+                            <obs conceptId="CIEL:167092" style="checkbox"
+                                 answerConceptId="CIEL:{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="159438" name="Neat"/>
+                        <render acID="114413" name="Overweight"/>
+                        <render acID="124905" name="Thin"/>
+                    </repeat>
+                    <br/>
+
+                    <label>
+                        Mood
+                    </label>
+
+                    <repeat>
+                        <template>
+                            <obs conceptId="CIEL:167099	" style="checkbox"
+                                 answerConceptId="CIEL:{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="119537" name="Depressed"/>
+                        <render acID="167100" name="Neutral"/>
+                        <render acID="166050" name="Elevated"/>
+                        <render acID="121543" name="Anxious"/>
+                        <render acID="6023" name="Irritable"/>
+                    </repeat>
+                    <br/>
+
+                    <label>
+                        Affect
+                    </label>
+
+                    <repeat>
+                        <template>
+                            <obs conceptId="CIEL:167101	" style="checkbox"
+                                 answerConceptId="CIEL:{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="167102" name="Appropriate"/>
+                        <render acID="167103" name="Labile"/>
+                        <render acID="167104" name="Restricted"/>
+                        <render acID="167105" name="Flat"/>
+                    </repeat>
+                </div>
+                <div>
+                    <label>
+                        Thought process
+                    </label>
+
+                    <repeat>
+                        <template>
+                            <obs conceptId="CIEL:167106	" style="checkbox"
+                                 answerConceptId="CIEL:{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="167108" name="Goal oriented"/>
+                        <render acID="167109" name="Linear"/>
+                        <render acID="167107" name="Circumferential"/>
+                        <render acID="167110" name="Tangential"/>
+                        <render acID="167111" name="Flight of ideas"/>
+                    </repeat>
+                    <br/>
+
+                    <label>
+                        Thought content
+                    </label>
+
+                    <repeat>
+                        <template>
+                            <obs conceptId="CIEL:167112	" style="checkbox"
+                                 answerConceptId="CIEL:{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="142600" name="Delusions"/>
+                        <render acID="167113" name="Denies suicidal ideation"/>
+                        <render acID="167114" name="Denies homicidal ideation"/>
+                        <render acID="130853" name="Paranoia"/>
+                        <render acID="133436" name="Negativistic"/>
+                    </repeat>
+                    <br/>
+
+                    <br/>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                        <p>
+                            <obs conceptId="CIEL:163044" rows="5" cols="25"/>
+                        </p>
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1005,6 +1153,59 @@
                     <obs conceptId="CIEL:165531" answerConceptId="CIEL:165533"/>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section id="mh-cognitive-func" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Cognitive function">
+        <div class="section-container">
+            <div class="two-columns">
+                <div>
+                    <label>
+                        Orientation status
+                    </label>
+                    <obs conceptId="CIEL:167084" style="checkbox"
+                         answerConceptId="CIEL:167083"
+                         answerCode="Oriented to time"/>
+                    <obs conceptId="CIEL:167084" style="checkbox"
+                         answerConceptId="CIEL:167082"
+                         answerCode="Oriented to place"/>
+                    <obs conceptId="CIEL:167084" style="checkbox"
+                         answerConceptId="CIEL:167081"
+                         answerCode="Oriented to person"/>
+                    <br/>
+
+                </div>
+                <div>
+                    <p class="list-inline">
+                        <label>
+                            Level of concentration
+                        </label>
+                        <br/>
+                        <obs conceptId="CIEL:167203" style="radio"
+                             answerConceptIds="CIEL:159405,CIEL:159406,CIEL:159407"
+                             answerCodes="Good,Fair,Poor" />
+                    </p>
+                </div>
+            </div>
+
+            <repeat>
+                <template>
+                    <p class="list-inline">
+                        <label>
+                            {name}
+                        </label>
+                        <obs conceptId="CIEL:{concept}" style="radio"
+                             answerConceptIds="CIEL:159405,CIEL:159406,CIEL:159407"
+                             answerCodes="Good,Fair,Poor"/>
+                    </p>
+
+                </template>
+                <render concept="167202" name="Memory" />
+                <render concept="167116" name="Judgement" />
+                <render concept="167115" name="Insight" />
+            </repeat>
+
         </div>
     </section>
 
