@@ -491,8 +491,8 @@
                     </label>
 
                     <obs conceptId="PIH:REFERRALS ORDERED"
-                         answerConceptIds="CIEL:160473,CIEL:160542,PIH:12743,PIH:7831,CIEL:165048,PIH:12742,CIEL:159928,CIEL:1713,PIH:11783,CIEL:1588"
-                         answerCodes="ER,OPD,ART Clinic,Maternity/ANC/PNC,Pediatrics,TB Clinic,Community,School,Church/Mosque,Traditional healers,Health facility"
+                         answerConceptIds="CIEL:160473,CIEL:160542,CIEL:165048,CIEL:165019,PIH:12743,PIH:7831,PIH:12742,CIEL:159928,CIEL:1713,PIH:11783,CIEL:1588"
+                         answerCodes="ER,OPD,Pediatrics,Internal Medicine,ART Clinic,Maternity/ANC/PNC,TB Clinic,Community,School,Church/Mosque,Traditional healers,Health facility"
                          style="radio" answerSeparator=""/>
                     <obs conceptId="PIH:REFERRALS ORDERED" answerConceptId="PIH:OTHER"
                          style="checkbox" commentFieldLabel=" "/>
