@@ -586,9 +586,8 @@
                         <render concept="CIEL:119537" name="Depression" />
                         <render concept="CIEL:113517" name="Psychosis" />
                         <render concept="CIEL:113155" name="Schizophrenia" />
-                        <!-- ToDo: Uncomment with new clinical mds pkg
-                        <render concept="CIEL:134337" name="Other psychiatric disorder" specify="true" class="medicalHistoryText patientHistory" /> -->
                     </repeat>
+                    <pastMedicalHistoryCheckbox concept="CIEL:134337" label="Other psychiatric disorder" specify="true" class="medicalHistoryText patientHistory"/>
 
                     <label>
                         Past psychiatry history comments:
