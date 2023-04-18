@@ -6,12 +6,17 @@ var omrs = {
             $('#' + containerId).hide();
         }
     },
-    mentalHealthDiagnoses: ["Psychosis", "Bipolar disorder", "Schizophrenia", "Psychosomatic problems",
-        "Psychosomatic disorder", "Hyperkinetic Behavior", "Conduct disorder", "Dementia", "Epilepsy",
-        "Anxiety", "Anxiety disorder", "Post-traumatic stress disorder", "PTSD", "Psychological trauma", "Panic Attack",
-        "Depression", "Manic episode", "Mood disorder"],
+    mentalHealthDiagnoses: ["Psychosis",
+        "Bipolar disorder", "Bipolar affective disorder, manic", "Bipolar depression",
+        "Schizophrenia", "Psychosomatic problems","Psychosomatic disorder",
+        "Hyperkinetic Behavior", "Conduct disorder", "Dementia", "Epilepsy",
+        "Anxiety", "Anxiety disorder", "Generalized anxiety disorder",
+        "Post-traumatic stress disorder", "PTSD", "Psychological trauma", "Panic disorder",
+        "Depression", "Manic episode", "Mood disorder",
+        "Alcohol abuse","Substance abuse","Inappropriate behavior","Emotional disorder",
+        "Autism","Cognitive impairment","Psychosis"],
     ncdDiagnoses: ["Diabetes", "Hypertension", "Renal failure", "Heart failure", "Liver failure", "Asthma",
-        "Chronic obstructive pulmonary disease", "COPD", "Sickle-cell anemia"]
+        "Chronic obstructive pulmonary disease", "COPD", "Sickle-cell anemia", "Splenomegaly"]
 }
 
 jQuery(document).ready(function ($) {
