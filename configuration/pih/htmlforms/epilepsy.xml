@@ -660,6 +660,7 @@
                     <div style="padding:0px;">
                         <orderProperty name="concept" label="pihcore.drugOrders.concept">
                             <option value="PIH:CARBAMAZEPINE" label="Carbamazepine"/>
+                            <option value="CIEL:74745" label="Diazepam"/>
                             <option value="PIH:PHENOBARBITAL" label="Phenobarbital"/>
                             <option value="CIEL:82024" label="Phenytoin sodium"/>
                             <option value="PIH:SODIUM VALPROATE" label="Sodium valproate"/>
@@ -669,6 +670,80 @@
                         <orderProperty name="drug" label="pihcore.drugOrders.drug"/>
                     </div>
 
+                    <div style="padding:0px;font-weight:bold;">
+                        <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
+                        <orderProperty name="doseUnits" value="CIEL:1513" label=" ">
+                            <option value="CIEL:1513"/>    <!-- Tablet -->
+                            <option value="CIEL:161553"/>  <!-- mg -->
+                            <option value="CIEL:162263"/>  <!-- mL -->
+                            <option value="CIEL:1608"/>   <!-- Capsule -->
+                        </orderProperty>
+                        <orderProperty name="frequency" label=" ">
+                            <option value="PIH:OD"/>
+                            <option value="PIH:BID"/>
+                            <option value="PIH:TID"/>
+                            <option value="PIH:QID"/>
+                            <option value="PIH:STAT"/>
+                            <option value="PIH:PRN"/>
+                            <!-- <option value="CIEL:5622" /> broken -->
+                        </orderProperty>
+                        <orderProperty name="route" value="CIEL:160240" label=" ">
+                            <option value="CIEL:160240"/> <!-- Oral -->
+                            <option value="CIEL:160242"/> <!-- Intravenous -->
+                            <option value="CIEL:160243"/> <!-- Intramuscular -->
+                        </orderProperty>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="duration" label="pihcore.visitNote.for"/>
+                        <orderProperty name="durationUnits" label=" ">
+                            <!-- <option value="PIH:Hours"/>  hours -->
+                            <option value="CIEL:1072"/>  <!-- days -->
+                            <option value="CIEL:1073"/>  <!-- weeks -->
+                            <option value="CIEL:1074"/>  <!-- months -->
+                        </orderProperty>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="quantity" label="pihcore.quantity"/>
+                        <orderProperty name="quantityUnits" value="1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label=" ">
+                            <option value="CIEL:1513"/>    <!-- Tablet -->
+                            <option value="CIEL:161553"/>  <!-- mg -->
+                            <option value="CIEL:162263"/>  <!-- mL -->
+                            <option value="CIEL:1608"/>   <!-- Capsule -->
+                        </orderProperty>
+                        <orderProperty name="numRefills" value="0" label="pihcore.refills"/>
+                    </div>
+                    <div style="display:none;">
+                        <orderProperty name="urgency" value="ROUTINE"/>
+                        <orderProperty name="dosingType" value="org.openmrs.SimpleDosingInstructions"/>
+                        <orderProperty name="previousOrder"/>
+                        <orderProperty name="careSetting" value="OUTPATIENT"/>
+                    </div>
+                    <orderProperty name="discontinueReason" label="pihcore.discontinueReason">
+                        <option value="CIEL:843"/>
+                        <option value="CIEL:102"/>
+                        <option value="CIEL:127750"/>
+                        <option value="CIEL:1754"/>
+                        <option value="CIEL:162853"/>
+                        <option value="CIEL:1434"/>
+                        <option value="CIEL:987"/>
+                        <option value="CIEL:1253"/>
+                        <option value="CIEL:1067"/>
+                        <option value="CIEL:5622"/>
+                    </orderProperty>
+                </orderTemplate>
+            </drugOrder>
+        </div>
+
+        <br/>
+        <h4><uimessage code="pihcore.otherDrugOrders"/></h4>
+
+        <div class="section-container-color">
+            <drugOrder>
+                <orderTemplate>
+                    <orderProperty name="action"/>
+                    <div style="padding:0px;">
+                        <orderProperty name="drug" label="pihcore.drugOrders.drug"/>
+                    </div>
                     <div style="padding:0px;font-weight:bold;">
                         <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
                         <orderProperty name="doseUnits" value="CIEL:1513" label=" ">
