@@ -130,7 +130,7 @@
                 // Hide the clinical impression section if the patient already has an NCD condition unless it was recorded in this encounter
                 function toggleSectionsBasedOnCondition() {
                     const encDateYmd = hfe.getEncounterDateYmd();
-                    const ncdConceptSet = 'PIH:7935';
+                    const ncdConceptSet = 'PIH:14648';
                     const conditionRep = 'custom:(uuid,display,clinicalStatus,onsetDate,endDate,encounter:(id,uuid),condition:(coded:(uuid)))';
                     const clinicalImpressionSection = '#clinical-impression';
                     pihemr.getMatchingConditions(patientUuid, null, ncdConceptSet, conditionRep).then(ncdConditions => {
