@@ -16,8 +16,17 @@
           formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="2.0">
     <style>
         .encounter-summary-container {
-        font-size: 1em;
-        font-weight: normal;
+            font-size: 1em;
+            font-weight: normal;
+        }
+
+        form input[type="radio"], .form input[type="radio"] {
+            float: none;
+            display: inline-block;
+        }
+
+        .side-by-side label {
+            display: inline-block;
         }
     </style>
 
@@ -92,7 +101,64 @@
                     </obs>
                 </p>
             </fieldset>
+        </section>
 
+        <section id="patientSupport" sectionTag="section" headerStyle="title" headerCode="pih.registration.patientSupport.section.label">
+
+            <fieldset class="patient-support-questions">
+                <legend>
+                    <uimessage code="pih.registration.patientSupport.section.label"/>
+                </legend>
+
+                <obsgroup groupingConceptId="PIH:14493">
+                    <div>
+                        <h3><uimessage code="pih.registration.patientSupport.typeOfSupport" /></h3>
+                        <p class="side-by-side">
+                            <obs conceptId="PIH:6547" id="patientSupportType"
+                                 answerConceptIds="PIH:11521,PIH:14646"
+                                 answerCodes="pih.referred,pih.escorted"
+                                 showUnits="false" unitsCssClass="append-to-value" style="radio" />
+                        </p>
+                        <br/>
+                    </div>
+
+
+                    <div>
+                        <h3><uimessage code="pih.registration.patientSupport.type.label"/></h3>
+                        <p>
+                            <obs conceptId="PIH:14494" id="patientSupportType"
+                                 answerConceptIds="PIH:14496,PIH:14495,PIH:14645,PIH:13489,PIH:14502,PIH:14649"
+                                 answerCodes="pih.registration.following.type.cha,pih.registration.following.type.chp,pih.registration.following.type.chv,pih.registration.following.type.tba,pih.registration.following.type.pssa,pih.registration.selfOrFamily"
+                                 showUnits="false" unitsCssClass="append-to-value" style="dropdown" />
+                        </p>
+                        <br/>
+                    </div>
+
+                    <div>
+                        <h3><uimessage code="pih.registration.patientSupport.location.label"/></h3>
+                        <p>
+                            <obs conceptId="PIH:6402" id="patientSupportLocation" size="30" />
+                        </p>
+                        <br/>
+                    </div>
+
+                    <div>
+                        <h3><uimessage code="pih.registration.patientSupport.name.label"/></h3>
+                        <p>
+                            <obs conceptId="CIEL:164141" id="patientSupportName" size="30" />
+                        </p>
+                        <br/>
+                    </div>
+
+                    <div>
+                        <h3><uimessage code="pih.registration.patientSupport.phone.label"/></h3>
+                        <p>
+                            <obs conceptId="PIH:2614" id="patientSupportPhone" size="30" />
+                        </p>
+                    </div>
+
+                </obsgroup>
+            </fieldset>
 
         </section>
 
@@ -121,6 +187,32 @@
                          unitsCssClass="append-to-value" style="dropdown" size="9">
                     </obs>
                 </p>
+            </fieldset>
+
+            <fieldset class="patient-support-questions">
+                <legend>
+                    <uimessage code="pih.registration.patientSupport.section.label"/>
+                </legend>
+                <h3>
+                    <uimessage code="pih.registration.patientSupport.section.label"/>
+                </h3>
+
+
+                <p class="left">
+                    <obsgroup groupingConceptId="PIH:14493">
+                        <obs conceptId="PIH:6547" id="patientSupportType" showUnits="false"
+                             unitsCssClass="append-to-value" style="dropdown" size="9"/>
+                        <obs conceptId="PIH:14494" id="patientSupportRole" showUnits="false"
+                             unitsCssClass="append-to-value" style="dropdown" size="9" />
+                        <obs conceptId="PIH:6402" id="patientSupportLocation" showUnits="false"
+                             unitsCssClass="" style="" size="9" />
+                        <obs conceptId="CIEL:164141" id="patientSupportName" showUnits="false"
+                             unitsCssClass="" style="" size="9" />
+                        <obs conceptId="PIH:2614" id="patientSupportPhone" showUnits="false"
+                             unitsCssClass="" style="" size="9" />
+                    </obsgroup>
+                </p>
+
             </fieldset>
 
         </section>
