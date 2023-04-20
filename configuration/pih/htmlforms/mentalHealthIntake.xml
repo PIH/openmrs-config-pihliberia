@@ -986,25 +986,73 @@
         <div class="section-container">
             <div class="two-columns">
                 <div>
+                    <strong>
+                        Appearance and posture
+                    </strong>
+                    <br/>
                     <label>
-                        Appearance
+                        Clothing/Grooming
                     </label>
-
                     <repeat>
                         <template>
                             <obs conceptId="CIEL:167092" style="checkbox"
                                  answerConceptId="CIEL:{acID}"
                                  answerCode="{name}"/>
                         </template>
-                        <render acID="159438" name="Neat"/>
-                        <render acID="114413" name="Overweight"/>
-                        <render acID="124905" name="Thin"/>
+                        <render acID="167091" name="Appropriate"/>
+                        <render acID="167089" name="Inappropriate"/>
+                        <render acID="167088" name="Disheveled"/>
+                        <render acID="5622"   name="other"/>
                     </repeat>
                     <br/>
 
                     <label>
-                        Mood
+                        Attitude toward interview
                     </label>
+                    <repeat>
+                        <template>
+                            <obs conceptId="CIEL:167193" style="checkbox"
+                                 answerConceptId="CIEL:{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="167188" name="Cooperative"/>
+                        <render acID="167189" name="Hostile"/>
+                        <render acID="167190" name="Defensive"/>
+                        <render acID="167191" name="Manipulative"/>
+                        <render acID="120345" name="Confused"/>
+                        <render acID="121543" name="Anxious"/>
+                        <render acID="167192" name="Seductive"/>
+                    </repeat>
+                    <br/>
+
+                    <strong>
+                        Speech
+                    </strong>
+                    <br/>
+
+                    <repeat>
+                        <template>
+                            <obs conceptId="CIEL:167201" style="checkbox"
+                                 answerConceptId="CIEL:{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="167194" name="Spontaneous"/>
+                        <render acID="167195" name="Loud"/>
+                        <render acID="167196" name="Soft"/>
+                        <render acID="158827" name="Slow"/>
+                        <render acID="167197" name="Fast"/>
+                        <render acID="167198" name="Pressured"/>
+                        <render acID="167199" name="Muted"/>
+                    </repeat>
+                    <obs conceptId="CIEL:167201" style="checkbox"
+                         answerConceptId="CIEL:167200"
+                         answerCode="Impaired" commentFieldLabel=" "/>
+                    <br/>
+
+                    <strong>
+                        Mood
+                    </strong>
+                    <br/>
 
                     <repeat>
                         <template>
@@ -1012,68 +1060,92 @@
                                  answerConceptId="CIEL:{acID}"
                                  answerCode="{name}"/>
                         </template>
-                        <render acID="119537" name="Depressed"/>
-                        <render acID="167100" name="Neutral"/>
+                        <render acID="119539" name="Sad"/>
                         <render acID="166050" name="Elevated"/>
-                        <render acID="121543" name="Anxious"/>
                         <render acID="6023" name="Irritable"/>
+                        <render acID="121543" name="Anxious"/>
+                        <render acID="167100" name="Euthymic (neutral)"/>
                     </repeat>
                     <br/>
 
-                    <label>
+                    <strong>
                         Affect
-                    </label>
+                    </strong>
+                    <br/>
 
                     <repeat>
                         <template>
                             <obs conceptId="CIEL:167101	" style="checkbox"
-                                 answerConceptId="CIEL:{acID}"
+                                 answerConceptId="{acID}"
                                  answerCode="{name}"/>
                         </template>
-                        <render acID="167102" name="Appropriate"/>
-                        <render acID="167103" name="Labile"/>
-                        <render acID="167104" name="Restricted"/>
-                        <render acID="167105" name="Flat"/>
+
+                        <render acID="PIH:14651"   name="Blunted"/>
+                        <render acID="CIEL:167104" name="Constricted"/>
+                        <render acID="CIEL:167102" name="Normal/Full"/>
+                        <render acID="CIEL:167103" name="Labile"/>
                     </repeat>
                 </div>
+
                 <div>
-                    <label>
+                    <strong>
                         Thought process
-                    </label>
+                    </strong>
+                    <br/>
 
                     <repeat>
                         <template>
                             <obs conceptId="CIEL:167106	" style="checkbox"
+                                 answerConceptId="{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="CIEL:1115"   name="Appropriate"/>
+                        <render acID="CIEL:167107" name="Circumferential"/>
+                        <render acID="CIEL:167110" name="Tangential"/>
+                        <render acID="CIEL:167111" name="Flight of ideas"/>
+                        <render acID="PIH:14652" name="Thought blocking"/>
+                        <render acID="PIH:14653" name="Looseness of association"/>
+                    </repeat>
+                    <br/>
+
+                    <strong>
+                        Thought and perceptual content
+                    </strong>
+                    <br/>
+
+                    <label>
+                        Delusions
+                    </label>
+                    <repeat>
+                        <template>
+                            <obs conceptId="CIEL:167179	" style="checkbox"
                                  answerConceptId="CIEL:{acID}"
                                  answerCode="{name}"/>
                         </template>
-                        <render acID="167108" name="Goal oriented"/>
-                        <render acID="167109" name="Linear"/>
-                        <render acID="167107" name="Circumferential"/>
-                        <render acID="167110" name="Tangential"/>
-                        <render acID="167111" name="Flight of ideas"/>
+                        <render acID="139290" name="Grandiose"/>
+                        <render acID="130853" name="Paranoid"/>
+                        <render acID="119573" name="Persecution"/>
+                        <render acID="167180" name="Religious"/>
                     </repeat>
                     <br/>
 
                     <label>
-                        Thought content
+                        Hallucinations
                     </label>
-
                     <repeat>
                         <template>
-                            <obs conceptId="CIEL:167112	" style="checkbox"
+                            <obs conceptId="CIEL:167181	" style="checkbox"
                                  answerConceptId="CIEL:{acID}"
                                  answerCode="{name}"/>
                         </template>
-                        <render acID="142600" name="Delusions"/>
-                        <render acID="167113" name="Denies suicidal ideation"/>
-                        <render acID="167114" name="Denies homicidal ideation"/>
-                        <render acID="130853" name="Paranoia"/>
-                        <render acID="133436" name="Negativistic"/>
+                        <render acID="148126" name="Auditory"/>
+                        <render acID="123069" name="Visual"/>
+                        <render acID="132427" name="Olfactory"/>
+                        <render acID="125058" name="Tactile"/>
                     </repeat>
                     <br/>
 
-                    <br/>
+
                     <p class="comment-label">
                         <uimessage code="pihcore.exam.comment"/>
                     </p>
