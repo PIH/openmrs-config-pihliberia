@@ -2,6 +2,17 @@
 
   "country": "LIBERIA",
 
+  "authenticationConfig": {
+    "scheme": "2fa",
+    "schemes": {
+      "2fa": {
+        "config": {
+          "secondaryOptions": "secret,totp"
+        }
+      }
+    }
+  },
+
   "dispositionConfig": "file:configuration/pih/pih-dispositions-liberia.json",
 
   "scheduleBackupReports": "false",
