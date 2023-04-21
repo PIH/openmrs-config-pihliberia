@@ -346,13 +346,6 @@
             </label>
         </h2>
 
-        <span id="mh_mrn_enter" style="float:right;">
-            <label class="inline">MRN:</label>
-            <span class="inline">
-                <patient field="identifier" identifierTypeId="23507d1e-4f22-11ea-9717-645d86728797" required="false"/>
-            </span>
-        </span>
-
         <!-- users with retroConsultNote privilege can edit provider, location, and date for both retro and active visits -->
         <includeIf velocityTest="$user.hasPrivilege('Task: emr.retroConsultNote')">
             <div id="who-when-where">
@@ -821,6 +814,51 @@
              headerCode="Review of systems / Physical exam">
         <div class="section-container">
 
+            <p class="list-inline">
+                <label>
+                    <uimessage code="pihcore.medication.side.effects"/>
+                </label>
+
+                <obs id="med-side-effects" conceptId="CIEL:165273" style="radio"
+                     answerConceptIds="PIH:NO,PIH:YES,PIH:UNKNOWN" >
+                    <controls>
+                        <when value="PIH:YES" thenDisplay = "#side-effect-section"/>
+                    </controls>
+                </obs>
+            </p>
+
+            <p id="side-effect-section">
+                <obs id="" conceptId="CIEL:164377" style="textarea"/>
+            </p>
+
+            <p>
+                <label>
+                    <uimessage code="zl.consultNote.currentMedications.title" />
+                </label>
+                <obs id="current-meds" conceptId="PIH:13318" style="textarea" />
+            </p>
+
+            <repeat>
+                <template>
+                    <p>
+                        <label>
+                            <uimessage code="{name}" />
+                        </label>
+                        <obs conceptId="{xId}" style="text" rows="1" />
+                    </p>
+                </template>
+                <render xId="PIH:11570" name="pihcore.exam.neuro_exam" />
+                <render xId="PIH:1374"  name="Genitourinary STIs" />
+                <render xId="PIH:13757" name="Gastrointestinal" />
+                <render xId="CIEL:163046" name="pihcore.exam.cardiac_exam" oname="Cardiovascular" />
+                <render xId="PIH:13764"   name="Endocrine" />
+                <render xId="CIEL:160981" name="Integumentary (skin)" />
+                <render xId="CIEL:163048" name="pihcore.exam.musculoskeletal_exam" />
+                <!-- <render xId="CIEL:" name="skeletal" /> -->
+                <render xId="PIH:13762"   name="Nervous" />
+                <render xId="PIH:11572"   name="Lymphatic" />
+            </repeat>
+
         </div>
     </section>
 
@@ -959,6 +997,7 @@
              headerCode="Substance use history">
         <div class="section-container">
             <!-- ToDo: incomplete -->
+            <label><i>(add details)</i></label>
             <div id="substance-section">
                 <repeat>
                     <template>
@@ -1430,7 +1469,6 @@
     <section id="mh-treatment-plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Mental Health clinician treatment plan">
         <div class="section-container">
-            <!-- Todo: Change to PIH:14655 -->
             <label>
                 <uimessage code="Counseling plan" />
             </label>
@@ -1551,23 +1589,6 @@
                 <obs conceptId="PIH:Medication comments (text)" style="textarea"/>
             </p>
 
-            <p class="list-inline">
-                <label>
-                    <uimessage code="pihcore.medication.side.effects"/>
-                </label>
-
-                <obs id="med-side-effects" conceptId="CIEL:165273" style="radio"
-                     answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" >
-                    <controls>
-                        <when value="PIH:YES" thenDisplay = "#side-effect-section"/>
-                    </controls>
-                </obs>
-            </p>
-
-            <p id="side-effect-section">
-                <obs  id="" conceptId="CIEL:164377" style="textarea"/>
-            </p>
-
         </div>
     </section>
 
@@ -1575,6 +1596,7 @@
              headerCode="Family involvement">
         <div class="section-container">
             <!-- ToDo: incomplete -->
+            <label><i>(add missing questions)</i></label>
         </div>
     </section>
 
