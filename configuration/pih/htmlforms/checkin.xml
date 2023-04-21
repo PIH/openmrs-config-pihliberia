@@ -119,8 +119,8 @@
                                  answerCodes="pih.referred,pih.escorted"
                                  showUnits="false" unitsCssClass="append-to-value" style="radio" />
                         </p>
-                        <br/>
                     </div>
+                    <br/>
 
 
                     <div>
@@ -131,24 +131,24 @@
                                  answerCodes="pih.registration.following.type.cha,pih.registration.following.type.chp,pih.registration.following.type.chv,pih.registration.following.type.tba,pih.registration.following.type.pssa,pih.registration.selfOrFamily"
                                  showUnits="false" unitsCssClass="append-to-value" style="dropdown" />
                         </p>
-                        <br/>
                     </div>
+                    <br/>
 
                     <div>
                         <h3><uimessage code="pih.registration.patientSupport.location.label"/></h3>
                         <p>
                             <obs conceptId="PIH:6402" id="patientSupportLocation" size="30" />
                         </p>
-                        <br/>
                     </div>
+                    <br/>
 
                     <div>
                         <h3><uimessage code="pih.registration.patientSupport.name.label"/></h3>
                         <p>
                             <obs conceptId="CIEL:164141" id="patientSupportName" size="30" />
                         </p>
-                        <br/>
                     </div>
+                    <br/>
 
                     <div>
                         <h3><uimessage code="pih.registration.patientSupport.phone.label"/></h3>

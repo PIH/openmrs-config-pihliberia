@@ -104,6 +104,7 @@
                     </p>
                     <br/>
                 </div>
+                <br/>
 
                 <div>
                     <h3><uimessage code="pih.registration.patientSupport.type.label"/></h3>
@@ -113,6 +114,7 @@
                              answerCodes="pih.registration.following.type.cha,pih.registration.following.type.chp,pih.registration.following.type.chv,pih.registration.following.type.tba,pih.registration.following.type.pssa,pih.registration.selfOrFamily"
                              showUnits="false" unitsCssClass="append-to-value" style="dropdown" />
                     </p>
+                    <br/>
                 </div>
                 <br/>
 
@@ -121,6 +123,7 @@
                     <p class="left side-by-side">
                         <obs conceptId="PIH:6402" id="patientSupportLocation" size="30" />
                     </p>
+                    <br/>
                 </div>
                 <br/>
 
@@ -129,6 +132,7 @@
                     <p class="left side-by-side">
                         <obs conceptId="CIEL:164141" id="patientSupportName" size="30" />
                     </p>
+                    <br/>
                 </div>
                 <br/>
 
