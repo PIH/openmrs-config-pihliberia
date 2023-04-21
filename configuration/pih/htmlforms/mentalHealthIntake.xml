@@ -66,7 +66,7 @@
             width: 50%;
         }
 
-        .two-columns > div {
+        .three-columns > div {
             display: table-cell;
             width: 33%;
         }
@@ -502,7 +502,7 @@
     </section>
 
     <section id="complaint" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Patient complaints">
+             headerCode="Patient complaint(s)">
         <div class="section-container">
             <obs conceptId="CIEL:160531" style="text" rows="5" />
         </div>
@@ -513,53 +513,11 @@
         <div class="section-container-color">
             <p>
                 <strong>
-                    Patient complaint history
+                    History of presenting complaint(s)
                 </strong>
-                <obs conceptId="CIEL:1390" style="text" rows="5" />
+                <obs conceptId="CIEL:1390" style="text" rows="8"/>
             </p>
 
-            <strong>
-                Past medical history
-            </strong>
-            <div class="two-columns-old">
-                <pastMedicalHistoryCheckbox concept="PIH:ASTHMA"/>
-                <pastMedicalHistoryCheckbox concept="PIH:HEART DISEASE" specify="true" class="medicalHistoryText patientHistory" />
-                <pastMedicalHistoryCheckbox concept="PIH:SURGERY" specify="true" class="medicalHistoryText patientHistory"/>
-                <pastMedicalHistoryCheckbox concept="PIH:Traumatic Injury" specify="true" class="medicalHistoryText patientHistory"/>
-                <pastMedicalHistoryCheckbox concept="PIH:EPILEPSY"/>
-                <pastMedicalHistoryCheckbox concept="CIEL: 117635" comment="Hemoglobinopathy" specify="true"
-                                            class="medicalHistoryText patientHistory"/>
-                <pastMedicalHistoryCheckbox concept="PIH:HYPERTENSION" label="pihcore.medicalhistory.hypertension"/>
-                <pastMedicalHistoryCheckbox concept="PIH:DIABETES"/>
-                <pastMedicalHistoryCheckbox concept="CIEL:138405" label="pihcore.lab.hiv.title"/>
-                <pastMedicalHistoryCheckbox concept="PIH:SEXUALLY TRANSMITTED INFECTION" label="pihcore.medicalhistory.sti"
-                                            specify="true" class="medicalHistoryText patientHistory"/>
-                <pastMedicalHistoryCheckbox concept="CIEL:143849" comment="Congenital malformations"
-                                            specify="true" class="medicalHistoryText patientHistory"/>
-                <pastMedicalHistoryCheckbox concept="PIH:MALNUTRITION"/>
-                <pastMedicalHistoryCheckbox concept="PIH:MEASLES"/>
-                <pastMedicalHistoryCheckbox concept="PIH:TUBERCULOSIS"/>
-                <pastMedicalHistoryCheckbox concept="PIH:VARICELLA"/>
-                <pastMedicalHistoryCheckbox concept="PIH:Diphtheria"/>
-                <pastMedicalHistoryCheckbox concept="PIH:ACUTE RHEUMATIC FEVER" label="pihcore.acuteRheumaticFever.abbrev"/>
-                <pastMedicalHistoryCheckbox concept="CIEL:117703" />
-                <pastMedicalHistoryCheckbox concept="CIEL:165623" label="COVID-19" />
-                <pastMedicalHistoryCheckbox concept="PIH:OTHER" code="pihcore.other" specify="true" class="medicalHistoryText patientHistory"/>
-            </div>
-            <!-- only show these diseases if female -->
-            <includeIf velocityTest="$patient.gender == 'F' ">
-                <pastMedicalHistoryCheckbox concept="CIEL:113859" />
-                <pastMedicalHistoryCheckbox concept="PIH:47" />
-                <pastMedicalHistoryCheckbox concept="PIH:Eclampsia" />
-            </includeIf>
-
-            <label>
-                Past medical history comments:
-            </label>
-            <obs conceptId="CIEL:160221" rows="3" />
-        </div>
-
-        <div class="section-container-color">
             <p>
                 <strong>
                     Past psychiatric history
@@ -569,40 +527,98 @@
                         <template>
                             <pastMedicalHistoryCheckbox concept="{concept}" label="{name}"/>
                         </template>
-                        <render concept="CIEL:115924" name="Bipolar disorder (mania)" />
-                        <render concept="CIEL:119541" name="Bipolar disorder (depressive)" />
-                        <render concept="CIEL:119566" name="Dementia" />
-                        <render concept="CIEL:121725" name="Alcohol abuse" />
-                        <render concept="CIEL:112603" name="Substance abuse (drugs)" />
-                        <render concept="CIEL:155"    name="Epilepsy" />
-                        <render concept="CIEL:137668" name="Behavioral disorder" />
-                        <render concept="PIH:14629"   name="Emotional disorder" />
-                        <render concept="CIEL:121303" name="Autism spectrum disorder (ASD)" />
-                        <render concept="CIEL:156923" name="Intellectual functioning disability (ITLD)" />
-                        <render concept="CIEL:160197" name="Psychosomatic disorder" />
-                        <render concept="CIEL:139545" name="General anxiety disorder (GAD)" />
-                        <render concept="CIEL:113881" name="PTSD" />
-                        <render concept="CIEL:130966" name="Panic disorder" />
-                        <render concept="CIEL:119537" name="Depression" />
-                        <render concept="CIEL:113517" name="Psychosis" />
-                        <render concept="CIEL:113155" name="Schizophrenia" />
+                        <render concept="CIEL:115924" name="Bipolar disorder (mania)"/>
+                        <render concept="CIEL:119541" name="Bipolar disorder (depressive)"/>
+                        <render concept="CIEL:119566" name="Dementia"/>
+                        <render concept="CIEL:121725" name="Alcohol abuse"/>
+                        <render concept="CIEL:112603" name="Substance abuse (drugs)"/>
+                        <render concept="CIEL:155" name="Epilepsy"/>
+                        <render concept="CIEL:137668" name="Behavioral disorder"/>
+                        <render concept="PIH:14629" name="Emotional disorder"/>
+                        <render concept="CIEL:121303" name="Autism spectrum disorder (ASD)"/>
+                        <render concept="CIEL:156923" name="Intellectual functioning disability (ITLD)"/>
+                        <render concept="CIEL:160197" name="Psychosomatic disorder"/>
+                        <render concept="CIEL:139545" name="General anxiety disorder (GAD)"/>
+                        <render concept="CIEL:113881" name="PTSD"/>
+                        <render concept="CIEL:130966" name="Panic disorder"/>
+                        <render concept="CIEL:119537" name="Depression"/>
+                        <render concept="CIEL:113517" name="Psychosis"/>
+                        <render concept="CIEL:113155" name="Schizophrenia"/>
                     </repeat>
-                    <pastMedicalHistoryCheckbox concept="CIEL:134337" label="Other psychiatric disorder" specify="true" class="medicalHistoryText patientHistory"/>
+                    <pastMedicalHistoryCheckbox concept="CIEL:134337" label="Other psychiatric disorder" specify="true"
+                                                class="medicalHistoryText patientHistory"/>
 
                     <label>
                         Past psychiatry history comments:
                     </label>
-                    <obs conceptId="CIEL:162159" style="text" rows="3" />
+                    <obs conceptId="CIEL:162159" style="text" rows="3"/>
 
                 </div>
             </p>
-        </div>
 
+            <p>
+                <strong>
+                    Past medical history
+                </strong>
+                <div class="two-columns-old">
+                    <pastMedicalHistoryCheckbox concept="PIH:ASTHMA"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:HEART DISEASE" specify="true"
+                                                class="medicalHistoryText patientHistory"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:SURGERY" specify="true"
+                                                class="medicalHistoryText patientHistory"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:Traumatic Injury" specify="true"
+                                                class="medicalHistoryText patientHistory"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:EPILEPSY"/>
+                    <pastMedicalHistoryCheckbox concept="CIEL: 117635" comment="Hemoglobinopathy" specify="true"
+                                                class="medicalHistoryText patientHistory"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:HYPERTENSION" label="pihcore.medicalhistory.hypertension"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:DIABETES"/>
+                    <pastMedicalHistoryCheckbox concept="CIEL:138405" label="pihcore.lab.hiv.title"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:SEXUALLY TRANSMITTED INFECTION"
+                                                label="pihcore.medicalhistory.sti"
+                                                specify="true" class="medicalHistoryText patientHistory"/>
+                    <pastMedicalHistoryCheckbox concept="CIEL:143849" comment="Congenital malformations"
+                                                specify="true" class="medicalHistoryText patientHistory"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:MALNUTRITION"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:MEASLES"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:TUBERCULOSIS"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:VARICELLA"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:Diphtheria"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:ACUTE RHEUMATIC FEVER"
+                                                label="pihcore.acuteRheumaticFever.abbrev"/>
+                    <pastMedicalHistoryCheckbox concept="CIEL:117703"/>
+                    <pastMedicalHistoryCheckbox concept="CIEL:165623" label="COVID-19"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:OTHER" code="pihcore.other" specify="true"
+                                                class="medicalHistoryText patientHistory"/>
+                </div>
+                <!-- only show these diseases if female -->
+                <includeIf velocityTest="$patient.gender == 'F' ">
+                    <pastMedicalHistoryCheckbox concept="CIEL:113859"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:47"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:Eclampsia"/>
+                </includeIf>
+
+                <label>
+                    Past medical history comments:
+                </label>
+                <obs conceptId="CIEL:160221" rows="3"/>
+            </p>
+        </div>
     </section>
 
     <section id="personal-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Personal history">
         <div class="section-container">
+            <!-- ToDo:  Add many questions here -->
+            <label><i>(add missing questions)</i></label>
+
+            <!-- This include will be changed to wrap pregnancy when other exams are added to this section -->
+            <includeIf velocityTest="$patient.gender == 'F' ">
+                <p>
+                    <obs labelCode="pihcore.pregnancy.status" conceptId="PIH:PATIENT PREGNANT" style="checkbox"/>
+                </p>
+            </includeIf>
+
             <section id="house" sectionTag="fieldset" headerTag="legend"
                      headerStyle="title" headerCode="Living situation">
                 <div class="two-columns list-inline">
@@ -801,6 +817,19 @@
         </div>
     </section>
 
+    <section id="mh_review_systems" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Review of systems / Physical exam">
+        <div class="section-container">
+
+        </div>
+    </section>
+
+    <section id="mh_impression" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="General impressions">
+        <div class="section-container">
+            <obs conceptId="PIH:1364" style="text" rows="2" />
+        </div>
+    </section>
 
     <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Screening tools">
@@ -873,30 +902,63 @@
                          answerSeparator="&lt;br&gt;" />
                 </span>
             </p>
-
-
-
-
-
         </div>
     </section>
 
-
-    <!-- This include will be changed to wrap pregnancy when other exams are added to this section -->
-    <includeIf velocityTest="$patient.gender == 'F' ">
-        <section id="mh_exams" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="pihcore.exam.general_exam.title">
-            <div class="section-container">
-                <p>
-                    <obs labelCode="pihcore.pregnancy.status" conceptId="PIH:PATIENT PREGNANT" style="checkbox"/>
-                </p>
+    <section id="diagnosis-area" sectionTag="fieldset" headerTag="legend"
+             headerStyle="title" headerCode="Diagnoses">
+        <div class="section-container">
+            <div class="two-columns">
+                <div>
+                    <repeat>
+                        <template>
+                            <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                                <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
+                                     answerConceptId="{concept}" answerCode="{name}"  />
+                            </obsgroup>
+                        </template>
+                        <render concept="CIEL:115924" name="Bipolar disorder (mania)" />
+                        <render concept="CIEL:119541" name="Bipolar disorder (depressive)" />
+                        <render concept="CIEL:119566" name="Dementia" />
+                        <render concept="CIEL:121725" name="Alcohol abuse" />
+                        <render concept="CIEL:112603" name="Substance abuse (drugs)" />
+                        <render concept="CIEL:155"    name="Epilepsy" />
+                        <render concept="CIEL:137668" name="Behavioral disorder" />
+                        <render concept="PIH:14629"   name="Emotional disorder" />
+                    </repeat>
+                </div>
+                <div>
+                    <repeat>
+                        <template>
+                            <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                                <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
+                                     answerConceptId="{concept}" answerCode="{name}" />
+                            </obsgroup>
+                        </template>
+                        <render concept="CIEL:121303" name="Developmental disorder (ASD)" />
+                        <render concept="CIEL:156923" name="Developmental disorder (ITLD)" />
+                        <render concept="CIEL:160197" name="Psychosomatic disorder" />
+                        <render concept="CIEL:139545" name="General anxiety (GAD)" />
+                        <render concept="CIEL:113881" name="PTSD" />
+                        <render concept="CIEL:130966" name="Panic disorder" />
+                        <render concept="CIEL:119537" name="Depression" />
+                        <render concept="CIEL:113517" name="Psychosis" />
+                        <render concept="CIEL:113155" name="Schizophrenia" />
+                    </repeat>
+                </div>
             </div>
-        </section>
-    </includeIf>
+
+            <div id="data-collection">
+                <strong>Other diagnoses</strong>
+                <encounterDiagnosesByObs selectedDiagnosesTarget="#encounter-diagnoses-target"/>
+            </div>
+        </div>
+    </section>
 
     <section id="mh_habits" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Substance use history">
         <div class="section-container">
+            <!-- ToDo: incomplete -->
             <div id="substance-section">
                 <repeat>
                     <template>
@@ -1329,129 +1391,157 @@
         </div>
     </section>
 
-    <section id="diagnosis-area" sectionTag="fieldset" headerTag="legend"
-             headerStyle="title" headerCode="Diagnoses">
-        <div class="section-container">
-            <div class="two-columns">
-                <div>
-                    <repeat>
-                        <template>
-                            <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
-                                     answerConceptId="{concept}" answerCode="{name}"  />
-                            </obsgroup>
-                        </template>
-                        <render concept="CIEL:115924" name="Bipolar disorder (mania)" />
-                        <render concept="CIEL:119541" name="Bipolar disorder (depressive)" />
-                        <render concept="CIEL:119566" name="Dementia" />
-                        <render concept="CIEL:121725" name="Alcohol abuse" />
-                        <render concept="CIEL:112603" name="Substance abuse (drugs)" />
-                        <render concept="CIEL:155"    name="Epilepsy" />
-                        <render concept="CIEL:137668" name="Behavioral disorder" />
-                        <render concept="PIH:14629"   name="Emotional disorder" />
-                    </repeat>
-                </div>
-                <div>
-                    <repeat>
-                        <template>
-                            <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
-                                     answerConceptId="{concept}" answerCode="{name}" />
-                            </obsgroup>
-                        </template>
-                        <render concept="CIEL:121303" name="Developmental disorder (ASD)" />
-                        <render concept="CIEL:156923" name="Developmental disorder (ITLD)" />
-                        <render concept="CIEL:160197" name="Psychosomatic disorder" />
-                        <render concept="CIEL:139545" name="General anxiety (GAD)" />
-                        <render concept="CIEL:113881" name="PTSD" />
-                        <render concept="CIEL:130966" name="Panic disorder" />
-                        <render concept="CIEL:119537" name="Depression" />
-                        <render concept="CIEL:113517" name="Psychosis" />
-                        <render concept="CIEL:113155" name="Schizophrenia" />
-                    </repeat>
-                </div>
-            </div>
+    <style type="text/css">
 
-            <div id="data-collection">
-                <strong>Other diagnoses</strong>
-                <encounterDiagnosesByObs selectedDiagnosesTarget="#encounter-diagnoses-target"/>
-            </div>
-        </div>
-    </section>
+        <!-- Hide the label for the drug field in view mode -->
+        .orderwidget-history-section .order-field-label.order-drug {
+            display:none;
+        }
+        <!-- Add a colon after the Dose label in view mode -->
+        .orderwidget-history-section .order-field-label.order-dose:after {
+            content: ": ";
+            white-space: pre;
+        }
+
+        .order-field {
+            display: inline-block;
+            padding: 0px;
+        }
+        .order-field.action {
+            display: block;
+        }
+        .order-field.dateActivated {
+            padding-right: 20px;
+        }
+        .order-field-label {
+            display: inline-block;
+            padding-right: 5px;
+            vertical-align: middle;
+        }
+        .order-field-label:after {
+            content: "";
+            white-space: pre;
+        }
+        .order-field-widget {
+            display: inline-block;
+        }
+    </style>
 
     <section id="mh-treatment-plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Mental Health clinician treatment plan">
         <div class="section-container">
+            <!-- Todo: Change to PIH:14655 -->
+            <label>
+                <uimessage code="Counseling plan" />
+            </label>
             <obs conceptId="CIEL:163104" rows="5" />
         </div>
-    </section>
 
-    <section id="mh-meds" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.visitNote.plan.medication">
         <div class="section-container toggle">
-            <table>
-                <tr>
-                    <th><uimessage code="pihcore.visitNote.plan.name"/></th>
-                    <th colspan="2"><uimessage code="pihcore.visitNote.plan.dose"/></th>
-                    <th><uimessage code="pihcore.drug.route"/></th>
-                    <th><uimessage code="pihcore.visitNote.plan.frequency"/></th>
-                    <th colspan="2"><uimessage code="pihcore.visitNote.plan.duration"/></th>
-                </tr>
 
-                <repeat>
-                    <template>
-                        <tr>
-                            <obsgroup groupingConceptId="PIH:Prescription construct">
-                                <td id="{name}-rx">
-                                    <obs conceptId="PIH:Mental health medication"
-                                         answerConceptId="{concept}"
-                                         style="checkbox"
-                                         toggle="{id: '{name}-rx-dose', style: 'dim'}" class="medication-checkbox"/>
-                                </td>
-                                <td id="{name}-rx-dose">
-                                    <obs id="dose-{name}" class="doseInput" conceptId="CIEL:160856"/>
-                                </td>
-                                <td id="{name}-rx-dose-unit">
-                                    <obs id="doseUnit-{name}" class="doseInput select-arrow" conceptId="PIH:Dosing units coded"
-                                         answerConceptIds="CIEL:161553,CIEL:162263,CIEL:1608,CIEL:1513"
-                                         answerCodes="pihcore.visitNote.plan.medication.units.mg,pihcore.visitNote.plan.medication.units.mL,pihcore.visitNote.plan.medication.units.capsule,pihcore.visitNote.plan.medication.units.tablet" />
-                                </td>
-                                <td id="{name}-rx-route">
-                                    <obs id="route-{name}" class="route select-arrow"
-                                         conceptId="PIH:12651"
-                                         answerConceptIds="CIEL:160240,CIEL:160242,CIEL:160243"/>
-                                </td>
-                                <td id="{name}-rx-frequency">
-                                    <obs id="frequencyCoded-{name}" class="frequency select-arrow" conceptId="PIH:Drug frequency for HUM"
-                                         answerConceptIds=
-                                                 "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:PRN,PIH:STAT,PIH:OTHER"
-                                         answerCodes="OD,BID,TID,QID,STAT,PRN,pihcore.visitNote.plan.other" />
-                                </td>
-                                <td id="{name}-rx-duration">
-                                    <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
-                                </td>
-                                <td id="{name}-rx-duration-unit">
-                                    <obs id="durationUnit-{name}" class="duration-unit select-arrow"
-                                         conceptId="PIH:TIME UNITS"
-                                         answerConceptIds="CIEL:1822,CIEL:1072,CIEL:1073,CIEL:1074"/>
-                                </td>
-                            </obsgroup>
-                        </tr>
-                    </template>
+            <h4><uimessage code="Drug orders"/></h4>
 
-                    <render concept="PIH:CHLORPROMAZINE" name="Chlorpromazine"/>
-                    <render concept="PIH:HALOPERIDOL" name="Haloperidol"/>
-                    <render concept="PIH:CARBAMAZEPINE" name="Carbamazepine"/>
-                    <render concept="PIH:SODIUM VALPROATE" name="Sodium valproate"/>
-                    <render concept="CIEL:83405" name="Risperidone"/>
-                    <render concept="PIH:FLUOXETINE" name="Fluoxetine"/>
-                    <render concept="PIH:PHENOBARBITAL" name="Phenobarbital"/>
-                    <render concept="PIH:IMIPRAMINE" name="Imipramine"/>
-                    <render concept="PIH:PHENYTOIN" name="Phenytoin"/>
-                    <render concept="PIH:AMITRYPTILINE" name="Amitryptiline"/>
-                    <render concept="PIH:FLUPHENAZINE" name="Fluphenazine"/>
-                </repeat>
-            </table>
+            <label>
+                <uimessage code="These medications are specifically used for mental health:" />
+            </label>
+            <div class="three-columns">
+                <div>
+                    <sl>
+                        <li>Amitryptiline</li>
+                        <li>Chlorpromazine</li>
+                        <li>Fluoxetine</li>
+                        <li>Fluphenazine</li>
+                    </sl>
+                </div>
+
+                <div>
+                    <sl>
+                        <li>Haloperidol</li>
+                        <li>Imipramine</li>
+                        <li>Risperidone</li>
+                    </sl>
+                </div>
+
+                <div>
+                    <sl>
+                        <li>Carbamazepine</li>
+                        <li>Diazapam</li>
+                        <li>Phenobarbital</li>
+                        <li>Phenytoin sodium</li>
+                        <li>Sodium valproate</li>
+                    </sl>
+                </div>
+
+            </div>
+
+            <drugOrder>
+                <orderTemplate>
+                    <orderProperty name="action"/>
+                    <div style="padding:0px;">
+                        <orderProperty name="drug" label="pihcore.drugOrders.drug"/>
+                    </div>
+                    <div style="padding:0px;font-weight:bold;">
+                        <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
+                        <orderProperty name="doseUnits" value="CIEL:1513" label=" ">
+                            <option value="CIEL:1513"/>    <!-- Tablet -->
+                            <option value="CIEL:161553"/>  <!-- mg -->
+                            <option value="CIEL:162263"/>  <!-- mL -->
+                            <option value="CIEL:1608"/>   <!-- Capsule -->
+                        </orderProperty>
+                        <orderProperty name="frequency" label=" ">
+                            <option value="PIH:OD"/>
+                            <option value="PIH:BID"/>
+                            <option value="PIH:TID"/>
+                            <option value="PIH:QID"/>
+                            <option value="PIH:STAT"/>
+                            <option value="PIH:PRN"/>
+                            <!-- <option value="CIEL:5622" /> broken -->
+                        </orderProperty>
+                        <orderProperty name="route" value="CIEL:160240" label=" ">
+                            <option value="CIEL:160240"/> <!-- Oral -->
+                            <option value="CIEL:160242"/> <!-- Intravenous -->
+                            <option value="CIEL:160243"/> <!-- Intramuscular -->
+                        </orderProperty>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="duration" label="pihcore.visitNote.for"/>
+                        <orderProperty name="durationUnits" label=" ">
+                            <!-- <option value="PIH:Hours"/>  hours -->
+                            <option value="CIEL:1072"/>  <!-- days -->
+                            <option value="CIEL:1073"/>  <!-- weeks -->
+                            <option value="CIEL:1074"/>  <!-- months -->
+                        </orderProperty>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="quantity" label="pihcore.quantity"/>
+                        <orderProperty name="quantityUnits" value="1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label=" ">
+                            <option value="CIEL:1513"/>    <!-- Tablet -->
+                            <option value="CIEL:161553"/>  <!-- mg -->
+                            <option value="CIEL:162263"/>  <!-- mL -->
+                            <option value="CIEL:1608"/>   <!-- Capsule -->
+                        </orderProperty>
+                        <orderProperty name="numRefills" value="0" label="pihcore.refills"/>
+                    </div>
+                    <div style="display:none;">
+                        <orderProperty name="urgency" value="ROUTINE"/>
+                        <orderProperty name="dosingType" value="org.openmrs.SimpleDosingInstructions"/>
+                        <orderProperty name="previousOrder"/>
+                        <orderProperty name="careSetting" value="OUTPATIENT"/>
+                    </div>
+                    <orderProperty name="discontinueReason" label="pihcore.discontinueReason">
+                        <option value="CIEL:843"/>
+                        <option value="CIEL:102"/>
+                        <option value="CIEL:127750"/>
+                        <option value="CIEL:1754"/>
+                        <option value="CIEL:162853"/>
+                        <option value="CIEL:1434"/>
+                        <option value="CIEL:987"/>
+                        <option value="CIEL:1253"/>
+                        <option value="CIEL:1067"/>
+                        <option value="CIEL:5622"/>
+                    </orderProperty>
+                </orderTemplate>
+            </drugOrder>
 
             <p>
                 <label>
@@ -1480,6 +1570,15 @@
 
         </div>
     </section>
+
+    <section id="mh-family-involved" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Family involvement">
+        <div class="section-container">
+            <!-- ToDo: incomplete -->
+        </div>
+    </section>
+
+
 
     <section id="mh-plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan">
