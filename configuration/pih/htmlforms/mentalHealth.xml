@@ -223,8 +223,9 @@
                 });
 
                 jq('#phq9Score > input:text').attr('placeholder', '0-27');
-                jq('#cgiScore > input:text').attr('placeholder', '0-7');
                 jq('#whodasScore > input:text').attr('placeholder', '0-100');
+                jq('#cageScore > input:text').attr('placeholder', '0-4');
+                jq('#gadScore > input:text').attr('placeholder', '0-21');
 
             });
 
@@ -362,47 +363,100 @@
 
     <!-- Program enrollment -->
     <enrollInProgram programId="Mental Health"/>
-    
-    <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.mentalhealth.scores">
-        <div class="section-container">
 
-            <span class="list-inline">
-            <p>
-                <label>
-                    <uimessage code="pihcore.ncd.mental.phq9Score"/> (0-27):
-                </label>
-                <span class="small">
-                    <obs id="phq9Score" conceptId="CIEL:165137"/>
-                </span>
-            </p>
-            </span>
-
-            <span class="list-inline">
-                <p>
-                    <label>
-                        <uimessage code="CGI Score"/> (0-7):
-                    </label>
-                    <span class="small">
-                        <obs id="cgiScore" conceptId="CIEL:163223"/>
-                    </span>
-                </p>
-            </span>
-
-            <span class="list-inline">
-            <p>
-                <label>
-                    <uimessage code="WHODAS Score"/> (0-100):
-                </label>
-                <span class="small">
-                    <obs id="whodasScore" conceptId="CIEL:163226"/>
-                </span>
-            </p>
-            </span>
-
+    <section id="hospital" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Hospitalization">
+        <div class="list-inline section-container">
+            <label>
+                <uimessage code="pihcore.ncd.plan.hospitalized"/>
+            </label>
+            <obs conceptId="PIH:PATIENT HOSPITALIZED SINCE LAST VISIT" answerConceptIds="PIH:YES,PIH:NO"
+                 style="radio" answerSeparator=""/>
         </div>
     </section>
 
+    <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Screening tools">
+        <div class="section-container">
+            <div class="two-columns">
+                <div>
+                    <p>
+                        <label>
+                            <uimessage code="pihcore.ncd.mental.gad7Score"/> (0-21) for anxiety:
+                        </label>
+                        <span class="small">
+                            <obs id="gadScore" conceptId="CIEL:165185"/>
+                        </span>
+                    </p>
+
+                    <p>
+                        <label>
+                            <uimessage code="WHODAS Score"/> (0-100):
+                        </label>
+                        <span class="small">
+                            <obs id="whodasScore" conceptId="CIEL:163226"/>
+                        </span>
+                    </p>
+
+                </div>
+                <div>
+                    <p>
+                        <label>
+                            <uimessage code="pihcore.ncd.mental.phq9Score"/> (0-27) for depression:
+                        </label>
+                        <span class="small">
+                            <obs id="phq9Score" conceptId="CIEL:165137"/>
+                        </span>
+                    </p>
+
+                    <p>
+                        <label>
+                            <uimessage code="CAGE"/> (0-4) for alcoholism:
+                        </label>
+                        <span class="small">
+                            <obs id="cageScore" conceptId="CIEL:167217"/>
+                        </span>
+                    </p>
+
+                </div>
+            </div>
+
+            <p class="list-inline">
+                <label>
+                    <uimessage code="pihcore.mentalhealth.cgis"/> (Severity):
+                </label>
+                <br/>
+                <obs conceptId="CIEL:163222" style="radio"
+                     answers="0,1,2,3,4,5,6,7"
+                     answerLabels="0 = Not assessed,1 = Normal,2 = Borderline mentally ill,3 = Mildly ill,4 = Moderately ill,5 = Markedly ill,6 = Severely ill,7 = Most extreme"
+                     answerSeparator="&lt;br&gt;" />
+            </p>
+
+            <p class="list-inline">
+                <label>
+                    <uimessage code="pihcore.mentalhealth.cgii"/> (Improvement):
+                </label>
+                <br/>
+                <obs conceptId="CIEL:163223" style="radio"
+                     answers="0,1,2,3,4,5,6,7"
+                     answerLabels="0 = Not assessed,1 = Very much improved,2 = Much improved,3 = Minimally improved,4 = No change,5 = Minimally worse,6 = Much worse,7 = Very much worse"
+                     answerSeparator="&lt;br&gt;"/>
+            </p>
+
+            <p class="list-inline">
+                <label>
+                    <uimessage code="pihcore.mentalhealth.cgie"/> (Efficacy):
+                </label>
+                <br/>
+                <span>
+                    <obs conceptId="CIEL:163224" style="radio"
+                         answers="0,1,2,3"
+                         answerLabels="0 = None,1 = Do not significantly interfere with patient FUNCTIONING,2 = Significantly interfere with patient FUNCTIONING,3 = Outweighs Therapeutic effects with patient's FUNCTIONING"
+                         answerSeparator="&lt;br&gt;" />
+                </span>
+            </p>
+        </div>
+    </section>
 
     <!-- This include will be changed to wrap pregnancy when other exams are added to this section -->
     <includeIf velocityTest="$patient.gender == 'F' ">
@@ -451,7 +505,7 @@
                         <template>
                             <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
                                 <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
-                                     answerConceptId="{concept}" answerCode="{name}"  />
+                              answerConceptId="{concept}" answerCode="{name}"  />
                             </obsgroup>
                         </template>
                         <render concept="CIEL:115924" name="Bipolar disorder (mania)" />

@@ -253,7 +253,11 @@
                     });
                 });
 
-                jq('#phq9Score > input:text').attr('placeholder', '0-27');
+            jq('#phq9Score > input:text').attr('placeholder', '0-27');
+            jq('#whodasScore > input:text').attr('placeholder', '0-100');
+            jq('#cageScore > input:text').attr('placeholder', '0-4');
+            jq('#gadScore > input:text').attr('placeholder', '0-21');
+
 
             });
 
@@ -810,7 +814,7 @@
         </div>
     </section>
 
-    <section id="mh_review_systems" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+  <!--  <section id="mh_review_systems" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Review of systems / Physical exam">
         <div class="section-container">
 
@@ -838,7 +842,7 @@
                 <obs id="current-meds" conceptId="PIH:13318" style="textarea" />
             </p>
 
-            <repeat>
+          <repeat>
                 <template>
                     <p>
                         <label>
@@ -854,13 +858,13 @@
                 <render xId="PIH:13764"   name="Endocrine" />
                 <render xId="CIEL:160981" name="Integumentary (skin)" />
                 <render xId="CIEL:163048" name="pihcore.exam.musculoskeletal_exam" />
-                <!-- <render xId="CIEL:" name="skeletal" /> -->
+                <render xId="CIEL:" name="skeletal" />
                 <render xId="PIH:13762"   name="Nervous" />
                 <render xId="PIH:11572"   name="Lymphatic" />
             </repeat>
 
         </div>
-    </section>
+    </section> -->
 
     <section id="mh_impression" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="General impressions">
@@ -880,6 +884,15 @@
                         </label>
                         <span class="small">
                             <obs id="gadScore" conceptId="CIEL:165185"/>
+                        </span>
+                    </p>
+
+                    <p>
+                        <label>
+                            <uimessage code="WHODAS Score"/> (0-100):
+                        </label>
+                        <span class="small">
+                            <obs id="whodasScore" conceptId="CIEL:163226"/>
                         </span>
                     </p>
 
