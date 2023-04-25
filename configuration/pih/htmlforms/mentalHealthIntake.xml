@@ -253,9 +253,17 @@
                     });
                 });
 
+<<<<<<< HEAD
+            jq('#phq9Score > input:text').attr('placeholder', '0-27');
+            jq('#whodasScore > input:text').attr('placeholder', '0-100');
+            jq('#cageScore > input:text').attr('placeholder', '0-4');
+            jq('#gadScore > input:text').attr('placeholder', '0-21');
+
+=======
                 jq('#phq9Score > input:text').attr('placeholder', '0-27');
                 jq('#cageScore > input:text').attr('placeholder', '0-4');
                 jq('#gadScore > input:text').attr('placeholder', '0-21');
+>>>>>>> upstream/master
 
             });
 
@@ -795,6 +803,104 @@
 
                 </div>
             </section>
+<<<<<<< HEAD
+        </div>
+    </section>
+
+  <!--  <section id="mh_review_systems" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Review of systems / Physical exam">
+        <div class="section-container">
+
+            <p class="list-inline">
+                <label>
+                    <uimessage code="pihcore.medication.side.effects"/>
+                </label>
+
+                <obs id="med-side-effects" conceptId="CIEL:165273" style="radio"
+                     answerConceptIds="PIH:NO,PIH:YES,PIH:UNKNOWN" >
+                    <controls>
+                        <when value="PIH:YES" thenDisplay = "#side-effect-section"/>
+                    </controls>
+                </obs>
+            </p>
+
+            <p id="side-effect-section">
+                <obs id="" conceptId="CIEL:164377" style="textarea"/>
+            </p>
+
+            <p>
+                <label>
+                    <uimessage code="zl.consultNote.currentMedications.title" />
+                </label>
+                <obs id="current-meds" conceptId="PIH:13318" style="textarea" />
+            </p>
+
+          <repeat>
+                <template>
+                    <p>
+                        <label>
+                            <uimessage code="{name}" />
+                        </label>
+                        <obs conceptId="{xId}" style="text" rows="1" />
+                    </p>
+                </template>
+                <render xId="PIH:11570" name="pihcore.exam.neuro_exam" />
+                <render xId="PIH:1374"  name="Genitourinary STIs" />
+                <render xId="PIH:13757" name="Gastrointestinal" />
+                <render xId="CIEL:163046" name="pihcore.exam.cardiac_exam" oname="Cardiovascular" />
+                <render xId="PIH:13764"   name="Endocrine" />
+                <render xId="CIEL:160981" name="Integumentary (skin)" />
+                <render xId="CIEL:163048" name="pihcore.exam.musculoskeletal_exam" />
+                <render xId="CIEL:" name="skeletal" />
+                <render xId="PIH:13762"   name="Nervous" />
+                <render xId="PIH:11572"   name="Lymphatic" />
+            </repeat>
+
+        </div>
+    </section> -->
+
+    <section id="mh_impression" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="General impressions">
+        <div class="section-container">
+            <obs conceptId="PIH:1364" style="text" rows="2" />
+        </div>
+    </section>
+
+    <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Screening tools">
+        <div class="section-container">
+            <div class="two-columns">
+                <div>
+                    <p>
+                        <label>
+                            <uimessage code="pihcore.ncd.mental.gad7Score"/> (0-21) for anxiety:
+                        </label>
+                        <span class="small">
+                            <obs id="gadScore" conceptId="CIEL:165185"/>
+                        </span>
+                    </p>
+
+                    <p>
+                        <label>
+                            <uimessage code="WHODAS Score"/> (0-100):
+                        </label>
+                        <span class="small">
+                            <obs id="whodasScore" conceptId="CIEL:163226"/>
+                        </span>
+                    </p>
+
+                </div>
+                <div>
+                    <p>
+                        <label>
+                            <uimessage code="pihcore.ncd.mental.phq9Score"/> (0-27) for depression:
+                        </label>
+                        <span class="small">
+                            <obs id="phq9Score" conceptId="CIEL:165137"/>
+                        </span>
+                    </p>
+=======
+>>>>>>> upstream/master
 
             <section id="god" sectionTag="fieldset" headerTag="legend"
                      headerStyle="title" headerCode="zl.registration.patient.religion.label">
