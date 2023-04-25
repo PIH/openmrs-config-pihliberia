@@ -1245,10 +1245,10 @@
 
             <p class="list-inline">
                 <label>
-                    <uimessage code="pihcore.medication.side.effects"/>
+                    <uimessage code="Medication allergies"/>
                 </label>
 
-                <obs id="med-side-effects" conceptId="CIEL:165273" style="radio"
+                <obs id="med-side-effects" conceptId="CIEL:121764" style="radio"
                      answerConceptIds="PIH:NO,PIH:YES,PIH:UNKNOWN" >
                     <controls>
                         <when value="PIH:YES" thenDisplay = "#side-effect-section"/>
@@ -1258,9 +1258,9 @@
 
             <p id="side-effect-section">
                 <label>
-                    <uimessage code="if yes, specify side effect:" />
+                    <uimessage code="if yes, specify allergy:" />
                 </label>
-                <obs id="" conceptId="CIEL:164377" style="textarea"/>
+                <obs id="" conceptId="PIH:1729" style="textarea"/>
             </p>
 
             <p>
