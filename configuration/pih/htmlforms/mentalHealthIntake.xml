@@ -796,151 +796,8 @@
 
                 </div>
             </section>
-        </div>
-    </section>
 
-   <section id="mh_review_systems" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Review of systems / Physical exam">
-        <div class="section-container">
-
-            <p class="list-inline">
-                <label>
-                    <uimessage code="pihcore.medication.side.effects"/>
-                </label>
-
-                <obs id="med-side-effects" conceptId="CIEL:165273" style="radio"
-                     answerConceptIds="PIH:NO,PIH:YES,PIH:UNKNOWN" >
-                    <controls>
-                        <when value="PIH:YES" thenDisplay = "#side-effect-section"/>
-                    </controls>
-                </obs>
-            </p>
-
-            <p id="side-effect-section">
-                <obs id="" conceptId="CIEL:164377" style="textarea"/>
-            </p>
-
-            <p>
-                <label>
-                    <uimessage code="zl.consultNote.currentMedications.title" />
-                </label>
-                <obs id="current-meds" conceptId="PIH:13318" style="textarea" />
-            </p>
-
-          <repeat>
-                <template>
-                    <p>
-                        <label>
-                            <uimessage code="{name}" />
-                        </label>
-                        <obs conceptId="{xId}" style="text" rows="1" />
-                    </p>
-                </template>
-                <render xId="PIH:11570" name="pihcore.exam.neuro_exam" />
-                <render xId="PIH:1374"  name="Genitourinary STIs" />
-                <render xId="PIH:13757" name="Gastrointestinal" />
-                <render xId="CIEL:163046" name="pihcore.exam.cardiac_exam" oname="Cardiovascular" />
-                <render xId="PIH:13764"   name="Endocrine" />
-                <render xId="CIEL:160981" name="Integumentary (skin)" />
-                <render xId="CIEL:163048" name="pihcore.exam.musculoskeletal_exam" />
-                <!--<render xId="CIEL:" name="skeletal" /> -->
-                <render xId="PIH:13762"   name="Nervous" />
-                <render xId="PIH:11572"   name="Lymphatic" />
-            </repeat>
-
-        </div>
-    </section>
-
-    <section id="mh_impression" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="General impressions">
-        <div class="section-container">
-            <obs conceptId="PIH:1364" style="text" rows="2" />
-        </div>
-    </section>
-
-    <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Screening tools">
-        <div class="section-container">
-            <div class="two-columns">
-                <div>
-                    <p>
-                        <label>
-                            <uimessage code="pihcore.ncd.mental.gad7Score"/> (0-21) for anxiety:
-                        </label>
-                        <span class="small">
-                            <obs id="gadScore" conceptId="CIEL:165185"/>
-                        </span>
-                    </p>
-
-                    <p>
-                        <label>
-                            <uimessage code="WHODAS Score"/> (0-100):
-                        </label>
-                        <span class="small">
-                            <obs id="whodasScore" conceptId="CIEL:163226"/>
-                        </span>
-                    </p>
-
-                </div>
-                <div>
-                    <p>
-                        <label>
-                            <uimessage code="pihcore.ncd.mental.phq9Score"/> (0-27) for depression:
-                        </label>
-                        <span class="small">
-                            <obs id="phq9Score" conceptId="CIEL:165137"/>
-                        </span>
-                    </p>
-
-                    <p>
-                        <label>
-                            <uimessage code="CAGE"/> (0-4) for alcoholism:
-                        </label>
-                        <span class="small">
-                            <obs id="cageScore" conceptId="CIEL:167217"/>
-                        </span>
-                    </p>
-
-                </div>
-            </div>
-
-            <p class="list-inline">
-                <label>
-                    <uimessage code="pihcore.mentalhealth.cgis"/> (Severity):
-                </label>
-                <br/>
-                <obs conceptId="CIEL:163222" style="radio"
-                     answers="0,1,2,3,4,5,6,7"
-                     answerLabels="0 = Not assessed,1 = Normal,2 = Borderline mentally ill,3 = Mildly ill,4 = Moderately ill,5 = Markedly ill,6 = Severely ill,7 = Most extreme"
-                     answerSeparator="&lt;br&gt;" />
-            </p>
-
-            <p class="list-inline">
-                <label>
-                    <uimessage code="pihcore.mentalhealth.cgii"/> (Improvement):
-                </label>
-                <br/>
-                <obs conceptId="CIEL:163223" style="radio"
-                     answers="0,1,2,3,4,5,6,7"
-                     answerLabels="0 = Not assessed,1 = Very much improved,2 = Much improved,3 = Minimally improved,4 = No change,5 = Minimally worse,6 = Much worse,7 = Very much worse"
-                     answerSeparator="&lt;br&gt;"/>
-            </p>
-
-            <p class="list-inline">
-                <label>
-                    <uimessage code="pihcore.mentalhealth.cgie"/> (Efficacy):
-                </label>
-                <br/>
-                <span>
-                    <obs conceptId="CIEL:163224" style="radio"
-                         answers="0,1,2,3"
-                         answerLabels="0 = None,1 = Do not significantly interfere with patient FUNCTIONING,2 = Significantly interfere with patient FUNCTIONING,3 = Outweighs Therapeutic effects with patient's FUNCTIONING"
-                         answerSeparator="&lt;br&gt;" />
-                </span>
-            </p>
-        </div>
-    </section>
-
+            <!-- WTF -->
             <section id="god" sectionTag="fieldset" headerTag="legend"
                      headerStyle="title" headerCode="zl.registration.patient.religion.label">
                 <p class="list-inline">
@@ -954,7 +811,8 @@
                      headerStyle="title" headerCode="Hobbies">
                 <obs conceptId="PIH:1604" style="text" rows="2" />
             </section>
-
+        </div>
+    </section>
 
     <section id="mh_habits" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Substance use history">
@@ -1381,7 +1239,7 @@
         </div>
     </section>
 
-    <section id="mh_review_systems" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+   <section id="mh_review_systems" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Review of systems / Physical exam">
         <div class="section-container">
 
@@ -1399,7 +1257,9 @@
             </p>
 
             <p id="side-effect-section">
-                <label><uimessage code="if yes, specify side effect:" /></label>
+                <label>
+                    <uimessage code="if yes, specify side effect:" />
+                </label>
                 <obs id="" conceptId="CIEL:164377" style="textarea"/>
             </p>
 
@@ -1410,7 +1270,7 @@
                 <obs id="current-meds" conceptId="PIH:13318" style="textarea" />
             </p>
 
-            <repeat>
+          <repeat>
                 <template>
                     <p>
                         <label>
@@ -1426,7 +1286,7 @@
                 <render xId="PIH:13764"   name="Endocrine" />
                 <render xId="CIEL:160981" name="Integumentary (skin)" />
                 <render xId="CIEL:163048" name="pihcore.exam.musculoskeletal_exam" />
-                <!-- <render xId="CIEL:" name="skeletal" /> -->
+                <!--<render xId="CIEL:" name="skeletal" /> -->
                 <render xId="PIH:13762"   name="Nervous" />
                 <render xId="PIH:11572"   name="Lymphatic" />
             </repeat>
@@ -1448,10 +1308,19 @@
                 <div>
                     <p>
                         <label>
-                            <uimessage code="pihcore.ncd.mental.gad7Score"/> (anxiety):
+                            <uimessage code="pihcore.ncd.mental.gad7Score"/> (0-21) for anxiety:
                         </label>
                         <span class="small">
                             <obs id="gadScore" conceptId="CIEL:165185"/>
+                        </span>
+                    </p>
+
+                    <p>
+                        <label>
+                            <uimessage code="WHODAS Score"/> (0-100):
+                        </label>
+                        <span class="small">
+                            <obs id="whodasScore" conceptId="CIEL:163226"/>
                         </span>
                     </p>
 
@@ -1459,7 +1328,7 @@
                 <div>
                     <p>
                         <label>
-                            <uimessage code="pihcore.ncd.mental.phq9Score"/> (depression):
+                            <uimessage code="pihcore.ncd.mental.phq9Score"/> (0-27) for depression:
                         </label>
                         <span class="small">
                             <obs id="phq9Score" conceptId="CIEL:165137"/>
@@ -1468,7 +1337,7 @@
 
                     <p>
                         <label>
-                            <uimessage code="CAGE"/> (alcoholism):
+                            <uimessage code="CAGE"/> (0-4) for alcoholism:
                         </label>
                         <span class="small">
                             <obs id="cageScore" conceptId="CIEL:167217"/>
