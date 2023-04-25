@@ -211,9 +211,27 @@
         </style>
     </ifMode>
 
+    <script type="text/javascript">
+        const patientUuid = '<lookup expression="patient.uuid"/>';
+        const encounterUuid = '<lookup expression="encounter.uuid"/>';
+        const encounterDateYmd = '<lookup complexExpression="$fn.formatDate($encounter.encounterDatetime, 'yyyy-MM-dd')"/>';
+        const pihemr = new PihServices(jq);
+        const hfe = new HtmlFormFunctions(pihemr, patientUuid, encounterUuid, encounterDateYmd);
+
+        function toggleConditionSections() {
+            jq('#mh-diagnoses').hide();
+            hfe.showSectionBasedOnCondition('PIH:14650', '#mh-diagnoses', false, true, true);
+        }
+
+        // When the form initially loads, and any time the encounter date is changed, show/hide sections based on condition list
+        jq('#encounterDate').find('input[type="hidden"]').change(function() {
+            toggleConditionSections()
+        });
+        toggleConditionSections();
+    </script>
+
     <ifMode mode="VIEW" include="false">
         <script type="text/javascript">
-
             jq(function() {
 
                 // return appointment date can never be before encounter date
@@ -253,11 +271,10 @@
                     });
                 });
 
-            jq('#phq9Score > input:text').attr('placeholder', '0-27');
-            jq('#whodasScore > input:text').attr('placeholder', '0-100');
-            jq('#cageScore > input:text').attr('placeholder', '0-4');
-            jq('#gadScore > input:text').attr('placeholder', '0-21');
-
+                jq('#phq9Score > input:text').attr('placeholder', '0-27');
+                jq('#whodasScore > input:text').attr('placeholder', '0-100');
+                jq('#cageScore > input:text').attr('placeholder', '0-4');
+                jq('#gadScore > input:text').attr('placeholder', '0-21');
             });
 
         </script>
@@ -1565,17 +1582,13 @@
         </div>
     </section>
 
-    <!-- ToDo:  Fix this when condition list is added
-    <includeIf velocityTest="!$patientHasMentalHealthCondition">
-        <section id="mh-diagnoses" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="pihcore.diagnoses.label">
-            <div class="section-container" data-program="Mental Health">
-                <condition required="true"/>
-            </div>
-        </section>
-
-        If user doesn't have MH encounter, don't display ep section
-    </includeIf> -->
+    <!-- Todo:  Un-comment to use condition list.  Confirm associated javascript on form is still correct.
+    <section id="mh-diagnoses" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.diagnoses.label">
+        <div class="section-container" data-program="Mental Health">
+            <condition required="true" controlId="condition_1"/>
+        </div>
+    </section>
+     -->
 
     <style type="text/css">
 

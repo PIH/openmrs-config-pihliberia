@@ -90,16 +90,27 @@
 
     </style>
 
+    <script type="text/javascript">
+        const patientUuid = '<lookup expression="patient.uuid"/>';
+        const encounterUuid = '<lookup expression="encounter.uuid"/>';
+        const encounterDateYmd = '<lookup complexExpression="$fn.formatDate($encounter.encounterDatetime, 'yyyy-MM-dd')"/>';
+        const pihemr = new PihServices(jq);
+        const hfe = new HtmlFormFunctions(pihemr, patientUuid, encounterUuid, encounterDateYmd);
+
+        function toggleConditionSections() {
+            jq('#clinical-impression').hide();
+            hfe.showSectionBasedOnCondition('PIH:14648', '#clinical-impression', false, true, true);
+        }
+
+        // When the form initially loads, and any time the encounter date is changed, show/hide sections based on condition list
+        jq('#encounterDate').find('input[type="hidden"]').change(function() {
+            toggleConditionSections()
+        });
+        toggleConditionSections();
+    </script>
+
     <ifMode mode="VIEW" include="false" >
         <script type="text/javascript">
-
-            const patientUuid = '<lookup expression="patient.uuid"/>';
-            const encounterUuid = '<lookup expression="encounter.uuid"/>';
-            const encounterDateYmd = '<lookup complexExpression="$fn.formatDate($encounter.encounterDatetime, 'yyyy-MM-dd')"/>';
-
-            const pihemr = new PihServices(jq);
-            const hfe = new HtmlFormFunctions(pihemr, patientUuid, encounterUuid, encounterDateYmd);
-
             // add validation handler to the HTML form
             htmlForm.getBeforeValidation().push(function() {
                 var valid = true;
@@ -120,38 +131,6 @@
                 jq('#disposition select:first').change(function() {
                     jq('#disposition .field-error').first().html('').hide(); // hide any previous error if disposition is changed
                 });
-
-                // When the form initially loads, and any time the encounter date is changed, show/hide sections based on condition list
-                jq('#encounterDate').find('input[type="hidden"]').change(function() {
-                    toggleSectionsBasedOnCondition();
-                });
-                toggleSectionsBasedOnCondition();
-
-                // Hide the clinical impression section if the patient already has an NCD condition unless it was recorded in this encounter
-                function toggleSectionsBasedOnCondition() {
-                    const encDateYmd = hfe.getEncounterDateYmd();
-                    const ncdConceptSet = 'PIH:14648';
-                    const conditionRep = 'custom:(uuid,display,clinicalStatus,onsetDate,endDate,encounter:(id,uuid),condition:(coded:(uuid)))';
-                    const clinicalImpressionSection = '#clinical-impression';
-                    pihemr.getMatchingConditions(patientUuid, null, ncdConceptSet, conditionRep).then(ncdConditions => {
-                        let foundConditionInEncounter = false;
-                        let foundActiveConditionAtEncounter = false;
-                        ncdConditions.forEach(function(condition) {
-                            if (encounterUuid &amp;&amp; encounterUuid === condition?.encounter?.uuid) {
-                                foundConditionInEncounter = true;
-                            }
-                            if (pihemr.isConditionActiveOnDate(condition, encDateYmd)) {
-                                foundActiveConditionAtEncounter = true;
-                            }
-                        });
-                        if (foundConditionInEncounter || !foundActiveConditionAtEncounter) {
-                            jq(clinicalImpressionSection).show();
-                        }
-                        else {
-                            jq(clinicalImpressionSection).hide();
-                        }
-                    });
-                }
             });
 
         </script>
