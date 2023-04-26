@@ -8,20 +8,6 @@
     <postSubmissionAction class="org.openmrs.module.pihcore.htmlformentry.action.CleanDiagnosisConstructAction"/>
     <postSubmissionAction class="org.openmrs.module.pihcore.htmlformentry.action.CleanPrescriptionConstructAction"/>
 
-    <macros>
-        <macro key="pt_has_htn" expression="conditionListConcepts.contains($fn.getConcept('PIH:HYPERTENSION'))"/>
-        <macro key="pt_has_dbt" expression="conditionListConcepts.contains($fn.getConcept('PIH:DIABETES'))"/>
-        <macro key="pt_has_rf" expression="conditionListConcepts.contains($fn.getConcept('PIH:RENAL FAILURE'))"/>
-        <macro key="pt_has_asthma" expression="conditionListConcepts.contains($fn.getConcept('PIH:ASTHMA'))"/>
-        <macro key="pt_has_copd"
-               expression="conditionListConcepts.contains($fn.getConcept('PIH:CHRONIC OBSTRUCTIVE PULMONARY DISEASE'))"/>
-        <macro key="pt_has_hf" expression="conditionListConcepts.contains($fn.getConcept('PIH:HEART FAILURE'))"/>
-        <macro key="pt_has_lf" expression="conditionListConcepts.contains($fn.getConcept('PIH:LIVER FAILURE'))"/>
-        <macro key="pt_has_scd" expression="conditionListConcepts.contains($fn.getConcept('PIH:SPLENOMEGALY'))"/>
-
-
-    </macros>
-
     <!-- ToDo:  Use messages.properties -->
     <translations defaultLocale="fr">
         <code name="yes">
@@ -160,17 +146,51 @@
         </style>
     </ifMode>
 
-
     <script type="text/javascript">
+        const patientUuid = '<lookup expression="patient.uuid"/>';
+        const encounterUuid = '<lookup expression="encounter.uuid"/>';
+        const encounterDateYmd = '<lookup complexExpression="$fn.formatDate($encounter.encounterDatetime, 'yyyy-MM-dd')"/>';
+        const pihemr = new PihServices(jq);
+        const hfe = new HtmlFormFunctions(pihemr, patientUuid, encounterUuid, encounterDateYmd);
+
+        const conditionSections = [
+            {"selector": ".pt_has_htn", "conceptRef": "PIH:HYPERTENSION"},
+            {"selector": ".pt_has_dbt", "conceptRef": "PIH:DIABETES"},
+            {"selector": ".pt_has_rf", "conceptRef": "PIH:RENAL FAILURE"},
+            {"selector": ".pt_has_asthma", "conceptRef": "PIH:ASTHMA"},
+            {"selector": ".pt_has_copd", "conceptRef": "PIH:CHRONIC OBSTRUCTIVE PULMONARY DISEASE"},
+            {"selector": ".pt_has_hf", "conceptRef": "PIH:HEART FAILURE"},
+            {"selector": ".pt_has_lf", "conceptRef": "PIH:LIVER FAILURE"},
+            {"selector": ".pt_has_scd", "conceptRef": "PIH:SPLENOMEGALY"}
+        ];
+
+        function toggleConditionSections() {
+            jq(".no_ncd_condition").show();
+            conditionSections.forEach(function(section) {
+                jq(section.selector).hide();
+                hfe.showSectionBasedOnCondition(section.conceptRef, section.selector, true, false, true).then(() => {
+                    if (jq(section.selector + ":visible").length > 0) {
+                        jq(".no_ncd_condition").hide();
+                    }
+                });
+            });
+        }
+
+        jq(function () {
+            // When the form initially loads, and any time the encounter date is changed, show/hide sections based on condition list
+            jq('#encounterDate').find('input[type="hidden"]').change(function() {
+                toggleConditionSections();
+            });
+            toggleConditionSections();
+        });
+
         var calculateWaistHipRatio = function(waist, hip) {
-        var waistHipRatio = null;
-        if (waist &amp;&amp; hip) {
-        waistHipRatio = waist / hip;
+            var waistHipRatio = null;
+            if (waist &amp;&amp; hip) {
+                waistHipRatio = waist / hip;
+            }
+            return waistHipRatio;
         }
-        return waistHipRatio;
-        }
-
-
     </script>
 
     <ifMode mode="VIEW" include="false">
@@ -394,8 +414,7 @@
             </div>
         </section>
 
-        <includeIf
-                velocityTest="$pt_has_htn or $pt_has_dbt or $pt_has_rf or $pt_has_asthma or $pt_has_copd or $pt_has_hf or $pt_has_lf or $pt_has_scd">
+        <div class="pt_has_htn pt_has_dbt pt_has_rf pt_has_asthma pt_has_copd pt_has_hf pt_has_lf pt_has_scd">
             <section sectionTag="fieldset" headerTag="legend" headerStyle="title"
                      headerCode="pihcore.ncd.title">
                 <div class="section-container">
@@ -405,51 +424,51 @@
                             <uimessage code="pihcore.ncd.last.visit.label"></uimessage>:
                         </h5>
 
-                        <includeIf velocityTest="$pt_has_htn">
+                        <span class="pt_has_htn">
                             <obs conceptId="PIH:Disease requiring hospitalization since last visit"
                                  answerConceptId="PIH:HYPERTENSION" labelText="Hospitalized for HTN" answerLabel=""/>
-                        </includeIf>
+                        </span>
 
-                        <includeIf velocityTest="$pt_has_dbt">
+                        <span class="pt_has_dbt">
                             <obs conceptId="PIH:Disease requiring hospitalization since last visit"
                                  answerConceptId="PIH:DIABETES" labelText="Hospitalized for Diabetes" answerLabel=""/>
-                        </includeIf>
+                        </span>
 
-                        <includeIf velocityTest="$pt_has_rf">
+                        <span class="pt_has_rf">
                             <obs conceptId="PIH:Disease requiring hospitalization since last visit"
                                  answerConceptId="PIH:RENAL FAILURE" labelText="Hospitalized for CKD" answerLabel=""/>
-                        </includeIf>
+                        </span>
 
-                        <includeIf velocityTest="$pt_has_asthma">
+                        <span class="pt_has_asthma">
                             <obs conceptId="PIH:Disease requiring hospitalization since last visit"
                                  answerConceptId="PIH:ASTHMA" labelText="Hospitalized for Asthma" answerLabel=""/>
-                        </includeIf>
+                        </span>
 
-                        <includeIf velocityTest="$pt_has_copd">
+                        <span class="pt_has_copd">
                             <obs conceptId="PIH:Disease requiring hospitalization since last visit"
                                  answerConceptId="PIH:CHRONIC OBSTRUCTIVE PULMONARY DISEASE"
                                  labelText="Hospitalized for COPD" answerLabel=""/>
-                        </includeIf>
+                        </span>
 
-                        <includeIf velocityTest="$pt_has_hf">
+                        <span class="pt_has_hf">
                             <obs conceptId="PIH:Disease requiring hospitalization since last visit"
                                  answerConceptId="PIH:HEART FAILURE" labelText="Hospitalized for CHF" answerLabel=""/>
-                        </includeIf>
+                        </span>
 
-                        <includeIf velocityTest="$pt_has_lf">
+                        <span class="pt_has_lf">
                             <obs conceptId="PIH:Disease requiring hospitalization since last visit"
                                  answerConceptId="PIH:LIVER FAILURE" labelText="Hospitalized for Cirrhosis"
                                  answerLabel=""/>
-                        </includeIf>
+                        </span>
 
-                        <includeIf velocityTest="$pt_has_scd">
+                        <span class="pt_has_scd">
                             <obs conceptId="PIH:Disease requiring hospitalization since last visit"
                                  answerConceptId="PIH:SPLENOMEGALY" labelText="Hospitalized for SCD" answerLabel=""/>
-                        </includeIf>
+                        </span>
 
                         <repeat>
                             <template>
-                                <includeIf velocityTest="{expression}">
+                                <span class="{expression}">
                                     <obsgroup groupingConceptId="PIH:12389">
                                         <obs conceptId="CIEL:1728"
                                              answerConceptId="{concept}"
@@ -465,105 +484,105 @@
                                             <br/>
                                         </span>
                                     </obsgroup>
-                                </includeIf>
+                                </span>
                             </template>
 
                             <render concept="CIEL:70468" name="alcohol" label="Drink alcohol"
-                                    expression="$pt_has_htn or $pt_has_dbt or $pt_has_hf or $pt_has_lf"/>
+                                    expression="pt_has_htn pt_has_dbt pt_has_hf pt_has_lf"/>
                             <render concept="PIH:2545" name="tobacco" label="Smoke tobacco"
-                                    expression="$pt_has_htn or $pt_has_dbt or $pt_has_rf or $pt_has_hf"/>
+                                    expression="pt_has_htn pt_has_dbt pt_has_rf pt_has_hf"/>
                             <render concept="CIEL:165585" name="poor-diet-adherance" label="Poor diet adherence"
-                                    expression="$pt_has_htn or $pt_has_dbt or $pt_has_hf or $pt_has_lf"/>
+                                    expression="pt_has_htn pt_has_dbt pt_has_hf pt_has_lf"/>
                             <render concept="CIEL:165569" name="poor-physical-activity" label="Poor physical activity"
-                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                                    expression="pt_has_htn pt_has_dbt"/>
                             <render concept="PIH:SHORTNESS OF BREATH WITH EXERTION" name="sob"
-                                    label="Shortness of breadth with exertion" expression="$pt_has_htn or $pt_has_dbt"/>
+                                    label="Shortness of breadth with exertion" expression="pt_has_htn pt_has_dbt"/>
                             <render concept="PIH:Currently taking medication" name="taking-meds"
                                     label="Took meds today?"
-                                    expression="$pt_has_htn or $pt_has_dbt or $pt_has_rf or $pt_has_lf"/>
+                                    expression="pt_has_htn pt_has_dbt pt_has_rf pt_has_lf"/>
                             <render concept="PIH:HYPOGLYCEMIA" name="Hypoglycemia" label="Hypoglycemia"
-                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                                    expression="pt_has_htn pt_has_dbt"/>
                             <render concept="PIH:HEADACHE" name="Headache" label="Headache"
-                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                                    expression="pt_has_htn pt_has_dbt"/>
                             <render concept="PIH:CHEST PAIN" name="chest-pain" label="Chest pain"
-                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                                    expression="pt_has_htn pt_has_dbt"/>
                             <render concept="PIH:DIZZINESS" name="dizziness" label="Dizziness"
-                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                                    expression="pt_has_htn pt_has_dbt"/>
                             <render concept="PIH:Vision problem" name="vision" label="Vision changes"
-                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                                    expression="pt_has_htn pt_has_dbt"/>
 
                             <render concept="PIH:PERIPHERAL NEUROPATHY" name="neuropathy" label="Neuropathy"
-                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                                    expression="pt_has_htn pt_has_dbt"/>
                             <render concept="PIH:Ulcers (generic)" name="ulcers" label="Ulcers"
-                                    expression="$pt_has_htn or $pt_has_dbt"/>
+                                    expression="pt_has_htn pt_has_dbt"/>
                             <render concept="PIH:HERBAL TRADITIONAL MEDICATIONS" name="herbs"
                                     label="Used traditional herbs"
-                                    expression="$pt_has_rf or $pt_has_lf"/>
+                                    expression="pt_has_rf pt_has_lf"/>
                             <render concept="CIEL:162306" name="nsaids" label="Took NSAIDs"
-                                    expression="$pt_has_rf or $pt_has_lf"/>
+                                    expression="pt_has_rf pt_has_lf"/>
                             <render concept="PIH:Retention of Urine" name="urinary-retention" label="Urinary retention"
-                                    expression="$pt_has_rf"/>
+                                    expression="pt_has_rf"/>
                             <render concept="PIH:FATIGUE" name="fatigue" label="Fatigue"
-                                    expression="$pt_has_rf or $pt_has_hf"/>
+                                    expression="pt_has_rf pt_has_hf"/>
                             <render concept="PIH:NAUSEA" name="nausea" label="Nausea"
-                                    expression="$pt_has_rf or $pt_has_lf"/>
+                                    expression="pt_has_rf pt_has_lf"/>
                             <render concept="PIH:PRURITIS" name="pruritis" label="Pruritis"
-                                    expression="$pt_has_rf or $pt_has_lf"/>
+                                    expression="pt_has_rf pt_has_lf"/>
                             <render concept="CIEL:119866" name="confusion" label="Confusion"
-                                    expression="$pt_has_rf or $pt_has_lf"/>
+                                    expression="pt_has_rf pt_has_lf"/>
                             <render concept="CIEL:165193" name="facial-edema" label="Facial edema"
-                                    expression="$pt_has_rf or $pt_has_lf"/>
+                                    expression="pt_has_rf pt_has_lf"/>
                             <render concept="CIEL:460" name="body-edema" label="Body edema"
-                                    expression="$pt_has_rf or $pt_has_hf"/>
+                                    expression="pt_has_rf pt_has_hf"/>
 
                             <render concept="CIEL:159596" name="regular-diet" label="Regular diet"
-                                    expression="$pt_has_rf"/>
+                                    expression="pt_has_rf"/>
                             <render concept="CIEL:141599" name="Dyspnea-on-exertion" label="DOE"
-                                    expression="$pt_has_hf"/>
+                                    expression="pt_has_hf"/>
                             <render concept="PIH:ASTHMA EXACERBATION" name="asthma-exacerbation"
                                     label="Asthma exacerbation"
-                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                                    expression="pt_has_asthma pt_has_copd"/>
                             <render concept="CIEL:127639" name="respiratory-distress" label="Respiratory distress"
-                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                                    expression="pt_has_asthma pt_has_copd"/>
                             <render concept="PIH:CYANOSIS" name="cyanosis" label="Cyanosis"
-                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                                    expression="pt_has_asthma pt_has_copd"/>
                             <render concept="PIH:COUGH" name="cough" label="Cough"
-                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                                    expression="pt_has_asthma pt_has_copd"/>
                             <render concept="PIH:1551" name="smoke" label="Smoked since last visit"
-                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                                    expression="pt_has_asthma pt_has_copd"/>
                             <render concept="PIH:1583" name="tb-related" label="TB-related"
-                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                                    expression="pt_has_asthma pt_has_copd"/>
 
                             <render concept="PIH:WHEEZE" name="wheezing" label="Wheezing"
-                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                                    expression="pt_has_asthma pt_has_copd"/>
                             <render concept="PIH:Respiratory emergency action plan" name="resp-action-plan"
                                     label="Has respiratory emergency action plan"
-                                    expression="$pt_has_asthma or $pt_has_copd"/>
+                                    expression="pt_has_asthma pt_has_copd"/>
                             <render concept="CIEL:130783" name="Paroxysmal-nocturnal-dyspnea" label="PND"
-                                    expression="$pt_has_hf"/>
+                                    expression="pt_has_hf"/>
                             <render concept="PIH:DEPRESSION" name="depression" label="Concerns of depression"
-                                    expression="$pt_has_hf or $pt_has_lf"/>
+                                    expression="pt_has_hf pt_has_lf"/>
                             <render concept="PIH:CRACKLES" name="crackles" label="Bibasilar Crackles"
-                                    expression="$pt_has_hf"/>
+                                    expression="pt_has_hf"/>
 
                             <render concept="CIEL:140147" name="jvd-elevated" label="Elevated JVD"
-                                    expression="$pt_has_hf"/>
+                                    expression="pt_has_hf"/>
                             <render concept="PIH:3486" name="Orthopnea" label="Orthopnea"
-                                    expression="$pt_has_hf"/>
+                                    expression="pt_has_hf"/>
                             <render concept="PIH:Paracetamol" name="paracetamol" label="Taking PCM"
-                                    expression="$pt_has_lf"/>
-                            <render concept="PIH:5960" name="dyspnea" label="Dyspnea" expression="$pt_has_lf"/>
+                                    expression="pt_has_lf"/>
+                            <render concept="PIH:5960" name="dyspnea" label="Dyspnea" expression="pt_has_lf"/>
                             <render concept="PIH:ASCITES" name="Ascites" label="Ascites"
-                                    expression="$pt_has_lf or $pt_has_scd"/>
-                            <render concept="CIEL:148276" name="Asterixis" label="Asterixis" expression="$pt_has_lf"/>
-                            <render concept="PIH:Pain" name="pain" label="Pain" expression="$pt_has_scd"/>
-                            <render concept="PIH:FEVER" name="fever" label="Fever" expression="$pt_has_scd"/>
+                                    expression="pt_has_lf pt_has_scd"/>
+                            <render concept="CIEL:148276" name="Asterixis" label="Asterixis" expression="pt_has_lf"/>
+                            <render concept="PIH:Pain" name="pain" label="Pain" expression="pt_has_scd"/>
+                            <render concept="PIH:FEVER" name="fever" label="Fever" expression="pt_has_scd"/>
                             <render concept="CIEL:164377" name="meds-side-effects" label="Any medication side effects"
-                                    expression="$pt_has_scd"/>
+                                    expression="pt_has_scd"/>
                             <render concept="PIH:ICTERIC SCLERA" name="icteric-sclera" label="Icteric sclera"
-                                    expression="$pt_has_scd"/>
+                                    expression="pt_has_scd"/>
                             <render concept="CIEL:112804" name="spleen-palpable" label="Spleen palpable"
-                                    expression="$pt_has_scd"/>
+                                    expression="pt_has_scd"/>
 
                         </repeat>
                     </div>
@@ -571,7 +590,7 @@
                     <div class="section-container">
 
                         <span class="list-inline">
-                            <includeIf velocityTest="$pt_has_dbt">
+                            <span class="pt_has_dbt">
                                 <label>
                                     <uimessage code="Diabetes Diagnosis:"/>
                                 </label>
@@ -579,29 +598,29 @@
                                      answerSeparator=""
                                      answerConceptIds="CIEL:142474, CIEL:165207"
                                      answerLabels="Type 1 diabetes, Type 2 diabetes"/>
-                            </includeIf>
+                            </span>
                         </span>
 
                         <span class="list-inline">
-                            <includeIf velocityTest="$pt_has_asthma or $pt_has_copd">
+                            <span class="pt_has_asthma pt_has_copd">
                                 <label>
                                     <uimessage code="Nights per week of symptom"/>
                                 </label>
                                 <span class="list-inline">
                                     <obs conceptId="PIH:14352"/>
                                 </span>
-                            </includeIf>
+                            </span>
                         </span>&amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp &amp;nbsp
 
                         <span class="list-inline">
-                            <includeIf velocityTest="$pt_has_asthma or $pt_has_copd">
+                            <span class="pt_has_asthma pt_has_copd">
                                 <label>
                                     <uimessage code="Days per week of symptom"/>
                                 </label>
                                 <span class="list-inline">
                                     <obs conceptId="PIH:14347"/>
                                 </span>
-                            </includeIf>
+                            </span>
                         </span>
 
                     </div>
@@ -612,402 +631,368 @@
                             <tbody>
                                 <repeat>
                                     <template>
-                                        <includeIf velocityTest="{expression}">
-                                            <tr>
-                                                <obsgroup groupingConceptId="PIH:Radiology report construct">
-                                                    <td style="width:35%">
-                                                        <obs conceptId="PIH:Radiology procedure performed"
-                                                             labelText="{procedure}"
-                                                             answerLabel="" answerConceptId="{concept}"
-                                                             toggle="{id: '{name}', style: 'dim'}"/>
-                                                    </td>
-                                                    <td>
-                                                        <span id="{name}">
-                                                            <span class="block;">
-                                                                <label class="inline">
-                                                                    Date:
-                                                                </label>
-                                                                <obs conceptId="PIH:12847" class="inline"/>
-                                                            </span>
-                                                            <span class="block;">
-                                                                <label>
-                                                                    Impression:
-                                                                </label>
-                                                                <obs conceptId="PIH:Radiology report comments"
-                                                                     style="textarea"/>
-                                                            </span>
+                                        <tr class="{expression}">
+                                            <obsgroup groupingConceptId="PIH:Radiology report construct">
+                                                <td style="width:35%">
+                                                    <obs conceptId="PIH:Radiology procedure performed"
+                                                         labelText="{procedure}"
+                                                         answerLabel="" answerConceptId="{concept}"
+                                                         toggle="{id: '{name}', style: 'dim'}"/>
+                                                </td>
+                                                <td>
+                                                    <span id="{name}">
+                                                        <span class="block;">
+                                                            <label class="inline">
+                                                                Date:
+                                                            </label>
+                                                            <obs conceptId="PIH:12847" class="inline"/>
                                                         </span>
-                                                    </td>
-                                                </obsgroup>
-                                            </tr>
-                                        </includeIf>
+                                                        <span class="block;">
+                                                            <label>
+                                                                Impression:
+                                                            </label>
+                                                            <obs conceptId="PIH:Radiology report comments"
+                                                                 style="textarea"/>
+                                                        </span>
+                                                    </span>
+                                                </td>
+                                            </obsgroup>
+                                        </tr>
                                     </template>
                                     <render name="echocardiogram" procedure="Echocardiogram"
                                             concept="PIH:Transthoracic echocardiogram"
-                                            expression="$pt_has_htn or $pt_has_dbt or $pt_has_hf"/>
+                                            expression="pt_has_htn pt_has_dbt pt_has_hf"/>
                                     <render name="ultrasound" procedure="Ultrasound"
                                             concept="PIH:Abdomen retroperitoneum limited (US)"
-                                            expression="$pt_has_rf or $pt_has_lf or $pt_has_scd"/>
+                                            expression="pt_has_rf pt_has_lf pt_has_scd"/>
                                 </repeat>
                                 <!-- Electrocardiogram construct -->
-                                <includeIf velocityTest="$pt_has_htn or $pt_has_dbt or $pt_has_hf">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:ELECTROCARDIOGRAM CONSTRUCT">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    EKG Results
+                                <tr class="pt_has_htn pt_has_dbt pt_has_hf">
+                                    <obsgroup groupingConceptId="PIH:ELECTROCARDIOGRAM CONSTRUCT">
+                                        <td style="width: 35%">
+                                            <label>
+                                                EKG Results
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <label class="inline">
+                                                    Date:
                                                 </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <label class="inline">
-                                                        Date:
-                                                    </label>
-                                                    <obs conceptId="PIH:12847" class="inline"/>
-                                                </span>
-                                                <span class="block;">
-                                                    <label>
-                                                        Impression:
-                                                    </label>
-                                                    <obs conceptId="CIEL:159565" style="radio" class="inline block"
-                                                         answerSeparator=""
-                                                         answerConceptIds="CIEL:1115,CIEL:135971,CIEL:148203,CIEL:115432,CIEL:5622"/>
-                                                </span>
-                                                <span class="block;">
-                                                    <label>
-                                                        Comments:
-                                                    </label>
-                                                    <obs conceptId="CIEL:159395" style="textarea"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                                <obs conceptId="PIH:12847" class="inline"/>
+                                            </span>
+                                            <span class="block;">
+                                                <label>
+                                                    Impression:
+                                                </label>
+                                                <obs conceptId="CIEL:159565" style="radio" class="inline block"
+                                                     answerSeparator=""
+                                                     answerConceptIds="CIEL:1115,CIEL:135971,CIEL:148203,CIEL:115432,CIEL:5622"/>
+                                            </span>
+                                            <span class="block;">
+                                                <label>
+                                                    Comments:
+                                                </label>
+                                                <obs conceptId="CIEL:159395" style="textarea"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_rf or $pt_has_scd">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:CONJUNCTIVA">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    Conjunctiva
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="PIH:CONJUNCTIVA" style="radio" class="list-inline"
-                                                         answerSeparator=""
-                                                         answerConceptIds="PIH:NORMAL, PIH:PALE CONJUNCTIVA"
-                                                         answerLabels="Normal, Pale"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_rf pt_has_scd">
+                                    <obsgroup groupingConceptId="PIH:CONJUNCTIVA">
+                                        <td style="width: 35%">
+                                            <label>
+                                                Conjunctiva
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="PIH:CONJUNCTIVA" style="radio" class="list-inline"
+                                                     answerSeparator=""
+                                                     answerConceptIds="PIH:NORMAL, PIH:PALE CONJUNCTIVA"
+                                                     answerLabels="Normal, Pale"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_rf or $pt_has_lf or $pt_has_hf">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:12636">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    Body Edema
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="PIH:12636" style="radio" class="list-inline"
-                                                         answerSeparator=""
-                                                         answerConceptIds="PIH:12711, PIH:12703, PIH:12996"
-                                                         answerLabels="1+ Pitting, 2+ Pitting, 3+ Pitting"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_rf pt_has_lf pt_has_hf">
+                                    <obsgroup groupingConceptId="PIH:12636">
+                                        <td style="width: 35%">
+                                            <label>
+                                                Body Edema
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="PIH:12636" style="radio" class="list-inline"
+                                                     answerSeparator=""
+                                                     answerConceptIds="PIH:12711, PIH:12703, PIH:12996"
+                                                     answerLabels="1+ Pitting, 2+ Pitting, 3+ Pitting"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_hf">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:PATIENTS FLUID MANAGEMENT">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    Volume Status
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="PIH:PATIENTS FLUID MANAGEMENT" style="radio"
-                                                         class="list-inline"
-                                                         answerSeparator=""
-                                                         answerConceptIds="PIH:3272, PIH:3273, PIH:3274"
-                                                         answerLabels="Hypo, Normal, Hyper"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_hf">
+                                    <obsgroup groupingConceptId="PIH:PATIENTS FLUID MANAGEMENT">
+                                        <td style="width: 35%">
+                                            <label>
+                                                Volume Status
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="PIH:PATIENTS FLUID MANAGEMENT" style="radio"
+                                                     class="list-inline"
+                                                     answerSeparator=""
+                                                     answerConceptIds="PIH:3272, PIH:3273, PIH:3274"
+                                                     answerLabels="Hypo, Normal, Hyper"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_hf">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:NYHA CLASS">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    NYHA Stage
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="PIH:NYHA CLASS" style="radio" class="list-inline"
-                                                         answerSeparator=""
-                                                         answerConceptIds="PIH:3135, PIH:3136, PIH:3137, PIH:3138"
-                                                         answerLabels="Class I, Class II, Class III, Class IV"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_hf">
+                                    <obsgroup groupingConceptId="PIH:NYHA CLASS">
+                                        <td style="width: 35%">
+                                            <label>
+                                                NYHA Stage
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="PIH:NYHA CLASS" style="radio" class="list-inline"
+                                                     answerSeparator=""
+                                                     answerConceptIds="PIH:3135, PIH:3136, PIH:3137, PIH:3138"
+                                                     answerLabels="Class I, Class II, Class III, Class IV"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_hf">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:14323">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    Heart Failure Diagnosis
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="PIH:14323" style="radio" class="inline block"
-                                                         answerSeparator=""
-                                                         answerConceptIds="CIEL:5016, CIEL:148203, CIEL:113227, CIEL:117690, CIEL:117386, CIEL:127367, CIEL:119092, CIEL:119956, CIEL:116608"
-                                                         answerLabels="Cardiomyopathy, Afib, RHD, Valvular Heart Disease, Hypertensive, RVF, Pericardial Disease, Congenital, Ischemic"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_hf">
+                                    <obsgroup groupingConceptId="PIH:14323">
+                                        <td style="width: 35%">
+                                            <label>
+                                                Heart Failure Diagnosis
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="PIH:14323" style="radio" class="inline block"
+                                                     answerSeparator=""
+                                                     answerConceptIds="CIEL:5016, CIEL:148203, CIEL:113227, CIEL:117690, CIEL:117386, CIEL:127367, CIEL:119092, CIEL:119956, CIEL:116608"
+                                                     answerLabels="Cardiomyopathy, Afib, RHD, Valvular Heart Disease, Hypertensive, RVF, Pericardial Disease, Congenital, Ischemic"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_rf">
-                                    <tr>
-                                        <obsgroup groupingConceptId="CIEL:165570">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    CKD Stage
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="CIEL:165570" style="radio" class="list-inline"
-                                                         answerSeparator=""
-                                                         answerConceptIds="CIEL:120575,CIEL:120574,CIEL:120579,CIEL:120578,CIEL:120577"
-                                                         answerLabels="CKD I,CKD II,CKD III,CKD IV,CKD V"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_rf">
+                                    <obsgroup groupingConceptId="CIEL:165570">
+                                        <td style="width: 35%">
+                                            <label>
+                                                CKD Stage
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="CIEL:165570" style="radio" class="list-inline"
+                                                     answerSeparator=""
+                                                     answerConceptIds="CIEL:120575,CIEL:120574,CIEL:120579,CIEL:120578,CIEL:120577"
+                                                     answerLabels="CKD I,CKD II,CKD III,CKD IV,CKD V"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_rf">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:12657">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    Diet Recs
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="PIH:12657" style="radio" class="list-inline"
-                                                         answerSeparator=""
-                                                         answerConceptIds="PIH:12658,CIEL:82340,PIH:12659,PIH:12660"
-                                                         answerLabels="Na,K+,Pro,Kcal"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_rf">
+                                    <obsgroup groupingConceptId="PIH:12657">
+                                        <td style="width: 35%">
+                                            <label>
+                                                Diet Recs
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="PIH:12657" style="radio" class="list-inline"
+                                                     answerSeparator=""
+                                                     answerConceptIds="PIH:12658,CIEL:82340,PIH:12659,PIH:12660"
+                                                     answerLabels="Na,K+,Pro,Kcal"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_lf">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:HEPATITIS C TEST - QUALITATIVE">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    Hep C Ab Test
+                                <tr class="pt_has_lf">
+                                    <obsgroup groupingConceptId="PIH:HEPATITIS C TEST - QUALITATIVE">
+                                        <td style="width: 35%">
+                                            <label>
+                                                Hep C Ab Test
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <label class="inline">
+                                                    Date:
                                                 </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <label class="inline">
-                                                        Date:
-                                                    </label>
-                                                    <obs conceptId="PIH:12847" class="inline"/>
-                                                </span>
-                                                <span class="block;">
-                                                    <label>
-                                                        Result:
-                                                    </label>
-                                                    <obs conceptId="CIEL:1325" style="radio" class="inline block"
-                                                         answerSeparator=""
-                                                         answerConceptIds="PIH:703, PIH:664, PIH:1138"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                                <obs conceptId="PIH:12847" class="inline"/>
+                                            </span>
+                                            <span class="block;">
+                                                <label>
+                                                    Result:
+                                                </label>
+                                                <obs conceptId="CIEL:1325" style="radio" class="inline block"
+                                                     answerSeparator=""
+                                                     answerConceptIds="PIH:703, PIH:664, PIH:1138"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_lf or $pt_has_rf">
-                                    <tr>
-                                        <obsgroup groupingConceptId="CIEL:161472">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    Hep B SAg Test
+                                <tr class="pt_has_lf pt_has_rf">
+                                    <obsgroup groupingConceptId="CIEL:161472">
+                                        <td style="width: 35%">
+                                            <label>
+                                                Hep B SAg Test
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <label class="inline">
+                                                    Date:
                                                 </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <label class="inline">
-                                                        Date:
-                                                    </label>
-                                                    <obs conceptId="PIH:12847" class="inline"/>
-                                                </span>
-                                                <span class="block;">
-                                                    <label>
-                                                        Result:
-                                                    </label>
-                                                    <obs conceptId="CIEL:161472" style="radio" class="inline block"
-                                                         answerSeparator=""
-                                                         answerConceptIds="PIH:703, PIH:664, PIH:1138"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                                <obs conceptId="PIH:12847" class="inline"/>
+                                            </span>
+                                            <span class="block;">
+                                                <label>
+                                                    Result:
+                                                </label>
+                                                <obs conceptId="CIEL:161472" style="radio" class="inline block"
+                                                     answerSeparator=""
+                                                     answerConceptIds="PIH:703, PIH:664, PIH:1138"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_lf">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:14348">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    Received Hep B Vaccine
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="PIH:14348" style="radio" class="inline block"
-                                                         answerSeparator=""
-                                                         answerConceptIds="PIH:1065, PIH:1066, PIH:1067" />
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_lf">
+                                    <obsgroup groupingConceptId="PIH:14348">
+                                        <td style="width: 35%">
+                                            <label>
+                                                Received Hep B Vaccine
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="PIH:14348" style="radio" class="inline block"
+                                                     answerSeparator=""
+                                                     answerConceptIds="PIH:1065, PIH:1066, PIH:1067" />
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$$pt_has_rf">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:11457">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    HCV spot test
+                                <tr class="pt_has_rf">
+                                    <obsgroup groupingConceptId="PIH:11457">
+                                        <td style="width: 35%">
+                                            <label>
+                                                HCV spot test
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <label class="inline">
+                                                    Date:
                                                 </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <label class="inline">
-                                                        Date:
-                                                    </label>
-                                                    <obs conceptId="PIH:12847" class="inline"/>
-                                                </span>
-                                                <span class="block;">
-                                                    <label>
-                                                        Result:
-                                                    </label>
-                                                    <obs conceptId="PIH:11457" style="radio" class="inline block"
-                                                         answerSeparator=""
-                                                         answerConceptIds="PIH:703, PIH:664, PIH:1138"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                                <obs conceptId="PIH:12847" class="inline"/>
+                                            </span>
+                                            <span class="block;">
+                                                <label>
+                                                    Result:
+                                                </label>
+                                                <obs conceptId="PIH:11457" style="radio" class="inline block"
+                                                     answerSeparator=""
+                                                     answerConceptIds="PIH:703, PIH:664, PIH:1138"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_asthma or $pt_has_copd">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:Asthma classification">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    CLD class
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="PIH:7405" style="radio" class="inline-block"
-                                                         answerSeparator=""
-                                                         answerConceptIds="CIEL:153753, CIEL:134026, CIEL:157792, CIEL:113018"
-                                                         answerLabels="Intermittent, Moderate persistent, Mild persistent, Severe persistent"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_asthma pt_has_copd">
+                                    <obsgroup groupingConceptId="PIH:Asthma classification">
+                                        <td style="width: 35%">
+                                            <label>
+                                                CLD class
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="PIH:7405" style="radio" class="inline-block"
+                                                     answerSeparator=""
+                                                     answerConceptIds="CIEL:153753, CIEL:134026, CIEL:157792, CIEL:113018"
+                                                     answerLabels="Intermittent, Moderate persistent, Mild persistent, Severe persistent"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_asthma or $pt_has_copd">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:11991">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    Beta-agonist use
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="PIH:11991" style="radio" class="inline-block"
-                                                         answerSeparator=""
-                                                         answerConceptIds="PIH:1602, PIH:2100, PIH:11992, PIH:1099, PIH:1098, PIH:1905"
-                                                         answerLabels="Every day, Once a week, More than once a week, Weekly, Monthly, Not at all"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_asthma pt_has_copd">
+                                    <obsgroup groupingConceptId="PIH:11991">
+                                        <td style="width: 35%">
+                                            <label>
+                                                Beta-agonist use
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="PIH:11991" style="radio" class="inline-block"
+                                                     answerSeparator=""
+                                                     answerConceptIds="PIH:1602, PIH:2100, PIH:11992, PIH:1099, PIH:1098, PIH:1905"
+                                                     answerLabels="Every day, Once a week, More than once a week, Weekly, Monthly, Not at all"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_htn">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:Type of hypertension diagnosis">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    Hypertension Diagnosis
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="PIH:Type of hypertension diagnosis" style="radio"
-                                                         class="list-inline"
-                                                         answerSeparator=""
-                                                         answerConceptIds="PIH:6847, PIH:7166"
-                                                         answerLabels="Essential HTN, Secondary HTN"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_htn">
+                                    <obsgroup groupingConceptId="PIH:Type of hypertension diagnosis">
+                                        <td style="width: 35%">
+                                            <label>
+                                                Hypertension Diagnosis
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="PIH:Type of hypertension diagnosis" style="radio"
+                                                     class="list-inline"
+                                                     answerSeparator=""
+                                                     answerConceptIds="PIH:6847, PIH:7166"
+                                                     answerLabels="Essential HTN, Secondary HTN"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
-                                <includeIf velocityTest="$pt_has_htn">
-                                    <tr>
-                                        <obsgroup groupingConceptId="PIH:12699">
-                                            <td style="width: 35%">
-                                                <label>
-                                                    HTN Stage
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <span class="block;">
-                                                    <obs conceptId="PIH:12699" style="radio" class="list-inline"
-                                                         answerSeparator=""
-                                                         answerConceptIds="CIEL:165206, CIEL:165203, CIEL:165204, CIEL:165205"
-                                                         answerLabels="Stage I, Stage II, Stage III, Stage IV"/>
-                                                </span>
-                                            </td>
-                                        </obsgroup>
-                                    </tr>
-                                </includeIf>
+                                <tr class="pt_has_htn">
+                                    <obsgroup groupingConceptId="PIH:12699">
+                                        <td style="width: 35%">
+                                            <label>
+                                                HTN Stage
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <span class="block;">
+                                                <obs conceptId="PIH:12699" style="radio" class="list-inline"
+                                                     answerSeparator=""
+                                                     answerConceptIds="CIEL:165206, CIEL:165203, CIEL:165204, CIEL:165205"
+                                                     answerLabels="Stage I, Stage II, Stage III, Stage IV"/>
+                                            </span>
+                                        </td>
+                                    </obsgroup>
+                                </tr>
 
                             </tbody>
                         </table>
@@ -1017,7 +1002,7 @@
                         <h5>
                             <uimessage code="pihcore.ncd.presume.etiology.label"></uimessage>
                         </h5>
-                        <includeIf velocityTest="$pt_has_rf">
+                        <span class="pt_has_rf">
                             <span class="inline-45">
                                 <obs conceptId="PIH:NCD category" answerConceptId="PIH:HYPERTENSION" style="checkbox"/>
                             </span>
@@ -1048,8 +1033,8 @@
                             <span class="inline-45">
                                 <obs conceptId="PIH:NCD category" answerConceptId="CIEL:115303" style="checkbox"/>
                             </span>
-                        </includeIf>
-                        <includeIf velocityTest="$pt_has_lf">
+                        </span>
+                        <span class="pt_has_lf">
                             <span class="inline-45">
                                 <obs conceptId="PIH:NCD category" answerConceptId="CIEL:70468" style="checkbox"/>
                             </span>
@@ -1059,8 +1044,8 @@
                             <span class="inline-45">
                                 <obs conceptId="PIH:NCD category" answerConceptId="CIEL:144223" style="checkbox"/>
                             </span>
-                        </includeIf>
-                        <includeIf velocityTest="$pt_has_scd">
+                        </span>
+                        <span class="pt_has_scd">
                             <span class="inline-45">
                                 <obs conceptId="PIH:NCD category" answerConceptId="PIH:123" style="checkbox"/>
                             </span>
@@ -1070,9 +1055,9 @@
                             <span class="inline-45">
                                 <obs conceptId="PIH:NCD category" answerConceptId="CIEL:117635" style="checkbox"/>
                             </span>
-                        </includeIf>
+                        </span>
 
-                        <includeIf velocityTest="$pt_has_lf or $pt_has_scd">
+                        <span class="pt_has_lf pt_has_scd">
                             <span class="inline-45">
                                 <obs conceptId="PIH:NCD category" answerConceptId="PIH:Infectious Disease"
                                      style="checkbox"/>
@@ -1080,9 +1065,9 @@
                             <span class="inline-45">
                                 <obs conceptId="PIH:NCD category" answerConceptId="CIEL:116031" style="checkbox"/>
                             </span>
-                        </includeIf>
+                        </span>
 
-                        <includeIf velocityTest="$pt_has_rf or $pt_has_lf or $pt_has_scd">
+                        <span class="pt_has_rf pt_has_lf pt_has_scd">
                             <span class="inline-45">
                                 <obs conceptId="PIH:NCD category" answerConceptId="PIH:Unknown" style="checkbox"/>
                             </span>
@@ -1090,15 +1075,14 @@
                                 <obs conceptId="PIH:NCD category" answerConceptId="PIH:OTHER" style="checkbox"
                                      commentFieldLabel=""/>
                             </span>
-                        </includeIf>
+                        </span>
 
                     </div>
                 </div>
             </section>
-        </includeIf>
+        </div>
 
-        <excludeIf
-                velocityTest="$pt_has_htn or $pt_has_dbt or $pt_has_rf or $pt_has_asthma or $pt_has_copd or $pt_has_hf or $pt_has_lf or $pt_has_scd">
+        <div class="no_ncd_condition">
             <section sectionTag="fieldset" headerTag="legend" headerStyle="title"
                      headerCode="pihcore.ncd.title">
                 <div class="section-container">
@@ -1106,7 +1090,7 @@
                     </strong>
                 </div>
             </section>
-        </excludeIf>
+        </div>
 
 
         <!-- Medications section -->
