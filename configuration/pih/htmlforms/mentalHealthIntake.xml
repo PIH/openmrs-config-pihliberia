@@ -223,11 +223,13 @@
             hfe.showSectionBasedOnCondition('PIH:14650', '#mh-diagnoses', false, true, true);
         }
 
-        // When the form initially loads, and any time the encounter date is changed, show/hide sections based on condition list
-        jq('#encounterDate').find('input[type="hidden"]').change(function() {
-            toggleConditionSections()
+        jq(function() {
+            // When the form initially loads, and any time the encounter date is changed, show/hide sections based on condition list
+            jq('#encounterDate').find('input[type="hidden"]').change(function() {
+                toggleConditionSections()
+            });
+            toggleConditionSections();
         });
-        toggleConditionSections();
     </script>
 
     <ifMode mode="VIEW" include="false">
