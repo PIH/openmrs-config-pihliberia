@@ -727,18 +727,6 @@
     <section id="mh-plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan">
         <div class="section-container">
-            <div class="inline">
-                <div id="disposition">
-                    <encounterDisposition/>
-                </div>
-
-                <label>
-                    <uimessage code="Disposition comments"/>
-                </label>
-                <obs conceptId="PIH:DISPOSITION COMMENTS" style="text"/>
-            </div>
-            <br/><br/>
-
             <p>
                 <label>
                     <uimessage code="Patient plan comments"/>
