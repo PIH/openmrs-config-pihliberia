@@ -380,26 +380,7 @@
         <div class="section-container">
             <div class="two-columns">
                 <div>
-                    <p>
-                        <label>
-                            <uimessage code="pihcore.ncd.mental.gad7Score"/> (0-21) for anxiety:
-                        </label>
-                        <span class="small">
-                            <obs id="gadScore" conceptId="CIEL:165185"/>
-                        </span>
-                    </p>
 
-                    <p>
-                        <label>
-                            <uimessage code="WHODAS Score"/> (0-100):
-                        </label>
-                        <span class="small">
-                            <obs id="whodasScore" conceptId="CIEL:163226"/>
-                        </span>
-                    </p>
-
-                </div>
-                <div>
                     <p>
                         <label>
                             <uimessage code="pihcore.ncd.mental.phq9Score"/> (0-27) for depression:
@@ -411,10 +392,10 @@
 
                     <p>
                         <label>
-                            <uimessage code="CAGE"/> (0-4) for alcoholism:
+                            <uimessage code="WHODAS Score"/> (0-100):
                         </label>
                         <span class="small">
-                            <obs id="cageScore" conceptId="CIEL:167217"/>
+                            <obs id="whodasScore" conceptId="CIEL:163226"/>
                         </span>
                     </p>
 
