@@ -700,21 +700,19 @@
                                 </tr>
 
                                 <tr class="pt_has_rf pt_has_scd">
-                                    <obsgroup groupingConceptId="PIH:CONJUNCTIVA">
-                                        <td style="width: 35%">
-                                            <label>
-                                                Conjunctiva
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <span class="block;">
-                                                <obs conceptId="PIH:CONJUNCTIVA" style="radio" class="list-inline"
-                                                     answerSeparator=""
-                                                     answerConceptIds="PIH:NORMAL, PIH:PALE CONJUNCTIVA"
-                                                     answerLabels="Normal, Pale"/>
-                                            </span>
-                                        </td>
-                                    </obsgroup>
+                                    <td style="width: 35%">
+                                        <label>
+                                            Conjunctiva
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <span class="block;">
+                                            <obs conceptId="PIH:CONJUNCTIVA" style="radio" class="list-inline"
+                                                 answerSeparator=""
+                                                 answerConceptIds="PIH:NORMAL, PIH:PALE CONJUNCTIVA"
+                                                 answerLabels="Normal, Pale"/>
+                                        </span>
+                                    </td>
                                 </tr>
 
                                 <tr class="pt_has_rf pt_has_lf pt_has_hf">
