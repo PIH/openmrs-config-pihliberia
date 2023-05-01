@@ -1118,6 +1118,11 @@
                             <uimessage code="pihcore.mentalhealth.suicideAttempt"/>
                         </label>
                     </th>
+                    <th>
+                        <label>
+                            <uimessage code="pihcore.mentalhealth.homicidalIdea"/>
+                        </label>
+                    </th>
                 </tr>
 
                 <tr>
@@ -1128,15 +1133,22 @@
                     </th>
                     <td>
                         <!-- Suicidal ideation -->
-                        <p class="side-by-side">
+                        <p class="list-inline">
                             <obs conceptId="CIEL:125562" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
                                  answerCodes="denies,present" answerSeparator="" />
                         </p>
                     </td>
                     <td>
                         <!-- Suicide attempt -->
-                        <p class="side-by-side">
+                        <p class="list-inline">
                             <obs conceptId="CIEL:148143" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
+                                 answerCodes="denies,present" answerSeparator="" />
+                        </p>
+                    </td>
+                    <td>
+                        <!-- Homicidal ideation -->
+                        <p class="list-inline">
+                            <obs conceptId="CIEL:167117" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
                                  answerCodes="denies,present" answerSeparator="" />
                         </p>
                     </td>
@@ -1145,20 +1157,27 @@
                 <tr>
                     <th>
                         <label>
-                            <uimessage code="pihcore.past.label"/>
+                            <uimessage code="pihcore.history.label"/>
                         </label>
                     </th>
                     <td>
                         <!-- History of suicidal thoughts/ideation -->
-                        <p class="side-by-side">
+                        <p class="list-inline">
                             <obs conceptId="CIEL:165529" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
                                  answerCodes="absent,present" answerSeparator="" />
                         </p>
                     </td>
                     <td>
                         <!-- History of suicide attempt -->
-                        <p class="side-by-side">
+                        <p class="list-inline">
                             <obs conceptId="CIEL:129176" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
+                                 answerCodes="absent,present" answerSeparator="" />
+                        </p>
+                    </td>
+                    <td>
+                        <!-- History of homicidal ideation -->
+                        <p class="list-inline">
+                            <obs conceptId="CIEL:167222" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
                                  answerCodes="absent,present" answerSeparator="" />
                         </p>
                     </td>
@@ -1175,6 +1194,7 @@
                         </label>
                         <obs conceptId="CIEL:165530"/>
                     </td>
+                    <td></td>
                 </tr>
             </table>
 
