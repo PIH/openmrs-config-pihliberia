@@ -141,13 +141,18 @@
             column-count: 1;
         }
 
-        .list-inline label, .list-inline input[type="radio"], .list-inline span{
+        .list-inline label, .list-inline input[type="radio"], .list-inline span,
+        .list-inline-wide label, .list-inline-wide input[type="radio"], .list-inline-wide span {
             display: inline-block;
             float: none;
         }
 
         .list-inline label:first-child {
             width: 220px;
+        }
+
+        .list-inline-wide label:first-child {
+        width: 320px;
         }
 
         span.symptom-present {
@@ -1105,98 +1110,41 @@
              headerCode="pihcore.mentalhealth.suicideEval">
         <div class="section-container">
 
-            <table>
-                <tr>
-                    <th></th>
-                    <th>
-                        <label>
-                            <uimessage code="pihcore.mentalhealth.suicideIdea"/>
-                        </label>
-                    </th>
-                    <th>
-                        <label>
-                            <uimessage code="pihcore.mentalhealth.suicideAttempt"/>
-                        </label>
-                    </th>
-                    <th>
-                        <label>
-                            <uimessage code="pihcore.mentalhealth.homicidalIdea"/>
-                        </label>
-                    </th>
-                </tr>
+            <!-- Suicidal ideation -->
+            <p class="list-inline-wide">
+                <label>
+                    <uimessage code="Current suicidal ideation/plan"/>
+                </label>
+                <obs conceptId="CIEL:125562" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
+                     answerCodes="denies,present" answerSeparator="" />
+            </p>
 
-                <tr>
-                    <th>
-                        <label>
-                            <uimessage code="pihcore.current.label"/>
-                        </label>
-                    </th>
-                    <td>
-                        <!-- Suicidal ideation -->
-                        <p class="list-inline">
-                            <obs conceptId="CIEL:125562" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
-                                 answerCodes="denies,present" answerSeparator="" />
-                        </p>
-                    </td>
-                    <td>
-                        <!-- Suicide attempt -->
-                        <p class="list-inline">
-                            <obs conceptId="CIEL:148143" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
-                                 answerCodes="denies,present" answerSeparator="" />
-                        </p>
-                    </td>
-                    <td>
-                        <!-- Homicidal ideation -->
-                        <p class="list-inline">
-                            <obs conceptId="CIEL:167117" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
-                                 answerCodes="denies,present" answerSeparator="" />
-                        </p>
-                    </td>
-                </tr>
+            <!-- History of suicidal thoughts/ideation -->
+            <p class="list-inline-wide">
+                <label>
+                    <uimessage code="History of suicidality"/>
+                </label>
+                <obs conceptId="CIEL:165529" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
+                     answerCodes="absent,present" answerSeparator="" />
+            </p>
 
-                <tr>
-                    <th>
-                        <label>
-                            <uimessage code="pihcore.history.label"/>
-                        </label>
-                    </th>
-                    <td>
-                        <!-- History of suicidal thoughts/ideation -->
-                        <p class="list-inline">
-                            <obs conceptId="CIEL:165529" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
-                                 answerCodes="absent,present" answerSeparator="" />
-                        </p>
-                    </td>
-                    <td>
-                        <!-- History of suicide attempt -->
-                        <p class="list-inline">
-                            <obs conceptId="CIEL:129176" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
-                                 answerCodes="absent,present" answerSeparator="" />
-                        </p>
-                    </td>
-                    <td>
-                        <!-- History of homicidal ideation -->
-                        <p class="list-inline">
-                            <obs conceptId="CIEL:167222" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
-                                 answerCodes="absent,present" answerSeparator="" />
-                        </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                    </td>
-                    <td>
+            <!-- Homicidal ideation -->
+            <p class="list-inline-wide">
+                <label>
+                    <uimessage code="Current homicidal ideation/plan"/>
+                </label>
+                <obs conceptId="CIEL:167117" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
+                     answerCodes="denies,present" answerSeparator="" />
+            </p>
 
-                        <!-- Date of suicide attempt -->
-                        <label>
-                            <uimessage code="pihcore.mentalhealth.dateSuicideAttempt"/>
-                        </label>
-                        <obs conceptId="CIEL:165530"/>
-                    </td>
-                    <td></td>
-                </tr>
-            </table>
+            <!-- History of homicidal ideation -->
+            <p class="list-inline-wide">
+                <label>
+                    <uimessage code="History of homicidality"/>
+                </label>
+                <obs conceptId="CIEL:167222" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
+                     answerCodes="absent,present" answerSeparator="" />
+            </p>
 
             <br/>
             <obs conceptId="PIH:Suicidal evaluation" style="checkbox"
