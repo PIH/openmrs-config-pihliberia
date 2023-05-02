@@ -1179,7 +1179,7 @@
         <div class="section-container">
             <div>
                 <label>
-                    Orientation status
+                    Level of consciousness orientation
                 </label>
                 <obs conceptId="CIEL:167084" style="checkbox"
                      answerConceptId="CIEL:167083"
