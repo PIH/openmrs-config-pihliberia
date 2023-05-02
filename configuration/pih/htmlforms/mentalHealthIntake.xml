@@ -1177,34 +1177,29 @@
     <section id="mh-cognitive-func" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Cognitive function">
         <div class="section-container">
-            <div class="two-columns">
-                <div>
-                    <label>
-                        Orientation status
-                    </label>
-                    <obs conceptId="CIEL:167084" style="checkbox"
-                         answerConceptId="CIEL:167083"
-                         answerCode="Oriented to time"/>
-                    <obs conceptId="CIEL:167084" style="checkbox"
-                         answerConceptId="CIEL:167082"
-                         answerCode="Oriented to place"/>
-                    <obs conceptId="CIEL:167084" style="checkbox"
-                         answerConceptId="CIEL:167081"
-                         answerCode="Oriented to person"/>
-                    <br/>
+            <div>
+                <label>
+                    Orientation status
+                </label>
+                <obs conceptId="CIEL:167084" style="checkbox"
+                     answerConceptId="CIEL:167083"
+                     answerCode="Oriented to time"/>
+                <obs conceptId="CIEL:167084" style="checkbox"
+                     answerConceptId="CIEL:167082"
+                     answerCode="Oriented to place"/>
+                <obs conceptId="CIEL:167084" style="checkbox"
+                     answerConceptId="CIEL:167081"
+                     answerCode="Oriented to person"/>
+                <br/>
 
-                </div>
-                <div>
-                    <p class="list-inline">
-                        <label>
-                            Level of concentration
-                        </label>
-                        <br/>
-                        <obs conceptId="CIEL:167203" style="radio"
-                             answerConceptIds="CIEL:159405,CIEL:159406,CIEL:159407"
-                             answerCodes="Good,Fair,Poor" />
-                    </p>
-                </div>
+                <p class="list-inline">
+                    <label>
+                        Level of concentration
+                    </label>
+                    <obs conceptId="CIEL:167203" style="radio"
+                         answerConceptIds="CIEL:159405,CIEL:159406,CIEL:159407"
+                         answerCodes="Good,Fair,Poor" />
+                </p>
             </div>
 
             <repeat>
