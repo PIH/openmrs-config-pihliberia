@@ -282,6 +282,7 @@
                 jq('#whodasScore > input:text').attr('placeholder', '0-100');
                 jq('#cageScore > input:text').attr('placeholder', '0-4');
                 jq('#gadScore > input:text').attr('placeholder', '0-21');
+                jq('#tsqScore > input:text').attr('placeholder', '0-10');
             });
 
         </script>
@@ -1295,27 +1296,34 @@
                 <div>
                     <p>
                         <label>
-                            <uimessage code="pihcore.ncd.mental.gad7Score"/> (0-21) for anxiety:
+                            <uimessage code="TSQ"/> (PTSD):
+                        </label>
+                        <span class="small">
+                            <obs id="tsqScore" conceptId="PIH:14668"/>
+                        </span>
+                    </p>
+
+                    <p>
+                        <label>
+                            <uimessage code="pihcore.ncd.mental.gad7Score"/> (anxiety):
                         </label>
                         <span class="small">
                             <obs id="gadScore" conceptId="CIEL:165185"/>
                         </span>
                     </p>
 
-                    <p>
+                    <!--
                         <label>
                             <uimessage code="WHODAS Score"/> (0-100):
                         </label>
                         <span class="small">
                             <obs id="whodasScore" conceptId="CIEL:163226"/>
                         </span>
-                    </p>
+                    -->
 
-                </div>
-                <div>
                     <p>
                         <label>
-                            <uimessage code="pihcore.ncd.mental.phq9Score"/> (0-27) for depression:
+                            <uimessage code="pihcore.ncd.mental.phq9Score"/> (depression):
                         </label>
                         <span class="small">
                             <obs id="phq9Score" conceptId="CIEL:165137"/>
@@ -1324,7 +1332,7 @@
 
                     <p>
                         <label>
-                            <uimessage code="CAGE"/> (0-4) for alcoholism:
+                            <uimessage code="CAGE"/> (alcoholism):
                         </label>
                         <span class="small">
                             <obs id="cageScore" conceptId="CIEL:167217"/>
@@ -1332,6 +1340,7 @@
                     </p>
 
                 </div>
+                <div></div>
             </div>
 
             <p class="list-inline">
