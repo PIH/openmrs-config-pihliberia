@@ -443,6 +443,16 @@
                             <obs conceptId="PIH:14131" style="radio" answerConceptIds="PIH:1115,PIH:1116"/>
                         </span>
                     </span>
+
+                    <span class="inline">
+                        <label class="inline">
+                            <uimessage code="Behavior/Appearance:"/> &amp;nbsp
+                        </label>
+                        <span class="list-inline">
+                            <obs conceptId="CIEL:167092" style="radio" answerConceptIds="PIH:1115,PIH:1116"/>
+                        </span>
+                    </span>
+
                 </div>
 
                 <div>
@@ -455,6 +465,15 @@
                                 <obs labelCode="" conceptId="PIH:PATIENT PREGNANT" style="checkbox"/>
                             </span>
                         </includeIf>
+                    </span>
+
+                    <span class="inline">
+                            <label class="inline">
+                                <uimessage code="On FP?"/> &amp;nbsp
+                            </label>
+                            <span class="list-inline">
+                                <obs conceptId="PIH:14321" style="radio" answerConceptIds="PIH:YES,PIH:NO"/>
+                            </span>
                     </span>
                 </div>
 
