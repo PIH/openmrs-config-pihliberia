@@ -461,7 +461,7 @@
                     <uimessage code="pihcore.habits.alcohol"/>
                 </label>
                 <obs conceptId="PIH:HISTORY OF ALCOHOL USE"
-                     answerConceptIds="PIH:IN THE PAST,PIH:CURRENTLY,PIH:NEVER,PIH:unknown"
+                     answerConceptIds="PIH:YES,PIH:NO"
                      style="radio" answerSeparator=""/>
             </p>
 
@@ -470,7 +470,7 @@
                     <uimessage code="pihcore.habits.drugs"/>
                 </label>
                 <obs conceptId="PIH:HISTORY OF ILLEGAL DRUGS"
-                     answerConceptIds="PIH:IN THE PAST,PIH:CURRENTLY,PIH:NEVER,PIH:unknown"
+                     answerConceptIds="PIH:YES,PIH:NO"
                      style="radio" answerSeparator=""/>
             </p>
 
