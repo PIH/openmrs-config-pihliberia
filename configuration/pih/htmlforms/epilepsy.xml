@@ -701,216 +701,109 @@
         </div>
     </section>
 
-    <style type="text/css">
+    <!-- Medication-section -->
+    <section id="mh-meds" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.visitNote.plan.medication">
+        <div class="section-container toggle">
+            <table>
+                <tr>
+                    <th>
+                        <uimessage code="pihcore.visitNote.plan.name"/>
+                    </th>
+                    <th colspan="2">
+                        <uimessage code="pihcore.visitNote.plan.dose"/>
+                    </th>
+                    <th>
+                        <uimessage code="pihcore.drug.route"/>
+                    </th>
+                    <th>
+                        <uimessage code="pihcore.visitNote.plan.frequency"/>
+                    </th>
+                    <th colspan="2">
+                        <uimessage code="pihcore.visitNote.plan.duration"/>
+                    </th>
+                </tr>
 
-        <!-- Hide the label for the drug field in view mode -->
-        .orderwidget-history-section .order-field-label.order-drug {
-        display:none;
-        }
-        <!-- Add a colon after the Dose label in view mode -->
-        .orderwidget-history-section .order-field-label.order-dose:after {
-        content: ": ";
-        white-space: pre;
-        }
+                <repeat>
+                    <template>
+                        <tr>
+                            <obsgroup groupingConceptId="PIH:Prescription construct">
+                                <td id="{name}-rx">
+                                    <obs conceptId="PIH:Mental health medication"
+                                         answerConceptId="{concept}"
+                                         style="checkbox"
+                                         toggle="{id: '{name}-rx-dose', style: 'dim'}" class="medication-checkbox"/>
+                                </td>
+                                <td id="{name}-rx-dose">
+                                    <obs id="dose-{name}" class="doseInput" conceptId="CIEL:160856"/>
+                                </td>
+                                <td id="{name}-rx-dose-unit">
+                                    <obs id="doseUnit-{name}" class="doseInput select-arrow"
+                                         conceptId="PIH:Dosing units coded"
+                                         answerConceptIds="CIEL:161553,CIEL:162263,CIEL:1608,CIEL:1513"
+                                         answerCodes="pihcore.visitNote.plan.medication.units.mg,pihcore.visitNote.plan.medication.units.mL,pihcore.visitNote.plan.medication.units.capsule,pihcore.visitNote.plan.medication.units.tablet"/>
+                                </td>
+                                <td id="{name}-rx-route">
+                                    <obs id="route-{name}" class="route select-arrow"
+                                         conceptId="PIH:12651"
+                                         answerConceptIds="CIEL:160240,CIEL:160242,CIEL:160243"/>
+                                </td>
+                                <td id="{name}-rx-frequency">
+                                    <obs id="frequencyCoded-{name}" class="frequency select-arrow"
+                                         conceptId="PIH:Drug frequency for HUM"
+                                         answerConceptIds=
+                                                 "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:PRN,PIH:STAT,PIH:OTHER"
+                                         answerCodes="OD,BID,TID,QID,STAT,PRN,pihcore.visitNote.plan.other"/>
+                                </td>
+                                <td id="{name}-rx-duration">
+                                    <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
+                                </td>
+                                <td id="{name}-rx-duration-unit">
+                                    <obs id="durationUnit-{name}" class="duration-unit select-arrow"
+                                         conceptId="PIH:TIME UNITS"
+                                         answerConceptIds="CIEL:1822,CIEL:1072,CIEL:1073,CIEL:1074"/>
+                                </td>
+                            </obsgroup>
+                        </tr>
+                    </template>
 
-        .order-field {
-        display: inline-block;
-        padding: 0px;
-        }
-        .order-field.action {
-        display: block;
-        }
-        .order-field.dateActivated {
-        padding-right: 20px;
-        }
-        .order-field-label {
-        display: inline-block;
-        padding-right: 5px;
-        vertical-align: middle;
-        }
-        .order-field-label:after {
-        content: "";
-        white-space: pre;
-        }
-        .order-field-widget {
-        display: inline-block;
-        }
-    </style>
+                    <render concept="PIH:CARBAMAZEPINE" name="Carbamazepine"/>
+                    <render concept="PIH:DIAZEPAM" name="Diazepam"/>
+                    <render concept="PIH:PHENOBARBITAL" name="Phenobarbital"/>
+                    <render concept="PIH:PHENYTOIN" name="Phenytoin sodium"/>
+                    <render concept="PIH:SODIUM VALPROATE" name="Sodium valproate"/>
 
-    <section id="drug-orders" sectionTag="fieldset" headerTag="legend"
-             headerStyle="title"
-             headerCode="pihcore.visitNote.orders.medications">
-        <div class="section-container">
-            <drugOrder format="select" selectLabel="pihcore.drugOrder.addAnotherDrug">
-                <orderTemplate>
-                    <orderProperty name="action" label="pihcore.action">
-                        <option value="NEW" label="pihcore.new"/>
-                        <option value="REVISE" label="pihcore.revise"/>
-                        <option value="RENEW" label="pihcore.renew"/>
-                        <option value="DISCONTINUE" label="pihcore.discontinue"/>
-                    </orderProperty>
+                </repeat>
+            </table>
 
-                    <div style="padding:0px;">
-                        <orderProperty name="concept" label="pihcore.drugOrders.concept">
-                            <option value="PIH:CARBAMAZEPINE" label="Carbamazepine"/>
-                            <option value="CIEL:74745" label="Diazepam"/>
-                            <option value="PIH:PHENOBARBITAL" label="Phenobarbital"/>
-                            <option value="CIEL:82024" label="Phenytoin sodium"/>
-                            <option value="PIH:SODIUM VALPROATE" label="Sodium valproate"/>
-                        </orderProperty>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="drug" label="pihcore.drugOrders.drug"/>
-                    </div>
-
-                    <div style="padding:0px;font-weight:bold;">
-                        <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
-                        <orderProperty name="doseUnits" value="CIEL:1513" label=" ">
-                            <option value="CIEL:1513"/>    <!-- Tablet -->
-                            <option value="CIEL:161553"/>  <!-- mg -->
-                            <option value="CIEL:162263"/>  <!-- mL -->
-                            <option value="CIEL:1608"/>   <!-- Capsule -->
-                        </orderProperty>
-                        <orderProperty name="frequency" label=" ">
-                            <option value="PIH:OD"/>
-                            <option value="PIH:BID"/>
-                            <option value="PIH:TID"/>
-                            <option value="PIH:QID"/>
-                            <option value="PIH:STAT"/>
-                            <option value="PIH:PRN"/>
-                            <!-- <option value="CIEL:5622" /> broken -->
-                        </orderProperty>
-                        <orderProperty name="route" value="CIEL:160240" label=" ">
-                            <option value="CIEL:160240"/> <!-- Oral -->
-                            <option value="CIEL:160242"/> <!-- Intravenous -->
-                            <option value="CIEL:160243"/> <!-- Intramuscular -->
-                        </orderProperty>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="duration" label="pihcore.visitNote.for"/>
-                        <orderProperty name="durationUnits" label=" ">
-                            <!-- <option value="PIH:Hours"/>  hours -->
-                            <option value="CIEL:1072"/>  <!-- days -->
-                            <option value="CIEL:1073"/>  <!-- weeks -->
-                            <option value="CIEL:1074"/>  <!-- months -->
-                        </orderProperty>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="quantity" label="pihcore.quantity"/>
-                        <orderProperty name="quantityUnits" value="1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label=" ">
-                            <option value="CIEL:1513"/>    <!-- Tablet -->
-                            <option value="CIEL:161553"/>  <!-- mg -->
-                            <option value="CIEL:162263"/>  <!-- mL -->
-                            <option value="CIEL:1608"/>   <!-- Capsule -->
-                        </orderProperty>
-                        <orderProperty name="numRefills" value="0" label="pihcore.refills"/>
-                    </div>
-                    <div style="display:none;">
-                        <orderProperty name="urgency" value="ROUTINE"/>
-                        <orderProperty name="dosingType" value="org.openmrs.SimpleDosingInstructions"/>
-                        <orderProperty name="previousOrder"/>
-                        <orderProperty name="careSetting" value="OUTPATIENT"/>
-                    </div>
-                    <orderProperty name="discontinueReason" label="pihcore.discontinueReason">
-                        <option value="CIEL:843"/>
-                        <option value="CIEL:102"/>
-                        <option value="CIEL:127750"/>
-                        <option value="CIEL:1754"/>
-                        <option value="CIEL:162853"/>
-                        <option value="CIEL:1434"/>
-                        <option value="CIEL:987"/>
-                        <option value="CIEL:1253"/>
-                        <option value="CIEL:1067"/>
-                        <option value="CIEL:5622"/>
-                    </orderProperty>
-                </orderTemplate>
-            </drugOrder>
-        </div>
-
-        <br/>
-        <h4><uimessage code="pihcore.otherDrugOrders"/></h4>
-
-        <div class="section-container-color">
-            <drugOrder>
-                <orderTemplate>
-                    <orderProperty name="action"/>
-                    <div style="padding:0px;">
-                        <orderProperty name="drug" label="pihcore.drugOrders.drug"/>
-                    </div>
-                    <div style="padding:0px;font-weight:bold;">
-                        <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
-                        <orderProperty name="doseUnits" value="CIEL:1513" label=" ">
-                            <option value="CIEL:1513"/>    <!-- Tablet -->
-                            <option value="CIEL:161553"/>  <!-- mg -->
-                            <option value="CIEL:162263"/>  <!-- mL -->
-                            <option value="CIEL:1608"/>   <!-- Capsule -->
-                        </orderProperty>
-                        <orderProperty name="frequency" label=" ">
-                            <option value="PIH:OD"/>
-                            <option value="PIH:BID"/>
-                            <option value="PIH:TID"/>
-                            <option value="PIH:QID"/>
-                            <option value="PIH:STAT"/>
-                            <option value="PIH:PRN"/>
-                            <!-- <option value="CIEL:5622" /> broken -->
-                        </orderProperty>
-                        <orderProperty name="route" value="CIEL:160240" label=" ">
-                            <option value="CIEL:160240"/> <!-- Oral -->
-                            <option value="CIEL:160242"/> <!-- Intravenous -->
-                            <option value="CIEL:160243"/> <!-- Intramuscular -->
-                        </orderProperty>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="duration" label="pihcore.visitNote.for"/>
-                        <orderProperty name="durationUnits" label=" ">
-                            <!-- <option value="PIH:Hours"/>  hours -->
-                            <option value="CIEL:1072"/>  <!-- days -->
-                            <option value="CIEL:1073"/>  <!-- weeks -->
-                            <option value="CIEL:1074"/>  <!-- months -->
-                        </orderProperty>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="quantity" label="pihcore.quantity"/>
-                        <orderProperty name="quantityUnits" value="1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label=" ">
-                            <option value="CIEL:1513"/>    <!-- Tablet -->
-                            <option value="CIEL:161553"/>  <!-- mg -->
-                            <option value="CIEL:162263"/>  <!-- mL -->
-                            <option value="CIEL:1608"/>   <!-- Capsule -->
-                        </orderProperty>
-                        <orderProperty name="numRefills" value="0" label="pihcore.refills"/>
-                    </div>
-                    <div style="display:none;">
-                        <orderProperty name="urgency" value="ROUTINE"/>
-                        <orderProperty name="dosingType" value="org.openmrs.SimpleDosingInstructions"/>
-                        <orderProperty name="previousOrder"/>
-                        <orderProperty name="careSetting" value="OUTPATIENT"/>
-                    </div>
-                    <orderProperty name="discontinueReason" label="pihcore.discontinueReason">
-                        <option value="CIEL:843"/>
-                        <option value="CIEL:102"/>
-                        <option value="CIEL:127750"/>
-                        <option value="CIEL:1754"/>
-                        <option value="CIEL:162853"/>
-                        <option value="CIEL:1434"/>
-                        <option value="CIEL:987"/>
-                        <option value="CIEL:1253"/>
-                        <option value="CIEL:1067"/>
-                        <option value="CIEL:5622"/>
-                    </orderProperty>
-                </orderTemplate>
-            </drugOrder>
-        </div>
-        <div class="section-container">
-            <label>
-                <b>
-                    <uimessage code="pihcore.remarks"/>
-                </b>
-            </label>
             <p>
-                <obs conceptId="PIH:10637" cols="50" rows="5"/>
+                <label>
+                    <uimessage code="pihcore.exam.comment"/>:
+                </label>
+
+                <obs conceptId="PIH:Medication comments (text)" style="textarea"/>
             </p>
+
+            <p class="list-inline">
+                <label>
+                    <uimessage code="pihcore.medication.side.effects"/>
+                </label>
+
+                <obs id="med-side-effects" conceptId="CIEL:165273" style="radio"
+                     answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
+                    <controls>
+                        <when value="PIH:YES" thenDisplay="#side-effect-section"/>
+                    </controls>
+                </obs>
+            </p>
+
+            <p id="side-effect-section">
+                <obs id="" conceptId="CIEL:164377" style="textarea"/>
+            </p>
+
         </div>
     </section>
+
 
     <!-- socioeconomic assistance section -->
     <section id="socioeconomic-assistance" sectionTag="fieldset" headerTag="legend"
