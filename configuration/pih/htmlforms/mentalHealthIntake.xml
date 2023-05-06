@@ -630,133 +630,51 @@
     <section id="personal-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Personal history">
         <div class="section-container">
-            <!-- ToDo:  Add many questions here -->
-            <label><i>(add missing questions)</i></label>
-
-            <!-- This include will be changed to wrap pregnancy when other exams are added to this section -->
+            <!-- ToDo:  Needed?
+               This include will be changed to wrap pregnancy when other exams are added to this section -->
             <includeIf velocityTest="$patient.gender == 'F' ">
                 <p>
                     <obs labelCode="pihcore.pregnancy.status" conceptId="PIH:PATIENT PREGNANT" style="checkbox"/>
                 </p>
             </includeIf>
 
-            <section id="house" sectionTag="fieldset" headerTag="legend"
-                     headerStyle="title" headerCode="Living situation">
-                <div class="two-columns list-inline">
-                    <div>
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.numPeople"/>
-                            </label>
-                            <span class="small">
-                                <obs conceptId="CIEL:1474"/>
-                            </span>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.numRooms"/>
-                            </label>
-                            <span class="small">
-                                <obs conceptId="CIEL:1475"/>
-                            </span>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.radio"/>
-                            </label>
-                            <obs conceptId="PIH:1318" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.tv"/>
-                            </label>
-                            <obs conceptId="CIEL:159746" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.fridge"/>
-                            </label>
-                            <obs conceptId="CIEL:159745" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.bank"/>
-                            </label>
-                            <obs conceptId="PIH:11936" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-                    </div>
-                    <div>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.toilet"/>
-                            </label>
-                            <obs conceptId="CIEL:159389" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.latrine"/>
-                            </label>
-                            <obs conceptId="PIH:Latrine" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.floor"/>
-                            </label>
-                            <br/>
-                            <obs conceptId="CIEL:159387" style="radio"
-                                 answerConceptIds="CIEL:1943,CIEL:1944,CIEL:159679,CIEL:5622"
-                                 answerSeparator="&amp;nbsp;"/>
-                            <!-- CIEL codes: 1943=Concrete, 1944=Beaten earth, 159679=Ceramic tile, 5622=Other -->
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.roof"/>
-                            </label>
-                            <br/>
-                            <obs conceptId="CIEL:1290" style="radio"
-                                 answerConceptIds="PIH:1320,CIEL:1942,CIEL:1943,CIEL:5622"
-                                 answerSeparator="&amp;nbsp;"/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.wall"/>
-                            </label>
-                            <br/>
-                            <obs conceptId="PIH:1668" style="radio"
-                                 answerConceptIds="CIEL:1943,PIH:11939,PIH:2937,CIEL:159685,PIH:11938,CIEL:1944,CIEL:5622"
-                                 answerSeparator="&amp;nbsp;"/>
-                        </p>
-                    </div>
-                </div>
+            <p class="list-inline">
                 <label>
-                    Living situation comment:
+                    <uimessage code="Pregnancy" />
+                </label>
+                <obs conceptId="CIEL:122933" style="radio"
+                     answerConceptIds="CIEL:1065,CIEL:1066"
+                     answerCodes="wanted,unwanted" />
+            </p>
+            <p>
+                <label>
+                    <uimessage code="Birth" />
+                </label>
+                <repeat>
+                    <template>
+                        <obs conceptId="CIEL:5630" style="checkbox"
+                             answerConceptId="{cId}"
+                             answerCodes="{nameTag}" />
+                    </template>
+                    <render nameTag="NVD" cId="CIEL:1170" />
+                    <render nameTag="C-section" cId="CIEL:1171" />
+                    <render nameTag="complications" cId="CIEL:120220" />
+                    <render nameTag="prolonged" cId="CIEL:113602" />
+                    <render nameTag="unknown" cId="CIEL:1067" />
+                </repeat>
+            </p>
+
+            <!-- ToDo:  Add many questions here -->
+            <label><i>(add missing questions)</i></label>
+
+            <p>
+                <label>
+                    Living situation:
                 </label>
                 <obs conceptId="CIEL:167224" rows="3" />
-            </section>
+            </p>
 
-            <section id="edu" sectionTag="fieldset" headerTag="legend"
+            <section id="edu"
                      headerStyle="title" headerCode="pihcore.socioEconomic.education">
                 <p class="list-inline">
                     <!-- Education level -->
@@ -785,7 +703,7 @@
                 </p>
             </section>
 
-            <section id="child-info" sectionTag="fieldset" headerTag="legend"
+            <section id="child-info"
                      headerStyle="title" headerCode="Children">
                 <div class="two-columns">
                     <div>
@@ -822,20 +740,21 @@
                 </div>
             </section>
 
-            <!-- WTF -->
-            <section id="god" sectionTag="fieldset" headerTag="legend"
-                     headerStyle="title" headerCode="zl.registration.patient.religion.label">
-                <p class="list-inline">
-                    <obs conceptId="PIH:Religion" id="religion" style="radio"
-                         answerConceptIds="PIH:Catholic,PIH:Islam,PIH:OTHER NON-CODED"
-                         answerCodes="Christian,Muslim,other" />
-                </p>
-            </section>
+            <p class="list-inline">
+                <label>
+                    <uimessage code="zl.registration.patient.religion.label" />
+                </label>
+                <obs conceptId="PIH:Religion" id="religion" style="radio"
+                     answerConceptIds="PIH:Catholic,PIH:Islam,PIH:OTHER NON-CODED"
+                     answerCodes="Christian,Muslim,other" />
+            </p>
 
-            <section id="hobby" sectionTag="fieldset" headerTag="legend"
-                     headerStyle="title" headerCode="Hobbies">
+            <p class="list-inline">
+                <label>
+                    <uimessage code="Hobbies" />
+                </label>
                 <obs conceptId="PIH:1604" style="text" rows="2" />
-            </section>
+            </p>
         </div>
     </section>
 

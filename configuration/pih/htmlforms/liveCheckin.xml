@@ -110,8 +110,8 @@
                     <h3><uimessage code="pih.registration.patientSupport.type.label"/></h3>
                     <p  class="left">
                         <obs conceptId="PIH:14494" id="patientSupportRole"
-                             answerConceptIds="PIH:14496,PIH:14495,PIH:14645,PIH:13489,PIH:14502,PIH:14649,CIEL:1555,PIH:OTHER"
-                             answerCodes="pih.registration.following.type.cha,pih.registration.following.type.chp,pih.registration.following.type.chv,pih.registration.following.type.tba,pih.registration.following.type.pssa,pih.registration.selfOrFamily,pih.registration.following.type.chwUnspec,pihcore.other"
+                             answerConceptIds="PIH:14496,PIH:14495,PIH:14645,CIEL:1555,PIH:13489,PIH:14502,PIH:14649,PIH:OTHER"
+                             answerCodes="pih.registration.following.type.cha,pih.registration.following.type.chp,pih.registration.following.type.chv,pih.registration.following.type.chwUnspec,pih.registration.following.type.tba,pih.registration.following.type.pssa,pih.registration.selfOrFamily,pihcore.other"
                              style="dropdown" size="999" />
                     </p>
                     <br/>
