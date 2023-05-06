@@ -346,7 +346,7 @@
     </section>
 
 
-    <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+   <!-- <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Screening tools">
         <div class="section-container">
             <div class="two-columns">
@@ -418,7 +418,7 @@
                 </span>
             </p>
         </div>
-    </section>
+    </section> -->
 
     <section id="mh_exams" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.exam.general_exam.title">
