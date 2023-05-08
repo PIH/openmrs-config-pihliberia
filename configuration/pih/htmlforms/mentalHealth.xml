@@ -404,10 +404,11 @@
 
             <p class="list-inline">
                 <label>
-                    <uimessage code="pihcore.mentalhealth.cgie"/> (Efficacy):
+                    <uimessage code="CGI"/>:
                 </label>
                 <br/>
                 <span>
+                    <!-- Using concept for CGI-E with 0-16 range -->
                     <obs id="cgiEScore16" conceptId="PIH:14670" />
                 </span>
             </p>
