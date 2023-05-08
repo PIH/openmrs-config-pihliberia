@@ -142,7 +142,8 @@
         }
 
         .list-inline label, .list-inline input[type="radio"], .list-inline span,
-        .list-inline-wide label, .list-inline-wide input[type="radio"], .list-inline-wide span {
+        .list-inline-wide label, .list-inline-wide input[type="radio"], .list-inline-wide span,
+        .list-inline-extra-wide label, .list-inline-extra-wide input[type="radio"], .list-inline-extra-wide span {
             display: inline-block;
             float: none;
         }
@@ -152,7 +153,11 @@
         }
 
         .list-inline-wide label:first-child {
-        width: 320px;
+            width: 320px;
+        }
+
+        .list-inline-extra-wide label:first-child {
+            width: 420px;
         }
 
         span.symptom-present {
@@ -631,14 +636,6 @@
     <section id="personal-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Personal history">
         <div class="section-container">
-            <!-- ToDo:  Needed?
-               This include will be changed to wrap pregnancy when other exams are added to this section -->
-            <includeIf velocityTest="$patient.gender == 'F' ">
-                <p>
-                    <obs labelCode="pihcore.pregnancy.status" conceptId="PIH:PATIENT PREGNANT" style="checkbox"/>
-                </p>
-            </includeIf>
-
             <p class="list-inline">
                 <label>
                     <uimessage code="Pregnancy" />
@@ -655,7 +652,7 @@
                     <template>
                         <obs conceptId="CIEL:5630" style="checkbox"
                              answerConceptId="{cId}"
-                             answerCodes="{nameTag}" />
+                             answerCode="{nameTag}" />
                     </template>
                     <render nameTag="NVD" cId="CIEL:1170" />
                     <render nameTag="C-section" cId="CIEL:1171" />
@@ -665,8 +662,142 @@
                 </repeat>
             </p>
 
-            <!-- ToDo:  Add many questions here -->
-            <label><i>(add missing questions)</i></label>
+            <p class="list-inline">
+                <label>
+                    <uimessage code="Developmental progression" />
+                </label>
+                <obs id="dev-q" conceptId="CIEL:160277" style="radio"
+                     answerConceptIds="CIEL:1115,CIEL:1841,CIEL:5622"
+                     answerCodes="normal,slowed,other">
+                    <controls>
+                        <when value="CIEL:5622" thenDisplay="#other-dev" />
+                    </controls>
+                </obs>
+
+                <div id="other-dev">
+                    <label>
+                        <uimessage code="if other developmental progression, specify" />
+                    </label>
+                    <obs conceptId="PIH:14671" />
+                </div>
+            </p>
+
+            <p class="list-inline-extra-wide">
+                <label>
+                    <uimessage code="Violence in home as child" />
+                </label>
+                <obs id="child-violence" conceptId="CIEL:167165" style="radio"
+                     answerConceptIds="CIEL:1066,CIEL:1065">
+                    <controls>
+                        <when value="CIEL:1065" thenDisplay="#child-violence-comment" />
+                    </controls>
+                </obs>
+
+                <div id="child-violence-comment">
+                    <label>
+                        <uimessage code="if violence as child, specify" />
+                    </label>
+                    <obs conceptId="PIH:14672" />
+                </div>
+            </p>
+
+            <p class="list-inline-extra-wide">
+                <label>
+                    <uimessage code="Violence in adult or sexual partner relationship" />
+                </label>
+                <obs id="adult-violence" conceptId="CIEL:123160" style="radio"
+                     answerConceptIds="CIEL:1066,CIEL:1065">
+                    <controls>
+                        <when value="CIEL:1065" thenDisplay="#adult-violence-comment" />
+                    </controls>
+                </obs>
+
+                <div id="adult-violence-comment">
+                    <label>
+                        <uimessage code="if violence as adult, specify" />
+                    </label>
+                    <obs conceptId="PIH:14673" />
+                </div>
+            </p>
+
+            <p class="list-inline-extra-wide">
+                <label>
+                    <uimessage code="Violence in current relationship" />
+                </label>
+                <obs id="current-violence" conceptId="CIEL:167161" style="radio"
+                     answerConceptIds="CIEL:1066,CIEL:1065">
+                    <controls>
+                        <when value="CIEL:1065" thenDisplay="#current-violence-comment" />
+                    </controls>
+                </obs>
+
+                <div id="current-violence-comment">
+                    <label>
+                        <uimessage code="if current violence, specify" />
+                    </label>
+                    <obs conceptId="PIH:14675" />
+                </div>
+            </p>
+
+            <div class="three-columns">
+                <div>
+                    <uimessage code="Age began sexual activity" />
+                    <obs conceptId="CIEL:163587" showUnits="true" />
+                </div>
+                <div>
+                    <uimessage code="Age of partner" />
+                    <obs conceptId="CIEL:167172" showUnits="true"/>
+                </div>
+                <div>
+                    <p class="list-inline">
+                        <obs conceptId="CIEL:167171" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066"
+                             answerCodes="Concentual,Rape"/>
+                    </p>
+                </div>
+            </div>
+
+            <br/>
+            <div class="three-columns">
+                <div>
+                    <p class="list-inline">
+                        <uimessage code="Condom use" />
+                        <obs conceptId="CIEL:1357" style="radio"
+                             answerConceptIds="CIEL:1066,CIEL:1065" />
+                    </p>
+                </div>
+                <div>
+                    <p class="list-inline">
+                        <uimessage code="Sexually active now/recently" />
+                        <br/>
+                        <obs conceptId="CIEL:160109" style="radio"
+                             answerConceptIds="CIEL:1066,CIEL:1065" />
+                    </p>
+                </div>
+                <div>
+                    <uimessage code="Condoms now" />
+                    <!-- ToDo: Ask Funke:  Do they have condoms?  Do they give them condoms? -->
+                </div>
+            </div>
+
+            <br/>
+            <div class="two-columns">
+                <div>
+                    <p class="list-inline">
+                        <obs conceptId="CIEL:167168" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066"
+                             answerCodes="One partner,Multiple partners"/>
+                    </p>
+                </div>
+                <div>
+                    <p class="list-inline">
+                        <uimessage code="Sexually partner has other sexual relationships" />
+                        <br/>
+                        <obs conceptId="CIEL:5568" style="radio"
+                             answerConceptIds="CIEL:1066,CIEL:1065" />
+                    </p>
+                </div>
+            </div>
 
             <p>
                 <label>
@@ -703,6 +834,14 @@
                     <obs conceptId="PIH:14644" style="text" rows="2" />
                 </p>
             </section>
+
+            <p>
+                <i>
+                    <label>Previous/current work/Employment (Occupation) entered during registration:</label>
+                    <lookup complexExpression="$fn.latestObs('PIH:Occupation').valueCoded.name"/>
+                    (on <lookup expression="fn.latestObs('PIH:Occupation').obsDatetime"/>)
+                </i>
+            </p>
 
             <section id="child-info"
                      headerStyle="title" headerCode="Children">
