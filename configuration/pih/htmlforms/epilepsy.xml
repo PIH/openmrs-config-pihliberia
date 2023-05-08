@@ -437,6 +437,15 @@
 
                     <span class="inline">
                         <label class="inline">
+                            <uimessage code="Development:"/> &amp;nbsp
+                        </label>
+                        <span class="list-inline">
+                            <obs conceptId="CIEL:160277" style="radio" answerConceptIds="PIH:1115,PIH:1116"/>
+                        </span>
+                    </span>
+
+                    <span class="inline">
+                        <label class="inline">
                             <uimessage code="Mood:  "/> &amp;nbsp
                         </label>
                         <span class="list-inline">
