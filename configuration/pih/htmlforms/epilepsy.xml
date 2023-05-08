@@ -334,6 +334,84 @@
     <enrollInProgram programId="Mental Health"/>
 
     <!-- The form -->
+    <section id="general" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Visit">
+        <div class="section-container">
+            <p class="list-inline">
+                <obs id="intake-or-followup"  conceptId="CIEL:164181" style="radio"
+                     answerConceptIds="CIEL:164180,PIH:7383"
+                     answerCodes="First epilepsy visit,Follow-up visit"
+                     required="true">
+                    <controls>
+                        <when value="CIEL:164180"
+                              thenJavaScript="jq('#intake-only').show(); jq('#obgyn-initial-div').hide();"
+                              elseJavaScript="jq('#intake-only').hide();"/>
+                        <when value="PIH:7383"
+                              thenJavaScript="jq('#epi-initial-div').show(); jq('#epi-section').hide();"
+                              elseJavaScript="jq('#epi-initial-div').hide(); jq('#epi-section').show();"/>
+                    </controls>
+                </obs>
+            </p>
+        </div>
+    </section>
+
+    <div id="intake-only" class="hidden">
+        <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="Patient overview">
+            <div class="section-container">
+                <p>
+                    <label>
+                        <uimessage code="Patient overview"/>
+                    </label>
+                </p>
+            </div>
+        </section>
+
+        <section id="complications" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="Complications">
+            <div class="section-container">
+                <p>
+                    <label>
+                        <uimessage code="injuries"/>
+                    </label>
+                </p>
+            </div>
+        </section>
+
+        <section id="med-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="Medical history">
+            <div class="section-container">
+                <p>
+                    <label>
+                        <uimessage code="Trauma"/>
+                    </label>
+                </p>
+            </div>
+        </section>
+
+        <section id="triggers" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="Triggers">
+            <div class="section-container">
+                <p>
+                    <label>
+                        <uimessage code="Alcohol"/>
+                    </label>
+                </p>
+            </div>
+        </section>
+
+        <section id="post-ictal features" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="Post-ictal features">
+            <div class="section-container">
+                <p>
+                    <label>
+                        <uimessage code="Headache"/>
+                    </label>
+                </p>
+            </div>
+        </section>
+    </div>
+
     <section id="hospital" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Hospitalization">
         <div class="list-inline section-container">
