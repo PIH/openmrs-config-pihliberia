@@ -364,6 +364,14 @@
                  headerCode="Patient overview">
             <div class="section-container">
                 <!-- ToDo: Add condition for epilepsy along with date -->
+                <p>
+                    <strong>
+                        <i>
+                            <uimessage code="ToDo: Epilepsy checkbox"/>
+                        </i>
+                    </strong>
+                </p>
+
 
                 <p>
                     <label>
@@ -558,13 +566,13 @@
                     </template>
                     <render concept="CIEL:139084" name="headache" label="Headache"/>
                     <render concept="CIEL:120345" name="disorientation" label="Disorientation / Confusion"/>
-                    <render concept="CIEL:152782" name="poor-concentration" label="Poor concentration"/>
-                    <render concept="CIEL:156923" name="poor-vc-skills" label="Poor verbal or cognit. skills"/>
+                    <render concept="CIEL:152782" name="poor-concentration" label="Poor concentration and verbal skills"/>
                     <render concept="CIEL:114362" name="paralysis" label="Paralysis"/>
                     <render concept="CIEL:121657" name="memory-loss" label="Memory loss"/>
                 </repeat>
 
-                <!-- Unused:
+            <!-- Unused:
+                    <render concept="CIEL:156923" name="poor-vc-skills" label="Poor verbal or cognit. skills"/>
                     <render concept="CIEL:165567" name="foaming-mouth" label="Foaming mouth"/>
                     <render concept="CIEL:5978" name="nausea" label="Nausea"/> -->
 
