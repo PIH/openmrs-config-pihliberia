@@ -141,13 +141,23 @@
             column-count: 1;
         }
 
-        .list-inline label, .list-inline input[type="radio"], .list-inline span{
+        .list-inline label, .list-inline input[type="radio"], .list-inline span,
+        .list-inline-wide label, .list-inline-wide input[type="radio"], .list-inline-wide span,
+        .list-inline-extra-wide label, .list-inline-extra-wide input[type="radio"], .list-inline-extra-wide span {
             display: inline-block;
             float: none;
         }
 
         .list-inline label:first-child {
             width: 220px;
+        }
+
+        .list-inline-wide label:first-child {
+            width: 320px;
+        }
+
+        .list-inline-extra-wide label:first-child {
+            width: 420px;
         }
 
         span.symptom-present {
@@ -277,6 +287,8 @@
                 jq('#whodasScore > input:text').attr('placeholder', '0-100');
                 jq('#cageScore > input:text').attr('placeholder', '0-4');
                 jq('#gadScore > input:text').attr('placeholder', '0-21');
+                jq('#tsqScore > input:text').attr('placeholder', '0-10');
+                jq('#cgiEScore16 > input:text').attr('placeholder', '0-16');
             });
 
         </script>
@@ -624,133 +636,177 @@
     <section id="personal-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Personal history">
         <div class="section-container">
-            <!-- ToDo:  Add many questions here -->
-            <label><i>(add missing questions)</i></label>
-
-            <!-- This include will be changed to wrap pregnancy when other exams are added to this section -->
-            <includeIf velocityTest="$patient.gender == 'F' ">
-                <p>
-                    <obs labelCode="pihcore.pregnancy.status" conceptId="PIH:PATIENT PREGNANT" style="checkbox"/>
-                </p>
-            </includeIf>
-
-            <section id="house" sectionTag="fieldset" headerTag="legend"
-                     headerStyle="title" headerCode="Living situation">
-                <div class="two-columns list-inline">
-                    <div>
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.numPeople"/>
-                            </label>
-                            <span class="small">
-                                <obs conceptId="CIEL:1474"/>
-                            </span>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.numRooms"/>
-                            </label>
-                            <span class="small">
-                                <obs conceptId="CIEL:1475"/>
-                            </span>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.radio"/>
-                            </label>
-                            <obs conceptId="PIH:1318" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.tv"/>
-                            </label>
-                            <obs conceptId="CIEL:159746" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.fridge"/>
-                            </label>
-                            <obs conceptId="CIEL:159745" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.bank"/>
-                            </label>
-                            <obs conceptId="PIH:11936" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-                    </div>
-                    <div>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.toilet"/>
-                            </label>
-                            <obs conceptId="CIEL:159389" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.latrine"/>
-                            </label>
-                            <obs conceptId="PIH:Latrine" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"
-                                 answerSeparator=""/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.floor"/>
-                            </label>
-                            <br/>
-                            <obs conceptId="CIEL:159387" style="radio"
-                                 answerConceptIds="CIEL:1943,CIEL:1944,CIEL:159679,CIEL:5622"
-                                 answerSeparator="&amp;nbsp;"/>
-                            <!-- CIEL codes: 1943=Concrete, 1944=Beaten earth, 159679=Ceramic tile, 5622=Other -->
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.roof"/>
-                            </label>
-                            <br/>
-                            <obs conceptId="CIEL:1290" style="radio"
-                                 answerConceptIds="PIH:1320,CIEL:1942,CIEL:1943,CIEL:5622"
-                                 answerSeparator="&amp;nbsp;"/>
-                        </p>
-
-                        <p>
-                            <label>
-                                <uimessage code="pihcore.socioEconomic.wall"/>
-                            </label>
-                            <br/>
-                            <obs conceptId="PIH:1668" style="radio"
-                                 answerConceptIds="CIEL:1943,PIH:11939,PIH:2937,CIEL:159685,PIH:11938,CIEL:1944,CIEL:5622"
-                                 answerSeparator="&amp;nbsp;"/>
-                        </p>
-                    </div>
-                </div>
+            <p class="list-inline">
                 <label>
-                    Living situation comment:
+                    <uimessage code="Pregnancy" />
+                </label>
+                <obs conceptId="CIEL:122933" style="radio"
+                     answerConceptIds="CIEL:1065,CIEL:1066"
+                     answerCodes="wanted,unwanted" />
+            </p>
+            <p>
+                <label>
+                    <uimessage code="Birth" />
+                </label>
+                <repeat>
+                    <template>
+                        <obs conceptId="CIEL:5630" style="checkbox"
+                             answerConceptId="{cId}"
+                             answerCode="{nameTag}" />
+                    </template>
+                    <render nameTag="NVD" cId="CIEL:1170" />
+                    <render nameTag="C-section" cId="CIEL:1171" />
+                    <render nameTag="complications" cId="CIEL:120220" />
+                    <render nameTag="prolonged" cId="CIEL:113602" />
+                    <render nameTag="unknown" cId="CIEL:1067" />
+                </repeat>
+            </p>
+
+            <p class="list-inline">
+                <label>
+                    <uimessage code="Developmental progression" />
+                </label>
+                <obs id="dev-q" conceptId="CIEL:160277" style="radio"
+                     answerConceptIds="CIEL:1115,CIEL:1841,CIEL:5622"
+                     answerCodes="normal,slowed,other">
+                    <controls>
+                        <when value="CIEL:5622" thenDisplay="#other-dev" />
+                    </controls>
+                </obs>
+
+                <div id="other-dev">
+                    <label>
+                        <uimessage code="if other developmental progression, specify" />
+                    </label>
+                    <obs conceptId="PIH:14671" />
+                </div>
+            </p>
+
+            <p class="list-inline-extra-wide">
+                <label>
+                    <uimessage code="Violence in home as child" />
+                </label>
+                <obs id="child-violence" conceptId="CIEL:167165" style="radio"
+                     answerConceptIds="CIEL:1066,CIEL:1065">
+                    <controls>
+                        <when value="CIEL:1065" thenDisplay="#child-violence-comment" />
+                    </controls>
+                </obs>
+
+                <div id="child-violence-comment">
+                    <label>
+                        <uimessage code="if violence as child, specify" />
+                    </label>
+                    <obs conceptId="PIH:14672" />
+                </div>
+            </p>
+
+            <p class="list-inline-extra-wide">
+                <label>
+                    <uimessage code="Violence in adult or sexual partner relationship" />
+                </label>
+                <obs id="adult-violence" conceptId="CIEL:123160" style="radio"
+                     answerConceptIds="CIEL:1066,CIEL:1065">
+                    <controls>
+                        <when value="CIEL:1065" thenDisplay="#adult-violence-comment" />
+                    </controls>
+                </obs>
+
+                <div id="adult-violence-comment">
+                    <label>
+                        <uimessage code="if violence as adult, specify" />
+                    </label>
+                    <obs conceptId="PIH:14673" />
+                </div>
+            </p>
+
+            <p class="list-inline-extra-wide">
+                <label>
+                    <uimessage code="Violence in current relationship" />
+                </label>
+                <obs id="current-violence" conceptId="CIEL:167161" style="radio"
+                     answerConceptIds="CIEL:1066,CIEL:1065">
+                    <controls>
+                        <when value="CIEL:1065" thenDisplay="#current-violence-comment" />
+                    </controls>
+                </obs>
+
+                <div id="current-violence-comment">
+                    <label>
+                        <uimessage code="if current violence, specify" />
+                    </label>
+                    <obs conceptId="PIH:14675" />
+                </div>
+            </p>
+
+            <div class="three-columns">
+                <div>
+                    <uimessage code="Age began sexual activity" />
+                    <obs conceptId="CIEL:163587" showUnits="true" />
+                </div>
+                <div>
+                    <uimessage code="Age of partner" />
+                    <obs conceptId="CIEL:167172" showUnits="true"/>
+                </div>
+                <div>
+                    <p class="list-inline">
+                        <obs conceptId="CIEL:167171" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066"
+                             answerCodes="Concentual,Rape"/>
+                    </p>
+                </div>
+            </div>
+
+            <br/>
+            <div class="three-columns">
+                <div>
+                    <p class="list-inline">
+                        <uimessage code="Condom use" />
+                        <obs conceptId="CIEL:1357" style="radio"
+                             answerConceptIds="CIEL:1066,CIEL:1065" />
+                    </p>
+                </div>
+                <div>
+                    <p class="list-inline">
+                        <uimessage code="Sexually active now/recently" />
+                        <br/>
+                        <obs conceptId="CIEL:160109" style="radio"
+                             answerConceptIds="CIEL:1066,CIEL:1065" />
+                    </p>
+                </div>
+                <div>
+                    <uimessage code="Condoms now" />
+                    <!-- ToDo: Ask Funke:  Do they have condoms?  Do they give them condoms? -->
+                </div>
+            </div>
+
+            <br/>
+            <div class="two-columns">
+                <div>
+                    <p class="list-inline">
+                        <obs conceptId="CIEL:167168" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066"
+                             answerCodes="One partner,Multiple partners"/>
+                    </p>
+                </div>
+                <div>
+                    <p class="list-inline">
+                        <uimessage code="Sexually partner has other sexual relationships" />
+                        <br/>
+                        <obs conceptId="CIEL:5568" style="radio"
+                             answerConceptIds="CIEL:1066,CIEL:1065" />
+                    </p>
+                </div>
+            </div>
+
+            <p>
+                <label>
+                    Living situation:
                 </label>
                 <obs conceptId="CIEL:167224" rows="3" />
-            </section>
+            </p>
 
-            <section id="edu" sectionTag="fieldset" headerTag="legend"
+            <section id="edu"
                      headerStyle="title" headerCode="pihcore.socioEconomic.education">
                 <p class="list-inline">
                     <!-- Education level -->
@@ -779,7 +835,15 @@
                 </p>
             </section>
 
-            <section id="child-info" sectionTag="fieldset" headerTag="legend"
+            <p>
+                <i>
+                    <label>Previous/current work/Employment (Occupation) entered during registration:</label>
+                    <lookup complexExpression="$fn.latestObs('PIH:Occupation').valueCoded.name"/>
+                    (on <lookup expression="fn.latestObs('PIH:Occupation').obsDatetime"/>)
+                </i>
+            </p>
+
+            <section id="child-info"
                      headerStyle="title" headerCode="Children">
                 <div class="two-columns">
                     <div>
@@ -816,20 +880,21 @@
                 </div>
             </section>
 
-            <!-- WTF -->
-            <section id="god" sectionTag="fieldset" headerTag="legend"
-                     headerStyle="title" headerCode="zl.registration.patient.religion.label">
-                <p class="list-inline">
-                    <obs conceptId="PIH:Religion" id="religion" style="radio"
-                         answerConceptIds="PIH:Catholic,PIH:Islam,PIH:OTHER NON-CODED"
-                         answerCodes="Christian,Muslim,other" />
-                </p>
-            </section>
+            <p class="list-inline">
+                <label>
+                    <uimessage code="zl.registration.patient.religion.label" />
+                </label>
+                <obs conceptId="PIH:Religion" id="religion" style="radio"
+                     answerConceptIds="PIH:Catholic,PIH:Islam,PIH:OTHER NON-CODED"
+                     answerCodes="Christian,Muslim,other" />
+            </p>
 
-            <section id="hobby" sectionTag="fieldset" headerTag="legend"
-                     headerStyle="title" headerCode="Hobbies">
+            <p class="list-inline">
+                <label>
+                    <uimessage code="Hobbies" />
+                </label>
                 <obs conceptId="PIH:1604" style="text" rows="2" />
-            </section>
+            </p>
         </div>
     </section>
 
@@ -1105,78 +1170,41 @@
              headerCode="pihcore.mentalhealth.suicideEval">
         <div class="section-container">
 
-            <table>
-                <tr>
-                    <th></th>
-                    <th>
-                        <label>
-                            <uimessage code="pihcore.mentalhealth.suicideIdea"/>
-                        </label>
-                    </th>
-                    <th>
-                        <label>
-                            <uimessage code="pihcore.mentalhealth.suicideAttempt"/>
-                        </label>
-                    </th>
-                </tr>
+            <!-- Suicidal ideation -->
+            <p class="list-inline-wide">
+                <label>
+                    <uimessage code="Current suicidal ideation/plan"/>
+                </label>
+                <obs conceptId="CIEL:125562" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
+                     answerCodes="denies,present" answerSeparator="" />
+            </p>
 
-                <tr>
-                    <th>
-                        <label>
-                            <uimessage code="pihcore.current.label"/>
-                        </label>
-                    </th>
-                    <td>
-                        <!-- Suicidal ideation -->
-                        <p class="side-by-side">
-                            <obs conceptId="CIEL:125562" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
-                                 answerCodes="denies,present" answerSeparator="" />
-                        </p>
-                    </td>
-                    <td>
-                        <!-- Suicide attempt -->
-                        <p class="side-by-side">
-                            <obs conceptId="CIEL:148143" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
-                                 answerCodes="denies,present" answerSeparator="" />
-                        </p>
-                    </td>
-                </tr>
+            <!-- History of suicidal thoughts/ideation -->
+            <p class="list-inline-wide">
+                <label>
+                    <uimessage code="History of suicidality"/>
+                </label>
+                <obs conceptId="CIEL:165529" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
+                     answerCodes="absent,present" answerSeparator="" />
+            </p>
 
-                <tr>
-                    <th>
-                        <label>
-                            <uimessage code="pihcore.past.label"/>
-                        </label>
-                    </th>
-                    <td>
-                        <!-- History of suicidal thoughts/ideation -->
-                        <p class="side-by-side">
-                            <obs conceptId="CIEL:165529" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
-                                 answerCodes="absent,present" answerSeparator="" />
-                        </p>
-                    </td>
-                    <td>
-                        <!-- History of suicide attempt -->
-                        <p class="side-by-side">
-                            <obs conceptId="CIEL:129176" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
-                                 answerCodes="absent,present" answerSeparator="" />
-                        </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                    </td>
-                    <td>
+            <!-- Homicidal ideation -->
+            <p class="list-inline-wide">
+                <label>
+                    <uimessage code="Current homicidal ideation/plan"/>
+                </label>
+                <obs conceptId="CIEL:167117" style="radio" answerConceptIds="CIEL:167113,CIEL:163748"
+                     answerCodes="denies,present" answerSeparator="" />
+            </p>
 
-                        <!-- Date of suicide attempt -->
-                        <label>
-                            <uimessage code="pihcore.mentalhealth.dateSuicideAttempt"/>
-                        </label>
-                        <obs conceptId="CIEL:165530"/>
-                    </td>
-                </tr>
-            </table>
+            <!-- History of homicidal ideation -->
+            <p class="list-inline-wide">
+                <label>
+                    <uimessage code="History of homicidality"/>
+                </label>
+                <obs conceptId="CIEL:167222" style="radio" answerConceptIds="CIEL:163747,CIEL:163748"
+                     answerCodes="absent,present" answerSeparator="" />
+            </p>
 
             <br/>
             <obs conceptId="PIH:Suicidal evaluation" style="checkbox"
@@ -1208,34 +1236,29 @@
     <section id="mh-cognitive-func" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Cognitive function">
         <div class="section-container">
-            <div class="two-columns">
-                <div>
-                    <label>
-                        Orientation status
-                    </label>
-                    <obs conceptId="CIEL:167084" style="checkbox"
-                         answerConceptId="CIEL:167083"
-                         answerCode="Oriented to time"/>
-                    <obs conceptId="CIEL:167084" style="checkbox"
-                         answerConceptId="CIEL:167082"
-                         answerCode="Oriented to place"/>
-                    <obs conceptId="CIEL:167084" style="checkbox"
-                         answerConceptId="CIEL:167081"
-                         answerCode="Oriented to person"/>
-                    <br/>
+            <div>
+                <label>
+                    Level of consciousness orientation
+                </label>
+                <obs conceptId="CIEL:167084" style="checkbox"
+                     answerConceptId="CIEL:167083"
+                     answerCode="Oriented to time"/>
+                <obs conceptId="CIEL:167084" style="checkbox"
+                     answerConceptId="CIEL:167082"
+                     answerCode="Oriented to place"/>
+                <obs conceptId="CIEL:167084" style="checkbox"
+                     answerConceptId="CIEL:167081"
+                     answerCode="Oriented to person"/>
+                <br/>
 
-                </div>
-                <div>
-                    <p class="list-inline">
-                        <label>
-                            Level of concentration
-                        </label>
-                        <br/>
-                        <obs conceptId="CIEL:167203" style="radio"
-                             answerConceptIds="CIEL:159405,CIEL:159406,CIEL:159407"
-                             answerCodes="Good,Fair,Poor" />
-                    </p>
-                </div>
+                <p class="list-inline">
+                    <label>
+                        Level of concentration
+                    </label>
+                    <obs conceptId="CIEL:167203" style="radio"
+                         answerConceptIds="CIEL:159405,CIEL:159406,CIEL:159407"
+                         answerCodes="Good,Fair,Poor" />
+                </p>
             </div>
 
             <repeat>
@@ -1327,27 +1350,34 @@
                 <div>
                     <p>
                         <label>
-                            <uimessage code="pihcore.ncd.mental.gad7Score"/> (0-21) for anxiety:
+                            <uimessage code="TSQ"/> (PTSD):
+                        </label>
+                        <span class="small">
+                            <obs id="tsqScore" conceptId="PIH:14668"/>
+                        </span>
+                    </p>
+
+                    <p>
+                        <label>
+                            <uimessage code="pihcore.ncd.mental.gad7Score"/> (anxiety):
                         </label>
                         <span class="small">
                             <obs id="gadScore" conceptId="CIEL:165185"/>
                         </span>
                     </p>
 
-                    <p>
+                    <!--
                         <label>
                             <uimessage code="WHODAS Score"/> (0-100):
                         </label>
                         <span class="small">
                             <obs id="whodasScore" conceptId="CIEL:163226"/>
                         </span>
-                    </p>
+                    -->
 
-                </div>
-                <div>
                     <p>
                         <label>
-                            <uimessage code="pihcore.ncd.mental.phq9Score"/> (0-27) for depression:
+                            <uimessage code="pihcore.ncd.mental.phq9Score"/> (depression):
                         </label>
                         <span class="small">
                             <obs id="phq9Score" conceptId="CIEL:165137"/>
@@ -1356,7 +1386,7 @@
 
                     <p>
                         <label>
-                            <uimessage code="CAGE"/> (0-4) for alcoholism:
+                            <uimessage code="CAGE"/> (alcoholism):
                         </label>
                         <span class="small">
                             <obs id="cageScore" conceptId="CIEL:167217"/>
@@ -1364,40 +1394,17 @@
                     </p>
 
                 </div>
+                <div></div>
             </div>
 
             <p class="list-inline">
                 <label>
-                    <uimessage code="pihcore.mentalhealth.cgis"/> (Severity):
-                </label>
-                <br/>
-                <obs conceptId="CIEL:163222" style="radio"
-                     answers="0,1,2,3,4,5,6,7"
-                     answerLabels="0 = Not assessed,1 = Normal,2 = Borderline mentally ill,3 = Mildly ill,4 = Moderately ill,5 = Markedly ill,6 = Severely ill,7 = Most extreme"
-                     answerSeparator="&lt;br&gt;" />
-            </p>
-
-            <p class="list-inline">
-                <label>
-                    <uimessage code="pihcore.mentalhealth.cgii"/> (Improvement):
-                </label>
-                <br/>
-                <obs conceptId="CIEL:163223" style="radio"
-                     answers="0,1,2,3,4,5,6,7"
-                     answerLabels="0 = Not assessed,1 = Very much improved,2 = Much improved,3 = Minimally improved,4 = No change,5 = Minimally worse,6 = Much worse,7 = Very much worse"
-                     answerSeparator="&lt;br&gt;"/>
-            </p>
-
-            <p class="list-inline">
-                <label>
-                    <uimessage code="pihcore.mentalhealth.cgie"/> (Efficacy):
+                    <uimessage code="CGI"/>:
                 </label>
                 <br/>
                 <span>
-                    <obs conceptId="CIEL:163224" style="radio"
-                         answers="0,1,2,3"
-                         answerLabels="0 = None,1 = Do not significantly interfere with patient FUNCTIONING,2 = Significantly interfere with patient FUNCTIONING,3 = Outweighs Therapeutic effects with patient's FUNCTIONING"
-                         answerSeparator="&lt;br&gt;" />
+                    <!-- Using concept for CGI-E with 0-16 range -->
+                    <obs id="cgiEScore16" conceptId="PIH:14670" />
                 </span>
             </p>
         </div>

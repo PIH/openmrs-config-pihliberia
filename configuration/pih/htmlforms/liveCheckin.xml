@@ -98,9 +98,9 @@
                     <h3><uimessage code="pih.registration.patientSupport.typeOfSupport" /></h3>
                     <p class="left side-by-side">
                         <obs conceptId="PIH:6547" id="patientSupportType"
-                             answerConceptIds="PIH:11521,PIH:14646"
-                             answerCodes="pih.referred,pih.escorted"
-                             showUnits="false" unitsCssClass="append-to-value" style="radio" />
+                             answerConceptIds="PIH:11521,PIH:14646,CIEL:1066,PIH:unknown"
+                             answerCodes="pih.referred,pih.escorted,pihcore.neither,pihcore.notSure"
+                             style="radio" />
                     </p>
                     <br/>
                 </div>
@@ -108,20 +108,11 @@
 
                 <div>
                     <h3><uimessage code="pih.registration.patientSupport.type.label"/></h3>
-                    <p  class="left side-by-side">
+                    <p  class="left">
                         <obs conceptId="PIH:14494" id="patientSupportRole"
-                             answerConceptIds="PIH:14496,PIH:14495,PIH:14645,PIH:13489,PIH:14502,PIH:14649"
-                             answerCodes="pih.registration.following.type.cha,pih.registration.following.type.chp,pih.registration.following.type.chv,pih.registration.following.type.tba,pih.registration.following.type.pssa,pih.registration.selfOrFamily"
-                             showUnits="false" unitsCssClass="append-to-value" style="dropdown" />
-                    </p>
-                    <br/>
-                </div>
-                <br/>
-
-                <div>
-                    <h3><uimessage code="pih.registration.patientSupport.location.label"/></h3>
-                    <p class="left side-by-side">
-                        <obs conceptId="PIH:6402" id="patientSupportLocation" size="30" />
+                             answerConceptIds="PIH:14496,PIH:14495,PIH:14645,CIEL:1555,PIH:13489,PIH:14502,PIH:14649,PIH:OTHER"
+                             answerCodes="pih.registration.following.type.cha,pih.registration.following.type.chp,pih.registration.following.type.chv,pih.registration.following.type.chwUnspec,pih.registration.following.type.tba,pih.registration.following.type.pssa,pih.registration.selfOrFamily,pihcore.other"
+                             style="dropdown" size="999" />
                     </p>
                     <br/>
                 </div>
@@ -134,7 +125,6 @@
                     </p>
                     <br/>
                 </div>
-                <br/>
 
                 <div>
                     <h3><uimessage code="pih.registration.patientSupport.phone.label"/></h3>
