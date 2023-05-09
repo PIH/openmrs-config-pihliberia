@@ -23,27 +23,27 @@
     <style type="text/css">
 
         #who-when-where {
-        margin-bottom: 6px;
-        border-bottom: 1px solid #ccc;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #ccc;
         }
 
         #who-when-where p {
-        display: inline-block;
-        padding-right: 20px;
+            display: inline-block;
+            padding-right: 20px;
         }
 
         #where > input[type=text] {
-        display: inline-block;
+            display: inline-block;
         }
 
         .narrow {
-        width: 200px;
+            width: 200px;
         }
 
         .field-error {
-        color: #ff6666;
-        font-size: 1.1em;
-        display: block;
+            color: #ff6666;
+            font-size: 1.1em;
+            display: block;
         }
 
         .three-columns, .two-columns {
@@ -363,23 +363,24 @@
         <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="Patient overview">
             <div class="section-container">
-                <!-- ToDo: Add condition for epilepsy along with date -->
-                <p>
-                    <strong>
-                        <i>
-                            <uimessage code="ToDo: Epilepsy checkbox"/>
-                        </i>
-                    </strong>
-                </p>
+                <div class="two-columns">
+                    <div>
+                        <!-- ToDo: Change diagnosis to using condition for epilepsy? -->
+                        <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                            <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
+                                 answerConceptId="CIEL:155"
+                                 answerCode="Epilepsy" dateLabel="Onset date of epilepsy"/>
+                        </obsgroup>
+                    </div>
 
-
-                <p>
-                    <label>
-                        <uimessage code="Age of onset"/>
-                    </label>
-                    <obs conceptId="CIEL:159499" showUnits="true" />
-                </p>
-
+                    <div>
+                        <label>
+                            <uimessage code="Age of onset"/>
+                        </label>
+                        <obs conceptId="CIEL:159499" showUnits="true" />
+                    </div>
+                </div>
+                <br/>
 
                 <p id="ep-focal" class="list-inline-extra-wide">
                     <label>
@@ -405,7 +406,7 @@
                             <render concept="CIEL:115424" label="Myoclonic"/>
                             <render concept="CIEL:145044" label="Clonic"/>
                             <render concept="CIEL:150525" label="Absence"/>
-                            <render concept="CIEL:120252" label="Complex Partial"/>
+                            <!-- render concept="CIEL:120252" label="Complex Partial"/ -->
                             <render concept="CIEL:123826" label="Unclassified"/>
                         </repeat>
                 </div>
