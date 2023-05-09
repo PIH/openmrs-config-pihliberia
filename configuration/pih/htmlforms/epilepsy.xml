@@ -727,9 +727,6 @@
         <div class="section-container toggle">
             <table>
                 <tr>
-                    <th>
-                        <uimessage code="pihcore.visitNote.plan.name"/>
-                    </th>
                     <th colspan="2">
                         <uimessage code="pihcore.visitNote.plan.dose"/>
                     </th>
@@ -746,15 +743,17 @@
 
                 <repeat>
                     <template>
-                        <tr>
-                            <obsgroup groupingConceptId="PIH:Prescription construct">
-                                <td id="{name}-rx">
+                        <obsgroup groupingConceptId="PIH:Prescription construct">
+                            <tr>
+                                <td id="{name}-rx" colspan="6">
                                     <obs conceptId="PIH:Mental health medication"
                                          answerConceptId="{concept}"
                                          style="checkbox"
-                                         toggle="{id: '{name}-rx-dose', style: 'dim'}" class="medication-checkbox"/>
+                                         toggle="{id: '{name}-rx-details', style: 'dim'}" class="medication-checkbox"/>
                                 </td>
-                                <td id="{name}-rx-dose">
+                            </tr>
+                            <tr id="{name}-rx-details">
+                                <td id="{name}-rx-dose" align="right">
                                     <obs id="dose-{name}" class="doseInput" conceptId="CIEL:160856"/>
                                 </td>
                                 <td id="{name}-rx-dose-unit">
@@ -783,8 +782,8 @@
                                          conceptId="PIH:TIME UNITS"
                                          answerConceptIds="CIEL:1822,CIEL:1072,CIEL:1073,CIEL:1074"/>
                                 </td>
-                            </obsgroup>
-                        </tr>
+                            </tr>
+                        </obsgroup>
                     </template>
 
                     <render concept="PIH:CARBAMAZEPINE" name="Carbamazepine"/>
