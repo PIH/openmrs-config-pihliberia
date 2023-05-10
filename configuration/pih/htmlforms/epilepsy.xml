@@ -23,27 +23,27 @@
     <style type="text/css">
 
         #who-when-where {
-        margin-bottom: 6px;
-        border-bottom: 1px solid #ccc;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #ccc;
         }
 
         #who-when-where p {
-        display: inline-block;
-        padding-right: 20px;
+            display: inline-block;
+            padding-right: 20px;
         }
 
         #where > input[type=text] {
-        display: inline-block;
+            display: inline-block;
         }
 
         .narrow {
-        width: 200px;
+            width: 200px;
         }
 
         .field-error {
-        color: #ff6666;
-        font-size: 1.1em;
-        display: block;
+            color: #ff6666;
+            font-size: 1.1em;
+            display: block;
         }
 
         .three-columns, .two-columns {
@@ -363,6 +363,7 @@
         <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="Patient overview">
             <div class="section-container">
+<<<<<<< HEAD
                 <!-- ToDo: Add condition for epilepsy along with date -->
 
                 <p>
@@ -371,7 +372,26 @@
                     </label>
                 <!-- <obs conceptId="CIEL:159499" showUnits="true" /> -->
                 </p>
+=======
+                <div class="two-columns">
+                    <div>
+                        <!-- ToDo: Change diagnosis to using condition for epilepsy? -->
+                        <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                            <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
+                                 answerConceptId="CIEL:155"
+                                 answerCode="Epilepsy" dateLabel="Onset date of epilepsy"/>
+                        </obsgroup>
+                    </div>
+>>>>>>> upstream/master
 
+                    <div>
+                        <label>
+                            <uimessage code="Age of onset"/>
+                        </label>
+                        <obs conceptId="CIEL:159499" showUnits="true" />
+                    </div>
+                </div>
+                <br/>
 
                 <p id="ep-focal" class="list-inline-extra-wide">
                     <label>
@@ -397,7 +417,7 @@
                             <render concept="CIEL:115424" label="Myoclonic"/>
                             <render concept="CIEL:145044" label="Clonic"/>
                             <render concept="CIEL:150525" label="Absence"/>
-                            <render concept="CIEL:120252" label="Complex Partial"/>
+                            <!-- render concept="CIEL:120252" label="Complex Partial"/ -->
                             <render concept="CIEL:123826" label="Unclassified"/>
                         </repeat>
                 </div>
@@ -448,7 +468,12 @@
                     <render concept="CIEL:5622"   name="other" label="Other" />
                 </repeat>
 
-                <!-- ToDo: Add other free text -->
+                <p>
+                    <label>
+                        <uimessage code="if other complication, specify"/>
+                    </label>
+                    <obs id="ep-other-complication" conceptId="PIH:14679" style="text" />
+                </p>
             </div>
         </section>
 
@@ -553,13 +578,15 @@
                     </template>
                     <render concept="CIEL:139084" name="headache" label="Headache"/>
                     <render concept="CIEL:120345" name="disorientation" label="Disorientation / Confusion"/>
-                    <render concept="CIEL:152782" name="poor-concentration" label="Poor concentration"/>
-                    <render concept="CIEL:156923" name="poor-vc-skills" label="Poor verbal or cognit. skills"/>
+                    <render concept="CIEL:152782" name="poor-concentration" label="Poor concentration and verbal skills"/>
                     <render concept="CIEL:114362" name="paralysis" label="Paralysis"/>
-                    <render concept="CIEL:165567" name="foaming-mouth" label="Foaming mouth"/>
-                    <render concept="CIEL:5978" name="nausea" label="Nausea"/>
                     <render concept="CIEL:121657" name="memory-loss" label="Memory loss"/>
                 </repeat>
+
+            <!-- Unused:
+                    <render concept="CIEL:156923" name="poor-vc-skills" label="Poor verbal or cognit. skills"/>
+                    <render concept="CIEL:165567" name="foaming-mouth" label="Foaming mouth"/>
+                    <render concept="CIEL:5978" name="nausea" label="Nausea"/> -->
 
             </div>
         </section>
@@ -570,44 +597,43 @@
         <div class="section-container">
             <div class="two-columns">
                 <div>
-                    <!-- ToDo:  Replace this concept -->
-                    <span class="inline">
-                        <label class="inline">
-                            <uimessage code="pihcore.ncd.epilepsy.seizure_num"/> &amp;nbsp
+                    <p class="list-inline">
+                        <label>
+                            <uimessage code="Seizure since last visit"/>
                         </label>
-                        <span class="inline">
-                            <obs conceptId="PIH:Number of seizures since last visit"/>
-                        </span>
-                    </span>
-
+                        <br/>
+                        <obs conceptId="PIH:14680" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"/>
+                    </p>
                 </div>
+
                 <div>
                     <p class="list-inline">
                         <label>
                             <uimessage code="Neuro exam"/>
                         </label>
-                        <obs conceptId="PIH:1129" style="radio" answerConceptIds="PIH:1115,PIH:1116"/>
+                        <obs conceptId="PIH:1129" style="radio" answerConceptIds="PIH:1116,PIH:1115"/>
                     </p>
 
                     <p class="list-inline">
                         <label>
                             <uimessage code="Development"/>
                         </label>
-                        <obs conceptId="CIEL:160277" style="radio" answerConceptIds="PIH:1115,PIH:1116"/>
+                        <obs conceptId="CIEL:160277" style="radio" answerConceptIds="PIH:1116,PIH:1115"/>
                     </p>
 
                     <p class="list-inline">
                         <label>
                             <uimessage code="Mood"/>
                         </label>
-                        <obs conceptId="PIH:14131" style="radio" answerConceptIds="PIH:1115,PIH:1116"/>
+                        <obs conceptId="PIH:14131" style="radio" answerConceptIds="PIH:1116,PIH:1115"/>
                     </p>
 
                     <p class="list-inline">
                         <label>
                             <uimessage code="Behavior/Appearance"/>
                         </label>
-                        <obs conceptId="CIEL:167092" style="radio" answerConceptIds="PIH:1115,PIH:1116"/>
+                        <obs conceptId="CIEL:167092" style="radio" answerConceptIds="PIH:1116,PIH:1115"/>
                     </p>
                 </div>
             </div>
@@ -619,14 +645,14 @@
                         <label class="inline">
                             <uimessage code="pihcore.epilepsy.care.during.seizure"/>
                         </label>
-                        <obs conceptId="PIH:12401" style="radio" answerConceptIds="PIH:YES,PIH:NO"/>
+                        <obs conceptId="PIH:12401" style="radio" answerConceptIds="PIH:NO,PIH:YES"/>
                     </p>
 
                     <p class="list-inline">
                         <label>
                             <uimessage code="pihcore.epilepsy.recognized.trigger.signs"/>
                         </label>
-                        <obs conceptId="PIH:12406" style="radio" answerConceptIds="PIH:YES,PIH:NO"/>
+                        <obs conceptId="PIH:12406" style="radio" answerConceptIds="PIH:NO,PIH:YES"/>
                     </p>
 
                     <p class="list-inline">
@@ -634,18 +660,23 @@
                             <label>
                                 <uimessage code="pihcore.pregnancy.status"/>
                             </label>
-                            <!-- ToDo: Fix this -->
-                            <obs labelCode="" conceptId="PIH:PATIENT PREGNANT" style="checkbox"/>
+                            <obs conceptId="PIH:PATIENT PREGNANT" style="yes_no" />
                         </includeIf>
                     </p>
 
                     <p class="list-inline">
                         <label>
-                            <uimessage code="On FP?"/>
+                            <uimessage code="On family planning"/>
                         </label>
                         <obs conceptId="PIH:14321" style="radio" answerConceptIds="PIH:YES,PIH:NO"/>
                     </p>
-                    <!-- TdDo: Missed dose -->
+
+                    <p class="list-inline">
+                        <label>
+                            <uimessage code="Missed a dose yesterday"/>
+                        </label>
+                        <obs conceptId="PIH:14678" style="radio" answerConceptIds="PIH:YES,PIH:NO"/>
+                    </p>
                 </div>
 
                 <div>
@@ -671,7 +702,7 @@
                             <uimessage code="Next appointment date"/>
                         </label>
                         <span class="small">
-                            <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true"
+                            <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true" allowPastDates="false"
                                  required="true"/>
                         </span>
                     </p>
@@ -727,18 +758,28 @@
                 <!-- ToDo: Improve formatting; Add placeholders/suggestions for un-entered inputs; Fix toggles -->
                 <repeat>
                     <template>
+<<<<<<< HEAD
                         <obsgroup groupingConceptId="PIH:Prescription construct" showIfEmpty="false">
+=======
+                        <obsgroup groupingConceptId="PIH:Prescription construct">
+>>>>>>> upstream/master
                             <tr>
                                 <td id="{name}-rx" colspan="6">
                                     <obs conceptId="PIH:Mental health medication"
                                          answerDrugId="{drug}"
                                          style="checkbox"
-                                         toggle="{id: '{name}-rx-dose', style: 'dim'}" class="medication-checkbox"/>
+                                         toggle="{id: '{name}-rx-details', style: 'dim'}" class="medication-checkbox"/>
                                 </td>
                             </tr>
+<<<<<<< HEAD
                             <tr>
                                 <td id="{name}-rx-dose" align="right">
                                     <obs id="dose-{name}" class="doseInput" conceptId="CIEL:160856" placeholder="dose"/>
+=======
+                            <tr id="{name}-rx-details">
+                                <td id="{name}-rx-dose" align="right">
+                                    <obs id="dose-{name}" class="doseInput" conceptId="CIEL:160856"/>
+>>>>>>> upstream/master
                                 </td>
                                 <td id="{name}-rx-dose-unit">
                                     <obs id="doseUnit-{name}" class="doseInput select-arrow" placeholder="unit"
@@ -771,6 +812,7 @@
                         </obsgroup>
                     </template>
 
+<<<<<<< HEAD
                     <render drug="e371d811-d32c-4f6e-8493-2fa667b7b44c" name="Carbamazepine200mgt"/>
                     <render drug="39d7a7ee-b0ff-48e0-a7ca-685688147c8f" name="Diazepam5mgt"/>
                     <render drug="923e3e90-8b5c-4ae6-b17f-b6d547803437" name="Diazepam5mgmLa"/>
@@ -782,6 +824,16 @@
                     <render drug="9a499fca-699e-4809-8175-732ef43d5c14" name="Phenobarb50mgt" />
                     <render drug="34dd5905-c28d-4cf8-8ebe-0b83e5093e17" name="PhenytoinNa100t"/>
                     <render drug="19e4dd0b-bd14-4c2b-ad3e-39ec8ea047d7" name="SodiumValproate200mgt"/>
+=======
+                    <render concept="PIH:CARBAMAZEPINE" name="Carbamazepine"/>
+                    <render concept="PIH:DIAZEPAM" name="Diazepam"/>
+                    <render concept="PIH:PHENOBARBITAL" name="Phenobarbital"/>
+                    <render concept="PIH:PHENYTOIN" name="Phenytoin sodium"/>
+                    <render concept="PIH:SODIUM VALPROATE" name="Sodium valproate"/>
+                    <render concept="CIEL:77335" name="Haldol"/>
+                    <render concept="CIEL:76613" name="Folic acid"/>
+                    <render concept="CIEL:83405" name="Risperidone"/>
+>>>>>>> upstream/master
                 </repeat>
             </table>
 
@@ -796,69 +848,42 @@
         </div>
     </section>
 
+<<<<<<< HEAD
     <!-- socioeconomic assistance section -->
     <section id="socioeconomic-assistance" sectionTag="fieldset" headerTag="legend"
              headerStyle="title" headerCode="pihcore.supportiveCare">
+=======
+    <section id="ep-notes" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Notes">
+>>>>>>> upstream/master
         <div class="section-container">
-            <p class="list-inline">
-                <label>
-                    <uimessage code="Receiving social support"/>
-                </label>
-                <obs id="supported" conceptId="CIEL:163766" style="radio"
-                     answerConceptIds="CIEL:1065,CIEL:1066"
-                     answerCodes="yes,no">
-                    <controls>
-                        <when value="CIEL:1065" thenDisplay="#support-q"/>
-                    </controls>
-                </obs>
-
-                <obsgroup groupingConceptId="PIH:1395">
-                    <div id="support-q" class="two-columns">
-                        <div>
-                            <label>
-                                <uimessage code="Start date"/>
-                            </label>
-                            <obs conceptId="CIEL:163526"/>
-                        </div>
-                        <div>
-                            <label>
-                                <uimessage code="End date"/>
-                            </label>
-                            <obs conceptId="CIEL:164384" allowFutureDates="true"/>
-                        </div>
-                    </div>
-
-                    <label>
-                        <uimessage code="Type of support"/>
-                    </label>
-
-                    <repeat>
-                        <template>
-                            <obs conceptId="PIH:2156" answerConceptId="{aid}"
-                                 answerLabel="{aidLabel}" style="checkbox"/>
-                        </template>
-                        <render aid="PIH:ASSISTANCE WITH TRANSPORT" aidLabel="Transportation"/>
-                        <render aid="PIH:NUTRITIONAL AID" aidLabel="Food support"/>
-                        <render aid="PIH:SCHOOL EXPENSES" aidLabel="School fees"/>
-                        <render aid="PIH:14628" aidLabel="Reintegration support"/>
-                        <render aid="PIH:FINANCIAL AID" aidLabel="Economic empowerment"/>
-                        <render aid="PIH:HOUSING EXPENSES" aidLabel="Housing or infrastructure support"/>
-                    </repeat>
-
-                </obsgroup>
-            </p>
-
             <p>
-                <label>
-                    <uimessage code="pihcore.remarks"/>:
-                </label>
-                <obs conceptId="PIH:SOCIO-ECONOMIC ASSISTANCE COMMENT" style="textarea"/>
+                <obs conceptId="PIH:PATIENT PLAN COMMENTS" style="textarea" rows="10"/>
             </p>
         </div>
     </section>
 
+    <section id="support-type" sectionTag="fieldset" headerTag="legend"
+             headerStyle="title" headerCode="Patient support type">
+        <div class="section-container">
+            <repeat>
+                <template>
+                    <obs conceptId="PIH:2156" answerConceptId="{aid}"
+                         answerLabel="{aidLabel}" style="checkbox"/>
+                </template>
+                <render aid="PIH:ASSISTANCE WITH TRANSPORT" aidLabel="Transportation"/>
+                <render aid="PIH:NUTRITIONAL AID" aidLabel="Food"/>
+                <render aid="PIH:SCHOOL EXPENSES" aidLabel="School fees"/>
+                <render aid="PIH:14628" aidLabel="Reintegration"/>
+                <render aid="PIH:FINANCIAL AID" aidLabel="Economic empowerment"/>
+                <render aid="PIH:HOUSING EXPENSES" aidLabel="Housing or infrastructure"/>
+                <render aid="PIH:10640" aidLabel="Psychoeducation"/>
+            </repeat>
+        </div>
+    </section>
+
     <section id="mh-plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.visitNote.plan">
+             headerCode="Referral from and by">
         <div class="section-container">
             <div class="inline">
                 <div id="disposition">
@@ -870,16 +895,6 @@
                 </label>
                 <obs conceptId="PIH:DISPOSITION COMMENTS" style="text"/>
             </div>
-            <br/>
-            <br/>
-
-            <p>
-                <label>
-                    <uimessage code="Patient plan comments"/>
-                </label>
-                <obs conceptId="PIH:PATIENT PLAN COMMENTS" style="textarea" rows="10"/>
-            </p>
-
         </div>
     </section>
 
