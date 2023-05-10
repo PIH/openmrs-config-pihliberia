@@ -363,7 +363,6 @@
         <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="Patient overview">
             <div class="section-container">
-<<<<<<< HEAD
                 <!-- ToDo: Add condition for epilepsy along with date -->
 
                 <p>
@@ -372,7 +371,6 @@
                     </label>
                 <!-- <obs conceptId="CIEL:159499" showUnits="true" /> -->
                 </p>
-=======
                 <div class="two-columns">
                     <div>
                         <!-- ToDo: Change diagnosis to using condition for epilepsy? -->
@@ -382,13 +380,12 @@
                                  answerCode="Epilepsy" dateLabel="Onset date of epilepsy"/>
                         </obsgroup>
                     </div>
->>>>>>> upstream/master
 
                     <div>
                         <label>
                             <uimessage code="Age of onset"/>
                         </label>
-                        <obs conceptId="CIEL:159499" showUnits="true" />
+                        <!-- <obs conceptId="CIEL:159499" showUnits="true" /> -->
                     </div>
                 </div>
                 <br/>
@@ -472,7 +469,7 @@
                     <label>
                         <uimessage code="if other complication, specify"/>
                     </label>
-                    <obs id="ep-other-complication" conceptId="PIH:14679" style="text" />
+                    <!-- <obs id="ep-other-complication" conceptId="PIH:14679" style="text" /> -->
                 </p>
             </div>
         </section>
@@ -602,8 +599,8 @@
                             <uimessage code="Seizure since last visit"/>
                         </label>
                         <br/>
-                        <obs conceptId="PIH:14680" style="radio"
-                             answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"/>
+                       <!-- <obs conceptId="PIH:14680" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"/> -->
                     </p>
                 </div>
 
@@ -675,7 +672,7 @@
                         <label>
                             <uimessage code="Missed a dose yesterday"/>
                         </label>
-                        <obs conceptId="PIH:14678" style="radio" answerConceptIds="PIH:YES,PIH:NO"/>
+                       <!-- <obs conceptId="PIH:14678" style="radio" answerConceptIds="PIH:YES,PIH:NO"/> -->
                     </p>
                 </div>
 
@@ -758,28 +755,20 @@
                 <!-- ToDo: Improve formatting; Add placeholders/suggestions for un-entered inputs; Fix toggles -->
                 <repeat>
                     <template>
-<<<<<<< HEAD
                         <obsgroup groupingConceptId="PIH:Prescription construct" showIfEmpty="false">
-=======
-                        <obsgroup groupingConceptId="PIH:Prescription construct">
->>>>>>> upstream/master
                             <tr>
                                 <td id="{name}-rx" colspan="6">
                                     <obs conceptId="PIH:Mental health medication"
                                          answerDrugId="{drug}"
                                          style="checkbox"
-                                         toggle="{id: '{name}-rx-details', style: 'dim'}" class="medication-checkbox"/>
+                                         toggle="{id: '{name}-rx-details', style: 'hidden'}" class="medication-checkbox"/>
                                 </td>
                             </tr>
-<<<<<<< HEAD
-                            <tr>
-                                <td id="{name}-rx-dose" align="right">
-                                    <obs id="dose-{name}" class="doseInput" conceptId="CIEL:160856" placeholder="dose"/>
-=======
+
                             <tr id="{name}-rx-details">
                                 <td id="{name}-rx-dose" align="right">
                                     <obs id="dose-{name}" class="doseInput" conceptId="CIEL:160856"/>
->>>>>>> upstream/master
+
                                 </td>
                                 <td id="{name}-rx-dose-unit">
                                     <obs id="doseUnit-{name}" class="doseInput select-arrow" placeholder="unit"
@@ -812,7 +801,6 @@
                         </obsgroup>
                     </template>
 
-<<<<<<< HEAD
                     <render drug="e371d811-d32c-4f6e-8493-2fa667b7b44c" name="Carbamazepine200mgt"/>
                     <render drug="39d7a7ee-b0ff-48e0-a7ca-685688147c8f" name="Diazepam5mgt"/>
                     <render drug="923e3e90-8b5c-4ae6-b17f-b6d547803437" name="Diazepam5mgmLa"/>
@@ -824,16 +812,6 @@
                     <render drug="9a499fca-699e-4809-8175-732ef43d5c14" name="Phenobarb50mgt" />
                     <render drug="34dd5905-c28d-4cf8-8ebe-0b83e5093e17" name="PhenytoinNa100t"/>
                     <render drug="19e4dd0b-bd14-4c2b-ad3e-39ec8ea047d7" name="SodiumValproate200mgt"/>
-=======
-                    <render concept="PIH:CARBAMAZEPINE" name="Carbamazepine"/>
-                    <render concept="PIH:DIAZEPAM" name="Diazepam"/>
-                    <render concept="PIH:PHENOBARBITAL" name="Phenobarbital"/>
-                    <render concept="PIH:PHENYTOIN" name="Phenytoin sodium"/>
-                    <render concept="PIH:SODIUM VALPROATE" name="Sodium valproate"/>
-                    <render concept="CIEL:77335" name="Haldol"/>
-                    <render concept="CIEL:76613" name="Folic acid"/>
-                    <render concept="CIEL:83405" name="Risperidone"/>
->>>>>>> upstream/master
                 </repeat>
             </table>
 
@@ -848,14 +826,10 @@
         </div>
     </section>
 
-<<<<<<< HEAD
+
     <!-- socioeconomic assistance section -->
-    <section id="socioeconomic-assistance" sectionTag="fieldset" headerTag="legend"
-             headerStyle="title" headerCode="pihcore.supportiveCare">
-=======
     <section id="ep-notes" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Notes">
->>>>>>> upstream/master
         <div class="section-container">
             <p>
                 <obs conceptId="PIH:PATIENT PLAN COMMENTS" style="textarea" rows="10"/>
