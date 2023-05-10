@@ -750,7 +750,7 @@
                                     <obs conceptId="PIH:Mental health medication"
                                          answerConceptId="{concept}"
                                          style="checkbox"
-                                         toggle="{id: '{name}-rx-details', style: 'dim'}" class="medication-checkbox"/>
+                                         toggle="{id: '{name}-rx-details', style: 'hidden'}" class="medication-checkbox"/>
                                 </td>
                             </tr>
                             <tr id="{name}-rx-details">
@@ -789,12 +789,12 @@
 
                     <render concept="PIH:CARBAMAZEPINE" name="Carbamazepine"/>
                     <render concept="PIH:DIAZEPAM" name="Diazepam"/>
-                    <render concept="PIH:PHENOBARBITAL" name="Phenobarbital"/>
-                    <render concept="PIH:PHENYTOIN" name="Phenytoin sodium"/>
-                    <render concept="PIH:SODIUM VALPROATE" name="Sodium valproate"/>
                     <render concept="CIEL:77335" name="Haldol"/>
-                    <render concept="CIEL:76613" name="Folic acid"/>
+                    <render concept="PIH:PHENOBARBITAL" name="Phenobarbital"/>
+                    <render concept="PIH:PHENYTOIN" name="PhenytoinSodium"/>
                     <render concept="CIEL:83405" name="Risperidone"/>
+                    <render concept="PIH:SODIUM VALPROATE" name="SodiumValproate"/>
+                    <render concept="CIEL:76613" name="FolicAcid"/>
                 </repeat>
             </table>
 
