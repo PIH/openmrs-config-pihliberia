@@ -338,28 +338,56 @@
     <enrollInProgram programId="Mental Health"/>
 
     <!-- The form -->
-    <section id="general" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Visit">
-        <div class="section-container">
-            <p class="list-inline">
-                <obs id="intake-or-followup"  conceptId="CIEL:164181" style="radio"
-                     answerConceptIds="CIEL:164180,PIH:7383"
-                     answerCodes="First epilepsy visit,Follow-up visit"
-                     required="true">
-                    <controls>
-                        <when value="CIEL:164180"
-                              thenJavaScript="jq('#intake-only').show(); jq('#obgyn-initial-div').hide();"
-                              elseJavaScript="jq('#intake-only').hide();"/>
-                        <when value="PIH:7383"
-                              thenJavaScript="jq('#epi-initial-div').show(); jq('#epi-section').hide();"
-                              elseJavaScript="jq('#epi-initial-div').hide(); jq('#epi-section').show();"/>
-                    </controls>
-                </obs>
-            </p>
-        </div>
-    </section>
+    <div class="section-container">
+        <p class="list-inline">
+            <obs id="intake-or-followup"  conceptId="CIEL:164181" style="checkbox"
+                 answerConceptId="CIEL:164180"
+                 answerCode="Show header">
+                <controls>
+                    <when value="CIEL:164180"
+                          thenJavaScript="jq('#intake-only').show(); jq('#obgyn-initial-div').hide();"
+                          elseJavaScript="jq('#intake-only').hide();"/>
+                </controls>
+            </obs>
+        </p>
+    </div>
+
 
     <div id="intake-only" class="hidden">
+        <section id="mh_refer" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="pihcore.mentalhealth.referral">
+
+            <div class="section-container">
+                <div class="two-columns">
+                    <div>
+                        <label>
+                            <uimessage code="pihcore.refer.referBy"/>:
+                        </label>
+                        <obs conceptId="PIH:Role of referring person"
+                             answerConceptIds="PIH:14502,CIEL:5489,PIH:14496,PIH:14495,CIEL:1555,CIEL:5620,PIH:13471,PIH:6708,PIH:Teacher,CIEL:167374,CIEL:167410,CIEL:978"
+                             answerCodes="PSSA,MH clinician,CHA,CHP,CHW,Relatives,Community members,Counselor,Instructor/Student,Faith healers,Service provider,Self-referral"
+                             style="radio" answerSeparator=""/>
+
+                        <obs conceptId="PIH:Role of referring person" answerConceptId="PIH:OTHER"
+                             style="checkbox" answerSeparator="" commentFieldLabel=" "/>
+                    </div>
+
+                    <div>
+                        <label>
+                            <uimessage code="Referral from"/>:
+                        </label>
+
+                        <obs conceptId="PIH:REFERRALS ORDERED"
+                             answerConceptIds="CIEL:160473,CIEL:160542,CIEL:165048,CIEL:165019,PIH:12743,PIH:7831,PIH:12742,CIEL:159928,CIEL:1713,PIH:11783,CIEL:1588"
+                             answerCodes="ER,OPD,Pediatrics,Internal Medicine,ART Clinic,Maternity/ANC/PNC,TB Clinic,Community,School,Church/Mosque,Traditional healers,Health facility"
+                             style="radio" answerSeparator=""/>
+                        <obs conceptId="PIH:REFERRALS ORDERED" answerConceptId="PIH:OTHER"
+                             style="checkbox" commentFieldLabel=" "/>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="Patient overview">
             <div class="section-container">
@@ -838,7 +866,7 @@
     </section>
 
     <section id="mh-plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Referral from and by">
+             headerCode="Disposition">
         <div class="section-container">
             <div class="inline">
                 <div id="disposition">
