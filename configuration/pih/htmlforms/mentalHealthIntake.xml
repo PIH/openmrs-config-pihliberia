@@ -902,7 +902,7 @@
              headerCode="Substance use history">
         <div class="section-container">
             <!-- ToDo: incomplete -->
-            <label><i>(add details)</i></label>
+
             <div id="substance-section">
                 <repeat>
                     <template>
@@ -914,7 +914,8 @@
                                     </label>
                                     <obs id="substance-{name}"
                                          conceptId="{concept}" style="radio"
-                                         answerConceptIds="CIEL:1090,CIEL:159452,CIEL:159450,CIEL:1067">
+                                         answerConceptIds="CIEL:1090,CIEL:159452,CIEL:159450"
+                                         answerCodes="Never,Not now,Currently using">
                                         <controls>
                                             <when value="CIEL:159450"
                                                   thenJavaScript="omrs.toggleExposureDurationField(1, 'substance-{name}-span')"/>
@@ -929,30 +930,86 @@
                                 </p>
 
                                 <!-- This is for recording duration the patient has been practising unhealthy habits -->
-                                <span id="substance-{name}-span" class="collapsible-inline" style="display:none;">
-                                    <div class="list-inline two-columns">
+                                <div id="substance-{name}-span" class="collapsible-inline" style="display:none;">
+                                    <div class="three-columns">
                                         <div>
                                             <label>
-                                                <uimessage code="Age started (years)"/>
+                                                <uimessage code="Age started"/>
                                             </label>
-                                            <obs id="substance-{name}-age" conceptId="PIH:14213"/>
+                                            <obs id="substance-{name}-age" conceptId="PIH:14213" showUnits="true"/>
                                         </div>
                                         <div>
                                             <label>
-                                                <uimessage code="Attempt to stop"/>
+                                                <uimessage code="mirebalais.dispensing.medicationAmount"/>
                                             </label>
-                                            <obs id="substance-{name}-stop-attempt" conceptId="PIH:14215" style="radio"
-                                                 answerConceptIds="CIEL:1065,CIEL:1066"/>
+                                            <obs conceptId="PIH:14682"/>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <uimessage code="mirebalais.dispensing.medicationFrequency"/>
+                                            </label>
+                                            <obs conceptId="PIH:14683"/>
                                         </div>
                                     </div>
-                                </span>
+                                    <br/>
+                                    <div class="two-columns">
+                                        <div class="list-inline">
+                                            <label>Who started using with</label>
+                                            <br/>
+                                            <obs conceptId="PIH:14214" style="radio"/>
+                                        </div>
+                                        <div>
+                                            <label>Drug(s) of choice</label>
+                                            <obs conceptId="PIH:6489" />
+                                        </div>
+                                    </div>
+                                    <br/>
+
+                                    <div>
+                                        <label>Problems due to use</label>
+                                        <obs conceptId="PIH:1729"/>
+                                    </div>
+                                    <br/>
+
+                                    <div class="list-inline">
+                                        <label>
+                                            <uimessage code="Any attempts at stopping"/>
+                                        </label>
+                                        <obs id="substance-{name}-stop-attempt" conceptId="PIH:14215" style="radio"
+                                             answerConceptIds="CIEL:1066,CIEL:1065">
+                                            <controls>
+                                                <when value="CIEL:1065" thenDisplay="#why-stop-abuse" />
+                                            </controls>
+                                        </obs>
+                                        <div id="why-stop-abuse">
+                                            <label>
+                                                <uimessage code="if yes, why attempting to stop" />
+                                            </label>
+                                            <obs conceptId="PIH:14681"/>
+                                            <br/>
+
+                                            <div class="two-columns">
+                                                <div>
+                                                    <label>When (attampt to stop)</label>
+                                                    <obs conceptId="PIH:14248"/>
+                                                </div>
+                                                <div>
+                                                    <label>Outcome</label>
+                                                    <obs conceptId="PIH:14249"/>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                        </div>
+
+                                    </div>
+                                    <br/>
+                                </div>
                             </div>
                         </obsgroup>
                     </template>
                     <render concept="CIEL:159449" name="alcohol" label="Alcohol"/>
                     <render concept="PIH:HISTORY OF ILLEGAL DRUGS" name="drugs" label="Illicit drugs" />
                     <render concept="CIEL:163731" name="tobacco" label="Tobacco" />
-                    <render concept="PIH:12391" name="marijuana" label="Marijuana"/>
                 </repeat>
             </div>
 
