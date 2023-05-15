@@ -1666,12 +1666,99 @@
     <section id="mh-family-involved" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Family involvement">
         <div class="section-container">
-            <!-- ToDo: incomplete -->
-            <label><i>(add missing questions)</i></label>
+            <p class="list-inline">
+                <label>
+                    <uimessage code="Family involvement" />
+                </label>
+                <obs id="fam-support" conceptId="PIH:14692" style="radio"
+                     answerConceptIds="CIEL:164260,PIH:14693,CIEL:1065">
+                    <controls>
+                        <when value="CIEL:1065" thenDisplay="#free-text-support"/>
+                    </controls>
+                </obs>
+                <div id="free-text-support">
+                    <obsgroup groupingConceptId="PIH:13182" showIfEmpty="false">
+                        <label>
+                            <uimessage code="Who?"/>
+                        </label>
+                        <obs conceptId="CIEL:160750" style="text"/>
+
+                        <div class="two-columns">
+                            <div>
+                                <label>
+                                    <uimessage code="Cell phone number"/>
+                                </label>
+                                <obs conceptId="PIH:6194"/>
+                            </div>
+                            <div>
+
+                                <p class="list-inline">
+                                    <label>
+                                        <uimessage code="Family educated on illness"/>
+                                    </label>
+                                    <obs conceptId="CIEL:167223" style="radio"
+                                         answerConceptIds="CIEL:1066,CIEL:1065"/>
+                                </p>
+                            </div>
+                        </div>
+
+                    </obsgroup>
+
+                </div>
+                <p>
+                    <label>
+                        <uimessage code="Issue" />
+                    </label>
+                    <obs conceptId="CIEL:163106" />
+                </p>
+            </p>
+
+            <div class="two-columns">
+                <div>
+                    <p class="list-inline-wide">
+                        <label>
+                            <uimessage code="Medication education client completed"/>
+                        </label>
+                        <obs conceptId="CIEL:167225" style="radio"
+                             answerConceptIds="CIEL:1066,CIEL:1065"/>
+                    </p>
+                    <br/><br/>
+
+                    <p class="list-inline-wide">
+                        <label>
+                            <uimessage code="Family medication needed"/>
+                        </label>
+                        <obs conceptId="CIEL:167287" style="radio"
+                             answerConceptIds="CIEL:1066,CIEL:1065"/>
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        <label>
+                            <uimessage code="Medication evaluation due"/>
+                        </label>
+                        <obs conceptId="PIH:14694"/>
+                    </p>
+
+                    <p class="list-inline-wide">
+                        <label>
+                            <uimessage code="Family medication provided"/>
+                        </label>
+                        <obs conceptId="PIH:14695" style="radio"
+                             answerConceptIds="CIEL:1066,CIEL:1065"/>
+                    </p>
+                </div>
+            </div>
+
+            <p class="list-inline-wide">
+                <label>
+                    <uimessage code="Family support needed" />
+                </label>
+                <obs conceptId="PIH:10642" style="radio"
+                     answerConceptIds="CIEL:1065,CIEL:1066" />
+            </p>
         </div>
     </section>
-
-
 
     <section id="mh-plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan">
