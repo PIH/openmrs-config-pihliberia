@@ -758,13 +758,25 @@
     </section>
     -->
 
+    <ifMode mode="VIEW" include="false">
+        <style>
+            .doseInput select, .frequency select, .duration-unit select {
+                width: 100px;
+            }
+
+            .route select {
+                width: 150px;
+            }
+        </style>
+    </ifMode>
+
     <!--Medication-->
-    <section id="mh-meds-v2" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+    <section id="medication" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan.medication">
         <div class="section-container">
 
             <!-- ToDo:  Introduce the new modelling in the next release -->
-            <table style="table-layout:fixed">
+            <table>
                 <tr>
                     <th colspan="2">
                         <uimessage code="pihcore.visitNote.plan.dose"/>
@@ -783,16 +795,16 @@
                 <!-- ToDo: Improve formatting; Add placeholders/suggestions for un-entered inputs; Fix toggles -->
                 <repeat>
                     <template>
-                        <obsgroup groupingConceptId="PIH:Prescription construct">
+                        <obsgroup groupingConceptId="PIH:Prescription construct" showIfEmpty="false">
                             <tr>
                                 <td id="{name}-rx" colspan="6">
                                     <obs conceptId="PIH:Mental health medication"
                                          answerDrugId="{drug}"
                                          style="checkbox"
-                                         toggle="{id: '{name}-rx-dose', style: 'dim'}" class="medication-checkbox"/>
+                                         toggle="{id: '{name}-rx-details', style: 'hidden'}" class="medication-checkbox"/>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="{name}-rx-details">
                                 <td id="{name}-rx-dose" align="right">
                                     <obs id="dose-{name}" class="doseInput" conceptId="CIEL:160856" placeholder="dose"/>
                                 </td>
@@ -833,10 +845,10 @@
                     <render drug="6241e56b-ec9c-4c5b-a79c-1ce6481b1acb" name="FolicAcid5mgt"/>
                     <render drug="23f2d94b-3072-4e86-b737-d5ccded81bc0" name="Haloperidol5mgt"/>
                     <render drug="a8541367-1eb0-4144-9cc7-41a909902d5d" name="Haloperidol5mgmLa"/>
-                    <render drug="85c71cd3-b84d-4e3c-84f0-94ecc294510e" name="Risperidone2mgt"/>
                     <render drug="7db9cb29-855d-4a30-aa76-4b8059bee0d5" name="PhenobarbAmpule"/>
                     <render drug="9a499fca-699e-4809-8175-732ef43d5c14" name="Phenobarb50mgt" />
                     <render drug="34dd5905-c28d-4cf8-8ebe-0b83e5093e17" name="PhenytoinNa100t"/>
+                    <render drug="85c71cd3-b84d-4e3c-84f0-94ecc294510e" name="Risperidone2mgt"/>
                     <render drug="19e4dd0b-bd14-4c2b-ad3e-39ec8ea047d7" name="SodiumValproate200mgt"/>
 
 
