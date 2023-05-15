@@ -378,7 +378,7 @@
                         </label>
 
                         <obs conceptId="PIH:REFERRALS ORDERED"
-                             answerConceptIds="CIEL:160473,CIEL:160542,CIEL:165048,CIEL:165019,PIH:12743,PIH:7831,PIH:12742,CIEL:159928,CIEL:1713,PIH:11783,CIEL:1588"
+                             answerConceptIds="CIEL:160473,CIEL:160542,CIEL:165048,CIEL:165019,PIH:12743,PIH:7831,PIH:12742,PIH:9361,CIEL:159928,PIH:11783,PIH:2067,CIEL:1588"
                              answerCodes="ER,OPD,Pediatrics,Internal Medicine,ART Clinic,Maternity/ANC/PNC,TB Clinic,Community,School,Church/Mosque,Traditional healers,Health facility"
                              style="radio" answerSeparator=""/>
                         <obs conceptId="PIH:REFERRALS ORDERED" answerConceptId="PIH:OTHER"
@@ -758,13 +758,34 @@
     </section>
     -->
 
+<<<<<<< HEAD
     <!--Medication-->
     <section id="mh-meds-v2" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+=======
+    <ifMode mode="VIEW" include="false">
+        <style>
+            .doseInput select, .frequency select, .duration-unit select {
+                width: 100px;
+            }
+
+            .route select {
+                width: 150px;
+            }
+        </style>
+    </ifMode>
+
+    <!--Medication-->
+    <section id="medication" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+>>>>>>> upstream/master
              headerCode="pihcore.visitNote.plan.medication">
         <div class="section-container">
 
             <!-- ToDo:  Introduce the new modelling in the next release -->
+<<<<<<< HEAD
             <table style="table-layout:fixed">
+=======
+            <table>
+>>>>>>> upstream/master
                 <tr>
                     <th colspan="2">
                         <uimessage code="pihcore.visitNote.plan.dose"/>
@@ -783,7 +804,7 @@
                 <!-- ToDo: Improve formatting; Add placeholders/suggestions for un-entered inputs; Fix toggles -->
                 <repeat>
                     <template>
-                        <obsgroup groupingConceptId="PIH:Prescription construct">
+                        <obsgroup groupingConceptId="PIH:Prescription construct" showIfEmpty="false">
                             <tr>
                                 <td id="{name}-rx" colspan="6">
                                     <obs conceptId="PIH:Mental health medication"
@@ -833,10 +854,17 @@
                     <render drug="6241e56b-ec9c-4c5b-a79c-1ce6481b1acb" name="FolicAcid5mgt"/>
                     <render drug="23f2d94b-3072-4e86-b737-d5ccded81bc0" name="Haloperidol5mgt"/>
                     <render drug="a8541367-1eb0-4144-9cc7-41a909902d5d" name="Haloperidol5mgmLa"/>
+<<<<<<< HEAD
                     <render drug="85c71cd3-b84d-4e3c-84f0-94ecc294510e" name="Risperidone2mgt"/>
                     <render drug="7db9cb29-855d-4a30-aa76-4b8059bee0d5" name="PhenobarbAmpule"/>
                     <render drug="9a499fca-699e-4809-8175-732ef43d5c14" name="Phenobarb50mgt" />
                     <render drug="34dd5905-c28d-4cf8-8ebe-0b83e5093e17" name="PhenytoinNa100t"/>
+=======
+                    <render drug="7db9cb29-855d-4a30-aa76-4b8059bee0d5" name="PhenobarbAmpule"/>
+                    <render drug="9a499fca-699e-4809-8175-732ef43d5c14" name="Phenobarb50mgt" />
+                    <render drug="34dd5905-c28d-4cf8-8ebe-0b83e5093e17" name="PhenytoinNa100t"/>
+                    <render drug="85c71cd3-b84d-4e3c-84f0-94ecc294510e" name="Risperidone2mgt"/>
+>>>>>>> upstream/master
                     <render drug="19e4dd0b-bd14-4c2b-ad3e-39ec8ea047d7" name="SodiumValproate200mgt"/>
 
 
