@@ -1537,45 +1537,38 @@
         </div>
     </section>
 
+    <ifMode mode="VIEW" include="false">
+        <style>
+            .doseInput select, .frequency select, .duration-unit select {
+                width: 100px;
+            }
+
+            .route select {
+                width: 150px;
+            }
+        </style>
+    </ifMode>
+
     <!--Medication-->
-    <section id="mh-meds" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+    <section id="medications" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan.medication">
         <div class="section-container">
             <label>
-                <uimessage code="These medications are specifically used for mental health:" />
+                <uimessage code="TBD - add these medications:" />
             </label>
-            <div class="three-columns">
-                <div>
-                    <sl>
-                        <li>Amitryptiline</li>
-                        <li>Chlorpromazine</li>
-                        <li>Fluoxetine</li>
-                        <li>Fluphenazine</li>
-                    </sl>
-                </div>
 
-                <div>
-                    <sl>
-                        <li>Haloperidol</li>
-                        <li>Imipramine</li>
-                        <li>Risperidone</li>
-                    </sl>
-                </div>
-
-                <div>
-                    <sl>
-                        <li>Carbamazepine</li>
-                        <li>Diazapam</li>
-                        <li>Phenobarbital</li>
-                        <li>Phenytoin sodium</li>
-                        <li>Sodium valproate</li>
-                    </sl>
-                </div>
-
+            <div>
+                <sl>
+                    <li>Amitryptiline</li>
+                    <li>Chlorpromazine</li>
+                    <li>Fluoxetine</li>
+                    <li>Fluphenazine</li>
+                    <li>Imipramine</li>
+                </sl>
             </div>
 
             <!-- ToDo:  Introduce new modelling in the next release -->
-            <table style="table-layout:fixed">
+            <table>
                 <tr>
                     <th colspan="2">
                         <uimessage code="pihcore.visitNote.plan.dose"/>
@@ -1593,7 +1586,7 @@
 
                 <repeat>
                     <template>
-                        <obsgroup groupingConceptId="PIH:Prescription construct">
+                        <obsgroup groupingConceptId="PIH:Prescription construct" showIfEmpty="false">
                             <tr>
                                 <td id="{name}-rx" colspan="6">
                                     <obs conceptId="PIH:Mental health medication"
@@ -1652,6 +1645,13 @@
                 </repeat>
             </table>
 
+            <!-- ToDo:  Add these drugs
+                <render concept="PIH:AMITRYPTILINE" name="Amitryptiline"/>
+                <render concept="PIH:CHLORPROMAZINE" name="Chlorpromazine"/>
+                <render concept="PIH:FLUOXETINE" name="Fluoxetine"/>
+                <render concept="PIH:FLUPHENAZINE" name="Fluphenazine"/>
+                <render concept="PIH:IMIPRAMINE" name="Imipramine"/>
+            -->
 
             <br/>
             <p>
