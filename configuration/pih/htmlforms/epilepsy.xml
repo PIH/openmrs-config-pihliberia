@@ -340,7 +340,7 @@
     <!-- The form -->
     <div class="section-container">
         <p class="list-inline">
-            <obs id="intake-or-followup"  conceptId="CIEL:164181" style="checkbox"
+            <obs id="intake-or-followup" conceptId="CIEL:164181" style="checkbox"
                  answerConceptId="CIEL:164180"
                  answerCode="Show header">
                 <controls>
@@ -397,7 +397,7 @@
                     <label>
                         <uimessage code="Age of onset"/>
                     </label>
-                    <obs conceptId="CIEL:159499" showUnits="true" />
+                    <obs conceptId="CIEL:159499" showUnits="true"/>
                 </p>
                 <div class="two-columns">
                     <div>
@@ -413,19 +413,19 @@
                         <label>
                             <uimessage code="Age of onset"/>
                         </label>
-                        <obs conceptId="CIEL:159499" showUnits="true" />
+                        <obs conceptId="CIEL:159499" showUnits="true"/>
                     </div>
                 </div>
                 <br/>
 
                 <p id="ep-focal" class="list-inline-extra-wide">
                     <label>
-                        <uimessage code="Focal seizure without loss of consciousness" />
+                        <uimessage code="Focal seizure without loss of consciousness"/>
                     </label>
                     <obsgroup groupingConceptId="PIH:1292">
                         <obs conceptIds="PIH:1293,PIH:1734,PIH:1735" style="radio"
                              answerConceptId="CIEL:165604"
-                             conceptLabels="yes,no,unknown" labelText="" />
+                             conceptLabels="yes,no,unknown" labelText=""/>
                     </obsgroup>
                 </p>
 
@@ -490,14 +490,14 @@
                     <render concept="CIEL:118826" name="drug-related" label="Drug Related"/>
                     <render concept="CIEL:119537" name="depression" label="Depression"/>
                     <render concept="CIEL:140238" name="fever" label="Fever"/>
-                    <render concept="CIEL:5622"   name="other" label="Other" />
+                    <render concept="CIEL:5622" name="other" label="Other"/>
                 </repeat>
 
                 <p>
                     <label>
                         <uimessage code="if other complication, specify"/>
                     </label>
-                    <obs id="ep-other-complication" conceptId="PIH:14679" style="text" />
+                    <obs id="ep-other-complication" conceptId="PIH:14679" style="text"/>
                 </p>
             </div>
         </section>
@@ -538,7 +538,7 @@
                     <label>
                         Any other medical diagnoses:
                     </label>
-                    <obs conceptId="CIEL:160221" style="text" />
+                    <obs conceptId="CIEL:160221" style="text"/>
                 </p>
             </div>
         </section>
@@ -603,7 +603,8 @@
                     </template>
                     <render concept="CIEL:139084" name="headache" label="Headache"/>
                     <render concept="CIEL:120345" name="disorientation" label="Disorientation / Confusion"/>
-                    <render concept="CIEL:152782" name="poor-concentration" label="Poor concentration and verbal skills"/>
+                    <render concept="CIEL:152782" name="poor-concentration"
+                            label="Poor concentration and verbal skills"/>
                     <render concept="CIEL:114362" name="paralysis" label="Paralysis"/>
                     <render concept="CIEL:121657" name="memory-loss" label="Memory loss"/>
                 </repeat>
@@ -662,7 +663,8 @@
                     </p>
                 </div>
             </div>
-            <br/><br/>
+            <br/>
+            <br/>
 
             <div class="two-columns">
                 <div>
@@ -685,7 +687,7 @@
                             <label>
                                 <uimessage code="pihcore.pregnancy.status"/>
                             </label>
-                            <obs conceptId="PIH:PATIENT PREGNANT" style="yes_no" />
+                            <obs conceptId="PIH:PATIENT PREGNANT" style="yes_no"/>
                         </includeIf>
                     </p>
 
@@ -711,7 +713,7 @@
                         </label>
 
                         <obs id="med-side-effects" conceptId="CIEL:165273" style="radio"
-                             answerConceptIds="PIH:YES,PIH:NO" />
+                             answerConceptIds="PIH:YES,PIH:NO"/>
                     </p>
 
                     <p class="list-inline">
@@ -727,7 +729,8 @@
                             <uimessage code="Next appointment date"/>
                         </label>
                         <span class="small">
-                            <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true" allowPastDates="false"
+                            <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true"
+                                 allowPastDates="false"
                                  required="true"/>
                         </span>
                     </p>
@@ -801,7 +804,8 @@
                                     <obs conceptId="PIH:Mental health medication"
                                          answerDrugId="{drug}"
                                          style="checkbox"
-                                         toggle="{id: '{name}-rx-details', style: 'hidden'}" class="medication-checkbox"/>
+                                         toggle="{id: '{name}-rx-details', style: 'hidden'}"
+                                         class="medication-checkbox"/>
                                 </td>
                             </tr>
                             <tr id="{name}-rx-details">
@@ -846,7 +850,7 @@
                     <render drug="23f2d94b-3072-4e86-b737-d5ccded81bc0" name="Haloperidol5mgt"/>
                     <render drug="a8541367-1eb0-4144-9cc7-41a909902d5d" name="Haloperidol5mgmLa"/>
                     <render drug="7db9cb29-855d-4a30-aa76-4b8059bee0d5" name="PhenobarbAmpule"/>
-                    <render drug="9a499fca-699e-4809-8175-732ef43d5c14" name="Phenobarb50mgt" />
+                    <render drug="9a499fca-699e-4809-8175-732ef43d5c14" name="Phenobarb50mgt"/>
                     <render drug="34dd5905-c28d-4cf8-8ebe-0b83e5093e17" name="PhenytoinNa100t"/>
                     <render drug="85c71cd3-b84d-4e3c-84f0-94ecc294510e" name="Risperidone2mgt"/>
                     <render drug="19e4dd0b-bd14-4c2b-ad3e-39ec8ea047d7" name="SodiumValproate200mgt"/>
