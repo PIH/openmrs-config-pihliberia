@@ -23,112 +23,112 @@
     <style type="text/css">
 
         #who-when-where {
-            margin-bottom: 6px;
-            border-bottom: 1px solid #ccc;
+        margin-bottom: 6px;
+        border-bottom: 1px solid #ccc;
         }
 
         #who-when-where p {
-            display: inline-block;
-            padding-right: 20px;
+        display: inline-block;
+        padding-right: 20px;
         }
 
         #where > input[type=text] {
-            display: inline-block;
+        display: inline-block;
         }
 
         .narrow {
-            width: 200px;
+        width: 200px;
         }
 
         .field-error {
-            color: #ff6666;
-            font-size: 1.1em;
-            display: block;
+        color: #ff6666;
+        font-size: 1.1em;
+        display: block;
         }
 
         .three-columns, .two-columns {
-            display: table;
-            height: 100%;
-            width: 100%;
+        display: table;
+        height: 100%;
+        width: 100%;
         }
 
         .two-columns > div {
-            display: table-cell;
-            width: 50%;
+        display: table-cell;
+        width: 50%;
         }
 
         .simple-form-ui input {
-            min-width: 80%
+        min-width: 80%
         }
 
         form fieldset {
-            min-width: 90%;
+        min-width: 90%;
         display: block;
         }
 
         .encounter-summary-container #calculated-ratio {
-            font-size: 1em;
-            font-weight: normal;
+        font-size: 1em;
+        font-weight: normal;
         }
 
         #encounterDate input {
-            min-width: 15%
+        min-width: 15%
         }
 
         .half-size-text {
-            color: #ff6666;
-            font-size: 50%;
-            display: block;
+        color: #ff6666;
+        font-size: 50%;
+        display: block;
         }
 
         .section-container {
-            background: #F2F2F2;
-            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-            padding: 10px 5px 10px 15px;
-            line-height: 1.5em; /*add this for vertical spacing between elements*/
+        background: #F2F2F2;
+        box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+        padding: 10px 5px 10px 15px;
+        line-height: 1.5em; /*add this for vertical spacing between elements*/
         }
 
         .section-container input[type="checkbox"] {
-            margin: 0px 5px; /*changed values to vertical, horizontal*/
-            top:5px; /*added to offset the checkbox position to line up*/
+        margin: 0px 5px; /*changed values to vertical, horizontal*/
+        top:5px; /*added to offset the checkbox position to line up*/
         }
 
         .section-container label { /*new definition to override labels inside section-containers*/
-            margin: 0px;
+        margin: 0px;
         }
 
         - .section {
-            width: 100%;
+        width: 100%;
         }
 
         textarea {
-            width: 95%;
+        width: 95%;
         }
 
         span.obs-field > select {
-            min-width: 0;
+        min-width: 0;
         }
 
         .list-inline label, .list-inline input[type="radio"], .list-inline span,
         .list-inline-wide label, .list-inline-wide input[type="radio"], .list-inline-wide span,
         .list-inline-extra-wide label, .list-inline-extra-wide input[type="radio"], .list-inline-extra-wide span {
-            display: inline-block;
-            float: none;
+        display: inline-block;
+        float: none;
         }
 
         .list-inline label:first-child {
-            width: 220px;
+        width: 220px;
         }
 
         .list-inline-wide label:first-child {
-            width: 320px;
+        width: 320px;
         }
 
         .list-inline-extra-wide label:first-child {
-            width: 420px;
+        width: 420px;
         }
         span.symptom-present {
-            float: right;
+        float: right;
         }
 
 
@@ -397,7 +397,7 @@
                     <label>
                         <uimessage code="Age of onset"/>
                     </label>
-                <obs conceptId="CIEL:159499" showUnits="true" />
+                    <obs conceptId="CIEL:159499" showUnits="true" />
                 </p>
                 <div class="two-columns">
                     <div>
@@ -431,20 +431,20 @@
 
 
                 <div>
-                        <label>General seizure type:</label>
-                        <repeat>
-                            <template>
-                                <obs conceptId="CIEL:161249" answerConceptId="{concept}"
-                                     style="checkbox" labelText="{label}" answerLabel=""/>
-                            </template>
-                            <render concept="CIEL:112356" label="Tonic"/>
-                            <render concept="CIEL:148223" label="Atonic"/>
-                            <render concept="CIEL:115424" label="Myoclonic"/>
-                            <render concept="CIEL:145044" label="Clonic"/>
-                            <render concept="CIEL:150525" label="Absence"/>
-                            <render concept="CIEL:120252" label="Complex Partial"/>
-                            <render concept="CIEL:123826" label="Unclassified"/>
-                        </repeat>
+                    <label>General seizure type:</label>
+                    <repeat>
+                        <template>
+                            <obs conceptId="CIEL:161249" answerConceptId="{concept}"
+                                 style="checkbox" labelText="{label}" answerLabel=""/>
+                        </template>
+                        <render concept="CIEL:112356" label="Tonic"/>
+                        <render concept="CIEL:148223" label="Atonic"/>
+                        <render concept="CIEL:115424" label="Myoclonic"/>
+                        <render concept="CIEL:145044" label="Clonic"/>
+                        <render concept="CIEL:150525" label="Absence"/>
+                        <render concept="CIEL:120252" label="Complex Partial"/>
+                        <render concept="CIEL:123826" label="Unclassified"/>
+                    </repeat>
                 </div>
             </div>
         </section>
@@ -526,7 +526,7 @@
                         </obsgroup>
                     </template>
                     <render concept="PIH:HEAD INJURY" name="head-injury" label="Trauma/Head injury"/>
-                   <render concept="CIEL:1625" name="history-seizure" label="Childhood history of seizures"/>
+                    <render concept="CIEL:1625" name="history-seizure" label="Childhood history of seizures"/>
                     <render concept="CIEL:226" name="neonatal-infection"
                             label="Neonatal infection/Cerebral Malaria/Meningitis"/>
                     <render concept="CIEL:156661" name="history-drugs" label="History of substance abuse"/>
@@ -608,10 +608,10 @@
                     <render concept="CIEL:121657" name="memory-loss" label="Memory loss"/>
                 </repeat>
 
-            <!-- Unused:
-                    <render concept="CIEL:156923" name="poor-vc-skills" label="Poor verbal or cognit. skills"/>
-                    <render concept="CIEL:165567" name="foaming-mouth" label="Foaming mouth"/>
-                    <render concept="CIEL:5978" name="nausea" label="Nausea"/> -->
+                <!-- Unused:
+                        <render concept="CIEL:156923" name="poor-vc-skills" label="Poor verbal or cognit. skills"/>
+                        <render concept="CIEL:165567" name="foaming-mouth" label="Foaming mouth"/>
+                        <render concept="CIEL:5978" name="nausea" label="Nausea"/> -->
 
             </div>
         </section>
@@ -627,7 +627,7 @@
                             <uimessage code="Seizure since last visit"/>
                         </label>
                         <br/>
-                       <obs conceptId="PIH:14680" style="radio"
+                        <obs conceptId="PIH:14680" style="radio"
                              answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"/>
                     </p>
                 </div>
@@ -700,7 +700,7 @@
                         <label>
                             <uimessage code="Missed a dose yesterday"/>
                         </label>
-                       <obs conceptId="PIH:14678" style="radio" answerConceptIds="PIH:YES,PIH:NO"/>
+                        <obs conceptId="PIH:14678" style="radio" answerConceptIds="PIH:YES,PIH:NO"/>
                     </p>
                 </div>
 
@@ -758,34 +758,25 @@
     </section>
     -->
 
-<<<<<<< HEAD
-    <!--Medication-->
-    <section id="mh-meds-v2" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-=======
     <ifMode mode="VIEW" include="false">
         <style>
             .doseInput select, .frequency select, .duration-unit select {
-                width: 100px;
+            width: 100px;
             }
 
             .route select {
-                width: 150px;
+            width: 150px;
             }
         </style>
     </ifMode>
 
     <!--Medication-->
     <section id="medication" sectionTag="fieldset" headerTag="legend" headerStyle="title"
->>>>>>> upstream/master
              headerCode="pihcore.visitNote.plan.medication">
         <div class="section-container">
 
             <!-- ToDo:  Introduce the new modelling in the next release -->
-<<<<<<< HEAD
-            <table style="table-layout:fixed">
-=======
             <table>
->>>>>>> upstream/master
                 <tr>
                     <th colspan="2">
                         <uimessage code="pihcore.visitNote.plan.dose"/>
@@ -810,10 +801,10 @@
                                     <obs conceptId="PIH:Mental health medication"
                                          answerDrugId="{drug}"
                                          style="checkbox"
-                                         toggle="{id: '{name}-rx-dose', style: 'dim'}" class="medication-checkbox"/>
+                                         toggle="{id: '{name}-rx-details', style: 'hidden'}" class="medication-checkbox"/>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="{name}-rx-details">
                                 <td id="{name}-rx-dose" align="right">
                                     <obs id="dose-{name}" class="doseInput" conceptId="CIEL:160856" placeholder="dose"/>
                                 </td>
@@ -854,17 +845,10 @@
                     <render drug="6241e56b-ec9c-4c5b-a79c-1ce6481b1acb" name="FolicAcid5mgt"/>
                     <render drug="23f2d94b-3072-4e86-b737-d5ccded81bc0" name="Haloperidol5mgt"/>
                     <render drug="a8541367-1eb0-4144-9cc7-41a909902d5d" name="Haloperidol5mgmLa"/>
-<<<<<<< HEAD
-                    <render drug="85c71cd3-b84d-4e3c-84f0-94ecc294510e" name="Risperidone2mgt"/>
-                    <render drug="7db9cb29-855d-4a30-aa76-4b8059bee0d5" name="PhenobarbAmpule"/>
-                    <render drug="9a499fca-699e-4809-8175-732ef43d5c14" name="Phenobarb50mgt" />
-                    <render drug="34dd5905-c28d-4cf8-8ebe-0b83e5093e17" name="PhenytoinNa100t"/>
-=======
                     <render drug="7db9cb29-855d-4a30-aa76-4b8059bee0d5" name="PhenobarbAmpule"/>
                     <render drug="9a499fca-699e-4809-8175-732ef43d5c14" name="Phenobarb50mgt" />
                     <render drug="34dd5905-c28d-4cf8-8ebe-0b83e5093e17" name="PhenytoinNa100t"/>
                     <render drug="85c71cd3-b84d-4e3c-84f0-94ecc294510e" name="Risperidone2mgt"/>
->>>>>>> upstream/master
                     <render drug="19e4dd0b-bd14-4c2b-ad3e-39ec8ea047d7" name="SodiumValproate200mgt"/>
 
 
