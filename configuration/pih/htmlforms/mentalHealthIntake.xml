@@ -906,25 +906,19 @@
             <div id="substance-section">
                 <repeat>
                     <template>
-                        <obsgroup groupingConceptId="PIH:14211">
+                        <obsgroup groupingConceptId="PIH:14211" showIfEmpty="false">
                             <div class="substance-row">
                                 <p id="substance-{name}-present" class="list-inline">
-                                    <label>
+                                    <strong>
                                         {label}
-                                    </label>
+                                    </strong>
                                     <obs id="substance-{name}"
                                          conceptId="{concept}" style="radio"
                                          answerConceptIds="CIEL:1090,CIEL:159452,CIEL:159450"
                                          answerCodes="Never,Not now,Currently using">
                                         <controls>
-                                            <when value="CIEL:159450"
-                                                  thenJavaScript="omrs.toggleExposureDurationField(1, 'substance-{name}-span')"/>
-                                            <when value="CIEL:159452"
-                                                  thenJavaScript="omrs.toggleExposureDurationField(1, 'substance-{name}-span')"/>
-                                            <when value="CIEL:1090"
-                                                  thenJavaScript="omrs.toggleExposureDurationField(0, 'substance-{name}-span')"/>
-                                            <when value="CIEL:1067"
-                                                  thenJavaScript="omrs.toggleExposureDurationField(0, 'substance-{name}-span')"/>
+                                            <when value="CIEL:159452" thenDisplay="#substance-{name}-span"/>
+                                            <when value="CIEL:159450" thenDisplay="#substance-{name}-span"/>
                                         </controls>
                                     </obs>
                                 </p>
@@ -978,10 +972,10 @@
                                         <obs id="substance-{name}-stop-attempt" conceptId="PIH:14215" style="radio"
                                              answerConceptIds="CIEL:1066,CIEL:1065">
                                             <controls>
-                                                <when value="CIEL:1065" thenDisplay="#why-stop-abuse" />
+                                                <when value="CIEL:1065" thenDisplay="#why-stop-{name}-abuse" />
                                             </controls>
                                         </obs>
-                                        <div id="why-stop-abuse">
+                                        <div id="why-stop-{name}-abuse">
                                             <label>
                                                 <uimessage code="if yes, why attempting to stop" />
                                             </label>
@@ -990,7 +984,7 @@
 
                                             <div class="two-columns">
                                                 <div>
-                                                    <label>When (attampt to stop)</label>
+                                                    <label>When (attempt to stop)</label>
                                                     <obs conceptId="PIH:14248"/>
                                                 </div>
                                                 <div>
