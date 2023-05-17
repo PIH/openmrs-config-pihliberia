@@ -519,7 +519,7 @@
     <section id="medications" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan.medication">
         <div class="section-container toggle">
-            
+
             <!-- ToDo:  Introduce new modelling in the next release -->
             <table>
                 <tr>
@@ -585,7 +585,7 @@
 
                     <!-- ToDo: Update with the full mental health list -->
                     <render drug="5edb194a-70bf-4fbf-b2ca-4dce586af7f3" name="Amitryptiline25mgt"/>
-                    <!--<render drug="d7a77d49-b68b-44aa-a12b-130c54cc20b2" name="Amitryptiline50mgt"/> -->
+                    <render drug="d7a77d49-b68b-44aa-a12b-130c54cc20b2" name="Amitryptiline50mgt"/>
                     <render drug="e371d811-d32c-4f6e-8493-2fa667b7b44c" name="Carbamazepine200mgt"/>
                     <render drug="e813bc3c-c035-4e17-a99b-d06a0bd4d3c3" name="Chlorpromazine100mgt"/>
                     <render drug="1ccbb8ee-a4c8-48a6-8ef2-f140c7145a92" name="Chlorpromazine100mgmLa"/>
