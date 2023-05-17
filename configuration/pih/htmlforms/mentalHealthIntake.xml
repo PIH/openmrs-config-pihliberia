@@ -761,7 +761,7 @@
             <div class="three-columns">
                 <div>
                     <p class="list-inline">
-                        <uimessage code="Condom use" />
+                        <uimessage code="Condom used" />
                         <obs conceptId="CIEL:1357" style="radio"
                              answerConceptIds="CIEL:1066,CIEL:1065" />
                     </p>
@@ -1547,19 +1547,6 @@
     <section id="medications" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan.medication">
         <div class="section-container">
-            <label>
-                <uimessage code="TBD - add these medications:" />
-            </label>
-
-            <div>
-                <sl>
-                    <li>Amitryptiline</li>
-                    <li>Chlorpromazine</li>
-                    <li>Fluoxetine</li>
-                    <li>Fluphenazine</li>
-                    <li>Imipramine</li>
-                </sl>
-            </div>
 
             <!-- ToDo:  Introduce new modelling in the next release -->
             <table>
@@ -1625,9 +1612,15 @@
                     </template>
 
                     <!-- ToDo: Update with the full mental health list -->
+                    <render drug="5edb194a-70bf-4fbf-b2ca-4dce586af7f3" name="Amitryptiline25mgt"/>
+                    <render drug="d7a77d49-b68b-44aa-a12b-130c54cc20b2" name="Amitryptiline50mgt"/>
                     <render drug="e371d811-d32c-4f6e-8493-2fa667b7b44c" name="Carbamazepine200mgt"/>
+                    <render drug="e813bc3c-c035-4e17-a99b-d06a0bd4d3c3" name="Chlorpromazine100mgt"/>
+                    <render drug="1ccbb8ee-a4c8-48a6-8ef2-f140c7145a92" name="Chlorpromazine100mgmLa"/>
                     <render drug="39d7a7ee-b0ff-48e0-a7ca-685688147c8f" name="Diazepam5mgt"/>
                     <render drug="923e3e90-8b5c-4ae6-b17f-b6d547803437" name="Diazepam5mgmLa"/>
+                    <render drug="6e3148dd-c2e3-4947-b014-a63fa623d644" name="Fluphenazine25mgLa"/>
+                    <render drug="7f7178bd-a1f8-44dd-85a9-02e49065e56b" name="Fluoxetine20mgt"/>
                     <render drug="6241e56b-ec9c-4c5b-a79c-1ce6481b1acb" name="FolicAcid5mgt"/>
                     <render drug="23f2d94b-3072-4e86-b737-d5ccded81bc0" name="Haloperidol5mgt"/>
                     <render drug="a8541367-1eb0-4144-9cc7-41a909902d5d" name="Haloperidol5mgmLa"/>
@@ -1638,14 +1631,6 @@
                     <render drug="19e4dd0b-bd14-4c2b-ad3e-39ec8ea047d7" name="SodiumValproate200mgt"/>
                 </repeat>
             </table>
-
-            <!-- ToDo:  Add these drugs
-                <render concept="PIH:AMITRYPTILINE" name="Amitryptiline"/>
-                <render concept="PIH:CHLORPROMAZINE" name="Chlorpromazine"/>
-                <render concept="PIH:FLUOXETINE" name="Fluoxetine"/>
-                <render concept="PIH:FLUPHENAZINE" name="Fluphenazine"/>
-                <render concept="PIH:IMIPRAMINE" name="Imipramine"/>
-            -->
 
             <br/>
             <p>
