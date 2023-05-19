@@ -395,12 +395,12 @@
                             <obs conceptId="CIEL:161249" answerConceptId="{concept}"
                                  style="checkbox" labelText="{label}" answerLabel=""/>
                         </template>
+                        <render concept="CIEL:150525" label="Absence"/>
                         <render concept="CIEL:112356" label="Tonic"/>
                         <render concept="CIEL:148223" label="Atonic"/>
                         <render concept="CIEL:115424" label="Myoclonic"/>
                         <render concept="CIEL:145044" label="Clonic"/>
-                        <render concept="CIEL:150525" label="Absence"/>
-                        <render concept="CIEL:120252" label="Complex Partial"/>
+                        <!-- <render concept="CIEL:120252" label="Complex Partial"/> -->
                         <render concept="CIEL:123826" label="Unclassified"/>
                     </repeat>
                 </div>

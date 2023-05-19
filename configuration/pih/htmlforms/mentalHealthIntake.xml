@@ -761,7 +761,9 @@
             <div class="three-columns">
                 <div>
                     <p class="list-inline">
-                        <uimessage code="Condom used" />
+                        <uimessage code="Condom use (past)" />
+                        <br/>
+>>>>>>> upstream/master
                         <obs conceptId="CIEL:1357" style="radio"
                              answerConceptIds="CIEL:1066,CIEL:1065" />
                     </p>
@@ -775,8 +777,12 @@
                     </p>
                 </div>
                 <div>
-                    <uimessage code="Condoms now" />
-                    <!-- ToDo: Ask Funke:  Do they have condoms?  Do they give them condoms? -->
+                    <p class="list-inline">
+                        <uimessage code="Condoms now (currently)" />
+                        <br/>
+                        <obs conceptId="PIH:14696" style="radio"
+                             answerConceptIds="CIEL:1066,CIEL:1065" />
+                    </p>
                 </div>
             </div>
 
@@ -1746,12 +1752,7 @@
                 <div id="disposition">
                     <encounterDisposition/>
                 </div>
-                <label>
-                    <uimessage code="Disposition comments"/>
-                </label>
-                <obs conceptId="PIH:DISPOSITION COMMENTS" style="text"/>
             </div>
-            <br/><br/>
 
             <p>
                 <label class="inline">
