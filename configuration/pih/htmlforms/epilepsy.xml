@@ -338,22 +338,30 @@
     <enrollInProgram programId="Mental Health"/>
 
     <!-- The form -->
-  <!--  <div class="section-container">
-        <p class="list-inline">
-            <obs id="intake-or-followup" conceptId="CIEL:164181" style="checkbox"
-                 answerConceptId="CIEL:164180"
-                 answerCode="Show header">
-                <controls>
-                    <when value="CIEL:164180"
-                          thenJavaScript="jq('#intake-only').show(); jq('#obgyn-initial-div').hide();"
-                          elseJavaScript="jq('#intake-only').hide();"/>
-                </controls>
-            </obs>
-        </p>
-    </div> -->
+    <section id="general" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Visit">
+        <div class="section-container">
+            <p class="list-inline">
+                <obs id="intake-or-followup"  conceptId="CIEL:164181" style="radio"
+                     answerConceptIds="CIEL:164180,PIH:7383"
+                     answerCodes="First epilepsy visit,Follow-up visit"
+                     required="true">
+                    <controls>
+                        <when value="CIEL:164180"
+                              thenJavaScript="jq('#intake-only').show(); jq('#obgyn-initial-div').hide();"
+                              elseJavaScript="jq('#intake-only').hide();"/>
+                        <when value="PIH:7383"
+                              thenJavaScript="jq('#epi-initial-div').show(); jq('#epi-section').hide();"
+                              elseJavaScript="jq('#epi-initial-div').hide(); jq('#epi-section').show();"/>
+                    </controls>
+                </obs>
+            </p>
+        </div>
+    </section>
 
+    <div id="intake-only" class="hidden">
         <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="Patient overview">
+                 headerCode="Epilepsy visit overview">
             <div class="section-container">
                 <!-- ToDo: Add condition for epilepsy along with date -->
                 
@@ -374,7 +382,13 @@
                         <obs conceptId="CIEL:159499" showUnits="true"/>
                     </div>
                 </div>
-                <br/>
+            </div>
+            </section>
+            </div>
+
+    <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Patient overview">
+        <div class="section-container">
 
                 <p id="ep-focal" class="list-inline-extra-wide">
                     <label>
@@ -406,6 +420,7 @@
                 </div>
             </div>
         </section>
+
 
         <section id="complications" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="Complications">
