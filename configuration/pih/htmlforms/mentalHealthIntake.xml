@@ -1220,7 +1220,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>SCREENING TOOLS
 
     <section id="mh-suicide" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.mentalhealth.suicideEval">

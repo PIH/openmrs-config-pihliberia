@@ -26,48 +26,48 @@
     <style type="text/css">
 
         #who-when-where {
-            margin-bottom: 6px;
-            border-bottom: 1px solid #ccc;
+        margin-bottom: 6px;
+        border-bottom: 1px solid #ccc;
         }
 
         #who-when-where p {
-            display: inline-block;
-            padding-right: 20px;
+        display: inline-block;
+        padding-right: 20px;
         }
 
         #where > input[type=text] {
-            display: inline-block;
+        display: inline-block;
         }
 
         .narrow {
-            width: 200px;
+        width: 200px;
         }
 
         .field-error {
-            color: #ff6666;
-            font-size: 1.1em;
-            display: block;
+        color: #ff6666;
+        font-size: 1.1em;
+        display: block;
         }
 
         .two-columns-old {
-            column-count: 2;
-            -webkit-column-count: 2;
-            -moz-column-count: 2;
+        column-count: 2;
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
         }
 
         .five-columns, .four-columns, .three-columns, .two-columns {
-            display: table;
-            height: 100%;
-            width: 100%;
+        display: table;
+        height: 100%;
+        width: 100%;
         }
 
         .two-columns > div {
-            display: table-cell;
-            width: 50%;
+        display: table-cell;
+        width: 50%;
         }
 
         .side-by-side label {
-            display: inline-block;
+        display: inline-block;
         }
 
         .simple-form-ui input {
@@ -115,7 +115,7 @@
         margin: 0px;
         }
 
-       - .section {
+        - .section {
         width: 100%;
         }
 
@@ -124,42 +124,42 @@
         }
 
         span.obs-field > select {
-            min-width: 0;
+        min-width: 0;
         }
 
         .mh-intervention {
-            -webkit-column-count: 1;
-            -moz-column-count: 1;
-            column-count: 1;
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
         }
 
         .list-inline label, .list-inline input[type="radio"], .list-inline span{
-            display: inline-block;
-            float: none;
+        display: inline-block;
+        float: none;
         }
 
         .list-inline label:first-child {
-            width: 220px;
+        width: 220px;
         }
 
         span.symptom-present {
-            float: right;
+        float: right;
         }
 
         #data-collection {
-            display: inline-block;
-            width: 58%;
-            vertical-align: top;
+        display: inline-block;
+        width: 58%;
+        vertical-align: top;
         }
 
         #encounter-diagnoses-target {
-            display: inline-block;
-            width: 40%;
-            vertical-align: top;
+        display: inline-block;
+        width: 40%;
+        vertical-align: top;
         }
 
         #encounter-diagnoses-app {
-            margin-bottom: 20px;
+        margin-bottom: 20px;
         }
 
     </style>
@@ -167,15 +167,15 @@
     <ifMode mode="VIEW">
         <style type="text/css">
             .collapsible {
-                display: block !important;
+            display: block !important;
             }
 
             .collapsible-inline {
-                display: inline-block !important;
+            display: inline-block !important;
             }
 
             .icon-arrow-down, .icon-arrow-up {
-                display: none;
+            display: none;
             }
         </style>
     </ifMode>
@@ -185,48 +185,50 @@
 
             jq(function() {
 
-                // return appointment date can never be before encounter date
-                var setMinReturnVisitDate = function () {
+            // return appointment date can never be before encounter date
+            var setMinReturnVisitDate = function () {
 
-                    var returnVisitDate = getValue('return-visit-date.value');
+            var returnVisitDate = getValue('return-visit-date.value');
 
-                    getField('return-visit-date.value').datepicker('option', 'minDate', getField('encounterDate.value').datepicker('getDate'));
+            getField('return-visit-date.value').datepicker('option', 'minDate',
+            getField('encounterDate.value').datepicker('getDate'));
 
-                    if (returnVisitDate  &amp;&amp; returnVisitDate != getValue('return-visit-date.value')) {
-                        setValue('return-visit-date.value','');  // reset return visit date if change to encounter date makes it invalid
-                        alert('<uimessage code="pihcore.mentalhealth.returnVisitDateResetWarning"/>');
-                    }
-                }
+            if (returnVisitDate &amp;&amp; returnVisitDate != getValue('return-visit-date.value')) {
+            setValue('return-visit-date.value',''); // reset return visit date if change to encounter date makes it
+            invalid
+            alert('<uimessage code="pihcore.mentalhealth.returnVisitDateResetWarning"/>');
+            }
+            }
 
-                getField('encounterDate.value').change(setMinReturnVisitDate);
+            getField('encounterDate.value').change(setMinReturnVisitDate);
 
-                setMinReturnVisitDate();
+            setMinReturnVisitDate();
 
-                jq('.medication-checkbox > input:checkbox').each(function(idx, it){
-                    if(jq(it).not(':checked')){
-                        jq(it).closest("td").siblings().find(":input").each(function(i, el){
-                            jq(el).attr("disabled", "disabled");
-                        });
-                    }
+            jq('.medication-checkbox > input:checkbox').each(function(idx, it){
+            if(jq(it).not(':checked')){
+            jq(it).closest("td").siblings().find(":input").each(function(i, el){
+            jq(el).attr("disabled", "disabled");
+            });
+            }
 
-                    jq(it).change(function(){
-                        if(jq(this).is(':checked')){
-                            jq(this).closest("td").siblings().find(":input").each(function(i, el){
-                                jq(el).removeAttr("disabled");
-                            });
-                        } else {
-                            jq(this).closest("td").siblings().find(":input").each(function(i, el){
-                                jq(el).val('').attr("disabled", "disabled");
-                            });
-                        }
-                    });
-                });
+            jq(it).change(function(){
+            if(jq(this).is(':checked')){
+            jq(this).closest("td").siblings().find(":input").each(function(i, el){
+            jq(el).removeAttr("disabled");
+            });
+            } else {
+            jq(this).closest("td").siblings().find(":input").each(function(i, el){
+            jq(el).val('').attr("disabled", "disabled");
+            });
+            }
+            });
+            });
 
-                jq('#phq9Score > input:text').attr('placeholder', '0-27');
-                jq('#whodasScore > input:text').attr('placeholder', '0-100');
-                jq('#cageScore > input:text').attr('placeholder', '0-4');
-                jq('#gadScore > input:text').attr('placeholder', '0-21');
-                jq('#cgiEScore16 > input:text').attr('placeholder', '0-16');
+            jq('#phq9Score > input:text').attr('placeholder', '0-27');
+            jq('#whodasScore > input:text').attr('placeholder', '0-100');
+            jq('#cageScore > input:text').attr('placeholder', '0-4');
+            jq('#gadScore > input:text').attr('placeholder', '0-21');
+            jq('#cgiEScore16 > input:text').attr('placeholder', '0-16');
             });
 
         </script>
@@ -322,7 +324,8 @@
 
         </includeIf>
         <!-- all users that don't have either retro privilege, or those with retro-this-provider-only but with an active visit, can only edit location -->
-        <includeIf velocityTest="(!$user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote')) or ($user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote') and $visit.open)">
+        <includeIf
+                velocityTest="(!$user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote')) or ($user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote') and $visit.open)">
             <div style="display:none">
                 <encounterProviderAndRole default="currentUser" encounterRole="4f10ad1a-ec49-48df-98c7-1391c6ac7f05"
                                           required="true"/>
@@ -344,7 +347,8 @@
                                 <uimessage code="emr.locationRequired"/>
                             </label>
                             <span>
-                                <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Consult Note Location"/>
+                                <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
+                                                   tags="Consult Note Location"/>
                             </span>
                         </td>
                         <td>
@@ -366,285 +370,308 @@
 
     <section id="hospital" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Hospitalization">
-        <div class="list-inline section-container">
-            <label>
-                <uimessage code="pihcore.ncd.plan.hospitalized"/>
-            </label>
-            <obs conceptId="PIH:PATIENT HOSPITALIZED SINCE LAST VISIT" answerConceptIds="PIH:YES,PIH:NO"
-                 style="radio" answerSeparator=""/>
-        </div>
-    </section>
-
-    <section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Screening tools">
         <div class="section-container">
-            <div class="two-columns">
-                <div>
-
-                    <p>
-                        <label>
-                            <uimessage code="pihcore.ncd.mental.phq9Score"/> (0-27) for depression:
-                        </label>
-                        <span class="small">
-                            <obs id="phq9Score" conceptId="CIEL:165137"/>
-                        </span>
-                    </p>
-
-                    <p>
-                        <label>
-                            <uimessage code="WHODAS Score"/> (0-100):
-                        </label>
-                        <span class="small">
-                            <obs id="whodasScore" conceptId="CIEL:163226"/>
-                        </span>
-                    </p>
-
-                </div>
-            </div>
 
             <p class="list-inline">
                 <label>
-                    <uimessage code="CGI"/>:
+                    <uimessage code="pihcore.ncd.plan.hospitalized"/>
                 </label>
-                <br/>
-                <span>
-                    <!-- Using concept for CGI-E with 0-16 range -->
-                    <obs id="cgiEScore16" conceptId="PIH:14670" />
+                <obs conceptId="PIH:PATIENT HOSPITALIZED SINCE LAST VISIT" answerConceptIds="PIH:YES,PIH:NO"
+                     style="radio" answerSeparator=""/>
+            </p>
+
+            <p class="list-inline">
+                <label>
+                    Last date of hospitalization
+                </label>
+                <span class="medium">
+                <obs conceptId="PIH:12602" labelText=""/>
                 </span>
             </p>
-        </div>
-    </section>
-
-    <!-- This include will be changed to wrap pregnancy when other exams are added to this section -->
-    <includeIf velocityTest="$patient.gender == 'F' ">
-        <section id="mh_exams" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="pihcore.exam.general_exam.title">
-            <div class="section-container">
-                <p>
-                    <obs labelCode="pihcore.pregnancy.status" conceptId="PIH:PATIENT PREGNANT" style="checkbox"/>
-                </p>
-            </div>
-        </section>
-    </includeIf>
 
 
-    <section id="mh_habits" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.habits">
-        <div class="section-container">
+    </div>
+</section>
 
-            <p class="list-inline">
-                <label>
-                    <uimessage code="pihcore.habits.alcohol"/>
-                </label>
-                <obs conceptId="PIH:HISTORY OF ALCOHOL USE"
-                     answerConceptIds="PIH:YES,PIH:NO"
-                     style="radio" answerSeparator=""/>
-            </p>
+<section id="mh_scores" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+         headerCode="Screening tools">
+<div class="section-container">
+    <div class="two-columns">
+        <div>
 
-            <p class="list-inline">
-                <label>
-                    <uimessage code="pihcore.habits.drugs"/>
-                </label>
-                <obs conceptId="PIH:HISTORY OF ILLEGAL DRUGS"
-                     answerConceptIds="PIH:YES,PIH:NO"
-                     style="radio" answerSeparator=""/>
-            </p>
-
-        </div>
-    </section>
-
-    <section id="diagnosis-area" sectionTag="fieldset" headerTag="legend"
-             headerStyle="title" headerCode="Diagnoses">
-        <div class="section-container">
-            <div class="two-columns">
-                <div>
-                    <repeat>
-                        <template>
-                            <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
-                              answerConceptId="{concept}" answerCode="{name}"  />
-                            </obsgroup>
-                        </template>
-                        <render concept="CIEL:115924" name="Bipolar disorder (mania)" />
-                        <render concept="CIEL:119541" name="Bipolar disorder (depressive)" />
-                        <render concept="CIEL:119566" name="Dementia" />
-                        <render concept="CIEL:121725" name="Alcohol abuse" />
-                        <render concept="CIEL:112603" name="Substance abuse (drugs)" />
-                        <render concept="CIEL:155"    name="Epilepsy" />
-                        <render concept="CIEL:137668" name="Behavioral disorder" />
-                        <render concept="PIH:14629"   name="Emotional disorder" />
-                     </repeat>
-                </div>
-                <div>
-                    <repeat>
-                        <template>
-                            <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
-                                     answerConceptId="{concept}" answerCode="{name}" />
-                            </obsgroup>
-                        </template>
-                        <render concept="CIEL:121303" name="Developmental disorder (ASD)" />
-                        <render concept="CIEL:156923" name="Developmental disorder (ITLD)" />
-                        <render concept="CIEL:160197" name="Psychosomatic disorder" />
-                        <render concept="CIEL:139545" name="General anxiety (GAD)" />
-                        <render concept="CIEL:113881" name="PTSD" />
-                        <render concept="CIEL:130966" name="Panic disorder" />
-                        <render concept="CIEL:119537" name="Depression" />
-                        <render concept="CIEL:113517" name="Psychosis" />
-                        <render concept="CIEL:113155" name="Schizophrenia" />
-                    </repeat>
-                </div>
-            </div>
-
-            <div id="data-collection">
-                <strong>Other diagnoses</strong>
-                <encounterDiagnosesByObs selectedDiagnosesTarget="#encounter-diagnoses-target"/>
-            </div>
-        </div>
-    </section>
-
-    <ifMode mode="VIEW" include="false">
-        <style>
-            .doseInput select, .frequency select, .duration-unit select {
-                width: 100px;
-            }
-
-            .route select {
-                width: 150px;
-            }
-        </style>
-    </ifMode>
-
-    <!--Medication-->
-    <section id="medications" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.visitNote.plan.medication">
-        <div class="section-container toggle">
-
-            <!-- ToDo:  Introduce new modelling in the next release -->
-            <table>
-                <tr>
-                    <th colspan="2">
-                        <uimessage code="pihcore.visitNote.plan.dose"/>
-                    </th>
-                    <th>
-                        <uimessage code="pihcore.visitNote.plan.frequency"/>
-                    </th>
-                    <th colspan="2">
-                        <uimessage code="pihcore.visitNote.plan.duration"/>
-                    </th>
-                    <th>
-                        <uimessage code="pihcore.drug.route"/>
-                    </th>
-                </tr>
-
-                <repeat>
-                    <template>
-                        <obsgroup groupingConceptId="PIH:Prescription construct" showIfEmpty="false">
-                            <tr>
-                                <td id="{name}-rx" colspan="6">
-                                    <obs conceptId="PIH:Mental health medication"
-                                         answerDrugId="{drug}"
-                                         style="checkbox"
-                                         toggle="{id: '{name}-rx-details', style: 'hidden'}" class="medication-checkbox"/>
-                                </td>
-                            </tr>
-                            <tr id="{name}-rx-details">
-                                <td id="{name}-rx-dose" align="right">
-                                    <obs id="dose-{name}" class="doseInput" conceptId="CIEL:160856" placeholder="dose"/>
-                                </td>
-                                <td id="{name}-rx-dose-unit">
-                                    <obs id="doseUnit-{name}" class="doseInput select-arrow" placeholder="unit"
-                                         conceptId="PIH:Dosing units coded"
-                                         answerConceptIds="CIEL:161553,CIEL:161554,CIEL:1513"
-                                         answerCodes="mg,g,tablet"/>
-                                    <!-- capsule, ampule, bottle, vial, mL -->
-                                </td>
-                                <td id="{name}-rx-frequency">
-                                    <obs id="frequencyCoded-{name}" class="frequency select-arrow"
-                                         conceptId="PIH:Drug frequency for HUM"
-                                         answerConceptIds=
-                                                 "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:OM,PIH:ON"
-                                         answerCodes="OD,BID,TID,QID,OM,ON"/>
-                                </td>
-                                <td id="{name}-rx-duration" align="right">
-                                    <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
-                                </td>
-                                <td id="{name}-rx-duration-unit">
-                                    <obs id="durationUnit-{name}" class="duration-unit select-arrow"
-                                         conceptId="PIH:TIME UNITS"
-                                         answerConceptIds="PIH:Days,PIH:1073,PIH:Months"/>
-                                </td>
-                                <td id="{name}-rx-route">
-                                    <obs id="route-{name}" class="route select-arrow"
-                                         conceptId="PIH:12651"
-                                         answerConceptIds="CIEL:160240,CIEL:160242,CIEL:160243"/>
-                                </td>
-                            </tr>
-                        </obsgroup>
-                    </template>
-
-                    <!-- ToDo: Update with the full mental health list -->
-                    <render drug="5edb194a-70bf-4fbf-b2ca-4dce586af7f3" name="Amitryptiline25mgt"/>
-                    <render drug="d7a77d49-b68b-44aa-a12b-130c54cc20b2" name="Amitryptiline50mgt"/>
-                    <render drug="e371d811-d32c-4f6e-8493-2fa667b7b44c" name="Carbamazepine200mgt"/>
-                    <render drug="e813bc3c-c035-4e17-a99b-d06a0bd4d3c3" name="Chlorpromazine100mgt"/>
-                    <render drug="1ccbb8ee-a4c8-48a6-8ef2-f140c7145a92" name="Chlorpromazine100mgmLa"/>
-                    <render drug="39d7a7ee-b0ff-48e0-a7ca-685688147c8f" name="Diazepam5mgt"/>
-                    <render drug="923e3e90-8b5c-4ae6-b17f-b6d547803437" name="Diazepam5mgmLa"/>
-                    <render drug="6e3148dd-c2e3-4947-b014-a63fa623d644" name="Fluphenazine25mgLa"/>
-                    <render drug="7f7178bd-a1f8-44dd-85a9-02e49065e56b" name="Fluoxetine20mgt"/>
-                    <render drug="6241e56b-ec9c-4c5b-a79c-1ce6481b1acb" name="FolicAcid5mgt"/>
-                    <render drug="23f2d94b-3072-4e86-b737-d5ccded81bc0" name="Haloperidol5mgt"/>
-                    <render drug="a8541367-1eb0-4144-9cc7-41a909902d5d" name="Haloperidol5mgmLa"/>
-                    <render drug="85c71cd3-b84d-4e3c-84f0-94ecc294510e" name="Risperidone2mgt"/>
-                    <render drug="7db9cb29-855d-4a30-aa76-4b8059bee0d5" name="PhenobarbAmpule"/>
-                    <render drug="9a499fca-699e-4809-8175-732ef43d5c14" name="Phenobarb50mgt" />
-                    <render drug="34dd5905-c28d-4cf8-8ebe-0b83e5093e17" name="PhenytoinNa100t"/>
-                    <render drug="19e4dd0b-bd14-4c2b-ad3e-39ec8ea047d7" name="SodiumValproate200mgt"/>
-                </repeat>
-            </table>
-
-            <br/>
             <p>
                 <label>
-                    <uimessage code="pihcore.exam.comment"/>:
+                    <uimessage code="pihcore.ncd.mental.phq9Score"/>
+                    (0-27) for depression:
                 </label>
-                <obs conceptId="PIH:Medication comments (text)" style="textarea"/>
+                <span class="small">
+                    <obs id="phq9Score" conceptId="CIEL:165137"/>
+                </span>
             </p>
 
-            <p class="list-inline">
+            <p>
                 <label>
-                    <uimessage code="pihcore.medication.side.effects"/>
+                    <uimessage code="WHODAS Score"/>
+                    (0-100):
                 </label>
-
-                <obs id="med-side-effects" conceptId="CIEL:165273" style="radio"
-                     answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" >
-                    <controls>
-                        <when value="PIH:YES" thenDisplay = "#side-effect-section"/>
-                    </controls>
-                </obs>
-            </p>
-
-            <p id="side-effect-section">
-                <obs  id="" conceptId="CIEL:164377" style="textarea"/>
+                <span class="small">
+                    <obs id="whodasScore" conceptId="CIEL:163226"/>
+                </span>
             </p>
 
         </div>
-    </section>
+    </div>
 
-    <!-- mental health interventions -->
-    <section id="mh-interventions" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.mentalhealth.interventions">
-        <div class="section-container">
-            <obs id="intervene" conceptId="PIH:14627" style="checkbox"
-                 answerConceptId="CIEL:1065" answerLabel="Interventions" >
-                <controls>
-                    <when value="CIEL:1065" thenDisplay="#show-interventions" />
-                </controls>
-            </obs>
+    <p class="list-inline">
+        <label>
+            <uimessage code="CGI"/>:
+        </label>
+        <br/>
+        <span>
+            <!-- Using concept for CGI-E with 0-16 range -->
+            <obs id="cgiEScore16" conceptId="PIH:14670"/>
+        </span>
+    </p>
+</div>
+</section>
 
-            <div id="show-interventions" class="two-columns-old">
-                <repeat with="
+        <!-- This include will be changed to wrap pregnancy when other exams are added to this section -->
+<includeIf velocityTest="$patient.gender == 'F' ">
+<section id="mh_exams" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+         headerCode="pihcore.exam.general_exam.title">
+    <div class="section-container">
+        <p>
+            <obs labelCode="pihcore.pregnancy.status" conceptId="PIH:PATIENT PREGNANT" style="checkbox"/>
+        </p>
+    </div>
+</section>
+</includeIf>
+
+
+<section id="mh_habits" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+         headerCode="pihcore.habits">
+<div class="section-container">
+
+    <p class="list-inline">
+        <label>
+            <uimessage code="pihcore.habits.alcohol"/>
+        </label>
+        <obs conceptId="PIH:HISTORY OF ALCOHOL USE"
+             answerConceptIds="PIH:YES,PIH:NO"
+             style="radio" answerSeparator=""/>
+    </p>
+
+    <p class="list-inline">
+        <label>
+            <uimessage code="pihcore.habits.drugs"/>
+        </label>
+        <obs conceptId="PIH:HISTORY OF ILLEGAL DRUGS"
+             answerConceptIds="PIH:YES,PIH:NO"
+             style="radio" answerSeparator=""/>
+    </p>
+
+</div>
+</section>
+
+<section id="diagnosis-area" sectionTag="fieldset" headerTag="legend"
+         headerStyle="title" headerCode="Diagnoses">
+<div class="section-container">
+    <div class="two-columns">
+        <div>
+            <repeat>
+                <template>
+                    <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                        <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
+                             answerConceptId="{concept}" answerCode="{name}"/>
+                    </obsgroup>
+                </template>
+                <render concept="CIEL:115924" name="Bipolar disorder (mania)"/>
+                <render concept="CIEL:119541" name="Bipolar disorder (depressive)"/>
+                <render concept="CIEL:119566" name="Dementia"/>
+                <render concept="CIEL:121725" name="Alcohol abuse"/>
+                <render concept="CIEL:112603" name="Substance abuse (drugs)"/>
+                <render concept="CIEL:155" name="Epilepsy"/>
+                <render concept="CIEL:137668" name="Behavioral disorder"/>
+                <render concept="PIH:14629" name="Emotional disorder"/>
+            </repeat>
+        </div>
+        <div>
+            <repeat>
+                <template>
+                    <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                        <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
+                             answerConceptId="{concept}" answerCode="{name}"/>
+                    </obsgroup>
+                </template>
+                <render concept="CIEL:121303" name="Developmental disorder (ASD)"/>
+                <render concept="CIEL:156923" name="Developmental disorder (ITLD)"/>
+                <render concept="CIEL:160197" name="Psychosomatic disorder"/>
+                <render concept="CIEL:139545" name="General anxiety (GAD)"/>
+                <render concept="CIEL:113881" name="PTSD"/>
+                <render concept="CIEL:130966" name="Panic disorder"/>
+                <render concept="CIEL:119537" name="Depression"/>
+                <render concept="CIEL:113517" name="Psychosis"/>
+                <render concept="CIEL:113155" name="Schizophrenia"/>
+            </repeat>
+        </div>
+    </div>
+
+    <div id="data-collection">
+        <strong>Other diagnoses</strong>
+        <encounterDiagnosesByObs selectedDiagnosesTarget="#encounter-diagnoses-target"/>
+    </div>
+</div>
+</section>
+
+<ifMode mode="VIEW" include="false">
+<style>
+    .doseInput select, .frequency select, .duration-unit select {
+    width: 100px;
+    }
+
+    .route select {
+    width: 150px;
+    }
+</style>
+</ifMode>
+
+        <!--Medication-->
+<section id="medications" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+         headerCode="pihcore.visitNote.plan.medication">
+<div class="section-container toggle">
+
+    <!-- ToDo:  Introduce new modelling in the next release -->
+    <table>
+        <tr>
+            <th colspan="2">
+                <uimessage code="pihcore.visitNote.plan.dose"/>
+            </th>
+            <th>
+                <uimessage code="pihcore.visitNote.plan.frequency"/>
+            </th>
+            <th colspan="2">
+                <uimessage code="pihcore.visitNote.plan.duration"/>
+            </th>
+            <th>
+                <uimessage code="pihcore.drug.route"/>
+            </th>
+        </tr>
+
+        <repeat>
+            <template>
+                <obsgroup groupingConceptId="PIH:Prescription construct" showIfEmpty="false">
+                    <tr>
+                        <td id="{name}-rx" colspan="6">
+                            <obs conceptId="PIH:Mental health medication"
+                                 answerDrugId="{drug}"
+                                 style="checkbox"
+                                 toggle="{id: '{name}-rx-details', style: 'hidden'}" class="medication-checkbox"/>
+                        </td>
+                    </tr>
+                    <tr id="{name}-rx-details">
+                        <td id="{name}-rx-dose" align="right">
+                            <obs id="dose-{name}" class="doseInput" conceptId="CIEL:160856" placeholder="dose"/>
+                        </td>
+                        <td id="{name}-rx-dose-unit">
+                            <obs id="doseUnit-{name}" class="doseInput select-arrow" placeholder="unit"
+                                 conceptId="PIH:Dosing units coded"
+                                 answerConceptIds="CIEL:161553,CIEL:161554,CIEL:1513"
+                                 answerCodes="mg,g,tablet"/>
+                            <!-- capsule, ampule, bottle, vial, mL -->
+                        </td>
+                        <td id="{name}-rx-frequency">
+                            <obs id="frequencyCoded-{name}" class="frequency select-arrow"
+                                 conceptId="PIH:Drug frequency for HUM"
+                                 answerConceptIds=
+                                         "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:OM,PIH:ON"
+                                 answerCodes="OD,BID,TID,QID,OM,ON"/>
+                        </td>
+                        <td id="{name}-rx-duration" align="right">
+                            <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
+                        </td>
+                        <td id="{name}-rx-duration-unit">
+                            <obs id="durationUnit-{name}" class="duration-unit select-arrow"
+                                 conceptId="PIH:TIME UNITS"
+                                 answerConceptIds="PIH:Days,PIH:1073,PIH:Months"/>
+                        </td>
+                        <td id="{name}-rx-route">
+                            <obs id="route-{name}" class="route select-arrow"
+                                 conceptId="PIH:12651"
+                                 answerConceptIds="CIEL:160240,CIEL:160242,CIEL:160243"/>
+                        </td>
+                    </tr>
+                </obsgroup>
+            </template>
+
+            <!-- ToDo: Update with the full mental health list -->
+            <render drug="5edb194a-70bf-4fbf-b2ca-4dce586af7f3" name="Amitryptiline25mgt"/>
+            <render drug="d7a77d49-b68b-44aa-a12b-130c54cc20b2" name="Amitryptiline50mgt"/>
+            <render drug="e371d811-d32c-4f6e-8493-2fa667b7b44c" name="Carbamazepine200mgt"/>
+            <render drug="e813bc3c-c035-4e17-a99b-d06a0bd4d3c3" name="Chlorpromazine100mgt"/>
+            <render drug="1ccbb8ee-a4c8-48a6-8ef2-f140c7145a92" name="Chlorpromazine100mgmLa"/>
+            <render drug="39d7a7ee-b0ff-48e0-a7ca-685688147c8f" name="Diazepam5mgt"/>
+            <render drug="923e3e90-8b5c-4ae6-b17f-b6d547803437" name="Diazepam5mgmLa"/>
+            <render drug="6e3148dd-c2e3-4947-b014-a63fa623d644" name="Fluphenazine25mgLa"/>
+            <render drug="7f7178bd-a1f8-44dd-85a9-02e49065e56b" name="Fluoxetine20mgt"/>
+            <render drug="6241e56b-ec9c-4c5b-a79c-1ce6481b1acb" name="FolicAcid5mgt"/>
+            <render drug="23f2d94b-3072-4e86-b737-d5ccded81bc0" name="Haloperidol5mgt"/>
+            <render drug="a8541367-1eb0-4144-9cc7-41a909902d5d" name="Haloperidol5mgmLa"/>
+            <render drug="85c71cd3-b84d-4e3c-84f0-94ecc294510e" name="Risperidone2mgt"/>
+            <render drug="7db9cb29-855d-4a30-aa76-4b8059bee0d5" name="PhenobarbAmpule"/>
+            <render drug="9a499fca-699e-4809-8175-732ef43d5c14" name="Phenobarb50mgt"/>
+            <render drug="34dd5905-c28d-4cf8-8ebe-0b83e5093e17" name="PhenytoinNa100t"/>
+            <render drug="19e4dd0b-bd14-4c2b-ad3e-39ec8ea047d7" name="SodiumValproate200mgt"/>
+        </repeat>
+    </table>
+
+    <br/>
+    <p>
+        <label>
+            <uimessage code="pihcore.exam.comment"/>:
+        </label>
+        <obs conceptId="PIH:Medication comments (text)" style="textarea"/>
+    </p>
+
+    <p class="list-inline">
+        <label>
+            <uimessage code="pihcore.medication.side.effects"/>
+        </label>
+
+        <obs id="med-side-effects" conceptId="CIEL:165273" style="radio"
+             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
+            <controls>
+                <when value="PIH:YES" thenDisplay="#side-effect-section"/>
+            </controls>
+        </obs>
+    </p>
+
+    <p id="side-effect-section">
+        <obs id="" conceptId="CIEL:164377" style="textarea"/>
+    </p>
+
+    <p class="list-inline">
+        <label>
+            <uimessage code="Missed Dose"/>
+        </label>
+        <obs conceptId="PIH:14678" style="radio" answerConceptIds="PIH:1065,PIH:1066"/>
+    </p>
+
+</div>
+</section>
+
+        <!-- mental health interventions -->
+<section id="mh-interventions" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+         headerCode="pihcore.mentalhealth.interventions">
+<div class="section-container">
+    <obs id="intervene" conceptId="PIH:14627" style="checkbox"
+         answerConceptId="CIEL:1065" answerLabel="Interventions">
+        <controls>
+            <when value="CIEL:1065" thenDisplay="#show-interventions"/>
+        </controls>
+    </obs>
+
+    <div id="show-interventions" class="two-columns-old">
+        <repeat with="
                             ['CIEL:165486','Supportive Psychotherapy'],
                             ['PIH:Psychotherapy'],
                             ['PIH:Psychoeducation'],
@@ -657,109 +684,110 @@
                             ['PIH:PSYCHOSOCIAL COUNSELING'],
                             ['CIEL:165328','HIV/AIDS counseling'],
                             ['CIEL:165479','Informing patient of diagnosis']">
-                    <div class="mh-intervention">
-                        <obs conceptId="PIH:Mental health intervention" answerConceptId="{0}"/>
-                    </div>
-                </repeat>
+            <div class="mh-intervention">
+                <obs conceptId="PIH:Mental health intervention" answerConceptId="{0}"/>
+            </div>
+        </repeat>
 
-                <p>
-                    <obs conceptId="PIH:Mental health intervention" answerConceptId="PIH:OTHER"
-                         commentFieldLabel=""/>
-                </p>
+        <p>
+            <obs conceptId="PIH:Mental health intervention" answerConceptId="PIH:OTHER"
+                 commentFieldLabel=""/>
+        </p>
+    </div>
+
+</div>
+</section>
+
+        <!-- socioeconomic assistance section -->
+<section id="socioeconomic-assistance" sectionTag="fieldset" headerTag="legend"
+         headerStyle="title" headerCode="pihcore.supportiveCare">
+<div class="section-container">
+    <p class="list-inline">
+        <label>
+            <uimessage code="Receiving social support"/>
+        </label>
+        <obs id="supported" conceptId="CIEL:163766" style="radio"
+             answerConceptIds="CIEL:1065,CIEL:1066"
+             answerCodes="Yes,No">
+            <controls>
+                <when value="CIEL:1065" thenDisplay="#support-q"/>
+            </controls>
+        </obs>
+
+        <obsgroup groupingConceptId="PIH:1395">
+            <div id="support-q" class="two-columns">
+                <div>
+                    <label>
+                        <uimessage code="Start date"/>
+                    </label>
+                    <obs conceptId="CIEL:163526"/>
+                </div>
+                <div>
+                    <label>
+                        <uimessage code="End date"/>
+                    </label>
+                    <obs conceptId="CIEL:164384" allowFutureDates="true"/>
+                </div>
             </div>
 
-        </div>
-    </section>
+            <label>
+                <uimessage code="Type of support"/>
+            </label>
 
-    <!-- socioeconomic assistance section -->
-    <section id="socioeconomic-assistance" sectionTag="fieldset" headerTag="legend"
-             headerStyle="title" headerCode="pihcore.supportiveCare">
-        <div class="section-container">
-            <p class="list-inline">
-                <label>
-                    <uimessage code="Receiving social support" />
-                </label>
-                <obs id="supported" conceptId="CIEL:163766" style="radio"
-                     answerConceptIds="CIEL:1065,CIEL:1066"
-                     answerCodes="yes,no">
-                    <controls>
-                        <when value="CIEL:1065" thenDisplay="#support-q" />
-                    </controls>
-                </obs>
+            <repeat>
+                <template>
+                    <obs conceptId="PIH:2156" answerConceptId="{aid}"
+                         answerLabel="{aidLabel}" style="checkbox"/>
+                </template>
+                <render aid="PIH:ASSISTANCE WITH TRANSPORT" aidLabel="Transportation"/>
+                <render aid="PIH:NUTRITIONAL AID" aidLabel="Food support"/>
+                <render aid="PIH:SCHOOL EXPENSES" aidLabel="School fees"/>
+                <render aid="PIH:14628" aidLabel="Reintegration support"/>
+                <render aid="PIH:FINANCIAL AID" aidLabel="Economic empowerment"/>
+                <render aid="PIH:HOUSING EXPENSES" aidLabel="Housing or infrastructure support"/>
+            </repeat>
 
-                <obsgroup groupingConceptId="PIH:1395" >
-                    <div id="support-q" class="two-columns">
-                        <div>
-                            <label>
-                                <uimessage code="Start date" />
-                            </label>
-                            <obs conceptId="CIEL:163526" />
-                        </div>
-                        <div>
-                            <label>
-                                <uimessage code="End date" />
-                            </label>
-                            <obs conceptId="CIEL:164384" allowFutureDates="true"/>
-                        </div>
-                    </div>
+        </obsgroup>
+    </p>
 
-                    <label>
-                        <uimessage code="Type of support"/>
-                    </label>
+    <p>
+        <label>
+            <uimessage code="pihcore.remarks"/>:
+        </label>
+        <obs conceptId="PIH:SOCIO-ECONOMIC ASSISTANCE COMMENT" style="textarea"/>
+    </p>
+</div>
+</section>
 
-                    <repeat>
-                        <template>
-                            <obs conceptId="PIH:2156" answerConceptId="{aid}"
-                                 answerLabel="{aidLabel}" style="checkbox"/>
-                        </template>
-                        <render aid="PIH:ASSISTANCE WITH TRANSPORT" aidLabel="Transportation"/>
-                        <render aid="PIH:NUTRITIONAL AID" aidLabel="Food support"/>
-                        <render aid="PIH:SCHOOL EXPENSES" aidLabel="School fees"/>
-                        <render aid="PIH:14628" aidLabel="Reintegration support"/>
-                        <render aid="PIH:FINANCIAL AID" aidLabel="Economic empowerment"/>
-                        <render aid="PIH:HOUSING EXPENSES" aidLabel="Housing or infrastructure support"/>
-                    </repeat>
+<section id="mh-plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+         headerCode="pihcore.visitNote.plan">
+<div class="section-container">
+    <p>
+        <label>
+            <uimessage code="Patient plan comments"/>
+        </label>
+        <obs conceptId="PIH:PATIENT PLAN COMMENTS" style="textarea" rows="10"/>
+    </p>
 
-                </obsgroup>
-            </p>
+    <p>
+        <label class="inline">
+            <uimessage code="pihcore.consult.returnVisitDate"/>:
+        </label>
+        <span class="small">
+            <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true" allowPastDates="false"
+                 required="true"/>
+        </span>
+    </p>
+</div>
+</section>
 
-            <p>
-                <label>
-                    <uimessage code="pihcore.remarks"/>:
-                </label>
-                <obs conceptId="PIH:SOCIO-ECONOMIC ASSISTANCE COMMENT" style="textarea"/>
-            </p>
-        </div>
-    </section>
+<ifMode mode="VIEW" include="false">
+<div id="buttons">
+    <submit submitClass="confirm right" submitCode="mirebalais.save"/>
+    <button type="button" class="cancel">
+        <uimessage code="emr.cancel"/>
+    </button>
+</div>
+</ifMode>
 
-    <section id="mh-plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.visitNote.plan">
-        <div class="section-container">
-            <p>
-                <label>
-                    <uimessage code="Patient plan comments"/>
-                </label>
-                <obs conceptId="PIH:PATIENT PLAN COMMENTS" style="textarea" rows="10"/>
-            </p>
-
-            <p>
-                <label class="inline">
-                    <uimessage code="pihcore.consult.returnVisitDate"/>:
-                </label>
-                <span class="small">
-                    <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true" allowPastDates="false" required="true"/>
-                </span>
-            </p>
-        </div>
-    </section>
-
-    <ifMode mode="VIEW" include="false">
-        <div id="buttons">
-            <submit submitClass="confirm right" submitCode="mirebalais.save"/>
-            <button type="button" class="cancel">
-                <uimessage code="emr.cancel"/>
-            </button>
-        </div>
-    </ifMode>
-
-</htmlform>
+        </htmlform>
