@@ -337,13 +337,13 @@
                         Duration of symptoms:
                     </label>
                     <obsgroup groupingConceptId="CIEL:1727">
-                        <span id="symptom-duration-id" class="inline">
+                        <span id="symptom-duration-id" class="list-inline">
                             <obs id="duration-id"
                                  conceptId="CIEL:1731" class="inline"/>
 
                             <obs id="duration-timeunits-id"
                                  conceptId="CIEL:1732"
-                                 answerConceptIds="CIEL:1072,CIEL:1073,CIEL:1074,CIEL:1734" class="inline"/>
+                                 answerConceptIds="CIEL:1072,CIEL:1073,CIEL:1074,CIEL:1734" style="radio" class="inline"/>
                         </span>
 
                         <span class="inline">
@@ -387,7 +387,7 @@
                         Has the patient ever received medication for symptoms?
                     </label>
                     <span class="list-inline">
-                        <obs id="patient-ever-received-medication" conceptId="PIH:12603"
+                        <obs id="patient-ever-received-medication" conceptId="PIH:12603" style="radio"
                              answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
                             <controls>
                                 <when value="PIH:YES" thenDisplay="#patient-recently-taken-medication"/>
@@ -417,7 +417,7 @@
                         Has the patient ever been to the church yard or seen a traditional healer for these symptoms?
                     </label>
                     <span class="list-inline">
-                        <obs id="visit-to-church-yard-or-traditional-healer" conceptId="PIH:12605"
+                        <obs id="visit-to-church-yard-or-traditional-healer" conceptId="PIH:12605" style="radio"
                              answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
                             <controls>
                                 <when value="PIH:YES" thenDisplay="#church-or-traditional-healer-comment"/>
@@ -523,8 +523,6 @@
                     </span>
                 </div>
             </div>
-            <br></br>
-            <br></br>
 
             <div class="ep-mh-section">
                 <span class="tb-symptom-name">
@@ -571,7 +569,7 @@
                                     Does the patient smoke?:
                                 </label>
                                 <span class="list-inline">
-                                    <obs id="patient-currently-smokes" conceptId="CIEL:163731"
+                                    <obs id="patient-currently-smokes" conceptId="CIEL:163731" style="radio"
                                          answerConceptIds="PIH:IN THE PAST,PIH:CURRENTLY,PIH:NEVER,PIH:unknown"
                                          answerSeparator="">
                                         <controls>
@@ -603,7 +601,7 @@
                                 </label>
 
                                 <span class="list-inline">
-                                    <obs id="patient-currently-drinks" conceptId="CIEL:159449"
+                                    <obs id="patient-currently-drinks" conceptId="CIEL:159449"  style="radio"
                                          answerConceptIds="PIH:IN THE PAST,PIH:CURRENTLY,PIH:NEVER,PIH:unknown"
                                          answerSeparator="">
                                         <controls>
@@ -720,7 +718,7 @@
                                     Has the patient ever had a reaction to medication/ drug allergy?
                                 </label> &amp;nbsp&amp;nbsp
                                 <span class="list-inline">
-                                    <obs id="medication-reaction" conceptId="CIEL:165273"
+                                    <obs id="medication-reaction" conceptId="CIEL:165273" style="radio"
                                          answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
                                         <controls>
                                             <when value="PIH:YES" thenDisplay="#medication-side-effect"/>
