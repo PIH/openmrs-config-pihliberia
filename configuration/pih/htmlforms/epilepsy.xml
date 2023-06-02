@@ -346,7 +346,7 @@
                 </label>
                 <obs id="intake-or-followup"  conceptId="CIEL:164181" style="radio"
                      answerConceptIds="CIEL:164180,PIH:7383"
-                     answerCodes="Show/edit,Hide" >
+                     answerCodes="show/edit,hide" >
                     <controls>
                         <!--
                         <when value="CIEL:164180"
