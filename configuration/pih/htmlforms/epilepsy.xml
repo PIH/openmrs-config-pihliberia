@@ -348,13 +348,6 @@
                      answerConceptIds="CIEL:164180,PIH:7383"
                      answerCodes="show/edit,hide" >
                     <controls>
-                        <!--
-                        <when value="CIEL:164180"
-                              thenJavaScript="jq('#intake-only').show(); jq('#obgyn-initial-div').hide();"
-                              elseJavaScript="jq('#intake-only').hide();"/>
-                        <when value="PIH:7383"
-                              thenJavaScript="jq('#epi-initial-div').show(); jq('#epi-section').hide();"
-                              elseJavaScript="jq('#epi-initial-div').hide(); jq('#epi-section').show();"/> -->
                         <when value="PIH:7383"
                               thenJavaScript="jq('#intake-only').hide();"
                               elseJavaScript="jq('#intake-only').show();"/>
