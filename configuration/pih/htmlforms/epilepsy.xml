@@ -341,10 +341,12 @@
     <section id="general" sectionTag="fieldset" headerTag="legend" headerStyle="title">
         <div class="section-container">
             <p class="list-inline">
+                <label>
+                    Patient details and history
+                </label>
                 <obs id="intake-or-followup"  conceptId="CIEL:164181" style="radio"
                      answerConceptIds="CIEL:164180,PIH:7383"
-                     answerCodes="First epilepsy visit,Follow-up visit"
-                     required="true">
+                     answerCodes="Show/edit,Hide" >
                     <controls>
                         <!--
                         <when value="CIEL:164180"
