@@ -1,0 +1,28 @@
+key: "checkin"
+uuid: "cb48d324-16d3-4c01-93b5-3e4d101592bb"
+name: "Checkin Forum"
+description: "Checkin Data"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "checkin"
+    type: "sql"
+    config: "sql/checkin.sql"
+designs:
+  - type: "csv"
+    properties:
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "dataExport"
+  countries:
+    - "LIBERIA"
+  components:
+    - "dataExports"
+  privilege: "Task: clinical.reports"
