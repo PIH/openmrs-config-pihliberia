@@ -435,19 +435,6 @@
 </div>
 </section>
 
-        <!-- This include will be changed to wrap pregnancy when other exams are added to this section -->
-<includeIf velocityTest="$patient.gender == 'F' ">
-<section id="mh_exams" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-         headerCode="pihcore.exam.general_exam.title">
-    <div class="section-container">
-        <p>
-            <obs labelCode="pihcore.pregnancy.status" conceptId="PIH:PATIENT PREGNANT" style="checkbox"/>
-        </p>
-    </div>
-</section>
-</includeIf>
-
-
 <section id="mh_habits" sectionTag="fieldset" headerTag="legend" headerStyle="title"
          headerCode="pihcore.habits">
 <div class="section-container">
@@ -655,6 +642,16 @@
         </label>
         <obs conceptId="PIH:14678" style="radio" answerConceptIds="PIH:1065,PIH:1066"/>
     </p>
+
+    <!-- This include will be changed to wrap pregnancy when other exams are added to this section -->
+    <includeIf velocityTest="$patient.gender == 'F' ">
+    <p class="list-inline">
+        <label>
+            <uimessage code="Pregnant"/>
+        </label>
+        <obs conceptId="PIH:5272" style="radio" answerConceptIds="PIH:1065,PIH:1066"/>
+    </p>
+    </includeIf>
 
 </div>
 </section>
