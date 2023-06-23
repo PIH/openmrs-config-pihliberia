@@ -503,10 +503,12 @@
         </div>
     </div>
 
-    <div id="data-collection">
-        <strong>Other diagnoses</strong>
-        <encounterDiagnosesByObs selectedDiagnosesTarget="#encounter-diagnoses-target"/>
-    </div>
+    <p>
+        <label>Other diagnoses</label>
+        <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+            <obs conceptId="CIEL:161602" style="text" />
+        </obsgroup>
+    </p>
 </div>
 </section>
 
