@@ -1,0 +1,28 @@
+key: "Epilepsy"
+uuid: "abb17186-1cd5-11ee-be56-0242ac120002"
+name: "Epilepsy Forum"
+description: "Epilepsy Data Export"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "epilepsy"
+    type: "sql"
+    config: "sql/epilepsy.sql"
+designs:
+  - type: "csv"
+    properties:
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "dataExport"
+  countries:
+    - "LIBERIA"
+  components:
+    - "dataExports"
+  privilege: "Task: clinical.reports"
