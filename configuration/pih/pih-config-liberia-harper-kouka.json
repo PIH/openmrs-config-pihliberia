@@ -1,52 +1,6 @@
 {
-  "components": [
-    "clinicianDashboard",
-    "patientRegistration",
-    "checkIn",
-    "consult",
-    "visitNote",
-    "visitManagement",
-    "systemAdministration",
-    "myAccount",
-    "overviewReports",
-    "dataExports",
-    "checkInHomepageApp",
-    "vitals",
-    "vitalsHomepageApp",
-    "allergies",
-    "markPatientDead",
-    "relationships",
-    "programs",
-    "mentalHealth",
-    "epilepsy",
-    "patientDocuments",
-    "conditionList",
-    "primaryCare",
-    "managePrinters",
-    "bmiOnClinicianDashboard",
-    "activeVisits",
-    "waitingForConsult",
-    "relationships",
-    "idcardPrinting",
-    "ncd",
-    "dispensing",
-    "labs",
-    "labResults",
-    "mch",
-    "spaPreview"
-  ],
-
   "primaryIdentifierPrefix": "YY",
-  "providerIdentifierPrefix": "YY",
-
-  "biometricsConfig": {
-    "biometricEngine": "restBiometricEngine",
-    "templateFormat": "PROPRIETARY",
-    "subjectUrl": "http://localhost:9000/subject",
-    "matchUrl": "http://localhost:9000/match",
-    "scanUrl": "https://localhost:9443/fingerprint/scan",
-    "devicesUrl": "https://localhost:9443/fingerprint/devices"
-  }
+  "providerIdentifierPrefix": "YY"
 }
 
 
