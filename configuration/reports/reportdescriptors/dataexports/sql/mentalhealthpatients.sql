@@ -1,7 +1,7 @@
 SELECT encounter_type_id  INTO @enc_type FROM encounter_type et WHERE uuid='f9cfdf8b-d086-4658-9b9d-45a62896da03';
 SELECT program_id  INTO @prog_id FROM program p WHERE uuid='0e69c3ab-1ccb-430b-b0db-b9760319230f';
 SELECT encounter_type_id INTO @enctype FROM encounter_type et WHERE et.uuid ='a8584ab8-cc2a-11e5-9956-625662870761';
-SET @partition = '${partitionNum}';
+
 
 
 DROP TABLE IF EXISTS all_mh_patients;
@@ -33,7 +33,7 @@ SELECT patient_id FROM all_mh_patients;
 INSERT INTO all_mh_patients(patient_id,emr_id)
 SELECT
 patient_id,
-zlemr(patient_id)
+patient_identifier(patient_id, '0bc545e0-f401-11e4-b939-0800200c9a66')
 FROM encounter e 
 WHERE e.encounter_type =@enctype
 AND e.patient_id  NOT IN (SELECT patient_id FROM enrolled_patients);
@@ -85,8 +85,7 @@ AND o.encounter_id IN (SELECT encounter_id FROM last_mh_visit)
 ;
 
 SELECT 
-patient_id,
-CONCAT(@partition,'-',emr_id) "emr_id",
+emr_id,
 dob,
 gender,
 town,
