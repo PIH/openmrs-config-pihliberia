@@ -1,0 +1,28 @@
+key: "mentalhealthpatients"
+uuid: "ce033a47a-0065-4805-9ad9-44f54906c36b"
+name: "Mental Health Patients"
+description: "Mental Health Patients Data"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "mentalhealthpatients"
+    type: "sql"
+    config: "sql/checkin.sql"
+designs:
+  - type: "csv"
+    properties:
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "dataExport"
+  countries:
+    - "LIBERIA"
+  components:
+    - "dataExports"
+  privilege: "Task: clinical.reports"
