@@ -36,7 +36,8 @@ patient_id,
 patient_identifier(patient_id, '0bc545e0-f401-11e4-b939-0800200c9a66')
 FROM encounter e 
 WHERE e.encounter_type =@enctype
-AND e.patient_id  NOT IN (SELECT patient_id FROM enrolled_patients);
+AND e.patient_id  NOT IN (SELECT patient_id FROM enrolled_patients)
+AND DATE(encounter_datetime) >= @startDate AND DATE(encounter_datetime) <= @endDate;
 
 
 UPDATE all_mh_patients
