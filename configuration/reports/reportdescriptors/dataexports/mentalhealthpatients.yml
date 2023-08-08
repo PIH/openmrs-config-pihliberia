@@ -12,7 +12,7 @@ parameters:
 datasets:
   - key: "mentalhealthpatients"
     type: "sql"
-    config: "sql/checkin.sql"
+    config: "sql/mentalhealthpatients.sql"
 designs:
   - type: "csv"
     properties:
