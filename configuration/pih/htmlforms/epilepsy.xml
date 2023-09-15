@@ -180,6 +180,13 @@
                     numberOfSeizures++;
                   }
                 });
+
+                if ( numberOfSeizures > 0 ) {
+                  jq('#seizure-type-error').attr('hidden', 'hidden');
+                } else {
+                  jq('#seizure-type-error').removeAttr('hidden');
+                  jq('html, body').scrollTop($("#seizure-type-div").offset().top);
+                }
                 return numberOfSeizures > 0 ? true : false;
             }
             beforeValidation.push( function() {
@@ -427,6 +434,7 @@
                             <!-- <render concept="CIEL:120252" label="Complex Partial"/> -->
                             <render concept="CIEL:123826" label="Unclassified"/>
                         </repeat>
+                        <span class="error field-error" hidden="hidden" id="seizure-type-error">Required</span>
                     </div>
                 </div>
             </section>
