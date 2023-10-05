@@ -21,3 +21,11 @@ encounterType:
     uuid: "74e06462-243e-4fad-8d7c-0bb3921322f1"
   liberiaMentalHealthIntakeForm:
     uuid: "fccd53c2-f802-439b-a7a2-2d680bd8b81b"
+  PATIENT_REGISTRATION:
+    name: "Patient Registration"
+  CHECK_IN:
+    name: "Check-In"
+  MEDICATION_DISPENSED:
+    name: "Medication Dispensing"
+  VITALS:
+    name: "Vital Signs"
