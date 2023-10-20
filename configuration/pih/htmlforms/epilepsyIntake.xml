@@ -12,140 +12,138 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<htmlform id="liberia-epilepsy-fu" class="simple-form-ui"
-          formUuid="4a101cb7-fab3-4d69-8fe2-84671ae82f6e"
-          htmlformUuid="4296831e-a8b0-4301-9b76-0c8a36ee7c5d"
-          formName="Epilepsy Followup"
-          formEncounterType="74e06462-243e-4fad-8d7c-0bb3921322f1" formVersion="1.0">
+<htmlform id="liberia-epilepsy-intake" class="simple-form-ui"
+          formUuid="e0e49050-85d8-444d-a587-c9769d0899f6"
+          htmlformUuid="2aa0a237-e4f4-464d-827a-1538b3656afb"
+          formName="Epilepsy Intake"
+          formEncounterType="7336a05e-4bd1-4e52-81c1-207697afc868" formVersion="1.0">
 
     <redirectOnSave url="/pihcore/visit/visit.page?patient={{patient.id}}&amp;encounter={{encounter.id}}#/overview"/>
 
     <style type="text/css">
 
         #who-when-where {
-        margin-bottom: 6px;
-        border-bottom: 1px solid #ccc;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #ccc;
         }
 
         #who-when-where p {
-        display: inline-block;
-        padding-right: 20px;
+            display: inline-block;
+            padding-right: 20px;
         }
 
         #where > input[type=text] {
-        display: inline-block;
+            display: inline-block;
         }
 
         .narrow {
-        width: 200px;
+            width: 200px;
         }
 
         .field-error {
-        color: #ff6666;
-        font-size: 1.1em;
-        display: block;
+            color: #ff6666;
+            font-size: 1.1em;
+            display: block;
         }
 
         .three-columns, .two-columns {
-        display: table;
-        height: 100%;
-        width: 100%;
+            display: table;
+            height: 100%;
+            width: 100%;
         }
 
         .two-columns > div {
-        display: table-cell;
-        width: 50%;
+            display: table-cell;
+            width: 50%;
         }
 
         .simple-form-ui input {
-        min-width: 80%
+            min-width: 80%
         }
 
         form fieldset {
-        min-width: 90%;
-        display: block;
+            min-width: 90%;
+            display: block;
         }
 
         .encounter-summary-container #calculated-ratio {
-        font-size: 1em;
-        font-weight: normal;
+            font-size: 1em;
+            font-weight: normal;
         }
 
         #encounterDate input {
-        min-width: 15%
+            min-width: 15%
         }
 
         .half-size-text {
-        color: #ff6666;
-        font-size: 50%;
-        display: block;
+            color: #ff6666;
+            font-size: 50%;
+            display: block;
         }
 
         .section-container {
-        background: #F2F2F2;
-        box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-        padding: 10px 5px 10px 15px;
-        line-height: 1.5em; /*add this for vertical spacing between elements*/
+            background: #F2F2F2;
+            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+            padding: 10px 5px 10px 15px;
+            line-height: 1.5em; /*add this for vertical spacing between elements*/
         }
 
         .section-container input[type="checkbox"] {
-        margin: 0px 5px; /*changed values to vertical, horizontal*/
-        top:5px; /*added to offset the checkbox position to line up*/
+            margin: 0px 5px; /*changed values to vertical, horizontal*/
+            top:5px; /*added to offset the checkbox position to line up*/
         }
 
         .section-container label { /*new definition to override labels inside section-containers*/
-        margin: 0px;
+            margin: 0px;
         }
 
         - .section {
-        width: 100%;
+            width: 100%;
         }
 
         textarea {
-        width: 95%;
+            width: 95%;
         }
 
         span.obs-field > select {
-        min-width: 0;
+            min-width: 0;
         }
 
         .list-inline label, .list-inline input[type="radio"], .list-inline span,
         .list-inline-wide label, .list-inline-wide input[type="radio"], .list-inline-wide span,
         .list-inline-extra-wide label, .list-inline-extra-wide input[type="radio"], .list-inline-extra-wide span {
-        display: inline-block;
-        float: none;
+            display: inline-block;
+            float: none;
         }
 
         .list-inline label:first-child {
-        width: 220px;
+            width: 220px;
         }
 
         .list-inline-wide label:first-child {
-        width: 320px;
+            width: 320px;
         }
 
         .list-inline-extra-wide label:first-child {
-        width: 420px;
+            width: 420px;
         }
         span.symptom-present {
-        float: right;
+            float: right;
         }
-
-
     </style>
 
     <ifMode mode="VIEW">
         <style type="text/css">
             .collapsible {
-            display: block !important;
+                display: block !important;
             }
 
             .collapsible-inline {
-            display: inline-block !important;
+                display: inline-block !important;
             }
 
             .icon-arrow-down, .icon-arrow-up {
-            display: none;
+                display: none;
             }
         </style>
     </ifMode>
@@ -238,7 +236,7 @@
     <ifMode mode="VIEW" include="false">
         <h2>
             <label>
-                <uimessage code="pihcore.ncd.epilepsyFU"/>
+                <uimessage code="pihcore.ncd.epilepsyIntake"/>
             </label>
         </h2>
 
@@ -357,257 +355,226 @@
     <!-- Program enrollment -->
     <enrollInProgram programId="Mental Health"/>
 
-    <!-- The form -->
-    <section id="general" sectionTag="fieldset" headerTag="legend" headerStyle="title">
+    <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Epilepsy visit overview">
         <div class="section-container">
-            <p class="list-inline">
-                <label>
-                    Patient details and history
-                </label>
-                <obs id="intake-or-followup"  conceptId="CIEL:164181" style="radio"
-                     answerConceptIds="CIEL:164180,PIH:7383"
-                     answerCodes="show/edit,hide" >
-                    <controls>
-                        <when value="PIH:7383"
-                              thenJavaScript="jq('#intake-only').hide();"
-                              elseJavaScript="jq('#intake-only').show();"/>
-                        <when value="CIEL:164180"
-                              thenJavaScript="jq('#intake-only').show();"
-                              elseJavaScript="jq('#intake-only').hide();"/>
-                    </controls>
-                </obs>
-            </p>
+
+            <div class="two-columns">
+                <div>
+                    <!-- ToDo: Add condition for epilepsy along with date -->
+                    <obs conceptId="CIEL:159948"
+                         id="onset-epilepsy-date"
+                         labelText="Onset date of epilepsy"
+                         allowFutureDates="false"
+                         allowPastDates="true"
+                         required="true"/>
+                </div>
+
+                <div>
+                    <label>
+                        <uimessage code="Age of onset"/>
+                    </label>
+                    <obs conceptId="CIEL:159499" showUnits="true"/>
+                </div>
+            </div>
         </div>
     </section>
 
-    <div id="intake-only">
-        <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="Epilepsy visit overview">
-            <div class="section-container">
-
-                <div class="two-columns">
-                    <div>
-                        <!-- ToDo: Add condition for epilepsy along with date -->
-                        <obs conceptId="CIEL:159948"
-                             id="onset-epilepsy-date"
-                             labelText="Onset date of epilepsy"
-                             allowFutureDates="false"
-                             allowPastDates="true"
-                             required="true"/>
-                    </div>
-
-                    <div>
-                        <label>
-                            <uimessage code="Age of onset"/>
-                        </label>
-                        <obs conceptId="CIEL:159499" showUnits="true"/>
-                    </div>
+    <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Patient overview">
+        <div class="section-container">
+                <p id="ep-focal" class="list-inline-extra-wide">
+                    <label>
+                        <uimessage code="Focal seizure without loss of consciousness"/>
+                    </label>
+                    <obsgroup groupingConceptId="PIH:1292">
+                        <obs conceptIds="PIH:1293,PIH:1734,PIH:1735" style="radio"
+                             answerConceptId="CIEL:165604"
+                             conceptLabels="yes,no,unknown" labelText=""/>
+                    </obsgroup>
+                </p>
+                <div id="seizure-type-div">
+                    <label><span class="required">* </span>General seizure type:</label>
+                    <repeat>
+                        <template>
+                            <obs conceptId="CIEL:161249" answerConceptId="{concept}"
+                                 style="checkbox" labelText="{label}" answerLabel=""/>
+                        </template>
+                        <render concept="CIEL:150525" label="Absence"/>
+                        <render concept="CIEL:112356" label="Tonic"/>
+                        <render concept="CIEL:148223" label="Atonic"/>
+                        <render concept="CIEL:115424" label="Myoclonic"/>
+                        <render concept="CIEL:145044" label="Clonic"/>
+                        <!-- <render concept="CIEL:120252" label="Complex Partial"/> -->
+                        <render concept="CIEL:123826" label="Unclassified"/>
+                    </repeat>
+                    <span class="error field-error" hidden="hidden" id="seizure-type-error">Required</span>
                 </div>
             </div>
         </section>
 
-        <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="Patient overview">
+        <section id="complications" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="Complications">
             <div class="section-container">
-                    <p id="ep-focal" class="list-inline-extra-wide">
-                        <label>
-                            <uimessage code="Focal seizure without loss of consciousness"/>
-                        </label>
-                        <obsgroup groupingConceptId="PIH:1292">
-                            <obs conceptIds="PIH:1293,PIH:1734,PIH:1735" style="radio"
-                                 answerConceptId="CIEL:165604"
-                                 conceptLabels="yes,no,unknown" labelText=""/>
+                <repeat>
+                    <template>
+                        <obsgroup groupingConceptId="CIEL:1727">
+                            <div class="list-inline">
+                                <span id="ep-complications-{name}-dx" class="complication-name">
+                                    <obs id="ep-complications-{name}-id"
+                                         conceptId="CIEL:1728"
+                                         answerConceptId="{concept}"
+                                         labelText="{label}"
+                                         answerLabel=""
+                                         style="checkbox"
+                                         toggle="{id: 'ep-complications-{name}-present', style: 'dim'}"/>
+                                </span>
+                                <span id="ep-complications-{name}-present">
+                                    <obs id="ep-complications-{name}" conceptId="CIEL:1729" style="radio"
+                                         answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
+                                        <controls>
+                                            <when value="PIH:YES" thenDisplay="#ep-complications-{name}-date-span"/>
+                                        </controls>
+                                    </obs>
+                                    <!-- Date when the patient experienced a complication -->
+                                    <span id="ep-complications-{name}-date-span" class="ep-compexp-duration-span">
+                                        <label>
+                                            <uimessage code="pihcore.epilepsy.complication.date"/>
+                                        </label>
+                                        <obs id="ep-complications-{name}-date" conceptId="PIH:Diagnosis date"/>
+                                    </span>
+                                </span>
+                            </div>
                         </obsgroup>
-                    </p>
-                    <div id="seizure-type-div">
-                        <label><span class="required">* </span>General seizure type:</label>
-                        <repeat>
-                            <template>
-                                <obs conceptId="CIEL:161249" answerConceptId="{concept}"
-                                     style="checkbox" labelText="{label}" answerLabel=""/>
-                            </template>
-                            <render concept="CIEL:150525" label="Absence"/>
-                            <render concept="CIEL:112356" label="Tonic"/>
-                            <render concept="CIEL:148223" label="Atonic"/>
-                            <render concept="CIEL:115424" label="Myoclonic"/>
-                            <render concept="CIEL:145044" label="Clonic"/>
-                            <!-- <render concept="CIEL:120252" label="Complex Partial"/> -->
-                            <render concept="CIEL:123826" label="Unclassified"/>
-                        </repeat>
-                        <span class="error field-error" hidden="hidden" id="seizure-type-error">Required</span>
-                    </div>
-                </div>
-            </section>
+                    </template>
+                    <render concept="CIEL:112234" name="injuries" label="Injuries"/>
+                    <render concept="CIEL:116543" name="burns" label="Burns"/>
+                    <render concept="CIEL:125943" name="epilepticus" label="Epilepticus"/>
+                    <render concept="CIEL:113517" name="psychosis" label="Psychosis"/>
+                    <render concept="CIEL:118826" name="drug-related" label="Drug Related"/>
+                    <render concept="CIEL:119537" name="depression" label="Depression"/>
+                    <render concept="CIEL:140238" name="fever" label="Fever"/>
+                    <render concept="CIEL:5622" name="other" label="Other"/>
+                </repeat>
 
+                <p>
+                    <label>
+                        <uimessage code="if other complication, specify"/>
+                    </label>
+                    <obs id="ep-other-complication" conceptId="PIH:14679" style="text"/>
+                </p>
+            </div>
+        </section>
 
-            <section id="complications" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                     headerCode="Complications">
-                <div class="section-container">
-                    <repeat>
-                        <template>
-                            <obsgroup groupingConceptId="CIEL:1727">
-                                <div class="list-inline">
-                                    <span id="ep-complications-{name}-dx" class="complication-name">
-                                        <obs id="ep-complications-{name}-id"
-                                             conceptId="CIEL:1728"
-                                             answerConceptId="{concept}"
-                                             labelText="{label}"
-                                             answerLabel=""
-                                             style="checkbox"
-                                             toggle="{id: 'ep-complications-{name}-present', style: 'dim'}"/>
-                                    </span>
-                                    <span id="ep-complications-{name}-present">
-                                        <obs id="ep-complications-{name}" conceptId="CIEL:1729" style="radio"
-                                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
-                                            <controls>
-                                                <when value="PIH:YES" thenDisplay="#ep-complications-{name}-date-span"/>
-                                            </controls>
-                                        </obs>
-                                        <!-- Date when the patient experienced a complication -->
-                                        <span id="ep-complications-{name}-date-span" class="ep-compexp-duration-span">
-                                            <label>
-                                                <uimessage code="pihcore.epilepsy.complication.date"/>
-                                            </label>
-                                            <obs id="ep-complications-{name}-date" conceptId="PIH:Diagnosis date"/>
-                                        </span>
-                                    </span>
-                                </div>
-                            </obsgroup>
-                        </template>
-                        <render concept="CIEL:112234" name="injuries" label="Injuries"/>
-                        <render concept="CIEL:116543" name="burns" label="Burns"/>
-                        <render concept="CIEL:125943" name="epilepticus" label="Epilepticus"/>
-                        <render concept="CIEL:113517" name="psychosis" label="Psychosis"/>
-                        <render concept="CIEL:118826" name="drug-related" label="Drug Related"/>
-                        <render concept="CIEL:119537" name="depression" label="Depression"/>
-                        <render concept="CIEL:140238" name="fever" label="Fever"/>
-                        <render concept="CIEL:5622" name="other" label="Other"/>
-                    </repeat>
+        <section id="med-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="Medical history">
+            <div class="section-container">
+                <repeat>
+                    <template>
+                        <obsgroup groupingConceptId="CIEL:1633">
+                            <div class="list-inline">
+                                <span id="ep-pmh-{name}-dx" class="ep-mh-sym-find">
+                                    <obs id="ep-pmh-{name}-id"
+                                         conceptId="CIEL:1628"
+                                         answerConceptId="{concept}"
+                                         labelText="{label}:"
+                                         answerLabel=""
+                                         style="checkbox"
+                                         toggle="{id: 'ep-pmh-{name}-present', style: 'dim'}"/>
+                                </span>
+                                <span id="ep-pmh-{name}-present">
+                                    <obs id="ep-pmh-{name}" conceptId="CIEL:1729" style="radio"
+                                         answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"/>
+                                </span>
+                            </div>
+                        </obsgroup>
+                    </template>
+                    <render concept="PIH:HEAD INJURY" name="head-injury" label="Trauma/Head injury"/>
+                    <render concept="CIEL:1625" name="history-seizure" label="Childhood history of seizures"/>
+                    <render concept="CIEL:226" name="neonatal-infection"
+                            label="Neonatal infection/Cerebral Malaria/Meningitis"/>
+                    <render concept="CIEL:156661" name="history-drugs" label="History of substance abuse"/>
 
-                    <p>
-                        <label>
-                            <uimessage code="if other complication, specify"/>
-                        </label>
-                        <obs id="ep-other-complication" conceptId="PIH:14679" style="text"/>
-                    </p>
-                </div>
-            </section>
+                </repeat>
+                <br/>
 
-            <section id="med-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                     headerCode="Medical history">
-                <div class="section-container">
-                    <repeat>
-                        <template>
-                            <obsgroup groupingConceptId="CIEL:1633">
-                                <div class="list-inline">
-                                    <span id="ep-pmh-{name}-dx" class="ep-mh-sym-find">
-                                        <obs id="ep-pmh-{name}-id"
-                                             conceptId="CIEL:1628"
-                                             answerConceptId="{concept}"
-                                             labelText="{label}:"
-                                             answerLabel=""
-                                             style="checkbox"
-                                             toggle="{id: 'ep-pmh-{name}-present', style: 'dim'}"/>
-                                    </span>
-                                    <span id="ep-pmh-{name}-present">
-                                        <obs id="ep-pmh-{name}" conceptId="CIEL:1729" style="radio"
-                                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"/>
-                                    </span>
-                                </div>
-                            </obsgroup>
-                        </template>
-                        <render concept="PIH:HEAD INJURY" name="head-injury" label="Trauma/Head injury"/>
-                        <render concept="CIEL:1625" name="history-seizure" label="Childhood history of seizures"/>
-                        <render concept="CIEL:226" name="neonatal-infection"
-                                label="Neonatal infection/Cerebral Malaria/Meningitis"/>
-                        <render concept="CIEL:156661" name="history-drugs" label="History of substance abuse"/>
+                <p>
+                    <label>
+                        Any other medical diagnoses:
+                    </label>
+                    <obs conceptId="CIEL:160221" style="text"/>
+                </p>
+            </div>
+        </section>
 
-                    </repeat>
-                    <br/>
+        <section id="triggers" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="Triggers">
+            <div id="ep-trigger-section" class="section-container">
+                <repeat>
+                    <template>
+                        <obsgroup groupingConceptId="PIH:12403">
+                            <div class="list-inline">
+                                <span id="ep-trigger-{name}-dx" class="ep-trigger-sym-find">
+                                    <obs id="ep-trigger-{name}-id"
+                                         conceptId="PIH:12402"
+                                         answerConceptId="{concept}"
+                                         labelText="{label}"
+                                         answerLabel=""
+                                         style="checkbox"
+                                         toggle="{id: 'ep-trigger-{name}-present', style: 'dim'}"/>
+                                </span>
+                                <span id="ep-trigger-{name}-present">
+                                    <obs id="ep-trigger-{name}" conceptId="CIEL:1729" style="radio"
+                                         answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"/>
+                                </span>
+                            </div>
+                        </obsgroup>
+                    </template>
+                    <render concept="CIEL:70468" name="alcohol" label="Alcohol"/>
+                    <render concept="PIH:12404" name="s-l-i-t" label="Sounds/Light/Inappropriate touch"/>
+                    <render concept="PIH:12405" name="e-s-a-b" label="Emotional Stress/Anger/Boredom"/>
+                    <render concept="CIEL:126370" name="s-d-o" label="Sleep deprivation/Overtiredness"/>
+                    <render concept="CIEL:159598" name="missed-medication" label="Missed medication"/>
+                    <render concept="CIEL:5989" name="menstruation" label="Menstruation"/>
+                    <render concept="CIEL:140238" name="fever" label="Fever"/>
+                    <render concept="CIEL:112603" name="substance-abuse" label="Subst. abuse"/>
+                </repeat>
+            </div>
+        </section>
 
-                    <p>
-                        <label>
-                            Any other medical diagnoses:
-                        </label>
-                        <obs conceptId="CIEL:160221" style="text"/>
-                    </p>
-                </div>
-            </section>
+        <section id="post-ictal features" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="Post-ictal features">
+            <div id="ep-pif-section" class="section-container">
+                <repeat>
+                    <template>
+                        <obsgroup groupingConceptId="PIH:12380">
+                            <div class="list-inline">
+                                <span id="ep-pif-{name}-dx" class="ep-pif-sym-find">
+                                    <obs id="ep-pif-{name}-id"
+                                         conceptId="CIEL:1728"
+                                         answerConceptId="{concept}"
+                                         labelText="{label}"
+                                         answerLabel=""
+                                         style="checkbox"
+                                         toggle="{id: 'ep-pif-{name}-present', style: 'dim'}"/>
+                                </span>
+                                <span id="ep-pif-{name}-present">
+                                    <obs id="ep-pif-{name}" conceptId="CIEL:1729" style="radio"
+                                         answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"/>
+                                </span>
+                            </div>
+                        </obsgroup>
+                    </template>
+                    <render concept="CIEL:139084" name="headache" label="Headache"/>
+                    <render concept="CIEL:120345" name="disorientation" label="Disorientation / Confusion"/>
+                    <render concept="CIEL:152782" name="poor-concentration"
+                            label="Poor concentration and verbal skills"/>
+                    <render concept="CIEL:114362" name="paralysis" label="Paralysis"/>
+                    <render concept="CIEL:121657" name="memory-loss" label="Memory loss"/>
+                </repeat>
 
-            <section id="triggers" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                     headerCode="Triggers">
-                <div id="ep-trigger-section" class="section-container">
-                    <repeat>
-                        <template>
-                            <obsgroup groupingConceptId="PIH:12403">
-                                <div class="list-inline">
-                                    <span id="ep-trigger-{name}-dx" class="ep-trigger-sym-find">
-                                        <obs id="ep-trigger-{name}-id"
-                                             conceptId="PIH:12402"
-                                             answerConceptId="{concept}"
-                                             labelText="{label}"
-                                             answerLabel=""
-                                             style="checkbox"
-                                             toggle="{id: 'ep-trigger-{name}-present', style: 'dim'}"/>
-                                    </span>
-                                    <span id="ep-trigger-{name}-present">
-                                        <obs id="ep-trigger-{name}" conceptId="CIEL:1729" style="radio"
-                                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"/>
-                                    </span>
-                                </div>
-                            </obsgroup>
-                        </template>
-                        <render concept="CIEL:70468" name="alcohol" label="Alcohol"/>
-                        <render concept="PIH:12404" name="s-l-i-t" label="Sounds/Light/Inappropriate touch"/>
-                        <render concept="PIH:12405" name="e-s-a-b" label="Emotional Stress/Anger/Boredom"/>
-                        <render concept="CIEL:126370" name="s-d-o" label="Sleep deprivation/Overtiredness"/>
-                        <render concept="CIEL:159598" name="missed-medication" label="Missed medication"/>
-                        <render concept="CIEL:5989" name="menstruation" label="Menstruation"/>
-                        <render concept="CIEL:140238" name="fever" label="Fever"/>
-                        <render concept="CIEL:112603" name="substance-abuse" label="Subst. abuse"/>
-                    </repeat>
-                </div>
-            </section>
-
-            <section id="post-ictal features" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                     headerCode="Post-ictal features">
-                <div id="ep-pif-section" class="section-container">
-                    <repeat>
-                        <template>
-                            <obsgroup groupingConceptId="PIH:12380">
-                                <div class="list-inline">
-                                    <span id="ep-pif-{name}-dx" class="ep-pif-sym-find">
-                                        <obs id="ep-pif-{name}-id"
-                                             conceptId="CIEL:1728"
-                                             answerConceptId="{concept}"
-                                             labelText="{label}"
-                                             answerLabel=""
-                                             style="checkbox"
-                                             toggle="{id: 'ep-pif-{name}-present', style: 'dim'}"/>
-                                    </span>
-                                    <span id="ep-pif-{name}-present">
-                                        <obs id="ep-pif-{name}" conceptId="CIEL:1729" style="radio"
-                                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"/>
-                                    </span>
-                                </div>
-                            </obsgroup>
-                        </template>
-                        <render concept="CIEL:139084" name="headache" label="Headache"/>
-                        <render concept="CIEL:120345" name="disorientation" label="Disorientation / Confusion"/>
-                        <render concept="CIEL:152782" name="poor-concentration"
-                                label="Poor concentration and verbal skills"/>
-                        <render concept="CIEL:114362" name="paralysis" label="Paralysis"/>
-                        <render concept="CIEL:121657" name="memory-loss" label="Memory loss"/>
-                    </repeat>
-
-                    <!-- Unused:
-                            <render concept="CIEL:156923" name="poor-vc-skills" label="Poor verbal or cognit. skills"/>
-                            <render concept="CIEL:165567" name="foaming-mouth" label="Foaming mouth"/>
-                            <render concept="CIEL:5978" name="nausea" label="Nausea"/> -->
-
-                </div>
-            </section>
-        </div>
+            </div>
+        </section>
 
         <section id="ep-visit" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="Visit">
@@ -731,35 +698,14 @@
             </div>
         </section>
 
-    <!-- Trash
-    <section id="mh-epilepsy-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.ncd.epilepsy">
-        <div id="epilepsy" class="section-container">
-            <div class="inline" style="margin-bottom: 11px;">
-
-                <div style="width:50%; float:right;">
-                    <label class="inline">
-                        <uimessage code="pihcore.ncd.epilepsy.seizure_num_1mo"/>&amp;nbsp
-                    </label>
-                    <span class="inline">
-                        <obs conceptId="PIH:Number of seizures in the past month"/>
-                    </span>
-
-
-                </div>
-            </div>
-        </div>
-    </section>
-    -->
-
     <ifMode mode="VIEW" include="false">
         <style>
             .doseInput select, .frequency select, .duration-unit select {
-            width: 100px;
+                width: 100px;
             }
 
             .route select {
-            width: 150px;
+                width: 150px;
             }
         </style>
     </ifMode>
@@ -845,8 +791,6 @@
                     <render drug="34dd5905-c28d-4cf8-8ebe-0b83e5093e17" name="PhenytoinNa100t"/>
                     <render drug="85c71cd3-b84d-4e3c-84f0-94ecc294510e" name="Risperidone2mgt"/>
                     <render drug="19e4dd0b-bd14-4c2b-ad3e-39ec8ea047d7" name="SodiumValproate200mgt"/>
-
-
                 </repeat>
             </table>
 

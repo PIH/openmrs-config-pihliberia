@@ -1,5 +1,6 @@
 Uuid,Void/Retire,Name,Description
 ${encounterType.liberiaAncForm.uuid},TRUE,ANC Form,General form for capturing all ANC-related data for Liberia
 ${encounterType.liberiaPedsForm.uuid},,PEDS Form,General form for capturing all pediatric data for Liberia
-${encounterType.liberiaEpilepsyForm.uuid},,Epilepsy Form,General Epilepsy form for Liberia
+${encounterType.liberiaEpilepsyIntakeForm.uuid},,Epilepsy Intake,Epilepsy Intake form for Liberia
+${encounterType.liberiaEpilepsyFollowupForm.uuid},,Epilepsy Followup,Epilepsy Followup form for Liberia
 ${encounterType.liberiaMentalHealthIntakeForm.uuid},,Mental Health Intake,Mental Health Intake form for Liberia
