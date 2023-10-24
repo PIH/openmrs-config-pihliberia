@@ -304,27 +304,35 @@
                          answerConceptIds="CIEL:160240,CIEL:160242,CIEL:160243,CIEL:160245"
                          answerLabels="Oral,IV,IM,SubQ"/>
                 </p>
-                <p class="inline">
-                    <label>
-                        <uimessage code="mirebalais.dispensing.medicationAmount"/>
-                    </label>
-                    <obs id="amount{0}" conceptId="CIEL:1443"/>
-                </p>
-                <p class="inline" style="min-width: 15%">
+                <p class="inline" style="min-width: 20%" >
                     <label>
                         <uimessage code="pihcore.status"/>
                     </label>
                     <obs id="stockout{0}" class="medication-status"
                          style="checkbox"
                          conceptId="PIH:14368" answerConceptId="CIEL:1754"
-                         answerCode="pihcore.stockout"/>
+                         answerCode="pihcore.stockout">
+                        <controls>
+                            <when value="CIEL:1754"
+                                  thenJavaScript="jq('#med-instruc-{0}').hide();"
+                                  elseJavaScript="jq('#med-instruc-{0}').show();"/>
+                        </controls>
+                    </obs>
                 </p>
-                <p class="inline" style="min-width: 65%">
-                    <label>
-                        <uimessage code="mirebalais.dispensing.medicationInstructions"/>
-                    </label>
-                    <obs id="instructions{0}" class="medication-instructions" conceptId="PIH:9072"/>
-                </p>
+                <div id="med-instruc-{0}" class="inline" >
+                    <p class="inline" style="min-width: 15%">
+                        <label>
+                            <uimessage code="mirebalais.dispensing.medicationAmount"/>
+                        </label>
+                        <obs id="amount{0}" conceptId="CIEL:1443"/>
+                    </p>
+                    <p class="inline" style="min-width: 65%">
+                        <label>
+                            <uimessage code="mirebalais.dispensing.medicationInstructions"/>
+                        </label>
+                        <obs id="instructions{0}" class="medication-instructions" conceptId="PIH:9072"/>
+                    </p>
+                </div>
             </fieldset>
         </obsgroup>
     </repeat>
