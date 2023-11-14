@@ -576,127 +576,7 @@
             </div>
         </section>
 
-        <section id="ep-visit" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="Visit">
-            <div class="section-container">
-                <div class="two-columns">
-                    <div>
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="Seizure since last visit"/>
-                            </label>
-                            <br/>
-                            <obs conceptId="PIH:14680" style="radio"
-                                 answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"/>
-                        </p>
-                    </div>
 
-                    <div>
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="Neuro exam"/>
-                            </label>
-                            <obs conceptId="PIH:1129" style="radio" answerConceptIds="PIH:1116,PIH:1115"/>
-                        </p>
-
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="Development"/>
-                            </label>
-                            <obs conceptId="CIEL:160277" style="radio" answerConceptIds="PIH:1116,PIH:1115"/>
-                        </p>
-
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="Mood"/>
-                            </label>
-                            <obs conceptId="PIH:14131" style="radio" answerConceptIds="PIH:1116,PIH:1115"/>
-                        </p>
-
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="Behavior/Appearance"/>
-                            </label>
-                            <obs conceptId="CIEL:167092" style="radio" answerConceptIds="PIH:1116,PIH:1115"/>
-                        </p>
-                    </div>
-                </div>
-                <br/>
-                <br/>
-
-                <div class="two-columns">
-                    <div>
-                        <p class="list-inline">
-                            <label class="inline">
-                                <uimessage code="pihcore.epilepsy.care.during.seizure"/>
-                            </label>
-                            <obs conceptId="PIH:12401" style="radio" answerConceptIds="PIH:NO,PIH:YES"/>
-                        </p>
-
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="pihcore.epilepsy.recognized.trigger.signs"/>
-                            </label>
-                            <obs conceptId="PIH:12406" style="radio" answerConceptIds="PIH:NO,PIH:YES"/>
-                        </p>
-
-                        <p class="list-inline">
-                            <includeIf velocityTest="$patient.gender == 'F' ">
-                                <label>
-                                    <uimessage code="pihcore.pregnancy.status"/>
-                                </label>
-                                <obs conceptId="PIH:PATIENT PREGNANT" style="yes_no"/>
-                            </includeIf>
-                        </p>
-
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="On family planning"/>
-                            </label>
-                            <obs conceptId="PIH:14321" style="radio" answerConceptIds="PIH:YES,PIH:NO"/>
-                        </p>
-
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="Missed a dose yesterday"/>
-                            </label>
-                            <obs conceptId="PIH:14678" style="radio" answerConceptIds="PIH:YES,PIH:NO"/>
-                        </p>
-                    </div>
-
-                    <div>
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="pihcore.medication.side.effects"/>
-                            </label>
-
-                            <obs id="med-side-effects" conceptId="CIEL:165273" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO"/>
-                        </p>
-
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="pihcore.ncd.plan.hospitalized"/>
-                            </label>
-                            <obs conceptId="PIH:PATIENT HOSPITALIZED SINCE LAST VISIT" answerConceptIds="PIH:YES,PIH:NO"
-                                 style="radio" answerSeparator=""/>
-                        </p>
-
-                        <p>
-                            <label class="inline">
-                                <uimessage code="Next appointment date"/>
-                            </label>
-                            <span class="small">
-                                <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true"
-                                     allowPastDates="false"
-                                     required="true"/>
-                            </span>
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
 
     <ifMode mode="VIEW" include="false">
         <style>
@@ -812,25 +692,17 @@
             <p>
                 <obs conceptId="PIH:PATIENT PLAN COMMENTS" style="textarea" rows="10"/>
             </p>
-        </div>
-    </section>
 
-    <section id="support-type" sectionTag="fieldset" headerTag="legend"
-             headerStyle="title" headerCode="Patient support type">
-        <div class="section-container">
-            <repeat>
-                <template>
-                    <obs conceptId="PIH:2156" answerConceptId="{aid}"
-                         answerLabel="{aidLabel}" style="checkbox"/>
-                </template>
-                <render aid="PIH:ASSISTANCE WITH TRANSPORT" aidLabel="Transportation"/>
-                <render aid="PIH:NUTRITIONAL AID" aidLabel="Food"/>
-                <render aid="PIH:SCHOOL EXPENSES" aidLabel="School fees"/>
-                <render aid="PIH:14628" aidLabel="Reintegration"/>
-                <render aid="PIH:FINANCIAL AID" aidLabel="Economic empowerment"/>
-                <render aid="PIH:HOUSING EXPENSES" aidLabel="Housing or infrastructure"/>
-                <render aid="PIH:10640" aidLabel="Psychoeducation"/>
-            </repeat>
+            <p>
+                <label class="inline">
+                    <uimessage code="pihcore.consult.returnVisitDate"/>:
+                </label>
+                <span class="small">
+                    <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true" allowPastDates="false"
+                         required="true"/>
+                </span>
+            </p>
+
         </div>
     </section>
 
