@@ -275,8 +275,8 @@
                     </label>
                     <obs id="dose{0}" class="doseInput" conceptId="CIEL:160856"/>
                     <obs id="doseUnit{0}" class="doseInput select-arrow" conceptId="PIH:9074"
-                         answers="mg,g,mL,Application,Capsule,Tablet,Drop,mcg,Patch,Pump,Sachet,UI"
-                         answerCodes="dispensing.units.mg,dispensing.units.g,dispensing.units.mL,dispensing.units.application,dispensing.units.capsule,dispensing.units.tablet,dispensing.units.drop,dispensing.units.mcg,dispensing.units.patch,dispensing.units.pump,dispensing.units.sachet,dispensing.units.IU"/>
+                         answers="mg,g,mL,Application,Capsule,Tablet,Drop,mcg,Patch,Pump,Sachet,UI, Bottle, Tube"
+                         answerCodes="dispensing.units.mg,dispensing.units.g,dispensing.units.mL,dispensing.units.application,dispensing.units.capsule,dispensing.units.tablet,dispensing.units.drop,dispensing.units.mcg,dispensing.units.patch,dispensing.units.pump,dispensing.units.sachet,dispensing.units.IU,Bottle,Tube"/>
                 </p>
                 <p class="inline">
                     <label>
@@ -286,7 +286,7 @@
                     <obs id="frequencyCoded{0}" class="frequency select-arrow" conceptId="CIEL:160855"
                          answerConceptIds=
                                  "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:5D,PIH:6D,PIH:7D,PIH:8D,PIH:9D,PIH:OM,PIH:ON,PIH:PRN,PIH:STAT,PIH:Q2H,PIH:Q3H,PIH:Q4H,PIH:Q6H,PIH:Q12H,PIH:5622"
-                         answerCodes="OD,BID,TID,QID,5D,6D,7D,8D,9D,OM,ON,SOS,STAT,Q2H,Q3H,Q4H,Q6H,Q12H,dispensing.general.other" />
+                         answerCodes="OD,BID,TID,QD,5D,6D,7D,8D,9D,OM,ON,SOS,STAT,Q2H,Q3H,Q4H,Q6H,Q12H,dispensing.general.other" />
                </p>
 
                 <p class="inline">
@@ -294,15 +294,15 @@
                         <uimessage code="mirebalais.dispensing.medicationDuration"  />
                     </label>
                     <obs id="duration{0}" class="duration doseInput" conceptId="CIEL:159368"/>
-                        <obs id="durationUnit{0}" class="duration-unit select-arrow" conceptId="PIH:6412" answerConceptIds="PIH:Days,PIH:1073,PIH:Months,PIH:Hours"/>
+                        <obs id="durationUnit{0}" class="duration-unit select-arrow" conceptId="PIH:6412" answerConceptIds="PIH:Days,PIH:1073,PIH:Months,PIH:Hours,CIEL:1733"/>
                 </p>
                 <p class="inline">
                     <label>
                         <uimessage code="pihcore.drug.route"/>
                     </label>
                     <obs id="route-{0}" class="route select-arrow" conceptId="PIH:12651"
-                         answerConceptIds="CIEL:160240,CIEL:160242,CIEL:160243,CIEL:160245"
-                         answerLabels="Oral,IV,IM,SubQ"/>
+                         answerConceptIds="CIEL:160240,CIEL:160242,CIEL:160243,CIEL:160245,CIEL:162797"
+                         answerLabels="Oral,IV,IM,SubQ,Apply"/>
                 </p>
                 <p class="inline">
                     <label>
@@ -310,7 +310,7 @@
                     </label>
                     <obs id="amount{0}" conceptId="CIEL:1443"/>
                 </p>
-                <p class="inline" style="min-width: 15%">
+               <!-- <p class="inline" style="min-width: 15%">
                     <label>
                         <uimessage code="pihcore.status"/>
                     </label>
@@ -318,7 +318,7 @@
                          style="checkbox"
                          conceptId="PIH:14368" answerConceptId="CIEL:1754"
                          answerCode="pihcore.stockout"/>
-                </p>
+                </p> -->
                 <p class="inline" style="min-width: 65%">
                     <label>
                         <uimessage code="mirebalais.dispensing.medicationInstructions"/>
