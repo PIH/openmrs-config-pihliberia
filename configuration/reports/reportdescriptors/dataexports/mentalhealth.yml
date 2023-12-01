@@ -1,0 +1,39 @@
+key: "mentalhealthexport"
+uuid: "4805f139-d66e-4d55-a399-a7c0bb7e584b"
+name: "Mental Health Data-Test"
+description: "Mental Health Results (only)"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - {key: "mentalhealthPatients", type: "sql", config: "sql/mentalhealthPatients.sql"}
+  - {key: "epilepsy", type: "sql", config: "sql/epilepsy.sql"}
+  - {key: "mentalhealthMedications", type: "sql", config: "sql/mentalhealthMedications.sql"}
+designs:
+  - type: "csv"
+    properties:
+      "filenameBase": "mentalhealthexport.{{ formatDate request.reportDefinition.parameterMappings.startDate \"yyyyMMdd\" }}.{{ formatDate request.reportDefinition.parameterMappings.endDate \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"HHmm\" }}"
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+    processors:
+      - name: "saveToDisk"
+        type: "disk"
+        runOnSuccess: "true"
+        runOnError: "false"
+        processorMode: "AUTOMATIC"
+        configuration:
+          saveLocation: "{{application_data_directory}}reports"
+          compressOutput: "true"
+config:
+  category: "dataExport"
+  order: 60
+  countries:
+    - "LIBERIA"
+  components:
+    - "dataExports"
+  privilege: "Task: clinical.reports"
