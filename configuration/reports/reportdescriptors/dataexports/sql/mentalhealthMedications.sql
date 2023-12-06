@@ -3,24 +3,25 @@ select encounter_type_id into @MH_Consult from encounter_type et2 where uuid = '
 drop temporary table if exists temp_MH_meds;
 create temporary table temp_MH_meds
 (
-patient_id int(11),
-emr_id varchar(50),
-encounter_id int(11),
-obs_group_id int(11),
-encounter_date date,
-provider varchar(50),
-date_entered date,
-user_entered varchar(50),
-med_name varchar(255),
-dose double,
-dose_unit varchar(255),
-dose_frequency varchar(50),
-duration double,
-duration_unit varchar(50),
-route varchar(50),
-additional_medication_comments varchar(255),
-index_asc int(5),
-index_desc int
+    meds_id int auto_increment primary key, -- new field introduced to join the indexes with the main table
+    patient_id int(11),
+    emr_id varchar(50),
+    encounter_id int(11),
+    obs_group_id int(11),
+    encounter_date date,
+    provider varchar(50),
+    date_entered date,
+    user_entered varchar(50),
+    med_name varchar(255),
+    dose double,
+    dose_unit varchar(255),
+    dose_frequency varchar(50),
+    duration double,
+    duration_unit varchar(50),
+    route varchar(50),
+    additional_medication_comments varchar(255),
+    index_asc int(5),
+    index_desc int
 )
 ;
 
@@ -92,8 +93,9 @@ set additional_medication_comments = obs_value_text(t.encounter_id, 'PIH','10637
 drop temporary table if exists temp_MH_meds_index_asc;
 CREATE TEMPORARY TABLE temp_MH_meds_index_asc
 (
-    SELECT
+    SELECT   
             patient_id,
+            meds_id,
             encounter_date,
             encounter_id,
             index_asc
@@ -102,6 +104,7 @@ FROM (SELECT
             encounter_date,
             encounter_id,
             patient_id,
+            meds_id,
             @u:= patient_id
       FROM temp_MH_meds,
                     (SELECT @r:= 1) AS r,
@@ -111,7 +114,7 @@ FROM (SELECT
 
 CREATE INDEX tmia_e ON temp_MH_meds_index_asc(encounter_id);
 update temp_MH_meds tm
-inner join temp_MH_meds_index_asc tmia on tmia.encounter_id = tm.encounter_id
+inner join temp_MH_meds_index_asc tmia on tmia.meds_id = tm.meds_id
 set tm.index_asc = tmia.index_asc;
 
 drop temporary table if exists temp_MH_meds_index_desc;
@@ -119,6 +122,7 @@ CREATE TEMPORARY TABLE temp_MH_meds_index_desc
 (
     SELECT
             patient_id,
+            meds_id,
             encounter_date,
             encounter_id,
             index_desc
@@ -127,6 +131,7 @@ FROM (SELECT
             encounter_date,
             encounter_id,
             patient_id,
+            meds_id,
             @u:= patient_id
       FROM temp_MH_meds,
                     (SELECT @r:= 1) AS r,
@@ -135,9 +140,9 @@ FROM (SELECT
         ) index_descending );
 
 CREATE INDEX tmid_e ON temp_MH_meds_index_desc(encounter_id);
-update temp_MH_meds mm
-inner join temp_MH_meds_index_desc tmid on tmid.encounter_id = mm.encounter_id
-set mm.index_desc = tmid.index_desc;
+update temp_MH_meds tm
+inner join temp_MH_meds_index_desc tmid on tmid.meds_id= tm.meds_id
+set tm.index_desc = tmid.index_desc;
 
 select
 emr_id,
