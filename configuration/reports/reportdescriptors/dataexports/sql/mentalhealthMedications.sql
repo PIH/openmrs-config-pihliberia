@@ -109,7 +109,7 @@ FROM (SELECT
       FROM temp_MH_meds,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id, encounter_date ASC, encounter_id ASC
+            ORDER BY patient_id, meds_id ASC, encounter_date ASC, encounter_id ASC
         ) index_ascending );
 
 CREATE INDEX tmia_e ON temp_MH_meds_index_asc(encounter_id);
@@ -136,7 +136,7 @@ FROM (SELECT
       FROM temp_MH_meds,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id, encounter_date DESC, encounter_id DESC
+            ORDER BY patient_id, meds_id DESC, encounter_date DESC, encounter_id DESC
         ) index_descending );
 
 CREATE INDEX tmid_e ON temp_MH_meds_index_desc(encounter_id);
