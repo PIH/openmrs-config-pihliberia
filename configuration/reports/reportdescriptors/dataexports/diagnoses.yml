@@ -22,6 +22,8 @@ designs:
 config:
   category: "dataExport"
   order: "10"
+  countries:
+    - "LIBERIA"  
   components:
     - "allDataExports"
   privilege: "Task: clinical.reports"
