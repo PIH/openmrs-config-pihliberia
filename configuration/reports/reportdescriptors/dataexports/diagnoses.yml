@@ -1,7 +1,7 @@
-key: "diagnosesdataexport"
+key: "mentalhealthexport"
 uuid: "3ddae447-c90b-4c50-bc51-76ad6fcfffb5"
-name: "mirebalaisreports.diagnosesdataexport.name"
-description: "mirebalaisreports.diagnosesdataexport.description"
+name: "Diagnoses Data"
+description: "Diagnoses Data"
 parameters:
   - key: "startDate"
     type: "java.util.Date"
@@ -19,11 +19,20 @@ designs:
       "characterEncoding": "ISO-8859-1"
       "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
       "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+    processors:
+      - name: "saveToDisk"
+        type: "disk"
+        runOnSuccess: "true"
+        runOnError: "false"
+        processorMode: "AUTOMATIC"
+        configuration:
+          saveLocation: "{{application_data_directory}}reports"
+          compressOutput: "true"
 config:
   category: "dataExport"
-  order: "10"
+  order: 5
   countries:
-    - "LIBERIA"  
+    - "LIBERIA"
   components:
-    - "allDataExports"
+    - "dataExports"
   privilege: "Task: clinical.reports"
