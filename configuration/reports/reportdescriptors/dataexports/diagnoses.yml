@@ -9,6 +9,13 @@ parameters:
   - key: "endDate"
     type: "java.util.Date"
     label: "reporting.parameter.endDate"
+  - key: "service"
+    type: "string"
+    label: "Service"
+    required: false
+    widgetConfiguration:
+      optionValues: ",Mental Health,MCH,NCD,OPD"
+      optionLabels: ",Mental Health,MCH,NCD,OPD"   
 datasets:
   - key: "diagnosesdataexport"
     type: "sql"
