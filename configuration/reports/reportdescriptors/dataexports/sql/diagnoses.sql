@@ -22,7 +22,15 @@ CREATE TEMPORARY TABLE temp_diagnoses
  coded              varchar(255), 
  diagnosis_concept  int(11),      
  diagnosis_coded_en varchar(255), 
+ age_at_encounter   double,
+ encounter_location varchar(255),
  date_created       datetime,
+ entered_by         varchar(255),
+ provider           varchar(255),
+ birthdate_estimated boolean,
+ encounter_type     varchar(255),
+ service            varchar(255),
+ visit_id           int(11),
  index_asc          int,
  index_desc         int
  );
@@ -48,9 +56,94 @@ AND ((date(o.obs_datetime) >=@startDate) or @startDate is null)
 AND ((date(o.obs_datetime) <=@endDate)  or @endDate is null)
 ;
 
-
 create index temp_diagnoses_e on temp_diagnoses(encounter_id);
 create index temp_diagnoses_p on temp_diagnoses(patient_id);
+
+
+select encounter_type_name_from_id(e.encounter_type) , t.* from temp_diagnoses t
+inner join encounter e on e.encounter_id = t.encounter_id;
+
+-- encounter level information
+DROP TEMPORARY TABLE IF EXISTS temp_dx_encounter;
+CREATE TEMPORARY TABLE temp_dx_encounter
+(
+ patient_id          int(11),      
+ encounter_id        int(11),   
+ encounter_location_id int(11),
+ encounter_location  varchar(255),
+ encounter_type_id   int(11),
+ encounter_type      varchar(255),
+ service             varchar(255),
+ age_at_encounter    int(3),
+ entered_by_user_id  int(11),
+ entered_by          varchar(255), 
+ provider            varchar(255), 
+ date_created        datetime,     
+ visit_id            int(11),      
+ birthdate           datetime,     
+ birthdate_estimated boolean     
+);
+
+insert into temp_dx_encounter(encounter_id)
+select distinct encounter_id from temp_diagnoses;
+
+create index temp_dx_encounter_ei on temp_dx_encounter(encounter_id);  
+
+update temp_dx_encounter t
+inner join encounter e on e.encounter_id  = t.encounter_id
+set t.entered_by_user_id = e.creator,
+	t.visit_id = e.visit_id,
+	t.encounter_type_id = e.encounter_type,
+	t.patient_id = e.patient_id,
+	t.encounter_location_id = e.location_id,
+	t.date_created = e.date_created;
+
+select encounter_type_id into @MHIntake from encounter_type et where uuid = 'fccd53c2-f802-439b-a7a2-2d680bd8b81b';
+select encounter_type_id into @MHConsult from encounter_type et where uuid = 'a8584ab8-cc2a-11e5-9956-625662870761';
+select encounter_type_id into @MHEpilepsyFollowup from encounter_type et where uuid = '74e06462-243e-4fad-8d7c-0bb3921322f1';
+select encounter_type_id into @MHEpilepsyIntake from encounter_type et where uuid = '7336a05e-4bd1-4e52-81c1-207697afc868';
+
+select encounter_type_id into @ANCFollowup from encounter_type et where uuid = '00e5e946-90ec-11e8-9eb6-529269fb1459';
+select encounter_type_id into @Delivery from encounter_type et where uuid = '00e5ebb2-90ec-11e8-9eb6-529269fb1459';
+select encounter_type_id into @ANCIntake from encounter_type et where uuid = '00e5e810-90ec-11e8-9eb6-529269fb1459';
+select encounter_type_id into @PEDS from encounter_type et where uuid = 'fac9d9a2-d0bc-11ea-9995-3c6aa7c392cc';
+
+select encounter_type_id into @NCDInitial from encounter_type et where uuid = 'ae06d311-1866-455b-8a64-126a9bd74171';
+select encounter_type_id into @NCDFollowup from encounter_type et where uuid = '5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c';
+
+select encounter_type_id into @Consult from encounter_type et where uuid = '92fd09b4-5335-4f7e-9f63-b2a663fd09a6';
+update temp_dx_encounter
+set service = 
+case 
+	when encounter_type_id in (@MHIntake, @MHConsult, @MHEpilepsyFollowup,  @MHEpilepsyIntake) then 'Mental Health'
+	when encounter_type_id in (@ANCFollowup, @Delivery, @ANCIntake,  @PEDS) then 'MCH'
+	when encounter_type_id in (@NCDInitial, @NCDFollowup) then 'NCD'
+	when encounter_type_id in (@Consult) then 'OPD'	
+end;	
+
+update temp_dx_encounter set encounter_location = location_name(encounter_location_id);
+update temp_dx_encounter set entered_by = person_name_of_user(entered_by_user_id);
+update temp_dx_encounter set encounter_type = encounter_type_name_from_id(encounter_type_id);
+
+update temp_dx_encounter set provider = provider(encounter_id);
+update temp_dx_encounter set age_at_encounter = age_at_enc(patient_id, encounter_id);
+
+update temp_diagnoses td
+inner join temp_dx_encounter tde on tde.patient_id = td.patient_id
+set td.encounter_location= tde.encounter_location,
+td.encounter_type= tde.encounter_type,
+td.service= tde.service,
+td.age_at_encounter= tde.age_at_encounter,
+td.entered_by= tde.entered_by,
+td.provider= tde.provider,
+td.date_created= tde.date_created,
+td.visit_id= tde.visit_id;
+
+
+-- delete rows that do not match the service, if one was passed in
+delete from temp_diagnoses
+where @service is not NULL
+and service <> @service;
 
 -- patient level info
 DROP TEMPORARY TABLE IF EXISTS temp_dx_patient;
@@ -83,81 +176,13 @@ update temp_dx_patient set gender = gender(patient_id);
 update temp_dx_patient t
 inner join person p on p.person_id  = t.patient_id
 set t.birthdate = p.birthdate,
-	t.birthdate_estimated = t.birthdate_estimated
-;
+	t.birthdate_estimated = t.birthdate_estimated;
 
 update temp_dx_patient set county = person_address_state_province(patient_id);
 update temp_dx_patient set district = person_address_county_district(patient_id);
 update temp_dx_patient set settlement = person_address_city_village(patient_id);
 update temp_dx_patient set address = person_address_one(patient_id);
 
-
--- encounter level information
-DROP TEMPORARY TABLE IF EXISTS temp_dx_encounter;
-CREATE TEMPORARY TABLE temp_dx_encounter
-(
- patient_id          int(11),      
- encounter_id        int(11),   
- encounter_location_id int(11),
- encounter_location  varchar(255),
- encounter_type_id   int(11),
- encounter_type      varchar(255),
- service             varchar(255),
- age_at_encounter    int(3),
- entered_by_user_id  int(11),
- entered_by          varchar(255), 
- provider            varchar(255), 
- date_created        datetime,     
- visit_id            int(11),      
- birthdate           datetime,     
- birthdate_estimated boolean     
-);
-
-insert into temp_dx_encounter(encounter_id)
-select distinct encounter_id from temp_diagnoses;
-
-create index temp_dx_encounter_ei on temp_dx_encounter(encounter_id);   
-
-update temp_dx_encounter t
-inner join encounter e on e.encounter_id  = t.encounter_id
-set t.entered_by_user_id = e.creator,
-	t.visit_id = e.visit_id,
-	t.encounter_type_id = e.encounter_type,
-	t.patient_id = e.patient_id,
-	t.encounter_location_id = e.location_id,
-	t.date_created = e.date_created 
-;
-
-update temp_dx_encounter set encounter_location = location_name(encounter_location_id);
-update temp_dx_encounter set entered_by = person_name_of_user(entered_by_user_id);
-update temp_dx_encounter set encounter_type = encounter_type_name_from_id(encounter_type_id);
-
-select encounter_type_id into @MHIntake from encounter_type et where uuid = 'fccd53c2-f802-439b-a7a2-2d680bd8b81b';
-select encounter_type_id into @MHConsult from encounter_type et where uuid = 'a8584ab8-cc2a-11e5-9956-625662870761';
-select encounter_type_id into @MHEpilepsyFollowup from encounter_type et where uuid = '74e06462-243e-4fad-8d7c-0bb3921322f1';
-select encounter_type_id into @MHEpilepsyIntake from encounter_type et where uuid = '7336a05e-4bd1-4e52-81c1-207697afc868';
-
-select encounter_type_id into @ANCFollowup from encounter_type et where uuid = '00e5e946-90ec-11e8-9eb6-529269fb1459';
-select encounter_type_id into @Delivery from encounter_type et where uuid = '00e5ebb2-90ec-11e8-9eb6-529269fb1459';
-select encounter_type_id into @ANCIntake from encounter_type et where uuid = '00e5e810-90ec-11e8-9eb6-529269fb1459';
-select encounter_type_id into @PEDS from encounter_type et where uuid = 'fac9d9a2-d0bc-11ea-9995-3c6aa7c392cc';
-
-select encounter_type_id into @NCDInitial from encounter_type et where uuid = 'ae06d311-1866-455b-8a64-126a9bd74171';
-select encounter_type_id into @NCDFollowup from encounter_type et where uuid = '5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c';
-
-select encounter_type_id into @Consult from encounter_type et where uuid = '92fd09b4-5335-4f7e-9f63-b2a663fd09a6';
-update temp_dx_encounter
-set service = 
-case 
-	when encounter_type_id in (@MHIntake, @MHConsult, @MHEpilepsyFollowup,  @MHEpilepsyIntake) then 'Mental Health'
-	when encounter_type_id in (@ANCFollowup, @Delivery, @ANCIntake,  @PEDS) then 'MCH'
-	when encounter_type_id in (@NCDInitial, @NCDFollowup) then 'NCD'
-	when encounter_type_id in (@Consult) then 'OPD'	
-end;	
-
-update temp_dx_encounter set provider = provider(encounter_id);
-update temp_dx_encounter set age_at_encounter = age_at_enc(patient_id, encounter_id);
-      
  -- diagnosis info
 DROP TEMPORARY TABLE IF EXISTS temp_obs;
 create temporary table temp_obs 
@@ -280,7 +305,6 @@ update temp_diagnoses t
 inner join temp_visit_index_desc tvia on tvia.obs_id = t.obs_id
 set t.index_desc = tvia.index_desc;
 
-
 -- select final output
 select 
 p.patient_id,
@@ -288,17 +312,17 @@ p.patient_primary_id "emr_id",
 p.loc_registered,
 p.unknown_patient,
 p.gender,
-e.age_at_encounter,
+d.age_at_encounter,
 p.county,
 p.district,
 p.settlement,
 p.address,
-e.encounter_id,
-e.encounter_location,
+d.encounter_id,
+d.encounter_location,
 d.obs_id,
 d.obs_datetime,
-e.entered_by,
-e.provider,
+d.entered_by,
+d.provider,
 d.diagnosis_entered,
 d.dx_order,
 d.certainty,
@@ -317,19 +341,16 @@ dc.non_diagnosis,
 dc.ed,
 dc.age_restricted,
 dc.oncology,
-e.date_created,
-IF(TIME_TO_SEC(e.date_created) - TIME_TO_SEC(d.obs_datetime) > 1800,1,0) "retrospective",
-e.visit_id,
+d.date_created,
+IF(TIME_TO_SEC(d.date_created) - TIME_TO_SEC(d.obs_datetime) > 1800,1,0) "retrospective",
+d.visit_id,
 p.birthdate,
 p.birthdate_estimated,
-e.encounter_type,
-e.encounter_type_id,
-e.service,
+d.encounter_type,
+d.service,
 d.index_asc,
 d.index_desc
 from temp_diagnoses d
 inner join temp_dx_patient p on p.patient_id = d.patient_id
-inner join temp_dx_encounter e on e.encounter_id = d.encounter_id
-inner join temp_dx_concept dc on dc.diagnosis_concept = d.diagnosis_concept
-where service = @service or @service is null
+left outer join temp_dx_concept dc on dc.diagnosis_concept = d.diagnosis_concept
 ;
