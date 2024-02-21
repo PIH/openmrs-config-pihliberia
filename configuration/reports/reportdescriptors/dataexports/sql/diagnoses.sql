@@ -5,7 +5,7 @@
  *  - added index_asc, index_desc
  * 
  * When the Liberia Data Warehouse is built, we probably want to use version in PH EMR 
- * (and maybe add service)
+ * (and maybe add service and change the address columns?)
  */
 SET @locale =   if(@startDate is null, 'en', GLOBAL_PROPERTY_VALUE('default_locale', 'en'));
 
@@ -21,7 +21,7 @@ CREATE TEMPORARY TABLE temp_diagnoses
  certainty          varchar(255), 
  coded              varchar(255), 
  diagnosis_concept  int(11),      
- diagnosis_coded_fr varchar(255), 
+ diagnosis_coded_en varchar(255), 
  date_created       datetime,
  index_asc          int,
  index_desc         int
@@ -57,19 +57,17 @@ DROP TEMPORARY TABLE IF EXISTS temp_dx_patient;
 CREATE TEMPORARY TABLE temp_dx_patient
 (
 patient_id               int(11),      
-dossierId                varchar(50),  
 patient_primary_id       varchar(50),  
 loc_registered           varchar(255), 
 unknown_patient          varchar(50),  
 gender                   varchar(50),  
-department               varchar(255), 
-commune                  varchar(255), 
-section                  varchar(255),  
-locality                 varchar(255), 
+county                   varchar(255), 
+district                 varchar(255),
+settlement               varchar(255), 
+address                  varchar(255), 
 street_landmark          varchar(255), 
 birthdate                datetime,     
-birthdate_estimated      boolean,      
-section_communale_CDC_ID varchar(11)    
+birthdate_estimated      boolean      
 );
    
 insert into temp_dx_patient(patient_id)
@@ -78,7 +76,6 @@ select distinct patient_id from temp_diagnoses;
 create index temp_dx_patient_pi on temp_dx_patient(patient_id);
 
 update temp_dx_patient set patient_primary_id = patient_identifier(patient_id, metadata_uuid('org.openmrs.module.emrapi', 'emr.primaryIdentifierType'));
-update temp_dx_patient set dossierid = dosid(patient_id);
 update temp_dx_patient set loc_registered = loc_registered(patient_id);
 update temp_dx_patient set unknown_patient = unknown_patient(patient_id);
 update temp_dx_patient set gender = gender(patient_id);
@@ -89,12 +86,11 @@ set t.birthdate = p.birthdate,
 	t.birthdate_estimated = t.birthdate_estimated
 ;
 
-update temp_dx_patient set department = person_address_state_province(patient_id);
-update temp_dx_patient set commune = person_address_city_village(patient_id);
-update temp_dx_patient set section = person_address_three(patient_id);
-update temp_dx_patient set locality = person_address_one(patient_id);
-update temp_dx_patient set street_landmark = person_address_two(patient_id);
-update temp_dx_patient set section_communale_CDC_ID = cdc_id(patient_id);
+update temp_dx_patient set county = person_address_state_province(patient_id);
+update temp_dx_patient set district = person_address_county_district(patient_id);
+update temp_dx_patient set settlement = person_address_city_village(patient_id);
+update temp_dx_patient set address = person_address_one(patient_id);
+
 
 -- encounter level information
 DROP TEMPORARY TABLE IF EXISTS temp_dx_encounter;
@@ -181,7 +177,7 @@ create index temp_obs_ci1 on temp_obs(obs_group_id, concept_id);
  left outer join concept_name cn on cn.concept_name_id  = o.value_coded_name_id 
  set t.diagnosis_entered = IFNULL(cn.name,IFNULL( concept_name(o.value_coded,'en'),o_non.value_text)), 
  	 t.diagnosis_concept = o.value_coded,
-     t.diagnosis_coded_fr = concept_name(o.value_coded,'fr'),
+     t.diagnosis_coded_en = concept_name(o.value_coded,'en'),
      t.coded = IF(o.value_coded is null, 0,1);
 
 update temp_diagnoses t
@@ -288,17 +284,15 @@ set t.index_desc = tvia.index_desc;
 -- select final output
 select 
 p.patient_id,
-p.dossierId,
-p.patient_primary_id,
+p.patient_primary_id "emr_id",
 p.loc_registered,
 p.unknown_patient,
 p.gender,
 e.age_at_encounter,
-p.department,
-p.commune,
-p.section,
-p.locality,
-p.street_landmark,
+p.county,
+p.district,
+p.settlement,
+p.address,
 e.encounter_id,
 e.encounter_location,
 d.obs_id,
@@ -310,7 +304,7 @@ d.dx_order,
 d.certainty,
 d.coded,
 d.diagnosis_concept,
-d.diagnosis_coded_fr,
+d.diagnosis_coded_en,
 dc.icd10_code,
 dc.notifiable,
 dc.urgent,
@@ -331,7 +325,6 @@ p.birthdate_estimated,
 e.encounter_type,
 e.encounter_type_id,
 e.service,
-p.section_communale_CDC_ID,
 d.index_asc,
 d.index_desc
 from temp_diagnoses d
