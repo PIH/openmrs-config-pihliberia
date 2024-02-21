@@ -59,10 +59,6 @@ AND ((date(o.obs_datetime) <=@endDate)  or @endDate is null)
 create index temp_diagnoses_e on temp_diagnoses(encounter_id);
 create index temp_diagnoses_p on temp_diagnoses(patient_id);
 
-
-select encounter_type_name_from_id(e.encounter_type) , t.* from temp_diagnoses t
-inner join encounter e on e.encounter_id = t.encounter_id;
-
 -- encounter level information
 DROP TEMPORARY TABLE IF EXISTS temp_dx_encounter;
 CREATE TEMPORARY TABLE temp_dx_encounter
