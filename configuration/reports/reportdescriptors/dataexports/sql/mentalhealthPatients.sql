@@ -11,7 +11,9 @@ encounter_id int,
 emr_id varchar(50),
 mh_mrn varchar(20),
 dob date,
-address varchar(100),
+community varchar(50),
+district varchar(50),
+county varchar(50),
 gender varchar(50),
 referred_by varchar(50),
 referred_from varchar(50),
@@ -36,7 +38,11 @@ set @mh_identifier = '23507d1e-4f22-11ea-9717-645d86728797'; -- mental health pa
 
 update temp_mh_patients set emr_id = patient_identifier(patient_id, @identifier_type);
 UPDATE temp_mh_patients SET mh_mrn = PATIENT_IDENTIFIER(patient_id, @mh_identifier);
-UPDATE temp_mh_patients SET address = PERSON_ADDRESS(patient_id);
+UPDATE temp_mh_patients SET community = PERSON_ADDRESS_ONE(patient_id);
+UPDATE temp_mh_patients SET district= person_address_city_village(patient_id);
+UPDATE temp_mh_patients SET county = person_address_state_province(patient_id);
+
+
 
 DROP TABLE IF EXISTS temp_encounter;
 CREATE TEMPORARY TABLE temp_encounter AS
@@ -80,7 +86,9 @@ SELECT
     mh_mrn,
     dob,
     gender,
-    address,
+    community,
+    district,
+    county,
     referred_by,
     referred_from,
     date_enrolled,
