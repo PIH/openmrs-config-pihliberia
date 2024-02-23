@@ -1,7 +1,7 @@
-key: "mentalhealthpatients"
-uuid: "ce033a47a-0065-4805-9ad9-44f54906c36b"
-name: "Mental Health Patients"
-description: "Mental Health Patients Data"
+key: "mentalhealthVisitsdataexport"
+uuid: "839c08d9-8745-46d3-9ca0-e0d3277a27eb"
+name: "Mental Health Visit Data"
+description: "Mental Health Visit Data"
 parameters:
   - key: "startDate"
     type: "java.util.Date"
@@ -10,9 +10,9 @@ parameters:
     type: "java.util.Date"
     label: "reporting.parameter.endDate"
 datasets:
-  - key: "mentalhealthpatients"
+  - key: "mentalhealthVisitsdataexport"
     type: "sql"
-    config: "sql/mentalhealthpatients.sql"
+    config: "sql/mentalhealthVisits.sql"
 designs:
   - type: "csv"
     properties:

@@ -1,7 +1,7 @@
-key: "epilepsydataexport"
-uuid: "45c8a248-3c01-4915-94e6-86932fa4a493"
-name: "Mental Health Epilepsy Data"
-description: "Mental Health Epilepsy Data"
+key: "mentalhealthPatientsdataexport"
+uuid: "2ba9018d-29cc-43a5-9bb9-4aea1298d2b4"
+name: "Mental Health Patients Data"
+description: "Mental Health Patients Data"
 parameters:
   - key: "startDate"
     type: "java.util.Date"
@@ -10,9 +10,9 @@ parameters:
     type: "java.util.Date"
     label: "reporting.parameter.endDate"
 datasets:
-  - key: "epilepsydataexport"
+  - key: "mentalhealthPatientsdataexport"
     type: "sql"
-    config: "sql/epilepsy.sql"
+    config: "sql/mentalhealthPatients.sql"
 designs:
   - type: "csv"
     properties:
