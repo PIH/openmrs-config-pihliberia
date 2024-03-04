@@ -8,19 +8,19 @@ create temporary table temp_mh_patients
 patient_id int,
 program_id int,
 encounter_id int,
-emr_id varchar(50),
-mh_mrn varchar(20),
+emr_id varchar(255),
+mh_mrn varchar(255),
 dob date,
-community varchar(50),
-district varchar(50),
-county varchar(50),
-gender varchar(50),
-referred_by varchar(50),
-referred_from varchar(50),
+community varchar(255),
+district varchar(255),
+county varchar(255),
+gender varchar(255),
+referred_by varchar(255),
+referred_from varchar(255),
 date_enrolled date,
 counseling_plan text,
 date_completed date,
-program_outcome varchar(50)
+program_outcome varchar(255)
 );
 
 INSERT INTO temp_mh_patients (patient_id, program_id, date_enrolled, date_completed, program_outcome)
