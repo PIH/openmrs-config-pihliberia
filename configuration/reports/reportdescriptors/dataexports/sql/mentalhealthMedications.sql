@@ -3,27 +3,26 @@ select encounter_type_id into @MH_Consult from encounter_type et2 where uuid = '
 drop temporary table if exists temp_MH_meds;
 create temporary table temp_MH_meds
 (
-    meds_id int auto_increment primary key, -- new field introduced to join the indexes with the main table
-    patient_id int(11),
-    emr_id varchar(255),
-    encounter_id int(11),
-    obs_group_id int(11),
-    encounter_date date,
-    provider varchar(255),
-    date_entered date,
-    user_entered varchar(255),
-    med_name varchar(255),
-    dose double,
-    dose_unit varchar(255),
-    dose_frequency varchar(50),
-    duration double,
-    duration_unit varchar(255),
-    route varchar(50),
-    additional_medication_comments varchar(255),
-    index_asc int(5),
-    index_desc int
-)
-;
+meds_id int auto_increment primary key, -- new field introduced to join the indexes with the main table
+patient_id int(11),
+emr_id varchar(50),
+encounter_id int(11),
+obs_group_id int(11),
+encounter_date date,
+provider varchar(50),
+date_entered date,
+user_entered varchar(50),
+med_name varchar(255),
+dose double,
+dose_unit varchar(255),
+dose_frequency varchar(50),
+duration double,
+duration_unit varchar(50),
+route varchar(50),
+additional_medication_comments varchar(255),
+index_asc int(5),
+index_desc int(5)
+);
 
 DROP TABLE IF EXISTS temp_encounter;
 CREATE TEMPORARY TABLE temp_encounter AS
@@ -37,7 +36,8 @@ create index temp_encounter_ci1 on temp_encounter(encounter_id);
 DROP TABLE IF EXISTS temp_obs;
 CREATE TEMPORARY TABLE temp_obs AS
 SELECT o.person_id, o.obs_id , o.obs_group_id , o.obs_datetime ,o.date_created , o.encounter_id, o.value_coded, o.concept_id, o.value_numeric , o.value_datetime , o.value_text , o.voided
-FROM temp_encounter te  INNER JOIN  obs o ON te.encounter_id=o.encounter_id
+FROM temp_encounter te
+INNER JOIN  obs o ON te.encounter_id=o.encounter_id
 WHERE o.voided =0;
 
 insert into temp_MH_meds(encounter_id, obs_group_id, patient_id, encounter_date)
@@ -93,23 +93,23 @@ set additional_medication_comments = obs_value_text(t.encounter_id, 'PIH','10637
 drop temporary table if exists temp_MH_meds_index_asc;
 CREATE TEMPORARY TABLE temp_MH_meds_index_asc
 (
-    SELECT   
-            patient_id,
+    SELECT
             meds_id,
-            encounter_date,
+            patient_id,
+            med_name,
             encounter_id,
             index_asc
 FROM (SELECT
-            @r:= IF(@u = patient_id, @r + 1,1) index_asc,
-            encounter_date,
+            @r:= IF(@u = med_name, @r + 1,1) index_asc,
+            med_name,
             encounter_id,
             patient_id,
             meds_id,
-            @u:= patient_id
-      FROM temp_MH_meds,
+            @u:= med_name
+      FROM temp_MH_meds tm,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id, meds_id ASC, encounter_date ASC, encounter_id ASC
+            ORDER BY patient_id ASC, med_name ASC, encounter_id ASC
         ) index_ascending );
 
 CREATE INDEX tmia_e ON temp_MH_meds_index_asc(encounter_id);
@@ -121,32 +121,34 @@ drop temporary table if exists temp_MH_meds_index_desc;
 CREATE TEMPORARY TABLE temp_MH_meds_index_desc
 (
     SELECT
-            patient_id,
             meds_id,
-            encounter_date,
+            patient_id,
+            med_name,
             encounter_id,
             index_desc
 FROM (SELECT
-            @r:= IF(@u = patient_id, @r + 1,1) index_desc,
-            encounter_date,
-            encounter_id,
+            @r:= IF(@u = med_name, @r + 1,1) index_desc,
+            med_name,
             patient_id,
+            encounter_id,
             meds_id,
-            @u:= patient_id
+            @u:= med_name
       FROM temp_MH_meds,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id, meds_id DESC, encounter_date DESC, encounter_id DESC
+            ORDER BY  patient_id DESC, med_name DESC, encounter_id DESC
         ) index_descending );
 
 CREATE INDEX tmid_e ON temp_MH_meds_index_desc(encounter_id);
-update temp_MH_meds tm
-inner join temp_MH_meds_index_desc tmid on tmid.meds_id= tm.meds_id
-set tm.index_desc = tmid.index_desc;
+update temp_MH_meds mm
+inner join temp_MH_meds_index_desc tmid on tmid.meds_id = mm.meds_id
+set mm.index_desc = tmid.index_desc;
 
 select
 emr_id,
+patient_id,
 encounter_id,
+obs_group_id,
 encounter_date,
 provider,
 date_entered,
