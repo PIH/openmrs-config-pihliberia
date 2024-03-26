@@ -13,7 +13,7 @@ create temporary table temp_mh_visits (
     provider varchar(255),
     suicidal_ideation text,
     homicidal_ideation text,
-    suicidality_screening int(11),
+    suicidality_screening int(255),
     result_of_suicide_risk_evaluation varchar(255),
     ms_appearance_posture varchar(255),
     ms_speech varchar(255),
@@ -159,17 +159,19 @@ CREATE TEMPORARY TABLE temp_mh_visits_index_asc
             visits_id,
             patient_id,
             encounter_id,
+            encounter_date,
             index_asc
 FROM (SELECT
             @r:= IF(@u = patient_id, @r + 1,1) index_asc,
             encounter_id,
+            encounter_date,
             visits_id,
             patient_id,
             @u:= patient_id
       FROM temp_mh_visits tm,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id, encounter_id, visits_id ASC
+            ORDER BY patient_id, encounter_date, encounter_id ASC
         ) index_ascending );
 
 CREATE INDEX tvia_e ON temp_mh_visits_index_asc(encounter_id);
@@ -184,10 +186,11 @@ CREATE TEMPORARY TABLE temp_mh_visits_index_desc
             visits_id,
             patient_id,
             encounter_id,
+            encounter_date,
             index_desc
 FROM (SELECT
             @r:= IF(@u = patient_id, @r + 1,1) index_desc,
-
+            encounter_date,
             encounter_id,
             patient_id,
             visits_id,
@@ -195,7 +198,7 @@ FROM (SELECT
       FROM temp_mh_visits,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id DESC,  encounter_id desc, visits_id DESC
+            ORDER BY patient_id desc, encounter_date DESC,  encounter_id desc
         ) index_descending );
 
 CREATE INDEX tvid_e ON temp_mh_visits_index_desc(encounter_id);
