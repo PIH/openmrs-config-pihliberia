@@ -2,7 +2,6 @@ SELECT encounter_type_id INTO @enctype FROM encounter_type et WHERE uuid='55a0d3
 -- set @startDate = '2024-03-28'; -- for testing
 -- set @endDate = '2024-03-28'; -- for testing
 
-
 DROP TABLE IF EXISTS checkin_details;
 CREATE TEMPORARY TABLE checkin_details (
 patient_id int,
@@ -33,8 +32,6 @@ FROM encounter
 WHERE encounter_type=@enctype
 AND DATE(encounter_datetime) >= @startDate AND DATE(encounter_datetime) <= @endDate
 ;
-
-select * from checkin_details;
 
 -- reason_of_visit
 UPDATE checkin_details s INNER JOIN obs o 
