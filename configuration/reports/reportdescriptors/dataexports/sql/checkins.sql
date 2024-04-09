@@ -1,4 +1,7 @@
 SELECT encounter_type_id INTO @enctype FROM encounter_type et WHERE uuid='55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b';
+-- set @startDate = '2024-03-28'; -- for testing
+-- set @endDate = '2024-03-28'; -- for testing
+
 
 DROP TABLE IF EXISTS checkin_details;
 CREATE TEMPORARY TABLE checkin_details (
@@ -7,7 +10,7 @@ emr_id varchar(50),
 encounter_id int,
 encounter_datetime datetime,
 encounter_location varchar(100),
-date_entered date,
+date_entered datetime,
 user_entered varchar(30),
 encounter_provider varchar(30),
 reason_of_visit varchar(50),
@@ -30,6 +33,8 @@ FROM encounter
 WHERE encounter_type=@enctype
 AND DATE(encounter_datetime) >= @startDate AND DATE(encounter_datetime) <= @endDate
 ;
+
+select * from checkin_details;
 
 -- reason_of_visit
 UPDATE checkin_details s INNER JOIN obs o 
@@ -74,4 +79,5 @@ emr_id,encounter_id,encounter_datetime,encounter_location,date_entered,user_ente
 encounter_provider,reason_of_visit,referred_or_escorted,referred_by,
 escorting_person_name,escorting_person_phone
 FROM checkin_details
-ORDER BY encounter_id desc;
+ORDER BY encounter_id desc
+;
