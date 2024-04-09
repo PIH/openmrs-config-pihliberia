@@ -1,4 +1,7 @@
 SELECT encounter_type_id INTO @enctype FROM encounter_type et WHERE uuid='55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b';
+-- set @startDate = '2024-03-28'; -- for testing
+-- set @endDate = '2024-03-28'; -- for testing
+
 
 DROP TABLE IF EXISTS checkin_details;
 CREATE TEMPORARY TABLE checkin_details (
@@ -7,7 +10,7 @@ emr_id varchar(50),
 encounter_id int,
 encounter_datetime datetime,
 encounter_location varchar(100),
-date_entered date,
+datetime_entered datetime,
 user_entered varchar(30),
 encounter_provider varchar(30),
 reason_of_visit varchar(50),
@@ -16,7 +19,7 @@ referred_by varchar(100),
 escorting_person_name varchar(100),
 escorting_person_phone varchar(30));
 
-INSERT INTO checkin_details(patient_id,emr_id,encounter_id,encounter_datetime,encounter_location,date_entered,user_entered,encounter_provider)
+INSERT INTO checkin_details(patient_id,emr_id,encounter_id,encounter_datetime,encounter_location,datetime_entered,user_entered,encounter_provider)
 SELECT 
 patient_id,
 patient_identifier(patient_id, '0bc545e0-f401-11e4-b939-0800200c9a66'),
@@ -30,6 +33,8 @@ FROM encounter
 WHERE encounter_type=@enctype
 AND DATE(encounter_datetime) >= @startDate AND DATE(encounter_datetime) <= @endDate
 ;
+
+select * from checkin_details;
 
 -- reason_of_visit
 UPDATE checkin_details s INNER JOIN obs o 
@@ -70,8 +75,9 @@ AND o.voided =0
 SET escorting_person_phone= value_text;
 
 SELECT 
-emr_id,encounter_id,encounter_datetime,encounter_location,date_entered,user_entered,
+emr_id,encounter_id,encounter_datetime,encounter_location,datetime_entered,user_entered,
 encounter_provider,reason_of_visit,referred_or_escorted,referred_by,
 escorting_person_name,escorting_person_phone
 FROM checkin_details
-ORDER BY encounter_id desc;
+ORDER BY encounter_id desc
+;
