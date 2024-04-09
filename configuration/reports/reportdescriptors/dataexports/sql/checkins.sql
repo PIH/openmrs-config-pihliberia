@@ -10,7 +10,7 @@ emr_id varchar(50),
 encounter_id int,
 encounter_datetime datetime,
 encounter_location varchar(100),
-date_entered datetime,
+datetime_entered datetime,
 user_entered varchar(30),
 encounter_provider varchar(30),
 reason_of_visit varchar(50),
@@ -19,7 +19,7 @@ referred_by varchar(100),
 escorting_person_name varchar(100),
 escorting_person_phone varchar(30));
 
-INSERT INTO checkin_details(patient_id,emr_id,encounter_id,encounter_datetime,encounter_location,date_entered,user_entered,encounter_provider)
+INSERT INTO checkin_details(patient_id,emr_id,encounter_id,encounter_datetime,encounter_location,datetime_entered,user_entered,encounter_provider)
 SELECT 
 patient_id,
 patient_identifier(patient_id, '0bc545e0-f401-11e4-b939-0800200c9a66'),
@@ -75,7 +75,7 @@ AND o.voided =0
 SET escorting_person_phone= value_text;
 
 SELECT 
-emr_id,encounter_id,encounter_datetime,encounter_location,date_entered,user_entered,
+emr_id,encounter_id,encounter_datetime,encounter_location,datetime_entered,user_entered,
 encounter_provider,reason_of_visit,referred_or_escorted,referred_by,
 escorting_person_name,escorting_person_phone
 FROM checkin_details
