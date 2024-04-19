@@ -3,7 +3,7 @@ ${program.anc.uuid},ANC,Antenatal Care Program,true,CIEL:165475,PIH:MCH outcome
 ${program.asthma.uuid},Asthma,Asthma Program,true,PIH:Asthma Program,PIH:Generic outcome
 ${program.covid19.uuid},COVID-19,COVID-19 Program,true,CIEL:166009,PIH:Generic outcome
 ${program.diabetes.uuid},Diabetes,Diabetes Program,true,PIH:Diabetes Program,PIH:Generic outcome
-${program.mentalHealth.uuid},Mental Health,Mental Health Program,,PIH:Mental Health Program,PIH:14578
+${program.mentalHealth.uuid},Mental Health,Mental Health Program,,PIH:Mental Health Program,PIH:Liberia Mental Health outcome
 ${program.hypertension.uuid},Hypertension,Hypertension Program,true,PIH:Hypertension program,PIH:Generic outcome
 ${program.hiv.uuid},HIV,HIV Program,true,PIH:HIV PROGRAM,PIH:HIV outcome
 ${program.malnutrition.uuid},Malnutrition,Malnutrition Program,true,PIH:MALNUTRITION PROGRAM,PIH:Generic outcome
