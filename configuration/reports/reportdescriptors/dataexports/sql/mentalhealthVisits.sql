@@ -68,6 +68,9 @@ FROM temp_encounter te
 INNER JOIN  obs o ON te.encounter_id=o.encounter_id
 WHERE o.voided =0;
 
+create index temp_obs_ci on temp_obs(concept_id);
+create index temp_obs_ci_ei on temp_obs(encounter_id,concept_id);
+
 update temp_mh_visits tmhv set emr_id = patient_identifier(patient_id, @identifier_type);
 
 UPDATE temp_mh_visits tmhv
