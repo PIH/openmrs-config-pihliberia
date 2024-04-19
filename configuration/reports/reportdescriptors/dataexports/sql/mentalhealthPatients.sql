@@ -19,16 +19,16 @@ referred_by varchar(255),
 referred_from varchar(255),
 date_enrolled date,
 counseling_plan text,
-date_completed date,
+outcome_date date,
 program_outcome varchar(255)
 );
 
-INSERT INTO temp_mh_patients (patient_id, program_id, date_enrolled, date_completed, program_outcome)
+INSERT INTO temp_mh_patients (patient_id, program_id, date_enrolled, outcome_date, program_outcome)
 SELECT
     patient_id,
     program_id,
     date_enrolled,
-    date_completed,
+    outcome_date,
 	concept_name(outcome_concept_id, 'en')
 FROM patient_program
 WHERE program_id = @program_id AND voided = 0;
@@ -92,7 +92,7 @@ SELECT
     referred_by,
     referred_from,
     date_enrolled,
-    date_completed,
+    outcome_date,
     counseling_plan,
     program_outcome
 FROM
