@@ -24,7 +24,7 @@
   "idCardLocale": "en",
   "registrationConfig": {
     "allowUnknownPatients": false,
-    "allowManualEntryOfPrimaryIdentifier": false,
+    "allowManualEntryOfPrimaryIdentifier": true,
     "afterCreatedUrl": "pihcore/patientRegistration/afterRegistration.page?patientId={{patientId}}&encounterId={{encounterId}}",
     "similarPatientsSearch": {
       "addressFields": {
