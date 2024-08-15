@@ -2,13 +2,6 @@ key: "mentalhealthVisitsdataexport"
 uuid: "153c11a9-221d-4d86-8daf-373ac6857922"
 name: "Mental Health Visit Data"
 description: "Mental Health Visit Data"
-parameters:
-  - key: "startDate"
-    type: "java.util.Date"
-    label: "reporting.parameter.startDate"
-  - key: "endDate"
-    type: "java.util.Date"
-    label: "reporting.parameter.endDate"
 datasets:
   - key: "mentalhealthVisitsdataexport"
     type: "sql"

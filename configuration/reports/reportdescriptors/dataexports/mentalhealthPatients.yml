@@ -2,13 +2,6 @@ key: "mentalhealthPatientsdataexport"
 uuid: "2ba9018d-29cc-43a5-9bb9-4aea1298d2b4"
 name: "Mental Health Patients Data"
 description: "Mental Health Patients Data"
-parameters:
-  - key: "startDate"
-    type: "java.util.Date"
-    label: "reporting.parameter.startDate"
-  - key: "endDate"
-    type: "java.util.Date"
-    label: "reporting.parameter.endDate"
 datasets:
   - key: "mentalhealthPatientsdataexport"
     type: "sql"

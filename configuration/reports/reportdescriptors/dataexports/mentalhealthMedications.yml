@@ -2,13 +2,6 @@ key: "mentalhealthMedicationsdataexport"
 uuid: "886f2614-fdcc-40a6-b900-f86732daff98"
 name: "Mental Health Medications Data"
 description: "Mental Health Medication Data"
-parameters:
-  - key: "startDate"
-    type: "java.util.Date"
-    label: "reporting.parameter.startDate"
-  - key: "endDate"
-    type: "java.util.Date"
-    label: "reporting.parameter.endDate"
 datasets:
   - key: "mentalhealthMedicationsdataexport"
     type: "sql"
