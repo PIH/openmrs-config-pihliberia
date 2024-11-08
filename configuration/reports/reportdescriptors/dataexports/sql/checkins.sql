@@ -1,6 +1,6 @@
 SELECT encounter_type_id INTO @enctype FROM encounter_type et WHERE uuid='55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b';
- set @startDate = '2024-01-01'; -- for testing
- set @endDate = '2024-11-08'; -- for testing
+-- set @startDate = '2024-01-01'; -- for testing
+-- set @endDate = '2024-11-08'; -- for testing
 
 DROP TABLE IF EXISTS checkin_details;
 CREATE TEMPORARY TABLE checkin_details (
