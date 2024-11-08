@@ -1,6 +1,6 @@
 SELECT encounter_type_id INTO @enctype FROM encounter_type et WHERE uuid='55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b';
--- set @startDate = '2024-03-28'; -- for testing
--- set @endDate = '2024-03-28'; -- for testing
+-- set @startDate = '2024-01-01'; -- for testing
+-- set @endDate = '2024-11-08'; -- for testing
 
 DROP TABLE IF EXISTS checkin_details;
 CREATE TEMPORARY TABLE checkin_details (
@@ -8,15 +8,15 @@ patient_id int,
 emr_id varchar(50),
 encounter_id int,
 encounter_datetime datetime,
-encounter_location varchar(100),
+encounter_location varchar(255),
 datetime_entered datetime,
-user_entered varchar(30),
-encounter_provider varchar(30),
-reason_of_visit varchar(50),
-referred_or_escorted varchar(30),
-referred_by varchar(100),
-escorting_person_name varchar(100),
-escorting_person_phone varchar(30));
+user_entered varchar(255),
+encounter_provider varchar(255),
+reason_of_visit varchar(255),
+referred_or_escorted varchar(255),
+referred_by varchar(255),
+escorting_person_name text,
+escorting_person_phone text);
 
 INSERT INTO checkin_details(patient_id,emr_id,encounter_id,encounter_datetime,encounter_location,datetime_entered,user_entered,encounter_provider)
 SELECT 
