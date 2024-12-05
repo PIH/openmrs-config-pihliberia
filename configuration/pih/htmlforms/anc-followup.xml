@@ -300,7 +300,7 @@
         </ifMode>
 
         <!-- Program enrollment -->
-        <enrollInProgram programId="MCH"/>
+        <enrollInProgram programId="MCH" locationTag="Program Location" />
 
         <!--follow-up section-->
         <section id="anc-followup" sectionTag="fieldset" headerTag="legend"

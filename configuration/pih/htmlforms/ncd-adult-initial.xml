@@ -253,7 +253,7 @@
         </ifMode>
 
         <!-- Program enrollment -->
-        <enrollInProgram programId="NCD"/>
+        <enrollInProgram programId="NCD" locationTag="Program Location" />
 
         <section id="complaint" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="pihcore.history.presentingHistory.title">
