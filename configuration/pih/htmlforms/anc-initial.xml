@@ -331,7 +331,7 @@
         </ifMode>
 
         <!-- Program enrollment -->
-        <enrollInProgram programId="MCH"/>
+        <enrollInProgram programId="MCH" locationTag="Program Location" />
 
         <!--anc referral section-->
         <section id="anc_refer" sectionTag="fieldset" headerTag="legend" headerStyle="title"

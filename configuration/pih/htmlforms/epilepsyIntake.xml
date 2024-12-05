@@ -353,7 +353,7 @@
     </ifMode>
 
     <!-- Program enrollment -->
-    <enrollInProgram programId="Mental Health"/>
+    <enrollInProgram programId="Mental Health" locationTag="Program Location" />
 
     <section id="overview" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Epilepsy visit overview">
