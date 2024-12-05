@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="20241204-migrate-program-locations" author="PIH">
+        <comment>
+            LIB-344 Fix Program Enrollment Locations
+        </comment>
+        <sql>
+            update  patient_program pp, location l, location pl
+            set     pp.location_id = pl.location_id, pp.date_changed = now(), pp.changed_by = 1
+            where   pp.location_id = l.location_id and pl.location_id = l.parent_location
+            and     (pl.uuid = '5af1ffcd-5178-11ea-a500-645d86728797');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
