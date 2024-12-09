@@ -333,7 +333,7 @@
     </ifMode>
 
     <!-- Program enrollment -->
-    <enrollInProgram programId="Mental Health"/>
+    <enrollInProgram programId="Mental Health" locationTag="Program Location" />
 
     <!-- The form -->
 

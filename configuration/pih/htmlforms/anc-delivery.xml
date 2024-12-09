@@ -250,7 +250,7 @@
         </ifMode>
 
         <!-- Program enrollment -->
-        <enrollInProgram programId="MCH"/>
+        <enrollInProgram programId="MCH" locationTag="Program Location" />
 
         <!--delivery section-->
         <section id="labor-delivery" sectionTag="fieldset" headerTag="legend"
