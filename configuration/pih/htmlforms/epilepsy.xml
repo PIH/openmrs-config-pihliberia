@@ -421,10 +421,12 @@
                         </p>
 
                         <p class="list-inline">
+                            <includeIf velocityTest="$patient.gender == 'F' ">
                             <label>
                                 <uimessage code="On family planning"/>
                             </label>
                             <obs conceptId="PIH:14321" style="radio" answerConceptIds="PIH:YES,PIH:NO"/>
+                            </includeIf>
                         </p>
 
                         <p class="list-inline">
