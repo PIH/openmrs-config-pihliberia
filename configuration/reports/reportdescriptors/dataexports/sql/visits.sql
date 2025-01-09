@@ -99,19 +99,14 @@ update temp_visits v
 set v.checkin_encounter_id =  
 	(select max(e.encounter_id) from encounter e where e.visit_id = v.visit_id and e.encounter_type = @checkinEncTypeId and e.voided = 0);
 
--- first visit this year
-drop temporary table if exists temp_visits_dates;
-create temporary table temp_visits_dates
-select patient_id, visit_id, visit_date_started from temp_visits;
-
 update temp_visits tv 
 set tv.first_visit_this_year = 1
 where not EXISTS 
-	(select 1 from temp_visits_dates vd 
-	where vd.patient_id = tv.patient_id
-	and vd.visit_date_started < tv.visit_date_started
-	and YEAR(vd.visit_date_started) = YEAR(tv.visit_date_started)
-	and vd.visit_id <> tv.visit_id);
+	(select 1 from visit v
+	where v.patient_id = tv.patient_id
+	and v.date_started < tv.visit_date_started
+	and YEAR(v.date_started) = YEAR(tv.visit_date_started)
+	and v.visit_id <> tv.visit_id);
 
 update temp_visits tv 
 set visit_reason = obs_value_coded_list(checkin_encounter_id, 'PIH','6189','en');
