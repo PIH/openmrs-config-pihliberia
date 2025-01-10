@@ -1,7 +1,16 @@
--- set @startDate = '2016-01-01';
--- set @endDate = '2016-12-31';
-
+-- set @startDate = '2024-12-01';
+-- set @endDate = '2024-12-31';
 select encounter_type_id  into @checkinEncTypeId from encounter_type where uuid = '55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b';
+select encounter_type_id  into @vitalsEncTypeId from encounter_type where uuid = '4fb47712-34a6-40d2-8ed3-e153abbd25b7';
+select encounter_type_id  into @consultEncTypeId from encounter_type where uuid = '92fd09b4-5335-4f7e-9f63-b2a663fd09a6';
+select encounter_type_id  into @ncdInitEncTypeId from encounter_type where uuid = 'ae06d311-1866-455b-8a64-126a9bd74171';
+select encounter_type_id  into @ncdFollowEncTypeId from encounter_type where uuid = '5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c';
+select encounter_type_id  into @ancInitEncTypeId from encounter_type where uuid = '00e5e810-90ec-11e8-9eb6-529269fb1459';
+select encounter_type_id  into @ancFollowEncTypeId from encounter_type where uuid = '00e5e946-90ec-11e8-9eb6-529269fb1459';
+select encounter_type_id  into @epilepsyEncTypeId from encounter_type where uuid = '74e06462-243e-4fad-8d7c-0bb3921322f1';
+select encounter_type_id  into @mhInitEncTypeId from encounter_type where uuid = 'fccd53c2-f802-439b-a7a2-2d680bd8b81b';
+select encounter_type_id  into @mhFollowEncTypeId from encounter_type where uuid = 'a8584ab8-cc2a-11e5-9956-625662870761';
+select encounter_type_id  into @specimenCollectionEncTypeId from encounter_type where uuid = '39C09928-0CAB-4DBA-8E48-39C631FA4286';
 
 drop temporary table if exists temp_visits;
 create temporary table temp_visits
@@ -17,9 +26,15 @@ visit_type_id		int(11),
 visit_type			varchar(255),
 checkin_encounter_id	int(11),	
 visit_checkin		bit,
-visit_reason		varchar(255),
+checkin_reason		varchar(255),
 location_id			int(11),
 visit_location		varchar(255),
+mh_or_epilepsy_encounter boolean,
+ncd_encounter boolean,
+anc_encounter boolean,
+lab_collection_encounter boolean,
+vitals_encounter boolean,
+consult_encounter boolean,
 first_visit_this_year boolean,
 number_of_encounters int);
 
@@ -109,11 +124,35 @@ where not EXISTS
 	and v.visit_id <> tv.visit_id);
 
 update temp_visits tv 
-set visit_reason = obs_value_coded_list(checkin_encounter_id, 'PIH','6189','en');
+set checkin_reason = obs_value_coded_list(checkin_encounter_id, 'PIH','6189','en');
 
 update temp_visits tv 
 set number_of_encounters = 
 	(select count(*) from encounter e where e.visit_id = tv.visit_id and e.voided = 0);
+
+update temp_visits tv 
+inner join encounter e on e.visit_id = tv.visit_id and e.voided = 0 and e.encounter_type = @vitalsEncTypeId
+set vitals_encounter = 1;
+
+update temp_visits tv 
+inner join encounter e on e.visit_id = tv.visit_id and e.voided = 0 and e.encounter_type in (@mhInitEncTypeId, @mhFollowEncTypeId)
+set mh_or_epilepsy_encounter = 1;
+
+update temp_visits tv 
+inner join encounter e on e.visit_id = tv.visit_id and e.voided = 0 and e.encounter_type in (@ncdInitEncTypeId, @ncdFollowEncTypeId)
+set ncd_encounter = 1;
+
+update temp_visits tv 
+inner join encounter e on e.visit_id = tv.visit_id and e.voided = 0 and e.encounter_type in (@ancInitEncTypeId, @ancFollowEncTypeId)
+set anc_encounter = 1;
+
+update temp_visits tv 
+inner join encounter e on e.visit_id = tv.visit_id and e.voided = 0 and e.encounter_type = @consultEncTypeId
+set consult_encounter = 1;
+
+update temp_visits tv 
+inner join encounter e on e.visit_id = tv.visit_id and e.voided = 0 and e.encounter_type = @specimenCollectionEncTypeId
+set lab_collection_encounter = 1;
 
 select 
 emr_id,
@@ -125,8 +164,14 @@ visit_date_entered,
 visit_user_entered,
 visit_type,
 if(checkin_encounter_id is null, null, 1) as visit_checkin,
-visit_reason,
+checkin_reason,
 visit_location,
+mh_or_epilepsy_encounter,
+ncd_encounter,
+anc_encounter,
+lab_collection_encounter,
+vitals_encounter,
+consult_encounter,
 first_visit_this_year,
 number_of_encounters
 from temp_visits;
