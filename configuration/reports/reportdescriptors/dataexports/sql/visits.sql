@@ -7,7 +7,8 @@ select encounter_type_id  into @ncdInitEncTypeId from encounter_type where uuid 
 select encounter_type_id  into @ncdFollowEncTypeId from encounter_type where uuid = '5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c';
 select encounter_type_id  into @ancInitEncTypeId from encounter_type where uuid = '00e5e810-90ec-11e8-9eb6-529269fb1459';
 select encounter_type_id  into @ancFollowEncTypeId from encounter_type where uuid = '00e5e946-90ec-11e8-9eb6-529269fb1459';
-select encounter_type_id  into @epilepsyEncTypeId from encounter_type where uuid = '74e06462-243e-4fad-8d7c-0bb3921322f1';
+select encounter_type_id  into @epilepsyInitEncTypeId from encounter_type where uuid = '7336a05e-4bd1-4e52-81c1-207697afc868';
+select encounter_type_id  into @epilepsyFollowEncTypeId from encounter_type where uuid = '74e06462-243e-4fad-8d7c-0bb3921322f1';
 select encounter_type_id  into @mhInitEncTypeId from encounter_type where uuid = 'fccd53c2-f802-439b-a7a2-2d680bd8b81b';
 select encounter_type_id  into @mhFollowEncTypeId from encounter_type where uuid = 'a8584ab8-cc2a-11e5-9956-625662870761';
 select encounter_type_id  into @specimenCollectionEncTypeId from encounter_type where uuid = '39C09928-0CAB-4DBA-8E48-39C631FA4286';
@@ -135,7 +136,7 @@ inner join encounter e on e.visit_id = tv.visit_id and e.voided = 0 and e.encoun
 set vitals_encounter = 1;
 
 update temp_visits tv 
-inner join encounter e on e.visit_id = tv.visit_id and e.voided = 0 and e.encounter_type in (@mhInitEncTypeId, @mhFollowEncTypeId)
+inner join encounter e on e.visit_id = tv.visit_id and e.voided = 0 and e.encounter_type in (@mhInitEncTypeId, @mhFollowEncTypeId, @epilepsyInitEncTypeId, @epilepsyFollowEncTypeId)
 set mh_or_epilepsy_encounter = 1;
 
 update temp_visits tv 
