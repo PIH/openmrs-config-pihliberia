@@ -16,7 +16,7 @@ select encounter_type_id  into @specimenCollectionEncTypeId from encounter_type 
 drop temporary table if exists temp_visits;
 create temporary table temp_visits
 (patient_id			int(11),
-emr_id				varchar(50),
+emr_id				varchar(255),
 visit_id			int(11),
 visit_date_started	datetime,
 visit_date_stopped	datetime,
