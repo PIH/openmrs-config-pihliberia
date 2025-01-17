@@ -108,7 +108,7 @@
 
         jq(document).ready(function() {
 
-            const vitalsSignsEncounterType = '2fd151a2-fbef-43e3-b82d-c3f70f1d7333';
+            const vitalsSignsEncounterType = '4fb47712-34a6-40d2-8ed3-e153abbd25b7';
             const weightConceptUuid = '3ce93b62-26fe-102b-80cb-0017a47871b2';
             const heightConceptUuid = '3ce93cf2-26fe-102b-80cb-0017a47871b2';
             const systolicBPConceptUuid = '3ce934fa-26fe-102b-80cb-0017a47871b2';
