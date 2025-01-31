@@ -1,3 +1,4 @@
+use openmrs;
 set @program_id = program('Mental Health');
 SELECT encounter_type_id INTO @mh_intake_enc FROM encounter_type WHERE uuid = 'fccd53c2-f802-439b-a7a2-2d680bd8b81b';
 set @identifier_type ='0bc545e0-f401-11e4-b939-0800200c9a66';
@@ -5,6 +6,7 @@ set @identifier_type ='0bc545e0-f401-11e4-b939-0800200c9a66';
 DROP TABLE IF EXISTS temp_mh_patients;
 create temporary table temp_mh_patients
 (
+enrollment_id int auto_increment primary key,
 patient_id int,
 program_id int,
 encounter_id int,
@@ -20,7 +22,9 @@ referred_from varchar(255),
 date_enrolled date,
 counseling_plan text,
 outcome_date date,
-program_outcome varchar(255)
+program_outcome varchar(255),
+index_asc int,
+index_desc int
 );
 
 INSERT INTO temp_mh_patients (patient_id, program_id, date_enrolled, outcome_date, program_outcome)
@@ -59,6 +63,56 @@ SELECT o.person_id, o.obs_id , o.obs_group_id , o.obs_datetime ,o.date_created ,
 FROM temp_encounter te  INNER JOIN  obs o ON te.encounter_id=o.encounter_id
 WHERE o.voided =0;
 
+drop temporary table if exists temp_mh_patients_index_asc;
+CREATE TEMPORARY TABLE temp_mh_patients_index_asc
+(
+    SELECT
+			enrollment_id,
+            patient_id,
+            date_enrolled,
+            index_asc
+FROM (SELECT
+            @r:= IF(@u = patient_id, @r + 1,1) index_asc,
+            enrollment_id,
+            date_enrolled,
+            patient_id,
+            @u:= patient_id
+      FROM temp_mh_patients tmp,
+                    (SELECT @r:= 1) AS r,
+                    (SELECT @u:= 0) AS u
+            ORDER BY patient_id, date_enrolled ASC
+        ) index_ascending );
+--         
+CREATE INDEX tmhia ON temp_mh_patients_index_asc(patient_id);
+update temp_mh_patients tmhp
+inner join temp_mh_patients_index_asc tmhia on tmhp.enrollment_id = tmhia.enrollment_id
+set tmhp.index_asc = tmhia.index_asc;
+
+drop temporary table if exists temp_mh_patients_index_desc;
+CREATE TEMPORARY TABLE temp_mh_patients_index_desc
+(
+    SELECT
+			enrollment_id,
+            patient_id,
+            date_enrolled,
+            index_desc
+FROM (SELECT
+            @r:= IF(@u = patient_id, @r + 1,1) index_desc,
+            enrollment_id,
+            date_enrolled,
+            patient_id,
+            @u:= patient_id
+      FROM temp_mh_patients tmp,
+                    (SELECT @r:= 1) AS r,
+                    (SELECT @u:= 0) AS u
+            ORDER BY patient_id DESC, date_enrolled DESC
+        ) index_descending );
+--         
+CREATE INDEX tmhia ON temp_mh_patients_index_desc(patient_id);
+update temp_mh_patients tmhp
+inner join temp_mh_patients_index_desc tmhia on tmhp.enrollment_id = tmhia.enrollment_id
+set tmhp.index_desc = tmhia.index_desc;
+
 UPDATE temp_mh_patients tmh
 SET
 	tmh.gender = GENDER(tmh.patient_id),
@@ -94,6 +148,8 @@ SELECT
     date_enrolled,
     outcome_date,
     counseling_plan,
-    program_outcome
+    program_outcome,
+    index_asc,
+    index_desc
 FROM
     temp_mh_patients;
