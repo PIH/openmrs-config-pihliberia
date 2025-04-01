@@ -403,16 +403,6 @@
              headerCode="Patient Details">
         <div class="section-container">
 
-            <!-- Type of Visit -->
-            <p class="side-by-side">
-                <label>
-                    <uimessage code="pihcore.type_of_visit" />
-                </label>
-                <obs conceptId="PIH:6189" style="radio"
-                     answerConceptIds="PIH:1246,PIH:12612,PIH:6192"
-                     answerCodes="Scheduled,Non scheduled,Urgent"/>
-            </p>
-
             <!-- Chief Complaint -->
             <p>
                 <obs conceptId="CIEL:160531" style="textarea" id="chief-complaint"
@@ -449,33 +439,11 @@
                         </span>
                     </div>
 
-                    <!-- External referral form -->
-                    <div class="two-columns">
-                        <div>
-                            <p class="side-by-side">
-                                <span class="list-inline" style="display:inline-block; width:45%;">
-                                    <obs conceptId="PIH:Type of referring service" style="checkbox"
-                                         answerConceptId="PIH:11956" commentFieldLabel="" class="first-label-inline"/>
-                                </span>
-                            </p>
-                        </div>
-
-                        <div>
-                            <p class="side-by-side">
-                                <span style="display:inline-block; width:47%;">
-                                    <obs conceptId="PIH:Type of referring service" style="checkbox"
-                                         answerConceptId="PIH:Non-ZL supported site" commentFieldLabel=""
-                                         class="first-label-inline"/>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-
                     <span class="first-label-inline">
-                        <label>
+                        <label class="inline">
                             <uimessage code="pihcore.refer.date"/>
                         </label>
-                        <obs conceptId="CIEL:163181" allowTime="false" placeholder="lorum ipsum"/>
+                        <obs conceptId="CIEL:163181" allowTime="false" placeholder="lorum ipsum" class="inline"/>
                     </span>
                 </fieldset>
 
@@ -516,19 +484,19 @@
                     <br/>
 
                     <span class="first-label-inline">
-                        <label>
-                            Total number of hospitalizations
+                        <label class="inline">
+                            Total number of hospitalizations:
                         </label>
-                        <obs conceptId="CIEL:1773" labelText=""/>
+                        <obs conceptId="CIEL:1773" labelText="" class="inline"/>
                     </span>
 
                     &amp;nbsp&amp;nbsp
 
                     <span class="first-label-inline">
-                        <label>
-                            Last date of admission
+                        <label class="inline">
+                            Last date of admission:
                         </label>
-                        <obs conceptId="PIH:12602" labelText=""/>
+                        <obs conceptId="PIH:12602" labelText="" class="inline"/>
                     </span>
 
                     <label class="inline">
@@ -1542,10 +1510,12 @@
                 <render category="PIH:Chronic respiratory disease program" nickname="respire" code="Chronic lung disease" />
                 <render category="CIEL:145438" nickname="kidney_failure" code="Chronic kidney disease"/>
                 <render category="PIH:3714" nickname="cirrhosis" code="Liver disease" />
-                <render category="CIEL:160849" nickname="palliative" code="Palliative care"/>
-                <render category="PIH:Sickle-Cell Anemia" nickname="sickle" code="Sickle cell"/>
-                <render category="CIEL:5622" nickname="other-ncd" code="Other"/>
+                <render category="PIH:SPLENOMEGALY" nickname="splenomegaly" code="Splenomegaly"/>
             </repeat>
+
+            <obs conceptId="PIH:NCD category" answerConceptId="PIH:OTHER"
+                 style="checkbox" toggle="other"
+                 showCommentField="true" commentFieldLabel=" "/>
         </div>
     </section>
 
