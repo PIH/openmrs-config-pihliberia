@@ -1504,13 +1504,17 @@
                     </obsgroup>
                 </template>
 
-                <render category="PIH:DIABETES" nickname="diabetes" code="Diabetes"/>
                 <render category="PIH:HYPERTENSION" nickname="htn" code="Hypertension"/>
-                <render category="PIH:HEART FAILURE" nickname="heart_failure" code="Heart failure"/>
-                <render category="PIH:Chronic respiratory disease program" nickname="respire" code="Chronic lung disease" />
-                <render category="CIEL:145438" nickname="kidney_failure" code="Chronic kidney disease"/>
+                <render category="PIH:6691" nickname="type_1_diabetes" code="Diabetes mellitus 1"/>
+                <render category="PIH:6692" nickname="type_2_diabetes" code="Diabetes mellitus 2"/>
+                <render category="PIH:HEART FAILURE" nickname="heart_failure" code="Chronic heart failure"/>
+                <render category="PIH:Sickle-Cell Anemia" nickname="sickle" code="Sickle cell disease"/>
                 <render category="PIH:3714" nickname="cirrhosis" code="Liver disease" />
-                <render category="PIH:SPLENOMEGALY" nickname="splenomegaly" code="Splenomegaly"/>
+                <render category="CIEL:145438" nickname="kidney_failure" code="Chronic kidney disease"/>
+                <render category="PIH:ASTHMA" nickname="asthma" code="Asthma"/>
+                <render category="PIH:3716" nickname="copd" code="COPD"/>
+                <render category="PIH:3131" nickname="chd" code="Congenital heart disease"/>
+                <render category="PIH:221" nickname="rhd" code="Rheumatic heart disease"/>
             </repeat>
 
             <obs conceptId="PIH:NCD category" answerConceptId="PIH:OTHER"
