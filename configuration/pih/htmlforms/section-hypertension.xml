@@ -161,6 +161,12 @@
         flex-direction: column;
         gap: 5px;
         }
+
+        .inline label {
+        display: inline-flex;
+        margin-right: 1rem;
+        align-items: center;
+        }
     </style>
 
     <ifMode mode="VIEW" include="false">
@@ -357,10 +363,11 @@
                             <div class="block">
                                 <label>Impression:</label>
                                 <div class="inline">
-                                    <obs conceptId="CIEL:159565" style="radio" class="list-inline"
+                                    <obs conceptId="CIEL:159565" style="checkbox" class="list-inline"
                                          answerSeparator=""
                                          answerConceptIds="CIEL:1115,CIEL:135971,CIEL:148203,CIEL:115432,CIEL:5622"/>
                                 </div>
+                                <render category="PIH:HYPERTENSION" nickname="htn" code="Hypertension"/>
                             </div>
                             <div class="block">
                                 <label>Comments:</label>
@@ -416,7 +423,7 @@
                         <orderProperty name="previousOrder"/>
                         <orderProperty name="careSetting" value="OUTPATIENT"/>
                         <orderProperty name="concept" label="">
-                            <option value="PIH:12653" label="Urea (mg/dL)"/>
+                            <option value=" 4521d6e3-524c-4e76-9efb-3fb06eb1f932" label="Urea (mg/dL)"/>
                             <option value="3cd3bd5a-26fe-102b-80cb-0017a47871b2" label="Total protein"/>
                             <option value="1875AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="Urine protein"/>
                             <option value="3cd4e194-26fe-102b-80cb-0017a47871b2" label="Blood glucose"/>
@@ -425,6 +432,7 @@
                             <option value="3cd76b58-26fe-102b-80cb-0017a47871b2" label="Serum sodium (Na)"/>
                             <option value="3cd76ce8-26fe-102b-80cb-0017a47871b2" label="Serum potassium (K)"/>
                             <option value="3ccc7158-26fe-102b-80cb-0017a47871b2" label="Hemoglobin (Hb)"/>
+                            <option value="668cd2a5-60dd-4dc4-889b-e09f072c6a1a" label="Creatinine (mg/dl)"/>
                         </orderProperty>
                     </div>
                 </orderTemplate>
