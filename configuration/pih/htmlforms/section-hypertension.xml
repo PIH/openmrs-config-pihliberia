@@ -162,11 +162,6 @@
         gap: 5px;
         }
 
-        .inline label {
-        display: inline-flex;
-        margin-right: 1rem;
-        align-items: center;
-        }
     </style>
 
     <ifMode mode="VIEW" include="false">
@@ -293,9 +288,20 @@
         </script>
     </ifMode>
 
+    <!--- Patient overview -->
     <section id="htn-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Patient Overview">
         <div id="htn-section" class="section-container">
+
+            <!-- Type of visit -->
+            <p class="side-by-side">
+                <label>
+                    <uimessage code="pihcore.type_of_visit" />
+                </label>
+                <obs conceptId="PIH:6189" style="radio"
+                     answerConceptIds="PIH:1246,PIH:12612,PIH:6192"
+                     answerCodes="Scheduled,Non scheduled,Urgent"/>
+            </p>
 
             <!-- this section is ONLY included for NCD intake encounter -->
             <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
@@ -341,42 +347,6 @@
                 </span>
 
             </includeIf>
-        </div>
-    </section>
-
-    <!-- EKG Findings -->
-    <section id="htn-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="EKG Findings">
-        <div id="htn-section" class="section-container">
-            <!-- Electrocardiogram Construct -->
-            <table>
-                <tr class="pt_has_htn">
-                    <obsgroup groupingConceptId="PIH:ELECTROCARDIOGRAM CONSTRUCT">
-                        <td style="width: 15%">
-                            <label>EKG Results</label>
-                        </td>
-                        <td>
-                            <div class="block">
-                                <label class="inline">Date:</label>
-                                <obs conceptId="PIH:12847" class="inline"/>
-                            </div>
-                            <div class="block">
-                                <label>Impression:</label>
-                                <div class="inline">
-                                    <obs conceptId="CIEL:159565" style="checkbox" class="list-inline"
-                                         answerSeparator=""
-                                         answerConceptIds="CIEL:1115,CIEL:135971,CIEL:148203,CIEL:115432,CIEL:5622"/>
-                                </div>
-                                <render category="PIH:HYPERTENSION" nickname="htn" code="Hypertension"/>
-                            </div>
-                            <div class="block">
-                                <label>Comments:</label>
-                                <obs conceptId="CIEL:159395" style="textarea"/>
-                            </div>
-                        </td>
-                    </obsgroup>
-                </tr>
-            </table>
         </div>
     </section>
 
@@ -440,6 +410,42 @@
         </div>
     </section>
 
+    <!-- EKG Findings -->
+    <section id="htn-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="EKG Findings">
+        <div id="htn-section" class="section-container">
+            <!-- Electrocardiogram Construct -->
+            <table>
+                <tr class="pt_has_htn">
+                    <obsgroup groupingConceptId="PIH:ELECTROCARDIOGRAM CONSTRUCT">
+                        <td style="width: 15%">
+                            <label>EKG Results</label>
+                        </td>
+                        <td>
+                            <div class="block">
+                                <label class="inline">Date:</label>
+                                <obs conceptId="PIH:12847" class="inline"/>
+                            </div>
+                            <div class="block">
+                                <label>Impression:</label>
+                                <div class="inline">
+                                    <obs conceptId="CIEL:159565" style="radio" class="list-inline"
+                                         answerSeparator=""
+                                         answerConceptIds="CIEL:1115,CIEL:135971,CIEL:148203,CIEL:115432,CIEL:5622"/>
+                                </div>
+                                <render category="PIH:HYPERTENSION" nickname="htn" code="Hypertension"/>
+                            </div>
+                            <div class="block">
+                                <label>Comments:</label>
+                                <obs conceptId="CIEL:159395" style="textarea"/>
+                            </div>
+                        </td>
+                    </obsgroup>
+                </tr>
+            </table>
+        </div>
+    </section>
+
     <!-- Vitals -->
     <section id="vitals" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.vitalSigns">
@@ -463,7 +469,6 @@
                             </label>
                         </td>
                     </tr>
-
                     <tr>
                         <td>
                             <div class="five-columns">
@@ -533,7 +538,6 @@
                             </div>
                         </td>
                     </tr>
-
                     <tr>
                         <td>
                             <div class="five-columns">
@@ -693,7 +697,6 @@
         </div>
     </section>
 
-
     <!-- HTN Consult Note -->
     <section sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.ncd.title">
         <div class="section-container two-column-old">
@@ -812,6 +815,7 @@
         </div>
     </section>
 
+    <!-- NCD plan -->
     <section id="ncd_plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan">
         <div class="section-container">
