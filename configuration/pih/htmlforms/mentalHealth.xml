@@ -411,6 +411,15 @@
 
             <p>
                 <label>
+                    <uimessage code="CAGE"/> (alcoholism):
+                </label>
+                <span class="small">
+                    <obs id="cageScore" conceptId="CIEL:167217"/>
+                </span>
+            </p>
+
+            <p>
+                <label>
                     <uimessage code="WHODAS Score"/>
                     (0-100):
                 </label>
@@ -573,7 +582,7 @@
                                  conceptId="PIH:Drug frequency for HUM"
                                  answerConceptIds=
                                          "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:OM,PIH:ON"
-                                 answerCodes="OD,BID,TID,QID,OM,ON"/>
+                                 answerCodes="QD,BID,TID,QID,OM,ON"/>
                         </td>
                         <td id="{name}-rx-duration" align="right">
                             <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>

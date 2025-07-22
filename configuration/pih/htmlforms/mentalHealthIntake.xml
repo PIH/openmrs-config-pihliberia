@@ -636,6 +636,8 @@
     <section id="personal-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Personal history">
         <div class="section-container">
+
+            <includeIf velocityTest="$patient.gender == 'F' and $patient.age gt 12 and $patient.age lt 55">
             <p class="list-inline">
                 <label>
                     <uimessage code="Pregnancy" />
@@ -661,6 +663,7 @@
                     <render nameTag="unknown" cId="CIEL:1067" />
                 </repeat>
             </p>
+            </includeIf>
 
             <p class="list-inline">
                 <label>
@@ -701,6 +704,7 @@
                 </div>
             </p>
 
+            <includeIf velocityTest="$patient.gender == 'F' and $patient.age gt 12">
             <p class="list-inline-extra-wide">
                 <label>
                     <uimessage code="Violence in adult or sexual partner relationship" />
@@ -803,6 +807,7 @@
                     </p>
                 </div>
             </div>
+            </includeIf>
 
             <p>
                 <label>
@@ -851,6 +856,7 @@
             <section id="child-info"
                      headerStyle="title" headerCode="Children">
                 <div class="two-columns">
+                    <includeIf velocityTest="$patient.gender == 'F' and $patient.age gt 12">
                     <div>
                         <p>
                             <label>
@@ -881,6 +887,7 @@
                             <obs conceptId="PIH:14638" />
                         </p>
                     </div>
+                    </includeIf>
 
                 </div>
             </section>
@@ -1599,7 +1606,7 @@
                                          conceptId="PIH:Drug frequency for HUM"
                                          answerConceptIds=
                                                  "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:OM,PIH:ON"
-                                         answerCodes="OD,BID,TID,QID,OM,ON"/>
+                                         answerCodes="QD,BID,TID,QID,OM,ON"/>
                                 </td>
                                 <td id="{name}-rx-duration" align="right">
                                     <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
@@ -1723,7 +1730,7 @@
                         <label>
                             <uimessage code="Medication evaluation due"/>
                         </label>
-                        <obs conceptId="PIH:14694"/>
+                        <obs conceptId="PIH:14694" allowFutureDates="true"/>
                     </p>
 
                     <p class="list-inline-wide">
