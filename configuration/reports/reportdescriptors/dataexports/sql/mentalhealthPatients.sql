@@ -13,6 +13,7 @@ encounter_id int,
 emr_id varchar(255),
 mh_mrn varchar(255),
 dob date,
+current_age int,
 community varchar(255),
 district varchar(255),
 county varchar(255),
@@ -23,6 +24,7 @@ date_enrolled date,
 counseling_plan text,
 outcome_date date,
 program_outcome varchar(255),
+mh_diagnoses text,
 index_asc int,
 index_desc int
 );
@@ -46,6 +48,7 @@ UPDATE temp_mh_patients SET community = PERSON_ADDRESS_ONE(patient_id);
 UPDATE temp_mh_patients SET district= person_address_city_village(patient_id);
 UPDATE temp_mh_patients SET county = person_address_state_province(patient_id);
 
+UPDATE temp_mh_patients SET current_age = current_age_in_years(patient_id);
 
 
 DROP TABLE IF EXISTS temp_encounter;
@@ -118,22 +121,46 @@ SET
 	tmh.gender = GENDER(tmh.patient_id),
 	tmh.dob = BIRTHDATE(tmh.patient_id);
 
+set @referred_by =  CONCEPT_FROM_MAPPING('PIH', '10647');
 UPDATE temp_mh_patients tmh
 INNER JOIN temp_obs o ON tmh.patient_id = o.person_id
-AND o.concept_id = CONCEPT_FROM_MAPPING('PIH', '10647')
+AND o.concept_id = @referred_by
 SET tmh.referred_by = CONCEPT_NAME(value_coded, 'en');
 
+set @referred_from = CONCEPT_FROM_MAPPING('PIH', '1272');
 UPDATE temp_mh_patients tmh
 INNER JOIN temp_obs o ON tmh.patient_id = o.person_id
-AND o.concept_id = CONCEPT_FROM_MAPPING('PIH', '1272')
+AND o.concept_id =  @referred_from
 SET tmh.referred_from = CONCEPT_NAME(value_coded, 'en');
 
+set @counseling_plan = CONCEPT_FROM_MAPPING('PIH', '14479');
 UPDATE temp_mh_patients tmh
 INNER JOIN temp_obs o ON tmh.patient_id = o.person_id
-AND o.concept_id = CONCEPT_FROM_MAPPING('PIH', '14479')
+AND o.concept_id = @counseling_plan
 SET tmh.counseling_plan = o.value_text
 WHERE o.value_text = 0;
 
+set @mh_diagnoses = concept_from_mapping('PIH','7942');
+DROP temporary table IF EXISTS temp_mh_dx_set;
+create temporary table temp_mh_dx_set 
+select concept_id from concept_set
+where concept_set  = @mh_diagnoses;
+
+insert into temp_mh_dx_set  -- in case there are any sets of diagnoses within this set
+select concept_id from concept_set 
+where concept_set in 
+  (select concept_id from concept_set
+where concept_set  = @mh_diagnoses);
+
+set @diagnosis = concept_from_mapping('PIH','3064');
+update temp_mh_patients t 
+inner join 
+ (select o.person_id, group_concat(distinct concept_name(o.value_coded, @locale)) dxs
+from obs o
+inner join temp_mh_dx_set s on s.concept_id = o.value_coded
+where o.concept_id =@diagnosis and o.voided = 0
+group by o.person_id) i on i.person_id = t.patient_id
+set t.mh_diagnoses = i.dxs ;
 
 SELECT
     emr_id,
@@ -143,11 +170,13 @@ SELECT
     community,
     district,
     county,
+    current_age,
     referred_by,
     referred_from,
     date_enrolled,
     outcome_date,
     counseling_plan,
+    mh_diagnoses,
     program_outcome,
     index_asc,
     index_desc
