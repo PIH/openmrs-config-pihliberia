@@ -5,6 +5,7 @@ UUID,Name,Description,Parent,Tag|Appointment Location,Tag|Archives Location,Tag|
 8b8dad4c-5179-11ea-a500-645d86728797,Mental Health Clinic,Mental Health Clinic,Health Facility,TRUE,,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,,TRUE,,,TRUE,,TRUE
 b7cfea60-5179-11ea-a500-645d86728797,NCD Clinic,NCD Clinic,Health Facility,TRUE,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,,TRUE,,TRUE
 267a0c52-5179-11ea-a500-645d86728797,Outpatient Clinic,The outpatient clinic,Health Facility,TRUE,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,,TRUE,TRUE,,TRUE
+8399d54f-2cc1-4cf2-bd00-e1923f41c212,Family Medicine,Family medicine,Health Facility,TRUE,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,,TRUE,TRUE,,TRUE
 0fff0fae-ff2c-11ea-85b1-3c6aa7c392cc,Pharmacy,The pharmacy where drugs will be dispensed,Health Facility,,,,,TRUE,TRUE,,TRUE,,,,,,,,,,
 8a4e37e3-5178-11ea-a500-645d86728797,Records Room,The records room at a health facility,Health Facility,,TRUE,TRUE,,,TRUE	,,TRUE,,TRUE,,,,,,TRUE,,TRUE
 0eea0073-91bc-4a28-8b1e-a882326a98ba,Medical Ward,Medical Ward,Health Facility,TRUE,,TRUE,TRUE,,TRUE,TRUE,,,,,,TRUE,,,TRUE,,TRUE

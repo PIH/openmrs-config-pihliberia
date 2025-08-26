@@ -4,3 +4,5 @@ ${encounterType.liberiaPedsForm.uuid},,PEDS Form,General form for capturing all 
 ${encounterType.liberiaEpilepsyIntakeForm.uuid},,Epilepsy Intake,Epilepsy Intake form for Liberia
 ${encounterType.liberiaEpilepsyFollowupForm.uuid},,Epilepsy Followup,Epilepsy Followup form for Liberia
 ${encounterType.liberiaMentalHealthIntakeForm.uuid},,Mental Health Intake,Mental Health Intake form for Liberia
+${encounterType.liberiaFamilyMedicineIntake.uuid},,Family Medicine Intake,Family Medicine Intake form for Liberia
+${encounterType.liberiaFamilyMedicineFollowup.uuid},,Family Medicine Followup,Family Medicine Followup form for Liberia
