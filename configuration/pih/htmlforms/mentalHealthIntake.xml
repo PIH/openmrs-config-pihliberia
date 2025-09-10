@@ -685,7 +685,7 @@
                 </div>
             </p>
 
-            <p class="list-inline-extra-wide">
+            <p class="list-inline">
                 <label>
                     <uimessage code="Violence in home as child" />
                 </label>
@@ -704,7 +704,7 @@
                 </div>
             </p>
 
-            <includeIf velocityTest="$patient.gender == 'F' and $patient.age gt 12">
+            <includeIf velocityTest="$patient.age gt 12">
             <p class="list-inline-extra-wide">
                 <label>
                     <uimessage code="Violence in adult or sexual partner relationship" />
@@ -723,8 +723,10 @@
                     <obs conceptId="PIH:14673" />
                 </div>
             </p>
+            </includeIf>
 
-            <p class="list-inline-extra-wide">
+            <includeIf velocityTest="$patient.age gt 12">
+            <p class="list-inline">
                 <label>
                     <uimessage code="Violence in current relationship" />
                 </label>
@@ -742,17 +744,25 @@
                     <obs conceptId="PIH:14675" />
                 </div>
             </p>
+            </includeIf>
 
             <div class="three-columns">
+                <includeIf velocityTest="$patient.age gt 12">
                 <div>
                     <uimessage code="Age began sexual activity" />
                     <obs conceptId="CIEL:163587" showUnits="true" />
                 </div>
+                </includeIf>
+
+                <includeIf velocityTest="$patient.age gt 12">
                 <div>
                     <uimessage code="Age of partner" />
                     <obs conceptId="CIEL:167172" showUnits="true"/>
                 </div>
+                </includeIf>
+
                 <div>
+                    <label>Sexual type</label>
                     <p class="list-inline">
                         <obs conceptId="CIEL:167171" style="radio"
                              answerConceptIds="CIEL:1065,CIEL:1066"
@@ -762,6 +772,7 @@
             </div>
 
             <br/>
+            <includeIf velocityTest="$patient.age gt 12">
             <div class="three-columns">
                 <div>
                     <p class="list-inline">
