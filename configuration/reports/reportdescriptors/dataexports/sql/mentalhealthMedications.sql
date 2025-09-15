@@ -12,7 +12,8 @@ encounter_date date,
 provider varchar(50),
 date_entered date,
 user_entered varchar(50),
-med_name varchar(255),
+drug_short_name varchar(255),
+drug_name varchar(255),
 dose double,
 dose_unit varchar(255),
 dose_frequency varchar(50),
@@ -65,7 +66,10 @@ update temp_MH_meds t
 set date_entered = encounter_date_created(t.encounter_id);
 
 update temp_MH_meds t
-set med_name = obs_from_group_id_value_coded_list(t.obs_group_id, 'PIH','10634','en');
+set drug_short_name = obs_from_group_id_value_coded_list(t.obs_group_id, 'PIH','10634','en');
+
+update temp_MH_meds t
+set drug_name = obs_from_group_id_value_drug(t.obs_group_id, 'PIH','10634');
 
 update temp_MH_meds t
 set dose_frequency = obs_from_group_id_value_coded_list(t.obs_group_id, 'PIH','9363','en');
@@ -96,20 +100,20 @@ CREATE TEMPORARY TABLE temp_MH_meds_index_asc
     SELECT
             meds_id,
             patient_id,
-            med_name,
+            drug_short_name,
             encounter_id,
             index_asc
 FROM (SELECT
-            @r:= IF(@u = med_name, @r + 1,1) index_asc,
-            med_name,
+            @r:= IF(@u = drug_short_name, @r + 1,1) index_asc,
+            drug_short_name,
             encounter_id,
             patient_id,
             meds_id,
-            @u:= med_name
+            @u:= drug_short_name
       FROM temp_MH_meds tm,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id ASC, med_name ASC, encounter_id ASC
+            ORDER BY patient_id ASC, drug_short_name ASC, encounter_id ASC
         ) index_ascending );
 
 CREATE INDEX tmia_e ON temp_MH_meds_index_asc(encounter_id);
@@ -123,20 +127,20 @@ CREATE TEMPORARY TABLE temp_MH_meds_index_desc
     SELECT
             meds_id,
             patient_id,
-            med_name,
+            drug_short_name,
             encounter_id,
             index_desc
 FROM (SELECT
-            @r:= IF(@u = med_name, @r + 1,1) index_desc,
-            med_name,
+            @r:= IF(@u = drug_short_name, @r + 1,1) index_desc,
+            drug_short_name,
             patient_id,
             encounter_id,
             meds_id,
-            @u:= med_name
+            @u:= drug_short_name
       FROM temp_MH_meds,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY  patient_id DESC, med_name DESC, encounter_id DESC
+            ORDER BY  patient_id DESC, drug_short_name DESC, encounter_id DESC
         ) index_descending );
 
 CREATE INDEX tmid_e ON temp_MH_meds_index_desc(encounter_id);
@@ -153,7 +157,8 @@ encounter_date,
 provider,
 date_entered,
 user_entered,
-med_name,
+drug_short_name,
+drug_name,
 dose,
 dose_unit,
 dose_frequency,
