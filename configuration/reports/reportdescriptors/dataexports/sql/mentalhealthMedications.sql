@@ -1,4 +1,7 @@
 select encounter_type_id into @MH_Consult from encounter_type et2 where uuid = 'a8584ab8-cc2a-11e5-9956-625662870761';
+select encounter_type_id into @MH_Intake from encounter_type et2 where uuid = 'fccd53c2-f802-439b-a7a2-2d680bd8b81b';
+select encounter_type_id into @Epilepsy_Followup from encounter_type et2 where uuid = '74e06462-243e-4fad-8d7c-0bb3921322f1';
+select encounter_type_id into @Epilepsy_Intake from encounter_type et2 where uuid = '7336a05e-4bd1-4e52-81c1-207697afc868';
 
 drop temporary table if exists temp_MH_meds;
 create temporary table temp_MH_meds
@@ -7,6 +10,8 @@ meds_id int auto_increment primary key, -- new field introduced to join the inde
 patient_id int(11),
 emr_id varchar(50),
 encounter_id int(11),
+encounter_type_id int(11),
+encounter_type varchar(255),
 obs_group_id int(11),
 encounter_date date,
 provider varchar(50),
@@ -29,7 +34,7 @@ DROP TABLE IF EXISTS temp_encounter;
 CREATE TEMPORARY TABLE temp_encounter AS
 SELECT patient_id, encounter_id, encounter_datetime, creator, encounter_type
 FROM encounter e
-WHERE e.encounter_type = @mh_consult
+WHERE e.encounter_type in (@MH_Consult, @MH_Intake, @Epilepsy_Followup, @Epilepsy_Intake)
 AND e.voided =0;
 
 create index temp_encounter_ci1 on temp_encounter(encounter_id);
@@ -41,12 +46,13 @@ FROM temp_encounter te
 INNER JOIN  obs o ON te.encounter_id=o.encounter_id
 WHERE o.voided =0;
 
-insert into temp_MH_meds(encounter_id, obs_group_id, patient_id, encounter_date)
+insert into temp_MH_meds(encounter_id, obs_group_id, patient_id, encounter_date, encounter_type_id)
 select
 e.encounter_id,
 obs_id,
 e.patient_id,
-e.encounter_datetime
+e.encounter_datetime,
+e.encounter_type
 from temp_obs o
 inner join temp_encounter e on e.encounter_id  = o.encounter_id
 where concept_id = concept_from_mapping('PIH','10742'); -- prescription construct
@@ -55,6 +61,9 @@ set @identifier_type ='0bc545e0-f401-11e4-b939-0800200c9a66';
 
 update temp_MH_meds t
 set emr_id = patient_identifier(t.patient_id, @identifier_type);
+
+update temp_MH_meds t
+set encounter_type = encounter_type_name_from_id(t.encounter_type_id);
 
 update temp_MH_meds t
 set user_entered = encounter_creator(t.encounter_id);
@@ -152,6 +161,7 @@ select
 emr_id,
 patient_id,
 encounter_id,
+encounter_type,
 obs_group_id,
 encounter_date,
 provider,
