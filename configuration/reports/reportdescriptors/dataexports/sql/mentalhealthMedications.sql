@@ -1,4 +1,7 @@
 select encounter_type_id into @MH_Consult from encounter_type et2 where uuid = 'a8584ab8-cc2a-11e5-9956-625662870761';
+select encounter_type_id into @MH_Intake from encounter_type et2 where uuid = 'fccd53c2-f802-439b-a7a2-2d680bd8b81b';
+select encounter_type_id into @Epilepsy_Followup from encounter_type et2 where uuid = '74e06462-243e-4fad-8d7c-0bb3921322f1';
+select encounter_type_id into @Epilepsy_Intake from encounter_type et2 where uuid = '7336a05e-4bd1-4e52-81c1-207697afc868';
 
 drop temporary table if exists temp_MH_meds;
 create temporary table temp_MH_meds
@@ -7,12 +10,15 @@ meds_id int auto_increment primary key, -- new field introduced to join the inde
 patient_id int(11),
 emr_id varchar(50),
 encounter_id int(11),
+encounter_type_id int(11),
+encounter_type varchar(255),
 obs_group_id int(11),
 encounter_date date,
 provider varchar(50),
 date_entered date,
 user_entered varchar(50),
-med_name varchar(255),
+drug_short_name varchar(255),
+drug_name varchar(255),
 dose double,
 dose_unit varchar(255),
 dose_frequency varchar(50),
@@ -28,7 +34,7 @@ DROP TABLE IF EXISTS temp_encounter;
 CREATE TEMPORARY TABLE temp_encounter AS
 SELECT patient_id, encounter_id, encounter_datetime, creator, encounter_type
 FROM encounter e
-WHERE e.encounter_type = @mh_consult
+WHERE e.encounter_type in (@MH_Consult, @MH_Intake, @Epilepsy_Followup, @Epilepsy_Intake)
 AND e.voided =0;
 
 create index temp_encounter_ci1 on temp_encounter(encounter_id);
@@ -40,12 +46,13 @@ FROM temp_encounter te
 INNER JOIN  obs o ON te.encounter_id=o.encounter_id
 WHERE o.voided =0;
 
-insert into temp_MH_meds(encounter_id, obs_group_id, patient_id, encounter_date)
+insert into temp_MH_meds(encounter_id, obs_group_id, patient_id, encounter_date, encounter_type_id)
 select
 e.encounter_id,
 obs_id,
 e.patient_id,
-e.encounter_datetime
+e.encounter_datetime,
+e.encounter_type
 from temp_obs o
 inner join temp_encounter e on e.encounter_id  = o.encounter_id
 where concept_id = concept_from_mapping('PIH','10742'); -- prescription construct
@@ -54,6 +61,9 @@ set @identifier_type ='0bc545e0-f401-11e4-b939-0800200c9a66';
 
 update temp_MH_meds t
 set emr_id = patient_identifier(t.patient_id, @identifier_type);
+
+update temp_MH_meds t
+set encounter_type = encounter_type_name_from_id(t.encounter_type_id);
 
 update temp_MH_meds t
 set user_entered = encounter_creator(t.encounter_id);
@@ -65,7 +75,10 @@ update temp_MH_meds t
 set date_entered = encounter_date_created(t.encounter_id);
 
 update temp_MH_meds t
-set med_name = obs_from_group_id_value_coded_list(t.obs_group_id, 'PIH','10634','en');
+set drug_short_name = obs_from_group_id_value_coded_list(t.obs_group_id, 'PIH','10634','en');
+
+update temp_MH_meds t
+set drug_name = obs_from_group_id_value_drug(t.obs_group_id, 'PIH','10634');
 
 update temp_MH_meds t
 set dose_frequency = obs_from_group_id_value_coded_list(t.obs_group_id, 'PIH','9363','en');
@@ -96,20 +109,20 @@ CREATE TEMPORARY TABLE temp_MH_meds_index_asc
     SELECT
             meds_id,
             patient_id,
-            med_name,
+            drug_short_name,
             encounter_id,
             index_asc
 FROM (SELECT
-            @r:= IF(@u = med_name, @r + 1,1) index_asc,
-            med_name,
+            @r:= IF(@u = drug_short_name, @r + 1,1) index_asc,
+            drug_short_name,
             encounter_id,
             patient_id,
             meds_id,
-            @u:= med_name
+            @u:= drug_short_name
       FROM temp_MH_meds tm,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id ASC, med_name ASC, encounter_id ASC
+            ORDER BY patient_id ASC, drug_short_name ASC, encounter_id ASC
         ) index_ascending );
 
 CREATE INDEX tmia_e ON temp_MH_meds_index_asc(encounter_id);
@@ -123,20 +136,20 @@ CREATE TEMPORARY TABLE temp_MH_meds_index_desc
     SELECT
             meds_id,
             patient_id,
-            med_name,
+            drug_short_name,
             encounter_id,
             index_desc
 FROM (SELECT
-            @r:= IF(@u = med_name, @r + 1,1) index_desc,
-            med_name,
+            @r:= IF(@u = drug_short_name, @r + 1,1) index_desc,
+            drug_short_name,
             patient_id,
             encounter_id,
             meds_id,
-            @u:= med_name
+            @u:= drug_short_name
       FROM temp_MH_meds,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY  patient_id DESC, med_name DESC, encounter_id DESC
+            ORDER BY  patient_id DESC, drug_short_name DESC, encounter_id DESC
         ) index_descending );
 
 CREATE INDEX tmid_e ON temp_MH_meds_index_desc(encounter_id);
@@ -148,12 +161,14 @@ select
 emr_id,
 patient_id,
 encounter_id,
+encounter_type,
 obs_group_id,
 encounter_date,
 provider,
 date_entered,
 user_entered,
-med_name,
+drug_short_name,
+drug_name,
 dose,
 dose_unit,
 dose_frequency,
