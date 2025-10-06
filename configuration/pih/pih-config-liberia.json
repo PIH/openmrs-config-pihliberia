@@ -48,5 +48,9 @@
       }
     }
   },
+  "addressConfig": {
+    "manualFields": ["address1"],
+    "shortcutField": "cityVillage"
+  },
   "extraIdentifierTypes": ["23507d1e-4f22-11ea-9717-645d86728797", "aa81023f-400f-11eb-8334-34c93de76af3"]
 }
