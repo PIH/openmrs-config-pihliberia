@@ -6,7 +6,7 @@
     <name>PIH Liberia OpenMRS Configuration</name>
     <description>Top-Level configuration for PIH Liberia OpenMRS distro</description>
     <url>https://github.com/PIH/openmrs-config-pihliberia</url>
-    <version>1.15.0</version>
+    <version>1.16.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <organization>
