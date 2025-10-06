@@ -28,6 +28,12 @@
             <requiredInHierarchy>true</requiredInHierarchy>
         </addressComponent>
         <addressComponent>
+            <field>ADDRESS_2</field>
+            <nameMapping>Community</nameMapping>
+            <sizeMapping>80</sizeMapping>
+            <requiredInHierarchy>false</requiredInHierarchy>
+        </addressComponent>
+        <addressComponent>
             <field>ADDRESS_1</field>
             <nameMapping>Address</nameMapping>
             <sizeMapping>80</sizeMapping>
@@ -36,7 +42,7 @@
     </addressComponents>
     <lineByLineFormat>
         <string>address1</string>
-        <string>cityVillage</string>
+        <string>cityVillage address2</string>
         <string>countyDistrict, stateProvince</string>
         <string>country</string>
     </lineByLineFormat>
