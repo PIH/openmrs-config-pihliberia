@@ -1,0 +1,21 @@
+key: "mentalhealthDiagnoses"
+uuid: "86e22729-a5d3-11f0-bc4f-8231810d9091"
+name: "Mental Health Diagnosis Data"
+description: "Mental Health Diagnosis Data"
+datasets:
+  - key: "mentalhealthDiagnoses"
+    type: "sql"
+    config: "sql/mentalhealthDiagnoses.sql"
+designs:
+  - type: "csv"
+    properties:
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "dataExport"
+  countries:
+    - "LIBERIA"
+  components:
+    - "dataExports"
+  privilege: "Task: clinical.reports"
