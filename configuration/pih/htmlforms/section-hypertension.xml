@@ -238,7 +238,7 @@
             const ppbsConceptUuid = '160914AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
 
             const contextPath = window.location.href.split('/')[3];
-            const apiBaseUrl = "/" + contextPath + "/ws/rest/v1";
+            const apiBaseUrl =  "/" + contextPath + "/ws/rest/v1";
             const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
             const monthOption = { month: 'short'};
 
@@ -249,16 +249,12 @@
             currentEncounterDate = new Date(+lookupEncDate);
             }
 
-            let serverEncounterDate = '
-            <lookup
-                    complexExpression="#if ($encounter) #set ($encounterDate = $encounter.encounterDatetime) #else #set ($encounterDate = $visit.startDatetime) #end"/>
-            ';
+            let serverEncounterDate = '<lookup complexExpression="#if ($encounter) #set ($encounterDate = $encounter.encounterDatetime) #else #set ($encounterDate = $visit.startDatetime) #end"/>';
 
             const visitUuid = '<lookup expression="encounter.getVisit().getUuid()"/>';
 
             jq.getJSON(apiBaseUrl + "/visit/" + visitUuid, {
-            v:
-            'custom:(uuid,id,startDatetime,encounters:(uuid,display,encounterDatetime,encounterType:(uuid,name),obs:(uuid,display,concept:(uuid,display),obsDatetime,value)))'
+            v: 'custom:(uuid,id,startDatetime,encounters:(uuid,display,encounterDatetime,encounterType:(uuid,name),obs:(uuid,display,concept:(uuid,display),obsDatetime,value)))'
             },
             function( data ){
             if (data.encounters &amp;&amp; data.encounters.length &gt; 0) {
@@ -268,8 +264,7 @@
             // we found a VitalsSigns encounter on this visit
             let encounterDate = new Date(encounter.encounterDatetime);
             let month = new Intl.DateTimeFormat(undefined, monthOption).format(encounterDate);
-            jq("#lastVitalsEncounterDate").text(encounterDate.getDate() + "-" + month + "-" +
-            encounterDate.getFullYear());
+            jq("#lastVitalsEncounterDate").text(encounterDate.getDate() + "-" + month + "-" + encounterDate.getFullYear());
             jq("#lastVitalsEncounterTime").text(encounterDate.toLocaleTimeString());
 
             let last_weight = null;
@@ -342,7 +337,7 @@
     <!--- Patient overview Section-->
     <section id="htn-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Patient Overview">
-        <div class="section-container">
+        <div id="htn-section" class="section-container">
 
             <!-- Type of visit -->
             <p class="side-by-side">
@@ -463,7 +458,7 @@
     <!-- EKG Findings Section -->
     <section id="ekg-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="EKG Findings">
-        <div class="section-container">
+        <div id="ekg-section" class="section-container">
 
             <!-- Electrocardiogram Construct -->
             <table>
