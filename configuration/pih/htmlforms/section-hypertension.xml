@@ -21,65 +21,65 @@
     <style type="text/css">
 
         .narrow {
-            width: 200px;
+        width: 200px;
         }
 
         .field-error {
-            color: #ff6666;
-            font-size: 1.1em;
-            display: block;
+        color: #ff6666;
+        font-size: 1.1em;
+        display: block;
         }
 
         form fieldset {
-            min-width: 90%;
-            display: block;
+        min-width: 90%;
+        display: block;
         }
 
         .encounter-summary-container #calculated-ratio {
-            font-size: 1em;
-            font-weight: normal;
+        font-size: 1em;
+        font-weight: normal;
         }
 
         .half-size-text {
-            color: #ff6666;
-            font-size: 50%;
-            display: block;
+        color: #ff6666;
+        font-size: 50%;
+        display: block;
         }
 
         .section-container {
-            background: #F2F2F2;
-            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-            padding: 10px 5px 10px 15px;
-            line-height: 1.5em; /*add this for vertical spacing between elements*/
-            margin-bottom: 20px; /* Add spacing below the section */
+        background: #F2F2F2;
+        box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+        padding: 10px 5px 10px 15px;
+        line-height: 1.5em; /*add this for vertical spacing between elements*/
+        margin-bottom: 20px; /* Add spacing below the section */
         }
 
         .section-container input[type="checkbox"] {
-            margin: 0px 5px; /*changed values to vertical, horizontal*/
-            top:5px; /*added to offset the checkbox position to line up*/
+        margin: 0px 5px; /*changed values to vertical, horizontal*/
+        top:5px; /*added to offset the checkbox position to line up*/
         }
 
         .section-container label { /*new definition to override labels inside section-containers*/
-            margin: 0px;
+        margin: 0px;
         }
 
         - .section {
-            width: 100%;
+        width: 100%;
         }
 
         textarea {
-            width: 95%;
+        width: 95%;
         }
 
         .five-columns, .four-columns, .three-columns, .two-columns {
-            display: table;
-            height: 100%;
-            width: 100%;
+        display: table;
+        height: 100%;
+        width: 100%;
         }
 
         .two-columns > div {
-            display: table-cell;
-            width: 50%;
+        display: table-cell;
+        width: 50%;
         }
 
         .two-columns {
@@ -96,51 +96,51 @@
         }
 
         .three-columns > div {
-            display: table-cell;
-            width: 33%;
+        display: table-cell;
+        width: 33%;
         }
 
         .four-columns > div {
-            display: table-cell;
-            width: 25%;
+        display: table-cell;
+        width: 25%;
         }
 
         .five-columns > div {
-            display: table-cell;
-            width: 20%;
+        display: table-cell;
+        width: 20%;
         }
 
         .side-by-side label {
-            display: inline-block;
+        display: inline-block;
         }
 
         .list-inline label, .list-inline input[type="radio"], .list-inline span,
         .list-inline-wide label, .list-inline-wide input[type="radio"], .list-inline-wide span,
         .list-inline-extra-wide label, .list-inline-extra-wide input[type="radio"], .list-inline-extra-wide span {
-            display: inline-block;
-            float: none;
+        display: inline-block;
+        float: none;
         }
 
         .list-inline label:first-child {
-            width: 220px;
+        width: 220px;
         }
 
         .list-inline-wide label:first-child {
-            width: 320px;
+        width: 320px;
         }
 
         .list-inline-extra-wide label:first-child {
-            width: 420px;
+        width: 420px;
         }
 
         label {
-            padding: 0px 3px 0px 0px
-            font-weight: bold;
+        padding: 0px 3px 0px 0px
+        font-weight: bold;
         }
 
         form input[type="radio"], .form input[type="radio"] {
-            float: none;
-            display: inline-block;
+        float: none;
+        display: inline-block;
         }
 
         .inline {
@@ -162,17 +162,63 @@
         gap: 5px;
         }
 
+        .htn-section {
+        background: #f8f8f8;
+        padding: 1.2em;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .htn-section label {
+        margin-bottom: 0.5em;
+        color: #1a3a4f;
+        }
+
+        .htn-section input[type="text"],
+        .htn-section input[type="date"] {
+        height: 32px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 0 8px;
+        }
+
+        .htn-section table {
+        width: 100%;
+        border-collapse: collapse;
+        }
+
+        .htn-section td {
+        vertical-align: top;
+        padding: 8px;
+        }
+
+        .htn-section input[type="radio"] {
+        margin-right: 8px;
+        }
+
+        .htn-section textarea {
+        width: 95%;
+        height: 80px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        }
+
+        .htn-section label {
+        font-weight: normal;
+        }
+
+
     </style>
 
     <ifMode mode="VIEW" include="false">
         <h1>
-            <uimessage code="HYPERTENSION" />
+            <uimessage code="HYPERTENSION"/>
         </h1>
         <script type="text/javascript">
             jq(function() {
 
-                // handlers for next and submit buttons, see nextAndSubmitButtons.js
-                setUpNextAndSubmitButtons();
+            // handlers for next and submit buttons, see nextAndSubmitButtons.js
+            setUpNextAndSubmitButtons();
 
             });
 
@@ -192,7 +238,7 @@
             const ppbsConceptUuid = '160914AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
 
             const contextPath = window.location.href.split('/')[3];
-            const apiBaseUrl =  "/" + contextPath + "/ws/rest/v1";
+            const apiBaseUrl = "/" + contextPath + "/ws/rest/v1";
             const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
             const monthOption = { month: 'short'};
 
@@ -203,12 +249,16 @@
             currentEncounterDate = new Date(+lookupEncDate);
             }
 
-            let serverEncounterDate = '<lookup complexExpression="#if ($encounter) #set ($encounterDate = $encounter.encounterDatetime) #else #set ($encounterDate = $visit.startDatetime) #end"/>';
+            let serverEncounterDate = '
+            <lookup
+                    complexExpression="#if ($encounter) #set ($encounterDate = $encounter.encounterDatetime) #else #set ($encounterDate = $visit.startDatetime) #end"/>
+            ';
 
             const visitUuid = '<lookup expression="encounter.getVisit().getUuid()"/>';
 
             jq.getJSON(apiBaseUrl + "/visit/" + visitUuid, {
-            v: 'custom:(uuid,id,startDatetime,encounters:(uuid,display,encounterDatetime,encounterType:(uuid,name),obs:(uuid,display,concept:(uuid,display),obsDatetime,value)))'
+            v:
+            'custom:(uuid,id,startDatetime,encounters:(uuid,display,encounterDatetime,encounterType:(uuid,name),obs:(uuid,display,concept:(uuid,display),obsDatetime,value)))'
             },
             function( data ){
             if (data.encounters &amp;&amp; data.encounters.length &gt; 0) {
@@ -218,7 +268,8 @@
             // we found a VitalsSigns encounter on this visit
             let encounterDate = new Date(encounter.encounterDatetime);
             let month = new Intl.DateTimeFormat(undefined, monthOption).format(encounterDate);
-            jq("#lastVitalsEncounterDate").text(encounterDate.getDate() + "-" + month + "-" + encounterDate.getFullYear());
+            jq("#lastVitalsEncounterDate").text(encounterDate.getDate() + "-" + month + "-" +
+            encounterDate.getFullYear());
             jq("#lastVitalsEncounterTime").text(encounterDate.toLocaleTimeString());
 
             let last_weight = null;
@@ -288,15 +339,15 @@
         </script>
     </ifMode>
 
-    <!--- Patient overview -->
+    <!--- Patient overview Section-->
     <section id="htn-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Patient Overview">
-        <div id="htn-section" class="section-container">
+        <div class="section-container">
 
             <!-- Type of visit -->
             <p class="side-by-side">
                 <label>
-                    <uimessage code="pihcore.type_of_visit" />
+                    <uimessage code="pihcore.type_of_visit"/>
                 </label>
                 <obs conceptId="PIH:6189" style="radio"
                      answerConceptIds="PIH:1246,PIH:12612,PIH:6192"
@@ -305,10 +356,11 @@
 
             <!-- this section is ONLY included for NCD intake encounter -->
             <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
+
                 <!-- Hypertension types, Differential diagnoses, HTN start data and Other -->
                 <p class="side-by-side">
                     <label>
-                        <uimessage code="Type of hypertension" />
+                        <uimessage code="Type of hypertension"/>
                     </label>
                     <obs conceptId="PIH:11940" style="radio"
                          answerConceptIds="CIEL:140987,CIEL:113087"
@@ -319,7 +371,6 @@
                     <uimessage code="Differential diagnoses:"/>
                 </label>
                 <div class="two-columns">
-
                     <div>
                         <repeat>
                             <template>
@@ -327,7 +378,7 @@
                                      answerConceptId="{acid}" answerCode="{ansLabel}"/>
                             </template>
                             <render acid="CIEL:111103" ansLabel="Stroke"/>
-                            <render acid="CIEL:5622"   ansLabel="Other"/>
+                            <render acid="CIEL:5622" ansLabel="Other"/>
                         </repeat>
                     </div>
 
@@ -382,6 +433,7 @@
     <section id="test-orders" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.lab.lab_tests.title">
         <div class="section-container two-column-old">
+
             <order orderType="52a447d3-a64a-11e3-9aeb-50e549534c5e" onLoadFunction="renderOrderWidgetAsCheckboxes">
                 <orderTemplate>
                     <div style="display:none;">
@@ -393,10 +445,8 @@
                         <orderProperty name="previousOrder"/>
                         <orderProperty name="careSetting" value="OUTPATIENT"/>
                         <orderProperty name="concept" label="">
-                            <option value=" 4521d6e3-524c-4e76-9efb-3fb06eb1f932" label="Urea (mg/dL)"/>
-                            <option value="3cd3bd5a-26fe-102b-80cb-0017a47871b2" label="Total protein"/>
-                            <option value="1875AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="Urine protein"/>
-                            <option value="3cd4e194-26fe-102b-80cb-0017a47871b2" label="Blood glucose"/>
+                            <option value="eabe2e12-6888-4ecf-876b-3c53468c17e0" label="Total protein (mg/dL)"/>
+                            <option value="159644AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="HbA1c"/>
                             <option value="163696AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="Casts urine"/>
                             <option value="161442AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="Ketones (urine)"/>
                             <option value="3cd76b58-26fe-102b-80cb-0017a47871b2" label="Serum sodium (Na)"/>
@@ -410,10 +460,11 @@
         </div>
     </section>
 
-    <!-- EKG Findings -->
-    <section id="htn-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+    <!-- EKG Findings Section -->
+    <section id="ekg-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="EKG Findings">
-        <div id="htn-section" class="section-container">
+        <div class="section-container">
+
             <!-- Electrocardiogram Construct -->
             <table>
                 <tr class="pt_has_htn">
@@ -446,7 +497,7 @@
         </div>
     </section>
 
-    <!-- Vitals -->
+    <!-- Vital Section -->
     <section id="vitals" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.vitalSigns">
         <div class="section-container">
@@ -588,7 +639,9 @@
                                             <span id="last_muac_mm" class="obs-field">
                                                 <span class="emptyValue">____</span>
                                             </span>
-                                            <span class="append-to-value"><uimessage code="emr.units.millimeters"/></span>
+                                            <span class="append-to-value">
+                                                <uimessage code="emr.units.millimeters"/>
+                                            </span>
                                         </span>
                                     </includeIf>
                                 </div>
@@ -685,7 +738,8 @@
                              answerCodes="Underweight (BMI under 18.5),Normal (BMI 18.5 - 24.9),Overweight (BMI 25.0 - 29.9),Moderate obese (BMI 30.0 - 34.9),Severe obese (BMI 35.0 - 39.9)"
                              answerSeparator="&lt;br /&gt;"/>
 
-                        <br/><br/>
+                        <br/>
+                        <br/>
                         <obsgroup groupingConceptId="PIH:1292" showIfEmpty="false">
                             <obs style="radio"
                                  conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT"
@@ -706,7 +760,8 @@
                         <span class="{expression}">
                             <obsgroup groupingConceptId="PIH:12389">
                                 <obs conceptId="CIEL:1728" answerConceptId="{concept}" style="checkbox"
-                                     labelText="{label}" answerLabel="" toggle="{id: '{name}-htn-dx-ynu', style: 'hide'}"/>
+                                     labelText="{label}" answerLabel=""
+                                     toggle="{id: '{name}-htn-dx-ynu', style: 'hide'}"/>
                                 <br/>
                                 <span class="list-inline" id="{name}-htn-dx-ynu">
                                     <obs conceptId="CIEL:1729"
@@ -719,16 +774,21 @@
 
                 <render concept="PIH:2545" name="tobacco" label="Smoke tobacco" expression="true"/>
                 <render concept="CIEL:70468" name="alcohol" label="Drink alcohol" expression="true"/>
+                <render concept="PIH:HYPERTENSION" name="htn" label="Hospitalized for HTN" expression="true"/>
                 <render concept="CIEL:165585" name="poor-diet-adherance" label="Poor diet" expression="true"/>
-                <render concept="CIEL:165569" name="poor-physical-activity" label="Poor physical activity" expression="true"/>
+                <render concept="CIEL:165569" name="poor-physical-activity" label="Poor physical activity"
+                        expression="true"/>
+
                 <render concept="PIH:HEADACHE" name="Headache" label="Headache" expression="true"/>
-                <render concept="PIH:SHORTNESS OF BREATH WITH EXERTION" name="sob" label="Shortness of breath" expression="true"/>
+                <render concept="PIH:SHORTNESS OF BREATH WITH EXERTION" name="sob" label="Shortness of breath"
+                        expression="true"/>
                 <render concept="PIH:CHEST PAIN" name="chest-pain" label="Chest pain" expression="true"/>
                 <render concept="PIH:DIZZINESS" name="dizziness" label="Dizziness" expression="true"/>
-                <render concept="PIH:Currently taking medication" name="taking-meds" label="Took meds today?" expression="true"/>
+
+                <render concept="PIH:Currently taking medication" name="taking-meds" label="Took meds today?"
+                        expression="true"/>
                 <render concept="PIH:PERIPHERAL NEUROPATHY" name="neuropathy" label="Neuropathy" expression="true"/>
                 <render concept="PIH:Ulcers (generic)" name="ulcers" label="Ulcers" expression="true"/>
-                <render concept="PIH:HYPERTENSION" name="htn" label="Hospitalized for HTN" expression="true"/>
             </repeat>
 
             <div class="htn-stages:">
@@ -738,14 +798,14 @@
                 <div class="form-check form-check-inline">
                     <obs conceptId="PIH:12699" style="radio"
                          answerConceptIds="CIEL:165206, CIEL:165203, CIEL:165204, CIEL:165205"
-                         answerCodes="Stage I, Stage II, Stage III, Stage IV" />
+                         answerCodes="Stage I, Stage II, Stage III, Stage IV"/>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- Medication -->
+    <!-- Medication Section -->
     <section id="ncd-meds" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan.medication">
         <div class="section-container toggle">
@@ -815,7 +875,7 @@
         </div>
     </section>
 
-    <!-- NCD plan -->
+    <!-- NCD plan Section -->
     <section id="ncd_plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.plan">
         <div class="section-container">
@@ -826,13 +886,14 @@
                 <obs conceptId="PIH:PATIENT PLAN COMMENTS" style="textarea" rows="10"/>
             </p>
 
-                <span class="block">
-                    <label class="inline">
-                        <uimessage code="pihcore.consult.returnVisitDate"/>:
-                    </label>
-                    <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true" allowPastDates="false"
-                         required="true" class="inline"/>
-                </span>
+            <span class="block">
+                <label class="inline">
+                    <uimessage code="pihcore.consult.returnVisitDate"/>:
+                </label>
+                <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true"
+                     allowPastDates="false"
+                     required="true" class="inline"/>
+            </span>
         </div>
     </section>
 
@@ -840,43 +901,45 @@
     <ifMode mode="VIEW" include="false">
         <style type="text/css">
             .ncdButtonDark.confirm, ncdButtonDark.confirm {
-                background: #3f746d;
-                border-color: #3f746d;
+            background: #3f746d;
+            border-color: #3f746d;
             }
 
             .ncdButtonLight.confirm, ncdButtonLight.confirm {
-                background: #6f9792;
-                border-color: #6f9792;
+            background: #6f9792;
+            border-color: #6f9792;
             }
 
             .ncdButtonSelf.confirm, ncdButtonSelf.confirm {
-                background: #6f9792;
-                border-color: #6f9792;
-                color: black;
+            background: #6f9792;
+            border-color: #6f9792;
+            color: black;
             }
         </style>
 
         <div id="buttonsTopRow">
             <repeat>
                 <template>
-                    <button id="pihcore-{idName}" type="button" class="nextSection ncdButton{buttonStyle} submitButton confirm right" >
+                    <button id="pihcore-{idName}" type="button"
+                            class="nextSection ncdButton{buttonStyle} submitButton confirm right">
                         <uimessage code="{label}"/>
                         <i class="icon-spinner icon-spin icon-2x" style="display: none; margin-left: 10px;"></i>
                     </button>
                 </template>
-                <render idName="ncd-plan"      buttonStyle="Dark" label="pihcore.visitNote.plan" />
-                <render idName="diagnosis"     buttonStyle="Dark" label="pihcore.diagnosis.label" />
-                <render idName="sickle-cell" buttonStyle="Light" label="Sickle" />
-                <render idName="palliative" buttonStyle="Light" label="Palliative" />
-                <render idName="liver" buttonStyle="Light" label="Liver" />
-                <render idName="kidney" buttonStyle="Light" label="Kidney" />
-                <render idName="lung" buttonStyle="Light" label="Lung" />
-                <render idName="heart-failure" buttonStyle="Light" label="Heart" />
-                <render idName="hypertension" buttonStyle="Self" label="HTN" />
-                <render idName="diabetes" buttonStyle="Light" label="DM" />
+                <render idName="ncd-plan" buttonStyle="Dark" label="pihcore.visitNote.plan"/>
+                <render idName="diagnosis" buttonStyle="Dark" label="pihcore.diagnosis.label"/>
+                <render idName="sickle-cell" buttonStyle="Light" label="Sickle"/>
+                <render idName="palliative" buttonStyle="Light" label="Palliative"/>
+                <render idName="liver" buttonStyle="Light" label="Liver"/>
+                <render idName="kidney" buttonStyle="Light" label="Kidney"/>
+                <render idName="lung" buttonStyle="Light" label="Lung"/>
+                <render idName="heart-failure" buttonStyle="Light" label="Heart"/>
+                <render idName="hypertension" buttonStyle="Self" label="HTN"/>
+                <render idName="diabetes" buttonStyle="Light" label="DM"/>
             </repeat>
         </div>
-        <br/><br/>
+        <br/>
+        <br/>
 
         <div id="buttons">
             <button id="next" type="button" class="submitButton confirm right">
