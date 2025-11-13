@@ -51,6 +51,7 @@
             box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
             padding: 10px 5px 10px 15px;
             line-height: 1.5em; /*add this for vertical spacing between elements*/
+            margin-bottom: 20px; /* Add spacing below the section */
         }
 
         .section-container input[type="checkbox"] {
@@ -83,6 +84,19 @@
         .two-columns > div {
             display: table-cell;
             width: 50%;
+        }
+
+        .two-columns {
+        display: flex; /* Use flexbox for layout */
+        flex-wrap: wrap; /* Allow items to wrap to the next line */
+        }
+
+        .column {
+        width: 48%; /* Adjust column width as needed (slightly less than 50% to add space between columns) */
+        margin-right: 2%; /* Add spacing between columns */
+        margin-bottom: 10px; /* Add spacing between rows */
+        display: flex; /* Use flexbox for vertical alignment */
+        align-items: center; /* Align items vertically in the center */
         }
 
         .three-columns > div {
@@ -125,558 +139,1039 @@
 
         label {
             padding: 0px 3px 0px 0px
+            font-weight: bold;
         }
 
         form input[type="radio"], .form input[type="radio"] {
             float: none;
             display: inline-block;
         }
+
+        .inline {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px; /* Adjust spacing between radio button and text */
+        }
+
+        .block {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Adjust spacing */
+        flex-wrap: wrap; /* Ensures proper alignment in smaller screens */
+        }
+
+        obs[style="radio"] {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        }
+
+        .htn-section {
+        background: #f8f8f8;
+        padding: 1.2em;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .htn-section label {
+        margin-bottom: 0.5em;
+        color: #1a3a4f;
+        }
+
+        .htn-section input[type="text"],
+        .htn-section input[type="date"] {
+        height: 32px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 0 8px;
+        }
+
+        .htn-section table {
+        width: 100%;
+        border-collapse: collapse;
+        }
+
+        .htn-section td {
+        vertical-align: top;
+        padding: 8px;
+        }
+
+        .htn-section input[type="radio"] {
+        margin-right: 8px;
+        }
+
+        .htn-section textarea {
+        width: 95%;
+        height: 80px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        }
+
+        .htn-section label {
+        font-weight: normal;
+        }
+
+        .family-history-item .label {
+        display: inline-block;
+        width: 250px;
+        }
+
+        .family-history-item .relative {
+        display: inline-block;
+        width: 120px;
+        }
+
+        table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        }
+
+        th, td {
+        padding: 5px;
+        text-align: left;
+        border: 1px solid #ddd;
+        }
+
+        th {
+        background-color: #f2f2f2;
+        }
+
+        .flex-container {
+        display: flex;
+        gap: 20px;
+        }
+
+        .flex-container > div {
+        flex: 1;
+        }
+
+        /* Make obs radio options inline using flexbox and !important to override HFE's default styles. */
+        .radio-container {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 5px;
+        }
+
+        .second-label-inline {
+        display: flex;
+        align-items: center; /* This centers them vertically */
+        }
+
+        /* This rule is just to add some space between the label and the text area */
+        .first-label-inline label {
+        margin-right: 5px;
+        }
+
+        .cld-history-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 40px;
+        row-gap: 15px;
+        padding: 10px 0;
+        }
+
+        /* Styles for the labels to ensure they are aligned and consistent */
+        .cld-history-grid .form-row {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Space between label and input */
+        margin-bottom: 5px; /* Space between the "Days" and "Nights" fields */
+        }
+
+        .cld-history-grid label {
+        font-weight: normal; /* Labels are not typically bold inside the form */
+        flex-shrink: 0; /* Prevents the label from shrinking */
+        }
+
+        /* Ensures the input fields (obs) take up available space */
+        .cld-history-grid .form-row > .inline {
+        flex-grow: 1;
+        }
+
+        /* Style for the radio button rows (Beta-agonist, Steroid inhaler) */
+        .radio-row {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Space between label and radio buttons */
+        /* Use a fixed width for the label to align input fields if necessary,
+        or let it flex as shown below */
+        }
+
+        /* Ensure the radio label takes space but aligns nicely */
+        .radio-row label {
+        flex-shrink: 0;
+        }
+
+    </style>
+
+    <style type="text/css">
+        <ifMode mode="VIEW" include="false">
+            #family-history br {
+            display: none;
+            }
+        </ifMode>
     </style>
 
     <ifMode mode="VIEW" include="false">
+        <h1>
+            <uimessage code="CHRONIC LUNG DISEASE"/>
+        </h1>
         <script type="text/javascript">
             jq(function() {
 
                 // handlers for next and submit buttons, see nextAndSubmitButtons.js
                 setUpNextAndSubmitButtons();
+            });
 
+            const vitalsSignsEncounterType = '4fb47712-34a6-40d2-8ed3-e153abbd25b7';
+            const weightConceptUuid = '3ce93b62-26fe-102b-80cb-0017a47871b2';
+            const heightConceptUuid = '3ce93cf2-26fe-102b-80cb-0017a47871b2';
+            const systolicBPConceptUuid = '3ce934fa-26fe-102b-80cb-0017a47871b2';
+            const diastolicBPConceptUuid = '3ce93694-26fe-102b-80cb-0017a47871b2';
+            const systolicBPConceptUuid_second = '55068053-6edf-4887-997a-ba75681ec1a5';
+            const diastolicBPConceptUuid_second = 'd710265f-ddd4-4eef-ab18-28113c8328ae';
+            const hrConceptUuid = '3ce93824-26fe-102b-80cb-0017a47871b2';
+            const temperatureConceptUuid = '3ce939d2-26fe-102b-80cb-0017a47871b2';
+            const muacConceptUuid = 'e3e03a93-de7f-41ea-b8f2-60b220b970e9';
+            const respiratoryRateConceptUuid = '3ceb11f8-26fe-102b-80cb-0017a47871b2';
+            const o2SatConceptUuid = '3ce9401c-26fe-102b-80cb-0017a47871b2';
+            const fbgConceptUuid = '160912AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+            const ppbsConceptUuid = '160914AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+
+            const contextPath = window.location.href.split('/')[3];
+            const apiBaseUrl =  "/" + contextPath + "/ws/rest/v1";
+            const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+            const monthOption = { month: 'short'};
+
+            const patientUuid = '<lookup expression="patient.uuid"/>';
+            let currentEncounterDate = new Date();
+            let lookupEncDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
+            if ( lookupEncDate ) {
+            currentEncounterDate = new Date(+lookupEncDate);
+            }
+
+            let serverEncounterDate = '<lookup complexExpression="#if ($encounter) #set ($encounterDate = $encounter.encounterDatetime) #else #set ($encounterDate = $visit.startDatetime) #end"/>';
+
+            const visitUuid = '<lookup expression="encounter.getVisit().getUuid()"/>';
+
+            jq.getJSON(apiBaseUrl + "/visit/" + visitUuid, {
+            v: 'custom:(uuid,id,startDatetime,encounters:(uuid,display,encounterDatetime,encounterType:(uuid,name),obs:(uuid,display,concept:(uuid,display),obsDatetime,value)))'
+            },
+            function( data ){
+            if (data.encounters &amp;&amp; data.encounters.length &gt; 0) {
+            for (let index=0; index &lt; data.encounters.length; ++index) {
+            let encounter = data.encounters[index];
+            if (encounter.encounterType.uuid === vitalsSignsEncounterType) {
+            // we found a VitalsSigns encounter on this visit
+            let encounterDate = new Date(encounter.encounterDatetime);
+            let month = new Intl.DateTimeFormat(undefined, monthOption).format(encounterDate);
+            jq("#lastVitalsEncounterDate").text(encounterDate.getDate() + "-" + month + "-" + encounterDate.getFullYear());
+            jq("#lastVitalsEncounterTime").text(encounterDate.toLocaleTimeString());
+
+            let last_weight = null;
+            let last_height = null;
+            let last_bmi = null;
+            if (encounter.obs &amp;&amp; encounter.obs.length &gt; 0) {
+            jq('#lastVitals').show();
+            for (let j=0; j &lt; encounter.obs.length; ++j) {
+            let obs = encounter.obs[j];
+            if (obs.concept.uuid === systolicBPConceptUuid) {
+            jq("#last_bp_systolic").text(obs.value);
+            jq("#last_bp_systolic").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === diastolicBPConceptUuid) {
+            jq("#last_bp_diastolic").text(obs.value);
+            jq("#last_bp_diastolic").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === systolicBPConceptUuid_second) {
+            jq("#last_bp_systolic_second").text(obs.value);
+            jq("#last_bp_systolic_second").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === diastolicBPConceptUuid_second) {
+            jq("#last_bp_diastolic_second").text(obs.value);
+            jq("#last_bp_diastolic_second").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === hrConceptUuid) {
+            jq("#last_heart_rate").text(obs.value);
+            jq("#last_heart_rate").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === temperatureConceptUuid) {
+            jq("#last_temperature_c").text(obs.value);
+            jq("#last_temperature_c").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === muacConceptUuid) {
+            jq("#last_muac_mm").text(obs.value);
+            jq("#last_muac_mm").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === respiratoryRateConceptUuid) {
+            jq("#last_respiratory_rate").text(obs.value);
+            jq("#last_respiratory_rate").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === o2SatConceptUuid) {
+            jq("#last_o2_sat").text(obs.value);
+            jq("#last_o2_sat").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === weightConceptUuid) {
+            jq("#last_weight").text(obs.value);
+            last_weight = obs.value;
+            jq("#last_weight").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === heightConceptUuid) {
+            jq("#last_height").text(obs.value);
+            last_height = obs.value;
+            jq("#last_height").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === fbgConceptUuid) {
+            jq("#last_fbg").text(obs.value);
+            last_fbg = obs.value;
+            jq("#last_fbg").removeClass("emptyValue").addClass("value");
+            } else if (obs.concept.uuid === ppbsConceptUuid) {
+            jq("#last_ppbs").text(obs.value);
+            last_ppbs = obs.value;
+            jq("#last_ppbs").removeClass("emptyValue").addClass("value");
+            }
+            }
+
+            if (last_weight &amp;&amp; last_height) {
+            last_bmi = last_weight / ((last_height/100) * (last_height/100));
+            jq("#last_bmi").text(last_bmi.toFixed(1));
+            jq("#last_bmi").removeClass("emptyValue").addClass("value");
+            }
+            break;
+            }
+            }
+            }
+            }
             });
         </script>
     </ifMode>
 
-    <section id="respire-section" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="Chronic lung disease">
-        <div id="respire" class="section-container">
+    <!-- Patient Overview Section -->
+    <section id="cld-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Patient Overview">
+        <div class="section-container">
 
-            <!-- Only include this section on the NCD intake form -->
-            <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
-                <h3>
-                    <uimessage code="Restrictive lung diseases" />
-                </h3>
-
-                <repeat>
-                    <template>
-                        <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                            <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{parId}" answerCode="{message}"
-                                 style="checkbox"/>
-                        </obsgroup>
-                    </template>
-                    <render parId="CIEL:116711" message="Interstitial lung disease" />
-                    <render parId="PIH:14601"   message="Post infection (Tuberculosis)" />
-                    <render parId="CIEL:132486" message="Occupational lung disease" />
-                    <render parId="CIEL:127611" message="Other restrictive lung disease" />
-                </repeat>
-                <br/>
-
-                <table>
-                    <tr>
-                        <th width="30%">
-                            <label>
-                                <uimessage code="Obstructive lung diseases "/>
-                            </label>
-                        </th>
-                        <th>
-                            <label>
-                                <uimessage code="pihcore.symptoms"/>
-                            </label>
-                        </th>
-                        <th>
-                            <label>
-                                <uimessage code="pihcore.suggestedTreatment.label"/>
-                            </label>
-                        </th>
-                    </tr>
-
-                    <repeat>
-                        <template>
-                            <tr>
-                                <td>
-                                    <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                        <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{ncdId}"
-                                             style="checkbox"/>
-                                    </obsgroup>
-                                </td>
-                                <td>
-                                    <label>
-                                        <uimessage code="{symp}"/>
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <uimessage code="{sugTreat}"/>
-                                    </label>
-                                </td>
-                            </tr>
-                        </template>
-                        <render ncdId="CIEL:1295" message="COPD" symp=""
-                                sugTreat="Ipratropium, Beclomethasone" />
-                        <render ncdId="CIEL:121375" message="Asthma" symp=""
-                                sugTreat="Salbutamol, Beclomethasone, or Prednisolone"/>
-                        <render ncdId="CIEL:121011" message="Bronchiectasis" symp="pihcore.symp.phlegm.label"
-                                sugTreat="pihcore.ncd.resp.bronchiectTreatment.label"/>
-                    </repeat>
-
-                    <tr>
-                        <td>
-                            <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
-                                     answerConceptId="CIEL:143381" answerCode="Cor pulmonale"/>
-                            </obsgroup>
-                        </td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-                <br/>
-            </includeIf>
-
-            <div class="two-columns">
-                <div>
-                    <p class="side-by-side">
-                        <label>
-                            <uimessage code="On medication with" />
-                        </label>
-                        <br/>
-                        <obs conceptId="PIH:14603" style="radio"
-                             answerConceptIds="PIH:14604,PIH:14605,PIH:14606,PIH:14607,PIH:14608,PIH:14609,PIH:15163"
-                             answerCodes="SABA (Short-acting beta-agonist),SAMA (Short-acting muscarinic antagonist),LABA (Long-acting beta-agonist),LAMA (Long acting muscarinic antagonist),Oral steroid,Steroid inhaler,Oral salbutamol"
-                             answerSeparator="&lt;br /&gt;"/>
-                    </p>
-                </div>
-
-                <div>
-                    <dl>
-                        <dt>
-                            <uimessage code="SABA"/>
-                        </dt>
-                        <dd>
-                            <uimessage code="Salbutamol"/>
-                        </dd>
-
-                        <dt>
-                            <uimessage code="SAMA"/>
-                        </dt>
-                        <dd>
-                            <uimessage code="Ipratropium bromide"/>
-                        </dd>
-
-                        <dt>
-                            <uimessage code="LABA"/>
-                        </dt>
-                        <dd>
-                            <uimessage code="Salmeterol, Formoterol, Indacaterol"/>
-                        </dd>
-
-                        <dt>
-                            <uimessage code="LAMA"/>
-                        </dt>
-                        <dd>
-                            <uimessage code="Tiotropium"/>
-                        </dd>
-
-                        <dt>
-                            <uimessage code="Inhaled steroids"/>
-                        </dt>
-                        <dd>
-                            <uimessage code="Budesonide"/>
-                        </dd>
-                    </dl>
-                </div>
-            </div>
-
-            <h3>COPD</h3>
-            <table>
-                <tr><th colspan="2">Modified MRC dyspnea scale</th></tr>
-                <tr>
-                    <td>mMRC Grade 0</td>
-                    <td>I only get breathless with strenuous exercise (GOLD A)</td>
-                </tr>
-                <tr>
-                    <td>mMRC Grade 1</td>
-                    <td>I get short of breath when hurrying on the level or walking up a
-                        slight hill (GOLD A)</td>
-                </tr>
-                <tr>
-                    <td>mMRC Grade 2</td>
-                    <td>I walk slower than people of the same age on the level because
-                        of breathlessness or have to stop for breath when walking at my
-                        own pace on the level </td>
-                </tr>
-                <tr>
-                    <td>mMRC Grade 3</td>
-                    <td>I stop for breath after walking about 100 yards or after a few
-                        minutes on the level</td>
-                </tr>
-                <tr>
-                    <td>mMRC Grade 4</td>
-                    <td>I am too breathless to leave the house or I am breathless
-                        when dressing</td>
-                </tr>
-            </table>
-            <br/><br/>
-
-            <table>
-                <tr>
-                    <th rowspan="2">
-                        GOLD 'ABCD' groups<br/>
-                        Assessment of symptoms and risks of exacerbations for initiation of COPD therapy
-                    </th>
-                    <th colspan="2">Assess symptoms</th>
-                </tr>
-                <tr>
-                    <th>mMRC 0 to 1</th>
-                    <th>mMRC 2+</th>
-                </tr>
-                <tr>
-                    <td>Assess exacerbation risk Exacerbations./ Hospitalizations</td>
-                    <td>A</td>
-                    <td>B</td>
-                </tr>
-                <tr>
-                    <td>2+ exacerbations or 1+ hospitalization</td>
-                    <td>C</td>
-                    <td>D</td>
-                </tr>
-
-            </table>
-            <br/>
-
+            <!-- Type of Visit -->
             <p class="side-by-side">
                 <label>
-                    <uimessage code="pihcore.ncd.copdClass"/>
+                    <uimessage code="pihcore.type_of_visit"/>
                 </label>
-                <obs conceptId="PIH:COPD group classification" style="radio"
-                     answerConceptIds="CIEL:165441,CIEL:165442,CIEL:165443,CIEL:165444"
-                     answerCodes="pihcore.gradeA,pihcore.gradeB,pihcore.gradeC,pihcore.gradeD"
-                />
+                <obs conceptId="PIH:6189" style="radio"
+                     answerConceptIds="PIH:1246,PIH:12612,PIH:6192"
+                     answerCodes="Scheduled,Non scheduled,Urgent"/>
             </p>
 
-            <strong>
-                <uimessage code="COPD evaluation" />
-            </strong>
-            <obsgroup groupingConceptId="PIH:14620">
-                <repeat>
-                    <template>
-                        <p class="list-inline-wide">
-                            <label>
-                                <uimessage code="{copdSym}" />
+            <!-- Chronic Lung Disease -->
+            <fieldset>
+                <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
+                    <div class="two-columns">
+                        <div class="form-row">
+                            <strong class="form-label">
+                                <uimessage code="Chronic Lung Disease: "/>
+                            </strong>
+                            <div class="checkbox-group">
+                                <repeat>
+                                    <template>
+                                        <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                                            <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{parId}"
+                                                 answerCode="{message}"
+                                                 style="checkbox"/>
+                                        </obsgroup>
+                                    </template>
+                                    <render parId="PIH:ASTHMA" message="Asthma"/>
+                                    <render parId="PIH:3716" message="COPD"/>
+                                    <render parId="PIH:1547" message="EPTB"/>
+                                </repeat>
+
+                                <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
+                                     style="checkbox" toggle="other"
+                                     showCommentField="true" commentFieldLabel=" "/>
+                            </div>
+                        </div>
+
+                        <!-- Treatment data -->
+                        <div class="form-row">
+                            <label class="form-label">
+                                Date CLD treatment started:
                             </label>
-
-                            <obs conceptId="{copdId}" style="radio"
-                                 answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                                 answerCodes="yes,no,unknown" />
-                        </p>
-                    </template>
-                    <render copdId="CIEL:158939" copdSym="Smoking cessation" />
-                </repeat>
-
-                <repeat>
-                    <template>
-                        <p class="side-by-side">
-                            <obs style="radio"
-                                 conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT,PIH:SYMPTOM PRESENCE UNKNOWN"
-                                 conceptLabels="yes,no,unknown" answerConceptId="{copdId}" labelText="{copdSym}"/>
-                        </p>
-                    </template>
-                    <render copdId="CIEL:122496" copdSym="Dyspnea" />
-                    <render copdId="CIEL:124665" copdSym="Chest tightness" />
-                    <render copdId="CIEL:5209"   copdSym="Wheezing" />
-                    <render copdId="CIEL:143264" copdSym="Cough" />
-                    <render copdId="CIEL:5957"   copdSym="Productive cough" />
-                </repeat>
-
-                <repeat>
-                    <template>
-                        <p class="list-inline-wide">
-                            <label>
-                                <uimessage code="{copdSym}" />
-                            </label>
-
-                            <obs conceptId="{copdId}" style="radio"
-                                 answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                                 answerCodes="yes,no,unknown" />
-                        </p>
-                    </template>
-                    <render copdId="PIH:14622"   copdSym="Increased inhaler use" />
-                    <render copdId="PIH:14623"   copdSym="Wheeze during exam" />
-                    <render copdId="PIH:11925"   copdSym="Activity limitation" />
-                    <render copdId="PIH:14626"   copdSym="Night waking due to dyspnea" />
-                </repeat>
-
-                <table>
-                    <tr><th>
-                        Exacerbation Definition (one or more):
-                    </th></tr>
-                    <tr>
-                        <td>
-                            <sl>
-                                <li>Worsening Dyspnea</li>
-                                <li>Sputum production increases and/or become thicker</li>
-                                <li>Cough increases in frequency and severity</li>
-                            </sl>
-                        </td>
-                    </tr>
-                </table>
-
-                <p class="list-inline-wide">
-                    <label>
-                        <uimessage code="COPD exacerbation" />
-                    </label>
-
-                    <obs id="exar-copd" conceptId="CIEL:166093" style="radio"
-                         answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                         answerCodes="yes,no,unknown" >
-                        <controls>
-                            <when value="CIEL:1065" thenDisplay="#details-exar-copd" />
-                        </controls>
-                    </obs>
-                </p>
-
-                <div id="details-exar-copd" style="margin-left: 30px">
-                    <label>
-                        <uimessage code="Number of COPD exacerbations since last visit" />
-                    </label>
-
-                    <obs conceptId="CIEL:167821" />
-                    <br/>
-                    <p class="list-inline-wide">
-                        <label>
-                            <uimessage code="If exacerbation, hospitalization needed?" />
-                        </label>
-
-                        <obs conceptId="PIH:14626" style="radio"
-                             answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                             answerCodes="yes,no,unknown" />
-                    </p>
-                </div>
-            </obsgroup>
-
-            <h3>Asthma</h3>
-
-            <div class="two-columns">
-                <div>
-                    <strong>
-                        <uimessage code="GINA assessment asthma control " />
-                    </strong>
-                    <i>(In the past 4 weeks)</i>
-                    <obsgroup groupingConceptId="PIH:14587">
-                        <repeat>
-                            <template>
-                                <p class="side-by-side">
-                                    <label>
-                                        <uimessage code="{message}"/>
-                                    </label>
-                                    <br/>
-                                    <obs conceptId="PIH:{ginaId}" style="radio"
-                                         answerConceptIds="PIH:YES,PIH:NO"
-                                         answerCodes="yes,no"/>
-                                </p>
-                            </template>
-                            <render ginaId="14618" message="Exacerbations (more than or equal to 1)" />
-                            <render ginaId="11803" message="Datetime symptoms more than twice a week" />
-                            <render ginaId="11991" message="Inhaler for symptoms more than twice a week" />
-                            <render ginaId="11925" message="Activity limitations due to asthma" />
-                            <render ginaId="11731" message="Night waking due to asthma" />
-                            <render ginaId="14619" message="Triggers cause exacerbation of asthma" />
-                        </repeat>
-                    </obsgroup>
-                </div>
-                <div>
-                    <p class="side-by-side">
-                        <strong>
-                            <uimessage code="Asthma severity"/>
-                        </strong>
-                        <obs conceptId="PIH:7405" style="radio"
-                             answerConceptIds="CIEL:1498,CIEL:1499,CIEL:1500"
-                             answerSeparator="&lt;br /&gt;"/>
-                    </p>
-                    <br/><br/>
-
-                    <strong>
-                        <uimessage code="Inhaler" />
-                    </strong>
-
-                    <div>
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="pihcore.ncd.inhalerEd"/>
-                            </label>
-                            <br/>
-                            <obs conceptId="PIH:7399" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO,CIEL:1067"
-                                 answerCodes="yes,no,unknown"/>
-
-                        </p>
-
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="Good inhaler technique"/>
-                            </label>
-                            <br/>
-                            <obs conceptId="PIH:7397" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO,CIEL:1067"
-                                 answerCodes="yes,no,unknown"/>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <h3>
-                Chronic lung disease followup indicators
-            </h3>
-            <obsgroup groupingConceptId="PIH:14812">
-
-                <h5>
-                    <uimessage code="Awareness and treatment"/>
-                </h5>
-
-                <div class="two-columns">
-                    <div>
-                        <repeat>
-                            <template>
-                                <p class="list-inline">
-                                    <label>
-                                        <uimessage code="{questionName}"/>
-                                    </label>
-                                    <obs id="lung-fui-{tog}" conceptId="{qId}" style="radio"
-                                         answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"
-                                         answerCodes="yes,no,unknown" >
-                                        <controls>
-                                            <when value="PIH:YES" thenDisplay="#lung-fui-{tog}-details"/>
-                                        </controls>
-                                    </obs>
-                                </p>
-                            </template>
-                            <render qId="CIEL:167914" questionName="Understands treatment" tog="understands"/>
-                            <render qId="PIH:14741"   questionName="Ability to titrate treatment" tog="titrate" />
-                            <render qId="CIEL:164075" questionName="Overall treatment adherence" tog="adher"/>
-                            <render qId="CIEL:167819" questionName="Missed doses in past week" tog="missed"/>
-                            <render qId="CIEL:167021" questionName="Aware and understands the disease" tog="aware"/>
-                        </repeat>
-
-                        <h5>
-                            <uimessage code="Disease control"/>
-                        </h5>
-                        <repeat>
-                            <template>
-                                <p class="list-inline">
-                                    <label>
-                                        <uimessage code="{questionName}"/>
-                                    </label>
-                                    <obs id="lung-dc-fui-{tog}" conceptId="{qId}" style="radio"
-                                         answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"
-                                         answerCodes="yes,no,unknown" >
-                                        <controls>
-                                            <when value="PIH:YES" thenDisplay="#lung-dc-fui-{tog}-details"/>
-                                        </controls>
-                                    </obs>
-                                </p>
-                            </template>
-
-                            <render qId="CIEL:1898" questionName="Patient condition improved" tog="improved"/>
-                            <render qId="PIH:20008" questionName="Lung decompensation"  tog="lungDecomp"/>
-                        </repeat>
-
-                        <div id="lung-dc-fui-lungDecomp-details" >
-                            <p class="list-inline">
-                                <label>
-                                    <uimessage code="Send for admission"/>
-                                </label>
-                                <obs conceptId="CIEL:1788" style="radio"
-                                     answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"
-                                     answerCodes="yes,no,unknown" />
-                            </p>
+                            <div>
+                                <obs conceptId="PIH:11131"/>
+                            </div>
                         </div>
                     </div>
+                </includeIf>
+                <br/>
 
-                    <div id="lung-fui-missed-details">
-                        <br/><br/><br/><br/>
-                        <label>
-                            <uimessage code="# of missed doses in past week"/>
-                        </label>
-                        <obs conceptId="CIEL:167918"  />
-                    </div>
+                <!-- Family history/involvement -->
+                <strong class="inline">
+                    <uimessage code="Family history: "/>
+                </strong>
+                <familyHistoryRelativeCheckboxes concept="PIH:ASTHMA"
+                                                 relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
+                <familyHistoryRelativeCheckboxes concept="PIH:3716"
+                                                 relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
+                <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
+                     style="checkbox" toggle="other"
+                     showCommentField="true" commentFieldLabel=" "/>
+            </fieldset>
+        </div>
+    </section>
+
+    <!-- Patient History & Exposures Section -->
+    <div class="flex-container">
+        <div>
+            <section id="cld-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                     headerCode="Patient History And Exposures">
+                <div class="section-container">
+                    <table>
+                        <tbody>
+                            <!-- TB contacts -->
+                            <tr>
+                                <td colspan="2">
+                                    <label class="inline">
+                                        TB contacts?:
+                                    </label>
+                                    <span class="list-inline">
+                                        <obs id="tb-contact" conceptId="PIH:2133"
+                                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" labelText=""
+                                             style="radio" answerSeparator=""/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- Cooking Fire Method -->
+                            <tr>
+                                <td colspan="2">
+                                    <label class="inline">
+                                        Cooking fire method?:
+                                    </label>
+                                    <span class="list-inline">
+                                        <obs id="money-source-while-sick" conceptId="PIH:20889"
+                                             answerConceptIds="PIH:20891,PIH:20892,PIH:20890" labelText=""
+                                             style="radio" answerSeparator=""/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- Smoking -->
+                            <tr>
+                                <td colspan="2">
+                                    <label class="inline">
+                                        Smoking:
+                                    </label>
+                                    <span class="list-inline">
+                                        <obs conceptId="CIEL:163731"
+                                             answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
+                                             answerLabels="Yes, Never, Quit"
+                                             style="radio"/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- Occupation: This load from the registration form -->
+                            <tr>
+                                <td colspan="2">
+                                    <p>
+                                        <i>
+                                            <label>Previous/current work/Employment (Occupation) entered during
+                                                registration:
+                                            </label>
+                                            <lookup complexExpression="$fn.latestObs('PIH:Occupation').valueCoded.name"/>
+                                            (on<lookup expression="fn.latestObs('PIH:Occupation').obsDatetime"/>)
+                                        </i>
+                                    </p>
+                                </td>
+                            </tr>
+                            <!-- Secondhand smoking-->
+                            <tr>
+                                <td colspan="2">
+                                    <label class="inline">
+                                        <uimessage code="pihcore.habits.secondhandSmoke"/>:
+                                    </label>
+                                    <span class="list-inline">
+                                        <obs conceptId="CIEL:152721"
+                                             answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
+                                             style="radio"/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- Family Medicine Method -->
+                            <tr>
+                                <td>
+                                    Family Planning, if female patient 14-49 years
+                                </td>
+                                <td>
+                                    <repeat>
+                                        <template>
+                                            <span>
+                                                <obs conceptId="PIH:374"
+                                                     style="checkbox"
+                                                     answerConceptId="{concept}"
+                                                     labelText="{label}" answerLabel=""/>
+                                            </span>
+                                        </template>
+                                        <render concept="PIH:780" label="OC (pills)"/>
+                                        <render concept="PIH:907" label="Depo (Injection)"/>
+                                        <render concept="PIH:1107" label="None"/>
+                                    </repeat>
+                                    <obs conceptId="PIH:374" answerConceptId="PIH:5622"
+                                         style="checkbox" commentFieldLabel="(specify)"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </section>
+        </div>
+    </div>
 
-            </obsgroup>
+    <!-- Chest X-ray Findings -->
+    <section id="cld-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Chest X-Ray Findings">
+        <div class="section-container">
 
-            <h3>
-                <uimessage code="Spirometry" />
-            </h3>
+            <table>
+                <tr class="pt_has_htn">
+                    <obsgroup groupingConceptId="PIH:10471">
+                        <td style="width: 15%">
+                            <label>Chest x-ray findings</label>
+                        </td>
+                        <td>
+                            <div class="block">
+                                <label class="inline">Date:</label>
+                                <obs conceptId="PIH:12847" class="inline"/>
+                            </div>
 
-            <obsgroup groupingConceptId="PIH:14610">
-                <div class="two-columns">
-                    <div>
-                        <obs conceptId="CIEL:163724" labelText="Date" allowTime="false"/>
-                        <br/>
+                            <div class="block">
+                                <label>Impressions:</label>
+                                <obs conceptId="PIH:10471" style="textarea"/>
+                            </div>
+                        </td>
+                    </obsgroup>
+                </tr>
+            </table>
+        </div>
+    </section>
 
-                        <table style="width: 400px">
-                            <tr>
-                                <th>FEV1 value</th>
-                                <th>COPD stage</th>
-                            </tr>
-                            <tr>
-                                <td>FEV1 80% or above</td>
-                                <td>mild</td>
-                            </tr>
-                            <tr>
-                                <td>FEV1 50 - 79%</td>
-                                <td>moderate</td>
-                            </tr>
-                            <tr>
-                                <td>FEV1 30 - 49%</td>
-                                <td>severe</td>
-                            </tr>
-                            <tr>
-                                <td>FEV1 29% or less</td>
-                                <td>very severe</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><b>FEV1 normal and FVC decreased:</b><br/>suspect interstitial lung diseases</td>
-                            </tr>
-                        </table>
+    <!-- Text/CSS for Lab -->
+    <style type="text/css">
+
+        #test-orders {
+        padding-top padding-bottom: 0px;
+        line-height: 0.1;
+        }
+
+        #test-orders .orderwidget-orderable-section {
+        border-bottom: none;
+        }
+
+        #test-orders .orderwidget-existing-order-section {
+        display:none;
+        }
+
+        #test-orders .orderwidget-section-header {
+        padding-bottom: 25px;
+        }
+        <!--
+        .two-column-old {
+        column-count: 2;
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        } -->
+    </style>
+    <br/>
+
+    <!-- Lab Section -->
+    <section id="test-orders" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.lab.lab_tests.title">
+        <div class="section-container two-column-old">
+            <order orderType="52a447d3-a64a-11e3-9aeb-50e549534c5e" onLoadFunction="renderOrderWidgetAsCheckboxes">
+                <orderTemplate>
+                    <div style="display:none;">
+                        <orderProperty name="action">
+                            <option value="NEW"/>
+                            <option value="DISCONTINUE"/>
+                        </orderProperty>
+                        <orderProperty name="urgency" value="ROUTINE"/>
+                        <orderProperty name="previousOrder"/>
+                        <orderProperty name="careSetting" value="OUTPATIENT"/>
+                        <orderProperty name="concept" label="">
+                            <option value="164945AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="GeneXpert MTB/Rif"/>
+                            <option value="4b17f24e-9615-4a03-b18f-d62a8edb50c3" label="TB smear (AFB)"/>
+                        </orderProperty>
                     </div>
+                </orderTemplate>
+            </order>
+        </div>
+    </section>
 
-                    <div>
-                        <repeat>
-                            <template>
-                                <obs conceptId="{spiroId}" labelText="{spironame}"/>
-                            </template>
-                            <render spiroId="PIH:14611" spironame="FEV1"/>
-                            <render spiroId="PIH:14612" spironame="FVC"/>
-                        </repeat>
+    <!-- Vitals Section -->
+    <section id="vitals" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.vitalSigns">
+        <div class="section-container">
 
-                        <repeat>
-                            <template>
-                                <p class="side-by-side">
-                                    <obs conceptId="{spiroId}" labelText="{spironame}" style="radio"
-                                         answerConceptIds="{answIds}"/>
-                                </p>
-                            </template>
-                            <render spiroId="PIH:14613" spironame="FEV1/FVC"
-                                    answIds="CIEL:1115,CIEL:164471,CIEL:164470"/>
-                            <render spiroId="PIH:14614" spironame="Post-bronchodilator" answIds="CIEL:703,CIEL:664"/>
-                        </repeat>
-                    </div>
-                </div>
-            </obsgroup>
+            <!-- Previous vitals from the same encounter -->
+            <div id="lastVitals" class="hidden section-container">
+                <table style="color:grey">
+                    <tr>
+                        <td>
+                            <label>
+                                <uimessage code="mirebalais.mostRecentVitals.label"/>
+                                <span class="date-span ng-binding">
+                                    <i class="icon-calendar"></i>
+                                    <span id="lastVitalsEncounterDate"></span>
+                                </span>
+                                <span class="time-span ng-binding">
+                                    <i class="icon-time"></i>
+                                    <span id="lastVitalsEncounterTime"></span>
+                                </span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="five-columns">
+                                <div>
+                                    <label>
+                                        <uimessage code="mirebalais.vitals.bloodPressure.title"/>&amp;nbsp;
+                                    </label>
+                                    <span class="small">
+                                        <span id="last_bp_systolic" class="obs-field">
+                                            <span class="emptyValue">____</span>
+                                        </span>
+                                        <span class="append-to-value">/</span>
+                                        <span id="last_bp_diastolic" class="obs-field">
+                                            <span class="emptyValue">____</span>
+                                        </span>
+                                        <span class="append-to-value">mm/Hg</span>
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        <uimessage code="mirebalais.vitals.respiratoryRate.title"/>
+                                    </label>
+                                    <span class="small">
+                                        <span id="last_respiratory_rate" class="obs-field">
+                                            <span class="emptyValue">____</span>
+                                        </span>
+                                        <span class="append-to-value">/min</span>
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        <uimessage code="mirebalais.vitals.weight.title"/>
+                                    </label>
+                                    <span class="small">
+                                        <span id="last_weight" class="obs-field">
+                                            <span class="emptyValue">____</span>
+                                        </span>
+                                        <span class="append-to-value">kg</span>
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        <uimessage code="mirebalais.vitals.height.title"/>
+                                    </label>
+                                    <span class="small">
+                                        <span id="last_height" class="obs-field">
+                                            <span class="emptyValue">____</span>
+                                        </span>
+                                        <span class="append-to-value">cm</span>
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        <uimessage code="mirebalais.vitals.bmi.title"/>
+                                    </label>
+                                    <!-- TodDo:  Add calculated BMI -->
+                                    <span class="small">
+                                        <span id="last_bmi" class="obs-field">
+                                            <span class="emptyValue">____</span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="five-columns">
+                                <div>
+                                </div>
+                                <div>
+                                    <label>
+                                        <uimessage code="mirebalais.vitals.heartRate.title"/>
+                                    </label>
+                                    <span class="small">
+                                        <span id="last_heart_rate" class="obs-field">
+                                            <span class="emptyValue">____</span>
+                                        </span>
+                                        <span class="append-to-value">/min</span>
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        <uimessage code="mirebalais.vitals.o2sat.title"/>
+                                    </label>
+                                    <span class="small">
+                                        <span id="last_o2_sat" class="obs-field">
+                                            <span class="emptyValue">____</span>
+                                        </span>
+                                        <span class="append-to-value">%</span>
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        <uimessage code="mirebalais.vitals.temperature.title"/>
+                                    </label>
+                                    <span class="small">
+                                        <span id="last_temperature_c" class="obs-field">
+                                            <span class="emptyValue">____</span>
+                                        </span>
+                                        <span class="append-to-value">°C</span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <!-- only show MUAC if patient is less than 13 years old (on the encounterDate)-->
+                                    <includeIf velocityTest="(13 > $patient.getAge($encounter.getEncounterDatetime()))">
+                                        <label>
+                                            <uimessage code="mirebalais.vitals.muac.navigation.title"/>
+                                        </label>
+                                        <span class="small">
+                                            <span id="last_muac_mm" class="obs-field">
+                                                <span class="emptyValue">____</span>
+                                            </span>
+                                            <span class="append-to-value">
+                                                <uimessage code="emr.units.millimeters"/>
+                                            </span>
+                                        </span>
+                                    </includeIf>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="three-columns">
+                                <div>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        <uimessage code="Post-prandial blood glucose (PPBS)"/>&amp;nbsp;&amp;nbsp;
+                                    </label>
+                                    <span class="small">
+                                        <span id="last_ppbs" class="obs-field">
+                                            <span class="emptyValue">____</span>
+                                        </span>
+                                        <span class="append-to-value">mg/dL</span>
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <label id="fbg_span">
+                                        <uimessage code="Fasting blood glucose (FBG)"/>&amp;nbsp;&amp;nbsp;
+                                    </label>
+                                    <span class="small">
+                                        <span id="last_fbg" class="obs-field">
+                                            <span class="emptyValue">____</span>
+                                        </span>
+                                        <span class="append-to-value">mg/dL</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <br/>
 
-            <p class="side-by-side">
-                <label>
-                    <uimessage code="Spirometry progress" />
-                </label>
-                <obs conceptId="PIH:14617" style="radio"
-                     answerConceptIds="CIEL:162677,CIEL:162678,CIEL:162679" />
-            </p>
+            <div class="three-columns">
+                <div>
+                    <label>
+                        <uimessage code="mirebalais.vitals.bloodPressure.short.title"/>
+                    </label>
+                    <span class="small">
+                        <ifMode mode="VIEW" include="true">
+                            <span class="append-to-value">
+                                <obs conceptId="CIEL:5085" id="bp_systolic"/>
+                            </span>
+                            <span class="append-to-value">/</span>
+                            <span class="append-to-value">
+                                <obs conceptId="CIEL:5086" id="bp_diastolic"/>
+                            </span>
+                            <span class="append-to-value">mm/Hg</span>
+                        </ifMode>
+                        <ifMode mode="VIEW" include="false">
+                            <span class="append-to-value left">
+                                <obs conceptId="CIEL:5085" id="bp_systolic"/>
+                            </span>
+                            <span class="append-to-value left">/</span>
+                            <span class="append-to-value left">
+                                <obs conceptId="CIEL:5086" id="bp_diastolic"/>
+                            </span>
+                            <span class="append-to-value">mm/Hg</span>
+                        </ifMode>
+                    </span>
+                </div>
+                <div>
+                    <!-- only show MUAC if patient is less than 13 years old (on the encounterDate)-->
+                    <includeIf velocityTest="(13 > $patient.getAge($encounter.getEncounterDatetime()))">
+                        <p class="side-by-side">
+                            <label>
+                                <uimessage code="MUAC"/>
+                            </label>
+                            <br/>
+                            <obs id="muac-results" conceptId="CIEL:160908" style="radio"
+                                 answerConceptIds="CIEL:127778,CIEL:160910,CIEL:160909"
+                                 answerCodes="red,yellow,green"
+                                 answerSeparator="&lt;br /&gt;"/>
+                        </p>
+                    </includeIf>
+                </div>
+                <div>
+                    <p class="side-by-side">
+                        <label>
+                            <uimessage code="BMI results"/>
+                        </label>
+                        <br/>
+                        <obs id="bmi-results" conceptId="CIEL:167092" style="radio"
+                             answerConceptIds="CIEL:123814,CIEL:167090,CIEL:114413,CIEL:115115,CIEL:133952"
+                             answerCodes="Underweight (BMI under 18.5),Normal (BMI 18.5 - 24.9),Overweight (BMI 25.0 - 29.9),Moderate obese (BMI 30.0 - 34.9),Severe obese (BMI 35.0 - 39.9)"
+                             answerSeparator="&lt;br /&gt;"/>
 
-            <div>
-                <label>
-                    <uimessage code="pihcore.remarks"/>:
-                </label>
-                <obs conceptId="PIH:11972"/>
+                        <br/>
+                        <br/>
+                        <obsgroup groupingConceptId="PIH:1292" showIfEmpty="false">
+                            <obs style="radio"
+                                 conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT"
+                                 conceptLabels="yes,no" answerConceptId="CIEL:115115" labelText="Obesity"/>
+                        </obsgroup>
+                    </p>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- CLD Clinical History -->
+    <section id="cld-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="CLD Clinical History">
+        <div class="section-container">
+            <div class="cld-history-grid">
+
+                <div class="form-group form-row">
+                    <label>
+                        <uimessage>Missing "code" attribute</uimessage>
+                    </label>
+                    <obs id="PATIENT MISSED VISIT" conceptId="PIH:3125" answerConceptId="CIEL:1067" style="checkbox"
+                         class="inline"/>
+                </div>
+
+                <div class="form-group radio-row">
+                    <obsgroup groupingConceptId="PIH:11991">
+                        <label>Beta-agonist use:</label>
+                        <span class="list-inline">
+                            <obs id="beta-agonist-use" conceptId="PIH:2133" answerConceptIds="PIH:1602,PIH:1099"
+                                 answerLabels="Yes,No" style="radio"/>
+                        </span>
+                    </obsgroup>
+                </div>
+
+                <div class="form-group form-row">
+                    <label><uimessage code="Days per week of symptom: "/></label>
+                    <obs conceptId="PIH:14347" labelText="" class="inline"/>
+                </div>
+
+                <div class="form-group radio-row">
+                    <label>Steroid inhaler daily?:</label>
+                    <span class="list-inline">
+                        <obs id="steroid-inhaler" conceptId="PIH:14589" answerConceptIds="PIH:1065,PIH:1066"
+                             answerLabels="Yes,No" style="radio"/>
+                    </span>
+                </div>
+
+                <div class="form-group form-row">
+                    <label><uimessage code="Nights per week of symptom: "/></label>
+                    <obs conceptId="PIH:14352" labelText="" class="inline"/>
+                </div>
+
+                <div class="form-group form-row">
+                    <label><uimessage code="Number of cigarettes per day"/></label>
+                    <obs conceptId="PIH:12586" labelText="" class="inline"/>
+                </div>
+
+            </div>
+
+            <table class="table table-bordered" style="margin-top: 8px;">
+                <thead>
+                    <tr>
+                        <th>Risk Factor</th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- Passive Smoke -->
+                    <tr>
+                        <td>Passive smoke</td>
+                        <td>
+                            <obs conceptId="CIEL:1729"
+                                 answerConceptId="PIH:YES"
+                                 labelText=""
+                                 style="radio"
+                                 group="passive-smoke"/>
+                        </td>
+                        <td>
+                            <obs conceptId="CIEL:1729"
+                                 answerConceptId="PIH:NO"
+                                 labelText=""
+                                 style="radio"
+                                 group="passive-smoke"/>
+                        </td>
+                    </tr>
+
+                    <!-- Indoor Cooking -->
+                    <tr>
+                        <td>Indoor cooking</td>
+                        <td>
+                            <obs conceptId="CIEL:1729"
+                                 answerConceptId="PIH:YES"
+                                 labelText=""
+                                 style="radio"
+                                 group="indoor-cooking"/>
+                        </td>
+                        <td>
+                            <obs conceptId="CIEL:1729"
+                                 answerConceptId="PIH:NO"
+                                 labelText=""
+                                 style="radio"
+                                 group="indoor-cooking"/>
+                        </td>
+                    </tr>
+
+                    <!-- Exacerbation Today -->
+                    <tr>
+                        <td>Exacerbation today?</td>
+                        <td>
+                            <obs conceptId="CIEL:1729"
+                                 answerConceptId="PIH:YES"
+                                 labelText=""
+                                 style="radio"
+                                 group="exacerbation-today"/>
+                        </td>
+                        <td>
+                            <obs conceptId="CIEL:1729"
+                                 answerConceptId="PIH:NO"
+                                 labelText=""
+                                 style="radio"
+                                 group="exacerbation-today"/>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <strong>Disease Severity</strong>
+            <div class="form-group" style="margin-top: 8px;">
+                <obs conceptId="PIH:7405" style="radio"
+                     answerConceptIds="PIH:7401,PIH:7403,PIH:7400,PIH:7402,PIH:7404"
+                     answerLabels="Intermittent,Mild Persistent,Moderate Persistent,Severe Persistent,Uncontrolled"
+                     class="inline"/>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Medication -->
+    <section id="ncd-meds" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.visitNote.plan.medication">
+        <div class="section-container toggle">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <uimessage code="pihcore.visitNote.plan.name"/>
+                        </th>
+                        <th colspan="2">
+                            <uimessage code="pihcore.visitNote.plan.dose"/>
+                        </th>
+                        <th>
+                            <uimessage code="pihcore.drug.route"/>
+                        </th>
+                        <th>
+                            <uimessage code="pihcore.visitNote.plan.frequency"/>
+                        </th>
+                        <th colspan="2">
+                            <uimessage code="pihcore.visitNote.plan.duration"/>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <repeat with="['1'],['2'],['3'],['4'],['5'],['6'],['7']">
+                        <tr id="medication-{0}" class="medication">
+                            <obsgroup groupingConceptId="PIH:Prescription construct">
+                                <td id="{0}-rx">
+                                    <obs id="{0}-rx-name" class="medication-name" conceptId="CIEL:1282"
+                                         style="autocomplete" answerClasses="Drug"/>
+                                </td>
+                                <td id="{0}-rx-dose">
+                                    <obs id="dose-{0}" class="doseInput" conceptId="CIEL:160856"/>
+                                </td>
+                                <td id="{0}-rx-dose-unit">
+                                    <obs id="{0}-doseUnit" class="doseInput select-arrow"
+                                         conceptId="PIH:Dosing units coded"
+                                         answerConceptIds="CIEL:161553,CIEL:162263,CIEL:1608,CIEL:1513"
+                                         answerCodes="pihcore.visitNote.plan.medication.units.mg,pihcore.visitNote.plan.medication.units.mL,pihcore.visitNote.plan.medication.units.capsule,pihcore.visitNote.plan.medication.units.tablet"/>
+                                </td>
+                                <td id="{name}-rx-route">
+                                    <obs id="route-{name}" class="route select-arrow"
+                                         conceptId="PIH:12651"
+                                         answerConceptIds="CIEL:160240,CIEL:160242,CIEL:160243,CIEL:160245"
+                                         answerLabels="Oral,IV,IM,SubQ"/>
+                                </td>
+                                <td id="{0}-rx-frequency">
+                                    <obs id="{0}-frequencyCoded" class="frequency select-arrow"
+                                         conceptId="CIEL:160855"
+                                         answerConceptIds=
+                                                 "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:PRN,PIH:STAT,PIH:OTHER"
+                                         answerCodes="QD,BID,TID,QID,STAT,PRN,pihcore.visitNote.plan.other"/>
+                                </td>
+                                <td id="{name}-rx-duration">
+                                    <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
+                                </td>
+                                <td id="{name}-rx-duration-unit">
+                                    <obs id="durationUnit-{name}" class="duration-unit select-arrow"
+                                         conceptId="PIH:TIME UNITS"
+                                         answerConceptIds="CIEL:1822,CIEL:1072,CIEL:1073,CIEL:1074"/>
+                                </td>
+                            </obsgroup>
+                        </tr>
+                    </repeat>
+                </tbody>
+                <br/>
+            </table>
+            <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
+                 style="checkbox" toggle="other"
+                 showCommentField="true" commentFieldLabel=" "/>
+        </div>
+    </section>
+
+    <!-- NCD plan -->
+    <section id="ncd_plan" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.visitNote.plan">
+        <div class="section-container">
+            <p>
+                <label>
+                    <uimessage code="pihcore.comment"/>:
+                </label>
+                <obs conceptId="PIH:PATIENT PLAN COMMENTS" style="textarea" rows="10"/>
+            </p>
+
+            <span class="block">
+                <label class="inline">
+                    <uimessage code="pihcore.consult.returnVisitDate"/>:
+                </label>
+                <obs id="return-visit-date" conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true"
+                     allowPastDates="false"
+                     required="true" class="inline"/>
+            </span>
+        </div>
+    </section>
+
 
     <div id="buttons-section"></div>
     <ifMode mode="VIEW" include="false">
