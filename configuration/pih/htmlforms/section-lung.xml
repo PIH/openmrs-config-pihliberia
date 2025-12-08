@@ -321,15 +321,15 @@
         </script>
     </ifMode>
 
-    <!-- Patient Overview Section -->
+    <!-- Patient Visit -->
     <section id="cld-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Visit">
-        <div class="section-container">
+        <div id="asthma-copd" class="section-container">
 
             <!-- Type of Visit -->
             <p class="side-by-side">
                 <label>
-                    <uimessage code="pihcore.type_of_visit"/>:
+                    <uimessage code="pihcore.type_of_visit"/>
                 </label>
                 <obs conceptId="PIH:6189" style="radio"
                      answerConceptIds="PIH:1246,PIH:12612,PIH:6192"
@@ -340,11 +340,10 @@
             <fieldset>
                 <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
                     <div class="two-columns">
-
-                        <!-- Chronic Lung Disease -->
                         <div class="form-row">
+
                             <strong class="form-label">
-                                <uimessage code="Chronic Lung Disease: "/>
+                                <uimessage code="Chronic Lung Disease "/>
                             </strong>
                             <div class="checkbox-group">
                                 <repeat>
@@ -369,147 +368,121 @@
                         <!-- Treatment data -->
                         <div class="form-row">
                             <label class="form-label">
-                                Date CLD treatment started:
+                                Date Asthma/COPD treatment started
                             </label>
                             <div>
                                 <obs conceptId="PIH:11131"/>
                             </div>
                         </div>
                     </div>
+
+                    <br/>
+
+                    <!-- Family history/involvement -->
+                    <strong class="inline">
+                        <uimessage code="Family history "/>
+                    </strong>
+                    <familyHistoryRelativeCheckboxes concept="PIH:ASTHMA"
+                                                     relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
+                    <familyHistoryRelativeCheckboxes concept="PIH:3716"
+                                                     relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
+                    <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
+                         style="checkbox" toggle="other"
+                         showCommentField="true" commentFieldLabel=" "/>
                 </includeIf>
                 <br/>
 
-                <!-- Family history/involvement -->
-                <strong class="inline">
-                    <uimessage code="Family history: "/>
+                <!-- Family Method -->
+                <includeIf velocityTest="$patient.gender == 'F' and $patient.age gt 14 and $patient.age lt 49">
+                <strong>
+                    <uimessage code="Family Planning, if female patient 14-49 years"/>
                 </strong>
-                <familyHistoryRelativeCheckboxes concept="PIH:ASTHMA"
-                                                 relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
-                <familyHistoryRelativeCheckboxes concept="PIH:3716"
-                                                 relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
-                <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
-                     style="checkbox" toggle="other"
-                     showCommentField="true" commentFieldLabel=" "/>
+                <div style="margin-left: 0.5em;">
+                    <repeat>
+                        <template>
+                            <span style="display: block;">
+                                <obs conceptId="PIH:374" style="checkbox"
+                                     answerConceptId="{concept}" labelText="{label}"
+                                     answerLabel=""/>
+                            </span>
+                        </template>
+                        <render concept="PIH:780" label="OC (pills)"/>
+                        <render concept="PIH:907" label="Depo (Injection)"/>
+                        <render concept="PIH:1107" label="None"/>
+                    </repeat>
+
+                    <span style="display: block;">
+                        <obs conceptId="PIH:374" style="checkbox"
+                             answerConceptId="PIH:5622" labelText=""
+                             commentFieldLabel="(If other, please specify)"/>
+                    </span>
+                </div>
+                </includeIf>
+
             </fieldset>
         </div>
     </section>
 
-    <!-- Patient History & Exposures Section -->
+    <!-- Patient Exposures Section -->
     <section id="cld-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Patient History And Exposures">
-        <div class="section-container">
+             headerCode="Patient Exposures">
+        <div id="asthma-copd" class="section-container">
 
-            <div class="two-columns-new">
-
-                <!-- TB Contacts -->
+            <div class="form-row">
                 <span class="first-label-inline">
+
+                    <!-- TB Contacts -->
                     <label>
-                        TB contacts?
+                        Has TB contacts?
                     </label>
-                    <obs id="tb-contact" conceptId="PIH:2133"
-                         answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"
+                    <obs id="tb-contact" conceptId="PIH:2133" answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"
                          style="radio" labelText=""/>
-                </span>
-                <br/>
+                    <br/>
 
-                <!-- Cooking fire method -->
-                <span class="first-label-inline">
+                    <!-- Cooking fire method -->
                     <label>
                         Cooking fire method?
                     </label>
-                    <obs id="cooking-method" conceptId="PIH:20889"
-                         answerConceptIds="PIH:20891,PIH:20892,PIH:20890"
+                    <obs id="cooking-method" conceptId="PIH:20889" answerConceptIds="PIH:20891,PIH:20892,PIH:20890"
                          style="radio" labelText=""/>
-                </span>
-                <br/>
+                    <br/>
 
-                <!-- Smoking -->
-                <!-- Only include this section on the NCD intake form -->
-                <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'
-                        || $encounter.encounterType.uuid == '43423212-6f70-4df8-a9f7-2aef88df1ee2' ">
-                    <span class="first-label-inline">
-                        <label>
-                            Smoking:
-                        </label>
-                        <obs conceptId="CIEL:163731"
-                             answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
-                             answerLabels="Yes,Never,Quit"
-                             style="radio"/>
-                    </span>
-                </includeIf>
-                <br/>
-
-                <!-- Occupation (from registration) -->
-                <span class="first-label-inline">
+                    <!-- Smoking -->
                     <label>
-                        Previous/current work/employment (Occupation) from registration:
+                        Smoked since last visit
                     </label>
-                    <i>
-                        <lookup complexExpression="$fn.latestObs('PIH:Occupation').valueCoded.name"/>
-                        (on<lookup expression="fn.latestObs('PIH:Occupation').obsDatetime"/>)
-                    </i>
-                </span>
-                <br/>
+                    <obs conceptId="PIH:1551"
+                         answerConceptIds="PIH:1065,PIH:1066" answerLabels="Yes,No"
+                         style="radio"/>
+                    <br/>
 
-                <!-- Secondhand Smoke -->
-                <span class="first-label-inline">
+                    <!-- Secondhand Smoke -->
                     <label>
-                        <uimessage code="pihcore.habits.secondhandSmoke"/>:
+                        Secondhand Smoke Exposure
                     </label>
-                    <obs conceptId="CIEL:152721"
-                         answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
+                    <obs conceptId="CIEL:152721" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
                          style="radio"/>
                 </span>
             </div>
-
-            <includeIf velocityTest="$patient.gender == 'F' and $patient.age gt 10 and $patient.age lt 55">
-                <table>
-                    <tbody>
-                        <!-- Family Medicine Method -->
-                        <tr>
-                            <td style="width: 15%;">
-                                Family Planning, if female patient 14-49 years
-                            </td>
-                            <td style="width: 35%;">
-                                <repeat>
-                                    <template>
-                                        <span>
-                                            <obs conceptId="PIH:374"
-                                                 style="checkbox"
-                                                 answerConceptId="{concept}"
-                                                 labelText="{label}" answerLabel=""/>
-                                        </span>
-                                    </template>
-                                    <render concept="PIH:780" label="OC (pills)"/>
-                                    <render concept="PIH:907" label="Depo (Injection)"/>
-                                    <render concept="PIH:1107" label="None"/>
-                                </repeat>
-                                <obs conceptId="PIH:374" answerConceptId="PIH:5622"
-                                     style="checkbox" commentFieldLabel="(specify)"/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </includeIf>
         </div>
     </section>
 
     <section id="cld-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Asthma/COPD Consult Note">
+             headerCode="Asthma/COPD">
         <div class="section-container">
-            <div class="cld-history-grid">
+            <div id="asthma-copd" class="cld-history-grid">
 
                 <!-- Symptom Frequency -->
                 <span class="first-label-inline">
                     <label>
-                        <uimessage code="Days per week of symptom: "/>
+                        <uimessage code="Days per week of symptom "/>
                     </label>
                     <obs conceptId="PIH:14347" labelText="" class="inline"/>
                 </span>
 
                 <span class="first-label-inline">
                     <label>
-                        <uimessage code="Nights per week of symptom: "/>
+                        <uimessage code="Nights per week of symptom "/>
                     </label>
                     <obs conceptId="PIH:14352" labelText="" class="inline"/>
                 </span>
@@ -517,97 +490,50 @@
                 <!-- Beta-agonist Use -->
                 <span class="first-label-inline">
                     <obsgroup groupingConceptId="PIH:11991">
-                        <label>Beta-agonist use:</label>
-                        <span class="list-inline">
+                        <label>
+                            Beta-agonist use
+                        </label>
                             <obs id="beta-agonist-use" conceptId="PIH:2133"
                                  answerConceptIds="PIH:1602,PIH:1099"
                                  answerLabels="Yes,No"
                                  style="radio"/>
-                        </span>
                     </obsgroup>
                 </span>
 
                 <!-- Steroid Inhaler -->
                 <span class="first-label-inline">
-                    <label>Steroid inhaler daily?:</label>
-                    <span class="list-inline">
+                    <label>
+                        Steroid inhaler daily?
+                    </label>
                         <obs id="steroid-inhaler" conceptId="PIH:14589"
                              answerConceptIds="PIH:1065,PIH:1066"
                              answerLabels="Yes,No"
                              style="radio"/>
                     </span>
-                </span>
-
-                <!-- Cigarette Use (conditional) -->
-                <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'
-                    || $encounter.encounterType.uuid == '43423212-6f70-4df8-a9f7-2aef88df1ee2' ">
-                    <span class="first-label-inline">
-                        <label>
-                            <uimessage code="Number of cigarettes per day: "/>
-                        </label>
-                        <obs conceptId="PIH:12586" labelText="" class="inline"/>
-                    </span>
-                </includeIf>
-                <br/>
             </div>
-            <!-- Risk Factors Table -->
-            <table class="table table-bordered" style="margin-top: 8px;">
-                <thead>
-                    <tr>
-                        <th>Risk Factor</th>
-                        <th>Yes</th>
-                        <th>No</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <!-- Passive Smoke -->
-                    <tr>
-                        <td>Passive smoke</td>
-                        <td>
-                            <input type="radio" name="passive_smoke" value="yes"/>
-                        </td>
-                        <td>
-                            <input type="radio" name="passive_smoke" value="no"/>
-                        </td>
-                    </tr>
-
-                    <!-- Indoor cooking -->
-                    <tr>
-                        <td>Indoor cooking</td>
-                        <td>
-                            <input type="radio" name="indoor_cooking" value="yes"/>
-                        </td>
-                        <td>
-                            <input type="radio" name="indoor_cooking" value="no"/>
-                        </td>
-                    </tr>
-
-                    <!-- Exacerbation today? -->
-                    <tr>
-                        <td>Exacerbation today?</td>
-                        <td>
-                            <input type="radio" name="exacerbation_today" value="yes"/>
-                        </td>
-                        <td>
-                            <input type="radio" name="exacerbation_today" value="no"/>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
+                <br />
             <!-- Disease Severity -->
-            <span class="first-label-inline">
-                <label>
-                    Disease Severity:
-                </label>
-                <obs conceptId="PIH:7405" style="radio"
-                     answerConceptIds="PIH:7401,PIH:7403,PIH:7400,PIH:7402,PIH:7404"
-                     answerLabels="Intermittent,Mild Persistent,Moderate Persistent,Severe Persistent,Uncontrolled"
-                     class="list-inline"/>
-            </span>
+            <div>
+                <strong>
+                    Disease Severity
+                </strong>
+                <repeat>
+                    <template>
+                        <span style="display: block;">
+                            <obs conceptId="PIH:7405" style="checkbox"
+                                 answerConceptId="{concept}" labelText="{label}"
+                                 answerLabel=""/>
+                        </span>
+                    </template>
+                    <render concept="PIH:7401" label="Intermittent"/>
+                    <render concept="PIH:7403" label="Mild Persistent"/>
+                    <render concept="PIH:7400" label="Moderate Persistent"/>
+                    <render concept="PIH:7402" label="Severe Persistent"/>
+                    <render concept="PIH:7404" label="Uncontrolled"/>
+                </repeat>
+            </div>
 
-        </div>
+            </div>
     </section>
 
     <div id="buttons-section"></div>
