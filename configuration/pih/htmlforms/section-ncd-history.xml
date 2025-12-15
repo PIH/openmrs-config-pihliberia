@@ -210,6 +210,7 @@
         width: 100%;
         }
         }
+
     </style>
 
 
@@ -224,118 +225,6 @@
 
     <ifMode mode="VIEW" include="false">
         <script type="text/javascript">
-                jq(function() {
-
-            const vitalsSignsEncounterType = '4fb47712-34a6-40d2-8ed3-e153abbd25b7';
-            const weightConceptUuid = '3ce93b62-26fe-102b-80cb-0017a47871b2';
-            const heightConceptUuid = '3ce93cf2-26fe-102b-80cb-0017a47871b2';
-            const systolicBPConceptUuid = '3ce934fa-26fe-102b-80cb-0017a47871b2';
-            const diastolicBPConceptUuid = '3ce93694-26fe-102b-80cb-0017a47871b2';
-            const systolicBPConceptUuid_second = '55068053-6edf-4887-997a-ba75681ec1a5';
-            const diastolicBPConceptUuid_second = 'd710265f-ddd4-4eef-ab18-28113c8328ae';
-            const hrConceptUuid = '3ce93824-26fe-102b-80cb-0017a47871b2';
-            const temperatureConceptUuid = '3ce939d2-26fe-102b-80cb-0017a47871b2';
-            const muacConceptUuid = 'e3e03a93-de7f-41ea-b8f2-60b220b970e9';
-            const respiratoryRateConceptUuid = '3ceb11f8-26fe-102b-80cb-0017a47871b2';
-            const o2SatConceptUuid = '3ce9401c-26fe-102b-80cb-0017a47871b2';
-            const fbgConceptUuid = '160912AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
-            const ppbsConceptUuid = '160914AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
-
-            const contextPath = window.location.href.split('/')[3];
-            const apiBaseUrl =  "/" + contextPath + "/ws/rest/v1";
-            const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
-            const monthOption = { month: 'short'};
-
-            const patientUuid = '<lookup expression="patient.uuid"/>';
-            let currentEncounterDate = new Date();
-            let lookupEncDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
-            if ( lookupEncDate ) {
-            currentEncounterDate = new Date(+lookupEncDate);
-            }
-
-            let serverEncounterDate = '<lookup complexExpression="#if ($encounter) #set ($encounterDate = $encounter.encounterDatetime) #else #set ($encounterDate = $visit.startDatetime) #end"/>';
-
-            const visitUuid = '<lookup expression="encounter.getVisit().getUuid()"/>';
-
-            jq.getJSON(apiBaseUrl + "/visit/" + visitUuid, {
-            v: 'custom:(uuid,id,startDatetime,encounters:(uuid,display,encounterDatetime,encounterType:(uuid,name),obs:(uuid,display,concept:(uuid,display),obsDatetime,value)))'
-            },
-            function( data ){
-            if (data.encounters &amp;&amp; data.encounters.length &gt; 0) {
-            for (let index=0; index &lt; data.encounters.length; ++index) {
-            let encounter = data.encounters[index];
-            if (encounter.encounterType.uuid === vitalsSignsEncounterType) {
-            // we found a VitalsSigns encounter on this visit
-            let encounterDate = new Date(encounter.encounterDatetime);
-            let month = new Intl.DateTimeFormat(undefined, monthOption).format(encounterDate);
-            jq("#lastVitalsEncounterDate").text(encounterDate.getDate() + "-" + month + "-" + encounterDate.getFullYear());
-            jq("#lastVitalsEncounterTime").text(encounterDate.toLocaleTimeString());
-
-            let last_weight = null;
-            let last_height = null;
-            let last_bmi = null;
-            if (encounter.obs &amp;&amp; encounter.obs.length &gt; 0) {
-            jq('#lastVitals').show();
-            for (let j=0; j &lt; encounter.obs.length; ++j) {
-            let obs = encounter.obs[j];
-            if (obs.concept.uuid === systolicBPConceptUuid) {
-            jq("#last_bp_systolic").text(obs.value);
-            jq("#last_bp_systolic").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === diastolicBPConceptUuid) {
-            jq("#last_bp_diastolic").text(obs.value);
-            jq("#last_bp_diastolic").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === systolicBPConceptUuid_second) {
-                jq("#last_bp_systolic_second").text(obs.value);
-                jq("#last_bp_systolic_second").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === diastolicBPConceptUuid_second) {
-                jq("#last_bp_diastolic_second").text(obs.value);
-                jq("#last_bp_diastolic_second").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === hrConceptUuid) {
-            jq("#last_heart_rate").text(obs.value);
-            jq("#last_heart_rate").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === temperatureConceptUuid) {
-            jq("#last_temperature_c").text(obs.value);
-            jq("#last_temperature_c").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === muacConceptUuid) {
-            jq("#last_muac_mm").text(obs.value);
-            jq("#last_muac_mm").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === respiratoryRateConceptUuid) {
-            jq("#last_respiratory_rate").text(obs.value);
-            jq("#last_respiratory_rate").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === o2SatConceptUuid) {
-            jq("#last_o2_sat").text(obs.value);
-            jq("#last_o2_sat").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === weightConceptUuid) {
-            jq("#last_weight").text(obs.value);
-            last_weight = obs.value;
-            jq("#last_weight").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === heightConceptUuid) {
-                jq("#last_height").text(obs.value);
-                last_height = obs.value;
-                jq("#last_height").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === fbgConceptUuid) {
-                jq("#last_fbg").text(obs.value);
-                last_fbg = obs.value;
-                jq("#last_fbg").removeClass("emptyValue").addClass("value");
-            } else if (obs.concept.uuid === ppbsConceptUuid) {
-                jq("#last_ppbs").text(obs.value);
-                last_ppbs = obs.value;
-                jq("#last_ppbs").removeClass("emptyValue").addClass("value");
-            }
-            }
-
-            if (last_weight &amp;&amp; last_height) {
-                last_bmi = last_weight / ((last_height/100) * (last_height/100));
-                jq("#last_bmi").text(last_bmi.toFixed(1));
-                jq("#last_bmi").removeClass("emptyValue").addClass("value");
-            }
-            break;
-            }
-            }
-            }
-            }
-            });
-
                     var validateFamHistoryText = function(divElem) {
                         var parentDiv = divElem.closest('.medicalHistoryText');
 
@@ -425,7 +314,6 @@
                                      style="checkbox"
                                      answerConceptId="{point}" answerCode="{message}"/>
                             </template>
-
                             <render point="CIEL:160542" message="pihcore.location.opd" comment="Outpatient"/>
                             <render point="CIEL:160473" message="pihcore.location.ed" comment="Emergency"/>
                             <render point="CIEL:160448" message="pihcore.location.med.ward" comment="Medical"/>
@@ -448,7 +336,7 @@
                 </fieldset>
 
                 <!-- Duration of Symptoms -->
-                <div class="two-columns">
+                <div class="two-columns-new">
                     <label class="inline">
                         Duration of symptoms:
                     </label>
@@ -471,6 +359,7 @@
                             </obs>
                         </span>
                     </obsgroup>
+                    <br />
 
                     <!-- Hospitalization History -->
                     <label class="inline">
@@ -527,6 +416,7 @@
                             </obs>
                         </span>
                     </span>
+                    <br />
 
                     <label class="inline">
                         Has the patient ever been to the church-yard or seen a traditional healer for these symptoms?
@@ -540,6 +430,7 @@
                             </controls>
                         </obs>
                     </span>
+                    <br/>
 
                     <span id="church-or-traditional-healer-comment">
                         <label class="inline">
@@ -670,6 +561,7 @@
                     <obs conceptId="PIH:11563" answerConceptIds="CIEL:140936"
                          answerLabels="Clothing is looser" style="radio"/>
                 </span>
+                <br />
 
                 <span class="inline">
                     <label class="inline">
@@ -1431,7 +1323,7 @@
                             <option value="161442AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="Ketones (urine)"/>
 
                             <option value="3cd4e194-26fe-102b-80cb-0017a47871b2" label="Blood glucose"/>
-                            <option value="3cd4374e-26fe-102b-80cb-0017a47871b2" label="Serum creatinine (umol/L)"/>
+                            <option value="668cd2a5-60dd-4dc4-889b-e09f072c6a1a" label="Creatinine (mg/dL)"/>
                             <option value="3cd76b58-26fe-102b-80cb-0017a47871b2" label="Serum sodium (Na)"/>
                             <option value="3cd76ce8-26fe-102b-80cb-0017a47871b2" label="Serum potassium (K)"/>
 
@@ -1520,258 +1412,6 @@
             <obs conceptId="PIH:NCD category" answerConceptId="PIH:OTHER"
                  style="checkbox" toggle="other"
                  showCommentField="true" commentFieldLabel=" "/>
-        </div>
-    </section>
-
-    <section id="vitals" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.vitalSigns">
-        <div class="section-container">
-
-            <!-- Previous vitals from the same encounter -->
-            <div id="lastVitals" class="hidden section-container">
-                <table style="color:grey">
-                    <tr>
-                        <td>
-                            <label>
-                                <uimessage code="mirebalais.mostRecentVitals.label"/>
-                                <span class="date-span ng-binding">
-                                    <i class="icon-calendar"></i>
-                                    <span id="lastVitalsEncounterDate"></span>
-                                </span>
-                                <span class="time-span ng-binding">
-                                    <i class="icon-time"></i>
-                                    <span id="lastVitalsEncounterTime"></span>
-                                </span>
-                            </label>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="five-columns">
-                                <div>
-                                    <label>
-                                        <uimessage code="mirebalais.vitals.bloodPressure.title"/>&amp;nbsp;
-                                    </label>
-                                    <span class="small">
-                                        <span id="last_bp_systolic" class="obs-field">
-                                            <span class="emptyValue">____</span>
-                                        </span>
-                                        <span class="append-to-value">/</span>
-                                        <span id="last_bp_diastolic" class="obs-field">
-                                            <span class="emptyValue">____</span>
-                                        </span>
-                                        <span class="append-to-value">mm/Hg</span>
-                                    </span>
-                                </div>
-
-                                <div>
-                                    <label>
-                                        <uimessage code="mirebalais.vitals.respiratoryRate.title"/>
-                                    </label>
-                                    <span class="small">
-                                        <span id="last_respiratory_rate" class="obs-field">
-                                            <span class="emptyValue">____</span>
-                                        </span>
-                                        <span class="append-to-value">/min</span>
-                                    </span>
-                                </div>
-
-                                <div>
-                                    <label>
-                                        <uimessage code="mirebalais.vitals.weight.title"/>
-                                    </label>
-                                    <span class="small">
-                                        <span id="last_weight" class="obs-field">
-                                            <span class="emptyValue">____</span>
-                                        </span>
-                                        <span class="append-to-value">kg</span>
-                                    </span>
-                                </div>
-
-                                <div>
-                                    <label>
-                                        <uimessage code="mirebalais.vitals.height.title"/>
-                                    </label>
-                                    <span class="small">
-                                        <span id="last_height" class="obs-field">
-                                            <span class="emptyValue">____</span>
-                                        </span>
-                                        <span class="append-to-value">cm</span>
-                                    </span>
-                                </div>
-
-                                <div>
-                                    <label>
-                                        <uimessage code="mirebalais.vitals.bmi.title"/>
-                                    </label>
-                                    <!-- TodDo:  Add calculated BMI -->
-                                    <span class="small">
-                                        <span id="last_bmi" class="obs-field">
-                                            <span class="emptyValue">____</span>
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="five-columns">
-                                <div>
-                                </div>
-                                <div>
-                                    <label>
-                                        <uimessage code="mirebalais.vitals.heartRate.title"/>
-                                    </label>
-                                    <span class="small">
-                                        <span id="last_heart_rate" class="obs-field">
-                                            <span class="emptyValue">____</span>
-                                        </span>
-                                        <span class="append-to-value">/min</span>
-                                    </span>
-                                </div>
-
-                                <div>
-                                    <label>
-                                        <uimessage code="mirebalais.vitals.o2sat.title"/>
-                                    </label>
-                                    <span class="small">
-                                        <span id="last_o2_sat" class="obs-field">
-                                            <span class="emptyValue">____</span>
-                                        </span>
-                                        <span class="append-to-value">%</span>
-                                    </span>
-                                </div>
-
-                                <div>
-                                    <label>
-                                        <uimessage code="mirebalais.vitals.temperature.title"/>
-                                    </label>
-                                    <span class="small">
-                                        <span id="last_temperature_c" class="obs-field">
-                                            <span class="emptyValue">____</span>
-                                        </span>
-                                        <span class="append-to-value">°C</span>
-                                    </span>
-                                </div>
-                                <div>
-                                    <!-- only show MUAC if patient is less than 13 years old (on the encounterDate)-->
-                                    <includeIf velocityTest="(13 > $patient.getAge($encounter.getEncounterDatetime()))">
-                                        <label>
-                                            <uimessage code="mirebalais.vitals.muac.navigation.title"/>
-                                        </label>
-                                        <span class="small">
-                                            <span id="last_muac_mm" class="obs-field">
-                                                <span class="emptyValue">____</span>
-                                            </span>
-                                            <span class="append-to-value"><uimessage code="emr.units.millimeters"/></span>
-                                        </span>
-                                    </includeIf>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="three-columns">
-                                <div>
-                                </div>
-
-                                <div>
-                                    <label>
-                                        <uimessage code="Post-prandial blood glucose (PPBS)"/>&amp;nbsp;&amp;nbsp;
-                                    </label>
-                                    <span class="small">
-                                        <span id="last_ppbs" class="obs-field">
-                                            <span class="emptyValue">____</span>
-                                        </span>
-                                        <span class="append-to-value">mg/dL</span>
-                                    </span>
-                                </div>
-
-                                <div>
-                                    <label id="fbg_span">
-                                        <uimessage code="Fasting blood glucose (FBG)"/>&amp;nbsp;&amp;nbsp;
-                                    </label>
-                                    <span class="small">
-                                        <span id="last_fbg" class="obs-field">
-                                            <span class="emptyValue">____</span>
-                                        </span>
-                                        <span class="append-to-value">mg/dL</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <br/>
-
-            <div class="three-columns">
-                <div>
-                    <label>
-                        <uimessage code="mirebalais.vitals.bloodPressure.short.title"/>
-                    </label>
-                    <span class="small">
-                        <ifMode mode="VIEW" include="true">
-                            <span class="append-to-value">
-                                <obs conceptId="CIEL:5085" id="bp_systolic"/>
-                            </span>
-                            <span class="append-to-value">/</span>
-                            <span class="append-to-value">
-                                <obs conceptId="CIEL:5086" id="bp_diastolic"/>
-                            </span>
-                            <span class="append-to-value">mm/Hg</span>
-                        </ifMode>
-                        <ifMode mode="VIEW" include="false">
-                            <span class="append-to-value left">
-                                <obs conceptId="CIEL:5085" id="bp_systolic"/>
-                            </span>
-                            <span class="append-to-value left">/</span>
-                            <span class="append-to-value left">
-                                <obs conceptId="CIEL:5086" id="bp_diastolic"/>
-                            </span>
-                            <span class="append-to-value">mm/Hg</span>
-                        </ifMode>
-                    </span>
-                </div>
-                <div>
-                    <!-- only show MUAC if patient is less than 13 years old (on the encounterDate)-->
-                    <includeIf velocityTest="(13 > $patient.getAge($encounter.getEncounterDatetime()))">
-                        <p class="side-by-side">
-                            <label>
-                                <uimessage code="MUAC"/>
-                            </label>
-                            <br/>
-                            <obs id="muac-results" conceptId="CIEL:160908" style="radio"
-                                 answerConceptIds="CIEL:127778,CIEL:160910,CIEL:160909"
-                                 answerCodes="red,yellow,green"
-                                 answerSeparator="&lt;br /&gt;"/>
-                        </p>
-                    </includeIf>
-                </div>
-                <div>
-                    <p class="side-by-side">
-                        <label>
-                            <uimessage code="BMI results"/>
-                        </label>
-                        <br/>
-                        <obs id="bmi-results" conceptId="CIEL:167092" style="radio"
-                             answerConceptIds="CIEL:123814,CIEL:167090,CIEL:114413,CIEL:115115,CIEL:133952"
-                             answerCodes="Underweight (BMI under 18.5),Normal (BMI 18.5 - 24.9),Overweight (BMI 25.0 - 29.9),Moderate obese (BMI 30.0 - 34.9),Severe obese (BMI 35.0 - 39.9)"
-                             answerSeparator="&lt;br /&gt;"/>
-
-                        <br/><br/>
-                        <obsgroup groupingConceptId="PIH:1292" showIfEmpty="false">
-                            <obs style="radio"
-                                 conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT"
-                                 conceptLabels="yes,no" answerConceptId="CIEL:115115" labelText="Obesity"/>
-                        </obsgroup>
-                    </p>
-                </div>
-            </div>
         </div>
     </section>
 
