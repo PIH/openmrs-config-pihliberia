@@ -433,7 +433,7 @@
 
                     <!-- TB Contacts -->
                     <label>
-                        Has TB contacts?
+                        Has contact with a TB person?
                     </label>
                     <obs id="tb-contact" conceptId="PIH:2133" answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"
                          style="radio" labelText=""/>
@@ -451,8 +451,7 @@
                     <label>
                         Smoked since last visit
                     </label>
-                    <obs conceptId="PIH:1551"
-                         answerConceptIds="PIH:1065,PIH:1066" answerLabels="Yes,No"
+                    <obs id="smoke-since-last-visit" conceptId="PIH:1551" answerConceptIds="PIH:1065,PIH:1066" answerLabels="Yes,No"
                          style="radio"/>
                     <br/>
 
@@ -460,7 +459,7 @@
                     <label>
                         Secondhand Smoke Exposure
                     </label>
-                    <obs conceptId="CIEL:152721" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
+                    <obs id="secondhand-smoke" conceptId="CIEL:152721" answerConceptIds="CIEL:159450,CIEL:159452,CIEL:1090"
                          style="radio"/>
                 </span>
             </div>
@@ -489,15 +488,10 @@
 
                 <!-- Beta-agonist Use -->
                 <span class="first-label-inline">
-                    <obsgroup groupingConceptId="PIH:11991">
-                        <label>
-                            Beta-agonist use
-                        </label>
-                            <obs id="beta-agonist-use" conceptId="PIH:2133"
-                                 answerConceptIds="PIH:1602,PIH:1099"
-                                 answerLabels="Yes,No"
-                                 style="radio"/>
-                    </obsgroup>
+                    <label>
+                        <uimessage code="Number of beta-agonist use? "/>
+                    </label>
+                    <obs conceptId="PIH:7398" labelText="" class="inline"/>
                 </span>
 
                 <!-- Steroid Inhaler -->
@@ -505,13 +499,31 @@
                     <label>
                         Steroid inhaler daily?
                     </label>
-                        <obs id="steroid-inhaler" conceptId="PIH:14589"
-                             answerConceptIds="PIH:1065,PIH:1066"
-                             answerLabels="Yes,No"
-                             style="radio"/>
-                    </span>
+                    <obs id="steroid-inhaler" conceptId="PIH:14589"
+                         answerConceptIds="PIH:1065,PIH:1066"
+                         answerLabels="Yes,No"
+                         style="radio"/>
+                </span>
+
+                <span class="first-label-inline">
+                    <repeat>
+                        <template>
+                            <p class="list-inline">
+                                <obsgroup groupingConceptId="PIH:14875" showIfEmpty="false">
+                                    <obs style="radio"
+                                         conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT"
+                                         conceptLabels="Yes,No"
+                                         answerConceptId="{qId}" labelText="{symptName}"/>
+                                </obsgroup>
+                            </p>
+                        </template>
+                        <render qId="PIH:ASTHMA EXACERBATION" symptName="Exacerbation today?"/>
+                    </repeat>
+                </span>
+
             </div>
-                <br />
+            <br/>
+
             <!-- Disease Severity -->
             <div>
                 <strong>
@@ -533,7 +545,7 @@
                 </repeat>
             </div>
 
-            </div>
+        </div>
     </section>
 
     <div id="buttons-section"></div>
