@@ -225,7 +225,8 @@
 
     <ifMode mode="VIEW" include="false">
         <script type="text/javascript">
-                    var validateFamHistoryText = function(divElem) {
+            jq(function() {
+            var validateFamHistoryText = function(divElem) {
                         var parentDiv = divElem.closest('.medicalHistoryText');
 
                         if (typeof parentDiv !== "undefined" ) {
