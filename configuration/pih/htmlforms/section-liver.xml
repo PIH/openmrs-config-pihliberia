@@ -81,6 +81,19 @@
             width: 50%;
         }
 
+        .two-columns {
+        display: flex; /* Use flexbox for layout */
+        flex-wrap: wrap; /* Allow items to wrap to the next line */
+        }
+
+        .column {
+        width: 48%; /* Adjust column width as needed (slightly less than 50% to add space between columns) */
+        margin-right: 2%; /* Add spacing between columns */
+        margin-bottom: 10px; /* Add spacing between rows */
+        display: flex; /* Use flexbox for vertical alignment */
+        align-items: center; /* Align items vertically in the center */
+        }
+
         .three-columns > div {
             display: table-cell;
             width: 33%;
@@ -121,142 +134,221 @@
 
         label {
             padding: 0px 3px 0px 0px
+            font-weight: bold;
         }
 
         form input[type="radio"], .form input[type="radio"] {
             float: none;
             display: inline-block;
         }
+
+        .inline {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px; /* Adjust spacing between radio button and text */
+        }
+
+        .flex-container {
+        display: flex;
+        gap: 20px;
+        }
+
+        .flex-container > div {
+        flex: 1;
+        }
+
+        .second-label-inline {
+        display: flex;
+        align-items: center; /* This centers them vertically */
+        }
+
+        /* This rule is just to add some space between the label and the text area */
+        .first-label-inline label {
+        margin-right: 5px;
+        }
+
     </style>
 
     <ifMode mode="VIEW" include="false">
+        <h1>
+            <uimessage code="Liver Disease" />
+        </h1>
         <script type="text/javascript">
             jq(function() {
 
                 // handlers for next and submit buttons, see nextAndSubmitButtons.js
                 setUpNextAndSubmitButtons();
-
             });
         </script>
     </ifMode>
 
-    <section id="cirrhosis-section" sectionTag="fieldset"
-             headerTag="legend" headerStyle="title" headerCode="pihcore.ncd.liver.disease">
+    <!-- Patient Visit Section -->
+    <section id="cld-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Visit">
         <div id="cirrhosis" class="section-container">
 
-            <!-- this section is ONLY included for NCD intake encounter -->
-            <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
-                <strong>
-                    <uimessage code="Diagnosis"/>
-                </strong>
-                <div class="two-columns">
-                    <div>
-                        <p class="side-by-side">
-                            <repeat>
-                                <template>
-                                    <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                        <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
-                                             answerConceptId="{diagId}" answerCode="{name}"/>
-                                    </obsgroup>
-                                    <br/>
-                                </template>
-                                <render diagId="CIEL:121812" name="Acute Hepatitis B" />
-                                <render diagId="CIEL:120557" name="Chronic Hepatitis B" />
-                                <render diagId="CIEL:145347" name="Chronic Hepatitis C" />
-                            </repeat>
-                        </p>
+            <!-- Type of visit -->
+            <p class="side-by-side">
+                <label>
+                    <uimessage code="pihcore.type_of_visit"/>
+                </label>
+                <obs conceptId="PIH:6189" style="radio"
+                     answerConceptIds="PIH:1246,PIH:12612,PIH:6192"
+                     answerCodes="Scheduled,Non scheduled,Urgent"/>
+            </p>
 
-                        <label>
-                            <uimessage code="Hepatocarcinoma secondary"/>
-                        </label>
-                        <p class="side-by-side">
-                            <repeat>
-                                <template>
-                                    <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                        <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
-                                             answerConceptId="{diagId}" answerCode="{name}"/>
-                                    </obsgroup>
-                                    <br/>
-                                </template>
-                                <render diagId="CIEL:168297" name="Hepatocarcinoma due to Hepatitis B" />
-                                <render diagId="CIEL:168298" name="Hepatocarcinoma due to Hepatitis C" />
-                                <render diagId="PIH:14911"   name="Hepatocarcinoma due to unknown cause" />
-                            </repeat>
-                        </p>
+            <!-- Liver Disease/Cirrhosis -->
+            <fieldset>
+                <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
+                    <div class="two-columns">
+                        <div class="form-row">
+
+                            <strong class="form-label">
+                                <uimessage code="Liver disease"/>
+                            </strong>
+                            <div class="checkbox-group">
+                                <repeat>
+                                    <template>
+                                        <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                                            <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{parId}"
+                                                 answerCode="{message}"
+                                                 style="checkbox"/>
+                                        </obsgroup>
+                                    </template>
+                                    <render parId="PIH:3714" message="Cirrhosis"/>
+                                    <render parId="PIH:903" message="Hypertension"/>
+                                    <render parId="PIH:3720" message="Diabetes"/>
+                                    <render parId="PIH:1547" message="EPTB"/>
+                                </repeat>
+
+                                <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
+                                     style="checkbox" toggle="other"
+                                     showCommentField="true" commentFieldLabel=" "/>
+                            </div>
+                        </div>
+
+                        <!-- Treatment data -->
+                        <div class="form-row">
+                            <label class="form-label">
+                                Date Liver/cirrhosis disease treatment started
+                            </label>
+                            <div>
+                                <obs conceptId="PIH:11131"/>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label>
-                            <uimessage code="Liver cirrhosis secondary"/>
-                        </label>
-                        <p class="side-by-side">
-                            <repeat>
-                                <template>
-                                    <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
-                                        <obs conceptId="PIH:DIAGNOSIS" style="checkbox"
-                                             answerConceptId="{diagId}" answerCode="{name}"/>
-                                    </obsgroup>
-                                    <br/>
-                                </template>
-                                <render diagId="CIEL:168300" name="Cirrhosis due to Hepatitis B" />
-                                <render diagId="CIEL:168301" name="Cirrhosis due to Hepatitis C" />
-                                <render diagId="CIEL:149157" name="Alcoholic cirrhosis" />
-                                <render diagId="PIH:15156" name="Fibrosis secondary to Schistosoma" />
-                                <render diagId="PIH:14910"   name="Non-alcoholic steatohepatitis" />
-                                <render diagId="CIEL:146184" name="Cardiac cirrhosis" />
-                                <render diagId="CIEL:143118" name="Unknown" fullName="Cryptogenic cirrhosis" />
-                            </repeat>
-                        </p>
+                </includeIf>
+            </fieldset>
 
-                    </div>
-                </div>
-            </includeIf>
-
-            <br/>
-            <h3>
-                <uimessage code="Liver followup indicators"/>
-            </h3>
-
-            <h5>
-                <uimessage code="Clinical indicators"/>
-            </h5>
-
-            <div>
-                <repeat>
-                    <template>
-                        <p class="list-inline">
-                            <obsgroup groupingConceptId="PIH:14875" showIfEmpty="false">
-                                <obs id="liver-asymptomatic" style="radio"
-                                     conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT,PIH:SYMPTOM PRESENCE UNKNOWN"
-                                     conceptLabels="yes,no,unknown"
-                                     answerConceptId="{qId}" labelText="{symptName}">
-                                    <controls>
-                                        <when value="PIH:SYMPTOM ABSENT" thenDisplay="#liver-symptoms"/>
-                                    </controls>
-                                </obs>
+            <fieldset>
+                <table>
+                    <tbody>
+                        <!--  Hep B SAg Test - Closing this! Would use if the lab module is not in used -->
+                        <!--
+                        <tr>
+                            <obsgroup groupingConceptId="CIEL:161472">
+                                <td>
+                                    <label>
+                                        Hep B SAg Test
+                                    </label>
+                                </td>
+                                <td>
+                                    <span class="block;">
+                                        <label class="list-inline">
+                                            Date:
+                                        </label>
+                                        <obs conceptId="PIH:12847" class="list-inline"/>
+                                    </span>
+                                    <span class="block;">
+                                        <label>
+                                            Result:
+                                        </label>
+                                        <obs conceptId="CIEL:161472" style="radio" class="list-inline"
+                                             answerSeparator=""
+                                             answerConceptIds="PIH:703, PIH:664, PIH:1138"/>
+                                    </span>
+                                </td>
                             </obsgroup>
-                        </p>
-                    </template>
-                    <render qId="CIEL:168289" symptName="Asymptomatic" />
-                </repeat>
+                        </tr>
+                        -->
 
-                <div id="liver-symptoms">
-                    <repeat>
-                        <template>
-                            <p class="list-inline">
-                                <obsgroup groupingConceptId="PIH:14875" showIfEmpty="false">
-                                    <obs style="radio"
-                                         conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT,PIH:SYMPTOM PRESENCE UNKNOWN"
-                                         conceptLabels="yes,no,unknown"
-                                         answerConceptId="{qId}" labelText="{symptName}"/>
-                                </obsgroup>
-                            </p>
-                        </template>
-                        <render qId="CIEL:460"    symptName="Ascites/Edema/Anasarca" />
-                        <render qId="CIEL:139582" symptName="Gastrointestinal bleeding" />
-                        <render qId="CIEL:120345" symptName="Confusion" />
-                        <render qId="CIEL:879"    symptName="Pruritus" />
-                    </repeat>
-                </div>
+                        <!-- Treated for Hep B -->
+                        <tr>
+                            <obsgroup groupingConceptId="PIH:14889">
+                                <td>
+                                    <label>
+                                        Has previous treatment for Hepatitis B?
+                                    </label>
+                                </td>
+                                <td>
+                                    <obs id="hepbtreatment-radio" conceptId="PIH:14889" style="radio"
+                                         class="list-inline" answerConceptIds="PIH:1065,PIH:1066"
+                                         answerLabels="Yes,No">
+                                        <controls>
+                                            <!-- When Yes is selected show the date section -->
+                                            <when value="PIH:1065" thenDisplay="#hepbtreatment-section"/>
+                                        </controls>
+                                    </obs>
+                                    <!-- hidden by default; shown when Yes selected -->
+                                    <span id="hepbtreatment-section" style="display:none">
+                                        <span class="block;">
+                                            <label>
+                                                Date Started:
+                                            </label>
+                                            <obs conceptId="PIH:11131" class="list-inline"/>
+                                        </span>
+                                        <span class="block;">
+                                            <label>
+                                                Date Finished:
+                                            </label>
+                                            <obs conceptId="PIH:12748" class="list-inline"/>
+                                        </span>
+                                    </span>
+                                </td>
+                            </obsgroup>
+                        </tr>
+
+                        <!-- Family Medicine Method -->
+                        <includeIf velocityTest="$patient.gender == 'F' and $patient.age gt 14 and $patient.age lt 49">
+                            <tr>
+                                <td style="width: 15%;">
+                                    Family Planning, if female patient 14-49 years
+                                </td>
+                                <td style="width: 35%;">
+                                    <repeat>
+                                        <template>
+                                            <span>
+                                                <obs conceptId="PIH:374"
+                                                     style="checkbox"
+                                                     answerConceptId="{concept}"
+                                                     labelText="{label}" answerLabel=""/>
+                                            </span>
+                                        </template>
+                                        <render concept="PIH:780" label="OC (pills)"/>
+                                        <render concept="PIH:907" label="Depo (Injection)"/>
+                                        <render concept="PIH:1107" label="None"/>
+                                    </repeat>
+                                    <obs conceptId="PIH:374" answerConceptId="PIH:5622"
+                                         style="checkbox" commentFieldLabel="(specify)"/>
+                                </td>
+                            </tr>
+                        </includeIf>
+                    </tbody>
+                </table>
+            </fieldset>
+
+        </div>
+    </section>
+
+    <!-- Liver Disease -->
+    <section id="cld-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Liver Disease/Cirrhosis">
+        <div id="cirrhosis" class="section-container">
+
+            <div class="two-columns-new">
+                <h5>
+                    <uimessage code="Signs and Symptoms"/>
+                </h5>
 
                 <repeat>
                     <template>
@@ -269,196 +361,69 @@
                             </obsgroup>
                         </p>
                     </template>
-                    <render qId="CIEL:159449" symptName="Alcohol use" />
+                    <render qId="CIEL:120345" symptName="Confusion"/>
+                    <render qId="CIEL:141599" symptName="Dyspnea"/>
+                    <render qId="PIH:NAUSEA" symptName="Nausea/Anorexia"/>
+                    <render qId="CIEL:879" symptName="Pruritus"/>
                 </repeat>
+                <div class="first-label-inline">
+                    <label>
+                        <uimessage code="Pain scale: "/>
+                    </label>
+                    <obs conceptId="PIH:3604" labelText="" class="inline"/>
+                </div>
+
+                <div class="two-columns-new">
+                    <h5>
+                        <uimessage code="Exam"/>
+                    </h5>
+
+                    <repeat>
+                        <template>
+                            <p class="list-inline">
+                                <obsgroup groupingConceptId="PIH:14875" showIfEmpty="false">
+                                    <obs style="radio"
+                                         conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT,PIH:SYMPTOM PRESENCE UNKNOWN"
+                                         conceptLabels="yes,no,unknown"
+                                         answerConceptId="{qId}" labelText="{symptName}"/>
+                                </obsgroup>
+                            </p>
+                        </template>
+                        <render qId="PIH:215" symptName="Jaundice"/>
+                        <render qId="CIEL:460" symptName="Ascites"/>
+                        <render qId="PIH:12704" symptName="Trace Edema"/>
+                        <render qId="PIH:12492" symptName="Asterixis"/>
+                    </repeat>
+                    <obs conceptId="PIH:374" answerConceptId="PIH:5622"
+                         style="checkbox" commentFieldLabel="Other exam findings or comments"/>
+                </div>
+                <div class="two-columns-new">
+                    <h5>
+                        <uimessage code="Risk Assessment"/>
+                    </h5>
+
+                    <repeat>
+                        <template>
+                            <p class="list-inline">
+                                <obsgroup groupingConceptId="PIH:14875" showIfEmpty="false">
+                                    <obs style="radio"
+                                         conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT,PIH:SYMPTOM PRESENCE UNKNOWN"
+                                         conceptLabels="yes,no,unknown"
+                                         answerConceptId="{qId}" labelText="{symptName}"/>
+                                </obsgroup>
+                            </p>
+                        </template>
+                        <render qId="CIEL:159449" symptName="Alcohol use"/>
+                        <render qId="CIEL:163731" symptName="Tobacco use"/>
+                        <render qId="PIH:DEPRESSION" symptName="Concerns of depression"/>
+                        <render qId="PIH:Currently taking medication" symptName="taking-meds"/>
+                        <render qId="CIEL:159596" symptName="Regular diet"/>
+                        <render qId="PIH:Paracetamol" symptName="Taking PCM"/>
+                        <render qId="CIEL:162306" symptName="Took NSAIDs"/>
+                    </repeat>
+                </div>
+
             </div>
-
-            <obsgroup groupingConceptId="PIH:14827" showIfEmpty="false">
-
-                <h5>
-                    <uimessage code="Awareness and treatment"/>
-                </h5>
-
-                <div class="two-columns">
-                    <div>
-                        <repeat>
-                            <template>
-                                <p class="list-inline">
-                                    <label>
-                                        <uimessage code="{questionName}"/>
-                                    </label>
-                                    <obs id="liver-{tog}" conceptId="{qId}" style="radio"
-                                         answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"
-                                         answerCodes="yes,no,unknown">
-                                        <controls>
-                                            <when value="PIH:YES" thenDisplay="#liver-{tog}-details"/>
-                                        </controls>
-                                    </obs>
-                                </p>
-                            </template>
-                            <render qId="CIEL:167914" questionName="Understands treatment" tog="fui-under"/>
-                            <render qId="PIH:14741"   questionName="Ability to titrate treatment" tog="fui-tite"/>
-                            <render qId="CIEL:164075" questionName="Overall treatment adherence" tog="fui-adher"/>
-                            <render qId="CIEL:167819" questionName="Missed doses in past week" tog="fui-miss"/>
-                            <render qId="CIEL:167021" questionName="Aware and understands the disease" tog="fui-aware"/>
-                        </repeat>
-                    </div>
-
-                    <div id="liver-fui-miss-details">
-                        <br/><br/><br/><br/>
-                        <label>
-                            <uimessage code="# of missed doses in past week"/>
-                        </label>
-                        <obs conceptId="CIEL:167918"/>
-                    </div>
-                </div>
-
-                <h5>
-                    <uimessage code="Disease control"/>
-                </h5>
-
-                <repeat>
-                    <template>
-                        <p class="list-inline">
-                            <label>
-                                <uimessage code="{questionName}"/>
-                            </label>
-                            <obs id="liver-{tog}" conceptId="{qId}" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"
-                                 answerCodes="yes,no,unknown">
-                                <controls>
-                                    <when value="PIH:YES" thenDisplay="#liver-{tog}-details"/>
-                                </controls>
-                            </obs>
-                        </p>
-                    </template>
-                    <render qId="CIEL:1898"   questionName="Patient condition improved" tog="fui-improved"/>
-                    <render qId="PIH:15164"   questionName="On prophylaxis for esophageal varices" tog="eso-var"/>
-                </repeat>
-
-                <p class="list-inline">
-                    <label>
-                        <uimessage code="Liver disease control"/>
-                    </label>
-                    <obs id="liver-control" conceptId="PIH:11506" style="radio"
-                         answerConceptIds="PIH:11507,PIH:11508,PIH:11509"
-                         answerCodes="controlled,uncontrolled,complications" >
-                        <controls>
-                            <when value="PIH:11508" thenDisplay="#liver-fui-uncontrolled"/>
-                        </controls>
-                    </obs>
-                </p>
-
-                <div id="liver-fui-uncontrolled" >
-                    <p class="list-inline">
-                        <label>
-                            <uimessage code="Send for admission"/>
-                        </label>
-                        <obs conceptId="CIEL:1788" style="radio"
-                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"
-                             answerCodes="yes,no,unknown" />
-                    </p>
-                </div>
-
-                <h3>
-                    <uimessage code="Hepatitis B treatment"/>
-                </h3>
-
-                <p class="side-by-side">
-                    <label>
-                        <uimessage code="Indication for Hepatitis B treatment"/>
-                    </label>
-                    <obs id="new-hepb-tto" conceptId="PIH:14889" style="radio"
-                         answerConceptIds="PIH:YES,PIH:NO"
-                         answerCodes="yes,no">
-                        <controls>
-                            <when value="PIH:YES" thenDisplay="#new-hepb-reason"/>
-                        </controls>
-                    </obs>
-
-                    <div id="new-hepb-reason" style="margin-left: 30px">
-                        <p>
-                            <repeat>
-                                <template>
-                                    <obs conceptId="PIH:14914" style="checkbox"
-                                         answerConceptId="{qId}" answerCode="{answName}"/>
-                                </template>
-                                <render qId="PIH:20018"   answName="APRI score &amp;#8805; 1.5 or US Cirrhosis"/>
-                                <render qId="CIEL:168583" answName="Co-infection with HCV and/or HIV" />
-                                <render qId="PIH:20019"   answName="Hep B DNA (VL) &amp;#8805; 2000 and ALT &amp;#8805; 1.5 x upper limit"/>
-                            </repeat>
-
-                            <includeIf velocityTest="$patient.gender == 'F' ">
-                                <repeat>
-                                    <template>
-                                        <obs conceptId="PIH:14914" style="checkbox"
-                                             answerConceptId="{qId}" answerCode="{answName}" />
-                                    </template>
-                                    <render qId="PIH:20020" answName="VL &amp;#8805; 2000 or HbeAg+ during pregnancy"/>
-                                    <render qId="PIH:20016" answName="VL not available during pregnancy" />
-                                </repeat>
-                            </includeIf>
-                        </p>
-                    </div>
-                </p>
-            </obsgroup>
-
-            <obsgroup groupingConceptId="PIH:14890" showIfEmpty="false">
-                <p class="side-by-side">
-                    <obs id="hepB-q" conceptId="PIH:14889" style="radio"
-                         labelCode="On treatment"
-                         answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1175"
-                         answerCodes="yes,no,not applicable">
-                        <controls>
-                            <when value="CIEL:1065" thenDisplay="#hepB-details" />
-                        </controls>
-                    </obs>
-                </p>
-
-                <div id="hepB-details" style="margin-left: 30px">
-                    <p class="side-by-side">
-                        <repeat>
-                            <template>
-                                <obs conceptId="PIH:14888" style="checkbox"
-                                     answerConceptId="{medId}" answerCode="{name}"/>
-                                <br/>
-                            </template>
-                            <render medId="CIEL:84795" name="Tenofovir" />
-                            <render medId="CIEL:75694" name="Entecavir" />
-                        </repeat>
-                    </p>
-
-                    <p class="list-inline-wide">
-                        <label>
-                            <uimessage code="Secondary effects"/>
-                        </label>
-                        <obs style="radio"
-                             conceptId="CIEL:162871"
-                             answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1175"
-                             answerCodes="yes,no,not applicable" />
-                    </p>
-                    <p class="list-inline-wide">
-                        <label>
-                            <uimessage code="Missed doses in the last week"/>
-                        </label>
-                        <obs style="radio"
-                             conceptId="CIEL:167819"
-                             answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1175"
-                             answerCodes="yes,no,not applicable" />
-
-                    </p>
-                    <p class="list-inline-wide">
-                        <label>
-                            <uimessage code="Response to treatment (after 1 year)"/>
-                        </label>
-                        <br/>
-                        <obs style="radio"
-                             conceptId="PIH:14892"
-                             answerConceptIds="CIEL:1775,CIEL:162677,PIH:2416"
-                             answerCodes="complete (undetectable VL),partial (decrease but persistent),no response" />
-                    </p>
-                </div>
-            </obsgroup>
         </div>
     </section>
 
