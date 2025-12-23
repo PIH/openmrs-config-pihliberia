@@ -51,7 +51,6 @@
             box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
             padding: 10px 5px 10px 15px;
             line-height: 1.5em; /*add this for vertical spacing between elements*/
-            margin-bottom: 20px; /* Add spacing below the section */
         }
 
         .section-container input[type="checkbox"] {
@@ -522,7 +521,6 @@
                 </span>
 
             </div>
-            <br/>
 
             <!-- Disease Severity -->
             <div>
