@@ -232,7 +232,7 @@
     </section>
 
     <section id="kidney_failure-section" sectionTag="fieldset" headerTag="legend"
-             headerStyle="title" headerCode="Visit">
+             headerStyle="title" headerCode="Chronic Kidney Disease">
         <div id="kidney_failure" class="section-container">
             <div class="two-columns-new">
 
