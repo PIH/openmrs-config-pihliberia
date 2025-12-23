@@ -130,275 +130,189 @@
     </style>
 
     <ifMode mode="VIEW" include="false">
+        <h1>
+            <uimessage code="Chronic Kidney Disease"/>
+        </h1>
         <script type="text/javascript">
             jq(function() {
 
-                // handlers for next and submit buttons, see nextAndSubmitButtons.js
-                setUpNextAndSubmitButtons();
-
+            // handlers for next and submit buttons, see nextAndSubmitButtons.js
+            setUpNextAndSubmitButtons();
             });
         </script>
     </ifMode>
 
-    <section id="kidney_failure-section" sectionTag="fieldset"
-             headerTag="legend" headerStyle="title" headerCode="Chronic kidney disease (CKD) / Nephrotic Syndrome">
+    <!-- Patient Visit -->
+    <section id="kidney_failure-section" sectionTag="fieldset" headerTag="legend"
+             headerStyle="title" headerCode="Visit">
         <div id="kidney_failure" class="section-container">
 
-            <!-- this section is ONLY included for NCD intake encounter -->
-            <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
-                <p>
-                    <label>
-                        <uimessage code="Chronic renal failure secondary to:" />
-                    </label>
-                    <repeat>
-                        <template>
-                            <obs conceptId="PIH:14765" style="checkbox"
-                                 answerConceptId="{answId}" />
+            <!-- Type of visit -->
+            <p class="side-by-side">
+                <label>
+                    <uimessage code="pihcore.type_of_visit"/>
+                </label>
+                <obs conceptId="PIH:6189" style="radio"
+                     answerConceptIds="PIH:1246,PIH:12612,PIH:6192"
+                     answerCodes="Scheduled,Non scheduled,Urgent"/>
+            </p>
 
-                        </template>
-                        <render answId="CIEL:117399" diagName="htn" />
-                        <render answId="CIEL:119481" diagName="dm" />
-                        <render answId="CIEL:1067"   diagName="unknown" />
-                        <render answId="CIEL:155008" diagName="NSAID" />
-                        <render answId="CIEL:149486" diagName="acuteTubularNecrosis" />
-                        <render answId="CIEL:117780" diagName="Glomerulonephritis" />
-                    </repeat>
+            <!-- Chronic Kidney Disease -->
+            <fieldset>
+                <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
+                    <div class="two-columns">
+                        <div class="form-row">
 
-                    <!-- Other free-text -->
-                    <obs conceptId="PIH:14765" style="checkbox"
-                         answerConceptId="CIEL:5622"
-                         answerCode="pihcore.other"
-                         showCommentField="true" commentFieldCode="zl.ifOtherSpecify" />
-                </p>
+                            <strong class="form-label">
+                                <uimessage code="Chronic kidney disease"/>
+                            </strong>
+                            <div class="checkbox-group">
+                                <repeat>
+                                    <template>
+                                        <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                                            <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{parId}"
+                                                 answerCode="{message}"
+                                                 style="checkbox"/>
+                                        </obsgroup>
+                                    </template>
+                                    <render parId="PIH:3699" message="CKD"/>
+                                    <render parId="PIH:903" message="Hypertension"/>
+                                    <render parId="PIH:3720" message="Diabetes"/>
+                                    <render parId="PIH:3405" message="heart attack"/>
+                                    <render parId="PIH:7496" message="Ischemic heart disease"/>
+                                </repeat>
 
-                <p class="side-by-side">
-                    <label>
-                        <uimessage code="Biopsy performed" />
-                    </label>
-                    <obs id="renal-biobsy" conceptId="PIH:14815" style="radio"
-                         answerConceptIds="CIEL:1065,CIEL:1066"
-                         answerCodes="yes,no">
-                        <controls>
-                            <when value="CIEL:1065" thenDisplay="#biopsy-details"/>
-                        </controls>
-                    </obs>
+                                <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
+                                     style="checkbox" toggle="other"
+                                     showCommentField="true" commentFieldLabel=" "/>
+                            </div>
+                        </div>
 
-                    <div id="biopsy-details" style="margin-left: 30px">
-                        <obs conceptId="PIH:3597" labelCode="Biopsy results"/>
+                        <!-- Treatment data -->
+                        <div class="form-row">
+                            <label class="form-label">
+                                Date Chronic kidney disease treatment started
+                            </label>
+                            <div>
+                                <obs conceptId="PIH:11131"/>
+                            </div>
+                        </div>
                     </div>
+                </includeIf>
+                <br/>
 
-                </p>
-
-                <p>
-                    <label>
-                        <uimessage code="Nephrotic syndrome likely related with:" />
-                    </label>
-                    <repeat>
-                        <template>
-                            <obs conceptId="PIH:14766" style="checkbox"
-                                 answerConceptId="{answId}"
-                                 answerCode="{diagName}"/>
-
-                        </template>
-                        <render answId="CIEL:115745" diagName="Minimal change glomerulonephritis" />
-                        <render answId="PIH:14767" diagName="Membraneous glomerulonephritis" />
-                    </repeat>
-
-                    <!-- other free-text -->
-                    <obs conceptId="PIH:14766" style="checkbox"
-                         answerConceptId="CIEL:5622"
-                         answerCode="pihcore.other"
-                         showCommentField="true" commentFieldCode="zl.ifOtherSpecify" />
-                </p>
-            </includeIf>
-
-            <div class="two-columns">
-                <div>
+                <!-- Family Planning -->
+                <includeIf velocityTest="$patient.gender == 'F' and $patient.age gt 14 and $patient.age lt 49">
                     <strong>
-                        CKD Stage
+                        <uimessage code="Family Planning, if female patient 14-49 years"/>
                     </strong>
-                    <p class="side-by-side">
-                        <obs conceptId="CIEL:165570" style="radio"
-                             answerConceptIds="CIEL:120575,CIEL:120574,CIEL:120579,CIEL:120578,CIEL:120577"
-                             answerLabels="Stage 1,Stage 2,Stage 3,Stage 4,Stage 5"
-                             answerSeparator="&lt;br /&gt;" />
-                    </p>
-                </div>
-                <div>
-                    <label>
-                        <br/>Stage 1: with normal or high GFR (GFR &gt; 90 mL/min)
-                        <br/>Stage 2: Mild CKD (GFR = 60-89 mL/min)
-                        <br/>Stage 3: Moderate CKD (GFR = 45-59 mL/min)
-                        <br/>Stage 3B: Moderate CKD (GFR = 30-44 mL/min)
-                        <br/>Stage 4: Severe CKD (GFR = 15-29 mL/min)
-                        <br/>Stage 5: End Stage CKD (GFR &lt; 15 mL/min)
-                    </label>
-                </div>
-            </div>
-
-            <h3>
-                <uimessage code="CKD and Nephrotic Syndrome followup indicators"/>
-            </h3>
-
-            <h5>
-                <uimessage code="Clinical indicators"/>
-            </h5>
-            <div>
-                <repeat>
-                    <template>
-                        <p class="side-by-side">
-                            <obsgroup groupingConceptId="PIH:14732" showIfEmpty="false">
-                                <obs style="radio"
-                                     conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT,PIH:SYMPTOM PRESENCE UNKNOWN"
-                                     conceptLabels="yes,no,unknown" answerConceptId="{qId}" labelText="{symptName}"/>
-                            </obsgroup>
-                        </p>
-                    </template>
-                    <render qId="CIEL:460"    symptName="Edema" />
-                    <render qId="CIEL:121629" symptName="Anemia" />
-                    <render qId="CIEL:117441" symptName="Hyperlipidemia" />
-                </repeat>
-            </div>
-
-            <obsgroup groupingConceptId="PIH:14717" showIfEmpty="false" >
-                <div>
-                    <repeat>
-                        <template>
-                            <p class="list-inline">
-                                <label>
-                                    <uimessage code="{questionName}"/>
-                                </label>
-                                <obs id="ckd-fui-{tog}" conceptId="{qId}" style="radio"
-                                     answerConceptIds="PIH:YES,PIH:NO,CIEL:1067"
-                                     answerCodes="yes,no,unknown">
-                                    <controls>
-                                        <when value="PIH:YES" thenDisplay="#ckd-fui-{tog}-details"/>
-                                    </controls>
-                                </obs>
-                            </p>
-                        </template>
-                        <render qId="PIH:14716" questionName="Hypertension controlled" tog="control"/>
-                    </repeat>
-                </div>
-
-                <h5>
-                    <uimessage code="Awareness and treatment"/>
-                </h5>
-
-                <div class="two-columns">
-                    <div>
+                    <div style="margin-left: 0.5em;">
                         <repeat>
                             <template>
-                                <p class="list-inline">
-                                    <label>
-                                        <uimessage code="{questionName}"/>
-                                    </label>
-                                    <obs id="ckd-fui-{tog}" conceptId="{qId}" style="radio"
-                                         answerConceptIds="PIH:YES,PIH:NO,CIEL:1067"
-                                         answerCodes="yes,no,unknown" >
-                                        <controls>
-                                            <when value="PIH:YES" thenDisplay="#ckd-fui-{tog}-details"/>
-                                        </controls>
-                                    </obs>
-                                </p>
+                                <span style="display: block;">
+                                    <obs conceptId="PIH:374" style="checkbox"
+                                         answerConceptId="{concept}" labelText="{label}"
+                                         answerLabel=""/>
+                                </span>
                             </template>
-                            <render qId="CIEL:167914" questionName="Understands treatment" tog="understands"/>
-                            <render qId="PIH:14741"   questionName="Ability to titrate treatment" tog="titrate"/>
-                            <render qId="CIEL:164075" questionName="Overall treatment adherence" tog="adher"/>
-                            <render qId="CIEL:167819" questionName="Missed doses in past week" tog="missed"/>
-                            <render qId="CIEL:167021" questionName="Aware and understands the disease" tog="aware"/>
+                            <render concept="PIH:780" label="OC (pills)"/>
+                            <render concept="PIH:907" label="Depo (Injection)"/>
+                            <render concept="PIH:1107" label="None"/>
                         </repeat>
+
+                        <span style="display: block;">
+                            <obs conceptId="PIH:374" style="checkbox"
+                                 answerConceptId="PIH:5622" labelText=""
+                                 commentFieldLabel="(If other, please specify)"/>
+                        </span>
                     </div>
-
-                    <div id="ckd-fui-missed-details">
-                        <br/><br/><br/><br/>
-                        <label>
-                            <uimessage code="# of missed doses in past week"/>
-                        </label>
-                        <obs conceptId="CIEL:167918"  />
-
-                    </div>
-                </div>
-
-                <h5>
-                    <uimessage code="Disease control"/>
-                </h5>
-
-                <repeat>
-                    <template>
-                        <p class="list-inline-extra-wide">
-                            <label>
-                                <uimessage code="{questionName}"/>
-                            </label>
-                            <obs id="ckd-fui-{tog}" conceptId="{qId}" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO,CIEL:1067"
-                                 answerCodes="yes,no,unknown" >
-                                <controls>
-                                    <when value="PIH:YES" thenDisplay="#ckd-fui-{tog}-details"/>
-                                </controls>
-                            </obs>
-                        </p>
-                    </template>
-                    <render qId="PIH:14718"   questionName="Stable creatinine level" tog="creatinine" />
-                    <render qId="CIEL:128340" questionName="Proteinuria" tog="pu"/>
-                    <render qId="CIEL:1898"   questionName="Patient condition improved" tog="improved"/>
-                </repeat>
-
-                <p class="list-inline-wide">
-                    <label>
-                        <uimessage code="CKD/nephrotic syndrome control"/>
-                    </label>
-                    <obs id="ckd-controlled" conceptId="PIH:11506" style="radio"
-                         answerConceptIds="PIH:11507,PIH:11508,PIH:11509"
-                         answerCodes="controlled,uncontrolled,complications" >
-                        <controls>
-                            <when value="PIH:11508" thenDisplay="#ckd-fui-uncontrolled"/>
-                        </controls>
-                    </obs>
-                </p>
-
-
-                <div id="ckd-fui-uncontrolled" >
-                    <p class="list-inline-wide">
-                        <label>
-                            <uimessage code="Send for admission"/>
-                        </label>
-                        <obs conceptId="CIEL:1788" style="radio"
-                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"
-                             answerCodes="yes,no,unknown" />
-                    </p>
-                </div>
-
-                <repeat>
-                    <template>
-                        <p class="list-inline-extra-wide">
-                            <label>
-                                <uimessage code="{questionName}"/>
-                            </label>
-                            <obs id="ckd-fui-{tog}" conceptId="{qId}" style="radio"
-                                 answerConceptIds="PIH:YES,PIH:NO,CIEL:1067"
-                                 answerCodes="yes,no,unknown" >
-                                <controls>
-                                    <when value="PIH:YES" thenDisplay="#ckd-fui-{tog}-details"/>
-                                </controls>
-                            </obs>
-                        </p>
-                    </template>
-                    <render qId="PIH:14721"   questionName="Glomerulonephritis/nephrotic syndrome relapse" tog="glomer" />
-                    <render qId="PIH:14719"   questionName="Dialysis referral" tog="dialysis"/>
-                    <render qId="PIH:14720"   questionName="On dialysis" tog="onDial"/>
-                </repeat>
-            </obsgroup>
-
-            <p>
-                <label>
-                    <uimessage code="pihcore.remarks"/>:
-                </label>
-                <obs conceptId="PIH:14813"/>
-            </p>
+                </includeIf>
+            </fieldset>
         </div>
     </section>
 
+    <section id="kidney_failure-section" sectionTag="fieldset" headerTag="legend"
+             headerStyle="title" headerCode="Visit">
+        <div id="kidney_failure" class="section-container">
+            <div class="two-columns-new">
+
+                <h5>
+                    <uimessage code="Signs and symptoms"/>
+                </h5>
+                <div>
+                    <repeat>
+                        <template>
+                            <p class="side-by-side">
+                                <obsgroup groupingConceptId="PIH:14732" showIfEmpty="false">
+                                    <obs style="radio"
+                                         conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT,PIH:SYMPTOM PRESENCE UNKNOWN"
+                                         conceptLabels="yes,no,unknown" answerConceptId="{qId}"
+                                         labelText="{symptName}"/>
+                                </obsgroup>
+                            </p>
+                        </template>
+                        <render qId="CIEL:119866" symptName="Confusion"/>
+                        <render qId="PIH:FATIGUE" symptName="Fatigue"/>
+                        <render qId="PIH:NAUSEA" symptName="Nausea"/>
+                        <render qId="PIH:868" symptName="Anorexia"/>
+                        <render qId="PIH:PRURITIS" symptName="Pruritis"/>
+                        <render qId="PIH:12704" symptName="Trace Edema"/>
+                    </repeat>
+                    <obs conceptId="PIH:374" answerConceptId="PIH:5622"
+                         style="checkbox" commentFieldLabel="Other exam findings or comments"/>
+                </div>
+                <br/>
+
+                <div class="two-columns">
+                    <div>
+                        <strong>
+                            CKD Stage
+                        </strong>
+                        <p class="side-by-side">
+                            <obs conceptId="CIEL:165570" style="radio"
+                                 answerConceptIds="CIEL:120575,CIEL:120574,CIEL:120579,CIEL:120578,CIEL:120577"
+                                 answerLabels="Stage 1,Stage 2,Stage 3,Stage 4,Stage 5"
+                                 answerSeparator="&lt;br /&gt;" />
+                        </p>
+                    </div>
+                    <div>
+                        <label>
+                            <br/>Stage 1: with normal or high GFR (GFR &gt; 90 mL/min)
+                            <br/>Stage 2: Mild CKD (GFR = 60-89 mL/min)
+                            <br/>Stage 3: Moderate CKD (GFR = 45-59 mL/min)
+                            <br/>Stage 3B: Moderate CKD (GFR = 30-44 mL/min)
+                            <br/>Stage 4: Severe CKD (GFR = 15-29 mL/min)
+                            <br/>Stage 5: End Stage CKD (GFR &lt; 15 mL/min)
+                        </label>
+                    </div>
+                </div>
+
+                <h5>
+                    <uimessage code="Risk assessment"/>
+                </h5>
+                <div>
+                    <repeat>
+                        <template>
+                            <p class="side-by-side">
+                                <obsgroup groupingConceptId="PIH:14732" showIfEmpty="false">
+                                    <obs style="radio"
+                                         conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT,PIH:SYMPTOM PRESENCE UNKNOWN"
+                                         conceptLabels="yes,no,unknown" answerConceptId="{qId}"
+                                         labelText="{symptName}"/>
+                                </obsgroup>
+                            </p>
+                        </template>
+                        <render qId="CIEL:162306" symptName="NSAID use"/>
+                        <render qId="PIH:2545" symptName="Tobacco use"/>
+                        <render qId="PIH:DEPRESSION" symptName="Concerns of depression"/>
+                        <render qId="PIH:Currently taking medication" symptName="Took meds today"/>
+                    </repeat>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    
     <div id="buttons-section"></div>
     <ifMode mode="VIEW" include="false">
         <style type="text/css">
