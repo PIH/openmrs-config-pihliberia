@@ -180,12 +180,12 @@
                         <div class="form-row">
 
                             <strong class="form-label">
-                                <uimessage code="Chronic Heart Failure"/>
+                                <uimessage code="CHF Diagnoses"/>
                             </strong>
                             <div class="checkbox-group">
                                 <repeat>
                                     <template>
-                                        <obsgroup groupingConceptId="PIH:Visit Diagnoses" showIfEmpty="false">
+                                        <obsgroup groupingConceptId="PIH:11499" showIfEmpty="false">
                                             <obs conceptId="PIH:DIAGNOSIS" answerConceptId="{parId}"
                                                  answerCode="{message}"
                                                  style="checkbox"/>
@@ -197,21 +197,20 @@
                                     <render parId="PIH:20860" message="Restrictive"/>
                                     <render parId="PIH:3131" message="Congenital heart disease"/>
                                     <render parId="PIH:903" message="Hypertension"/>
-                                    <render parId="PIH:903" message="Hypertension"/>
                                     <render parId="PIH:3699" message="CKD"/>
                                     <render parId="PIH:3720" message="Diabetes"/>
                                 </repeat>
 
                                 <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
                                      style="checkbox" toggle="other"
-                                     showCommentField="true" commentFieldLabel=" "/>
+                                     showCommentField="true" commentFieldLabel="(please specify other diagnoses)"/>
                             </div>
                         </div>
 
                         <!-- Treatment data -->
                         <div class="form-row">
                             <label class="form-label">
-                                Date Chronic heart failure treatment started
+                                Date CHF treatment started
                             </label>
                             <div>
                                 <obs conceptId="PIH:11131"/>
@@ -221,6 +220,7 @@
                 </includeIf>
                 <br/>
 
+                <!-- Family planning method -->
                 <includeIf velocityTest="$patient.gender == 'F' and $patient.age gt 14 and $patient.age lt 49">
                     <strong>
                         <uimessage code="Family Planning, if female patient 14-49 years"/>
@@ -250,11 +250,13 @@
         </div>
     </section>
 
+    <!-- Chronic Heart Failure Section-->
     <section id="chf-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Chronic Heart Failure">
         <div id="heart_failure" class="section-container">
             <div class="two-columns-new">
 
+                <!-- Signs and symptoms -->
                 <h5>
                     <uimessage code="Signs and symptoms since last visit"/>
                 </h5>
@@ -273,15 +275,15 @@
                         <render qId="CIEL:130783" symptName="PND"/>
                         <render qId="CIEL:141599" symptName="DOE"/>
                         <render qId="PIH:3486" symptName="Orthopnea"/>
-                        <render qId="PIH:COUGH" symptName="Cough"/>
+                        <render qId="PIH:COUGH" symptName="Dry cough"/>
                         <render qId="PIH:FATIGUE" symptName="Fatigue"/>
-                        <render qId="CIEL:70468" symptName="Drink alcohol"/>
-                        <render qId="PIH:2545" symptName="Smoke tobacco"/>
-                        <render qId="PIH:DEPRESSION" symptName="Concerns of depression"/>
-                        <render qId="PIH:Currently taking medication" symptName="Took meds today"/>
                     </repeat>
                 </div>
 
+                <!-- Exam -->
+                <h5>
+                    <uimessage code="Exam"/>
+                </h5>
                 <div class="two-columns-new">
                     <obsgroup groupingConceptId="PIH:12636">
                         <strong>
@@ -311,8 +313,11 @@
                         </obs>
                     </obsgroup>
                 </div>
-                <br/>
 
+                <!-- Risk assessment -->
+                <h5>
+                    <uimessage code="Risk assessment"/>
+                </h5>
                 <div class="nyha-classification-wrapper">
                     <p>
                         <strong>
@@ -325,6 +330,26 @@
                          answerConceptIds="PIH:NYHA CLASS 1,PIH:NYHA CLASS 2,PIH:NYHA CLASS 3,PIH:NYHA CLASS 4"
                          answerLabels="I (No limitations),II (Slight limitation of activity),III (Marked limitation of activity),IV (Unable to carry out any physical activity)"
                          answerSeparator="&lt;br/&gt;"/>
+                </div>
+                <br />
+
+                <div>
+                    <repeat>
+                        <template>
+                            <p class="side-by-side">
+                                <obsgroup groupingConceptId="PIH:14733" showIfEmpty="false">
+                                    <obs style="radio"
+                                         conceptIds="PIH:SYMPTOM PRESENT,PIH:SYMPTOM ABSENT,PIH:SYMPTOM PRESENCE UNKNOWN"
+                                         conceptLabels="yes,no,unknown" answerConceptId="{qId}"
+                                         labelText="{symptName}"/>
+                                </obsgroup>
+                            </p>
+                        </template>
+                        <render qId="CIEL:70468" symptName="Drink alcohol"/>
+                        <render qId="PIH:2545" symptName="Smoke tobacco"/>
+                        <render qId="PIH:DEPRESSION" symptName="Concerns of depression"/>
+                        <render qId="PIH:Currently taking medication" symptName="Took meds today"/>
+                    </repeat>
                 </div>
 
             </div>
