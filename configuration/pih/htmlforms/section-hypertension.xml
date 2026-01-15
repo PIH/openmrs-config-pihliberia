@@ -256,7 +256,7 @@
         </script>
     </ifMode>
 
-    <!--- Patient Visit -->
+    <!--- Patient Visit Section-->
     <section id="htn-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Visit">
         <div id="htn-form" class="section-container">
@@ -274,7 +274,7 @@
                 </p>
 
                 <fieldset>
-                    <!-- Hypertension complication -->
+                    <!-- Hypertension complications -->
                     <strong>
                         Complications related to hypertension
                     </strong>
@@ -301,18 +301,19 @@
                             </obsgroup>
                         </template>
                         <render category="PIH:HYPERTENSION" nickname="htn" code="Hypertension"/>
-                        <render category="PIH:3405" nickname="cardiovascular-disease" code="heart attack"/>
-                        <render category="PIH:7496" nickname="cardiovascular-disease" code="Ischemic heart disease"/>
+                        <render category="PIH:3405" nickname="cardiovascular_disease" code="heart attack"/>
+                        <render category="PIH:7496" nickname="ischemic_heart_disease" code="Ischemic heart disease"/>
                         <render category="PIH:7483" nickname="retinopathy" code="Retinopathy"/>
                         <render category="PIH:3681" nickname="renal-failure" code="Renal failure"/>
                         <render category="CIEL:111103" nickname="stroke" code="Stroke"/>
                         <render category="PIH:7494" nickname="Peripheral-vascular-disease" code="PVD"/>
                         <render category="PIH:821" nickname="neuropathy" code="Neuropathy"/>
+                        <render category="PIH:20459" nickname="erectile" code="Erectile dysfunction"/>
                     </repeat>
 
                     <obs conceptId="PIH:NCD category" answerConceptId="PIH:OTHER"
                          style="checkbox" toggle="other"
-                         showCommentField="true" commentFieldLabel=" "/>
+                         showCommentField="true" commentFieldLabel="(please specify other Complications)"/>
                     <br/>
 
                     <!-- Family History -->
@@ -324,7 +325,7 @@
                                                          relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
                         <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
                              style="checkbox" toggle="other"
-                             showCommentField="true" commentFieldLabel=" "/>
+                             showCommentField="true" commentFieldLabel="(If other, please specify)"/>
                         <br/>
 
                         <!-- Family Planning -->
@@ -359,7 +360,7 @@
         </div>
     </section>
 
-    <!-- Hypertension Followup -->
+    <!-- Hypertension Followup Section-->
     <section id="htn-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Hypertension">
         <div id="htn-form" class="section-container">

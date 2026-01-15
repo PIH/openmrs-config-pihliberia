@@ -320,6 +320,7 @@
                             <render point="CIEL:160448" message="pihcore.location.med.ward" comment="Medical"/>
                             <render point="CIEL:165048" message="pihcore.location.ped.ward" comment="Pediatrics"/>
                             <render point="PIH:MATERNITY WARD" message="pihcore.location.ob.ward" comment="Maternity"/>
+                            <render point="PIH:5489" message="Mental Health" comment="Mental Health"/>
                         </repeat>
 
                         <span class="list-inline" style="display:inline-block; width:45%;">

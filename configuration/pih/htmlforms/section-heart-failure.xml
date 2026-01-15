@@ -173,7 +173,7 @@
                      answerCodes="Scheduled,Non scheduled,Urgent"/>
             </p>
 
-            <!-- Chronic Heart Failure Diagnoses -->
+            <!-- CKD diagnoses -->
             <fieldset>
                 <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
                     <div class="two-columns">
@@ -207,7 +207,7 @@
                             </div>
                         </div>
 
-                        <!-- Treatment data -->
+                        <!-- Treatment date -->
                         <div class="form-row">
                             <label class="form-label">
                                 Date CHF treatment started
@@ -250,7 +250,7 @@
         </div>
     </section>
 
-    <!-- Chronic Heart Failure Section-->
+    <!-- CKF Followup Section-->
     <section id="chf-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Chronic Heart Failure">
         <div id="heart_failure" class="section-container">
