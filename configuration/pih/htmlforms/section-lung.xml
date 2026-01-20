@@ -320,7 +320,7 @@
         </script>
     </ifMode>
 
-    <!-- Patient Visit -->
+    <!-- Patient Visit Section-->
     <section id="cld-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Visit">
         <div id="asthma-copd" class="section-container">
@@ -335,14 +335,14 @@
                      answerCodes="Scheduled,Non scheduled,Urgent"/>
             </p>
 
-            <!-- Chronic Lung Disease -->
+            <!-- CLD diagnoses -->
             <fieldset>
                 <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
                     <div class="two-columns">
                         <div class="form-row">
 
                             <strong class="form-label">
-                                <uimessage code="Chronic Lung Disease "/>
+                                <uimessage code="CLD Diagnoses "/>
                             </strong>
                             <div class="checkbox-group">
                                 <repeat>
@@ -355,19 +355,18 @@
                                     </template>
                                     <render parId="PIH:ASTHMA" message="Asthma"/>
                                     <render parId="PIH:3716" message="COPD"/>
-                                    <render parId="PIH:1547" message="EPTB"/>
                                 </repeat>
 
                                 <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
                                      style="checkbox" toggle="other"
-                                     showCommentField="true" commentFieldLabel=" "/>
+                                     showCommentField="true" commentFieldLabel="(please specify other diagnoses)"/>
                             </div>
                         </div>
 
-                        <!-- Treatment data -->
+                        <!-- Treatment date -->
                         <div class="form-row">
                             <label class="form-label">
-                                Date Asthma/COPD treatment started
+                                Date CLD treatment started
                             </label>
                             <div>
                                 <obs conceptId="PIH:11131"/>
@@ -387,7 +386,7 @@
                                                      relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
                     <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
                          style="checkbox" toggle="other"
-                         showCommentField="true" commentFieldLabel=" "/>
+                         showCommentField="true" commentFieldLabel="(If other, please specify)"/>
                 </includeIf>
                 <br/>
 
@@ -430,7 +429,7 @@
             <div class="form-row">
                 <span class="first-label-inline">
 
-                    <!-- TB Contacts -->
+                    <!-- TB contacts -->
                     <label>
                         Has contact with a TB person?
                     </label>
@@ -454,7 +453,7 @@
                          style="radio"/>
                     <br/>
 
-                    <!-- Secondhand Smoke -->
+                    <!-- Secondhand smoke -->
                     <label>
                         Secondhand Smoke Exposure
                     </label>
@@ -465,12 +464,13 @@
         </div>
     </section>
 
+    <!-- Lung Followup -->
     <section id="cld-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Asthma/COPD">
         <div class="section-container">
             <div id="asthma-copd" class="cld-history-grid">
 
-                <!-- Symptom Frequency -->
+                <!-- Symptom frequency -->
                 <span class="first-label-inline">
                     <label>
                         <uimessage code="Days per week of symptom "/>
@@ -485,7 +485,7 @@
                     <obs conceptId="PIH:14352" labelText="" class="inline"/>
                 </span>
 
-                <!-- Beta-agonist Use -->
+                <!-- Beta-agonist use -->
                 <span class="first-label-inline">
                     <label>
                         <uimessage code="Number of beta-agonist use? "/>
@@ -493,7 +493,7 @@
                     <obs conceptId="PIH:7398" labelText="" class="inline"/>
                 </span>
 
-                <!-- Steroid Inhaler -->
+                <!-- Steroid inhaler -->
                 <span class="first-label-inline">
                     <label>
                         Steroid inhaler daily?
@@ -522,7 +522,7 @@
 
             </div>
 
-            <!-- Disease Severity -->
+            <!-- Disease severity -->
             <div>
                 <strong>
                     Disease Severity

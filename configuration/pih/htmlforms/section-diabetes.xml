@@ -134,6 +134,9 @@
     </style>
 
     <ifMode mode="VIEW" include="false">
+        <h1>
+            <uimessage code="Diabetes" />
+        </h1>
         <script type="text/javascript">
             jq(function() {
 
@@ -143,6 +146,13 @@
             });
         </script>
     </ifMode>
+
+    <section id="diabetes-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Visit">
+        <div id="diabetes" class="section-container">
+
+        </div>
+    </section>
 
     <section id="diabetes-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.ncd.diabetes">

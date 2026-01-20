@@ -157,14 +157,14 @@
                      answerCodes="Scheduled,Non scheduled,Urgent"/>
             </p>
 
-            <!-- Chronic Kidney Disease -->
+            <!-- Chronic Kidney Diagnoses -->
             <fieldset>
                 <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
                     <div class="two-columns">
                         <div class="form-row">
 
                             <strong class="form-label">
-                                <uimessage code="Chronic kidney disease"/>
+                                <uimessage code="CKD diagnoses"/>
                             </strong>
                             <div class="checkbox-group">
                                 <repeat>
@@ -184,14 +184,14 @@
 
                                 <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
                                      style="checkbox" toggle="other"
-                                     showCommentField="true" commentFieldLabel=" "/>
+                                     showCommentField="true" commentFieldLabel="please specify other diagnoses"/>
                             </div>
                         </div>
 
                         <!-- Treatment data -->
                         <div class="form-row">
                             <label class="form-label">
-                                Date Chronic kidney disease treatment started
+                                Date CKD treatment started
                             </label>
                             <div>
                                 <obs conceptId="PIH:11131"/>
@@ -231,11 +231,13 @@
         </div>
     </section>
 
+    <!-- CKD Followup Section-->
     <section id="kidney_failure-section" sectionTag="fieldset" headerTag="legend"
              headerStyle="title" headerCode="Chronic Kidney Disease">
         <div id="kidney_failure" class="section-container">
             <div class="two-columns-new">
 
+                <!-- Signs and symptoms -->
                 <h5>
                     <uimessage code="Signs and symptoms"/>
                 </h5>
@@ -263,6 +265,7 @@
                 </div>
                 <br/>
 
+                <!-- CKD Stage -->
                 <div class="two-columns">
                     <div>
                         <strong>
@@ -287,6 +290,7 @@
                     </div>
                 </div>
 
+                <!-- Risk assessment -->
                 <h5>
                     <uimessage code="Risk assessment"/>
                 </h5>
