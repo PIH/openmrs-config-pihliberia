@@ -54,7 +54,6 @@
             display: inline-block;
         }
 
-
         form input[type="radio"], .form input[type="radio"] {
             float: none;
             display: inline-block;
@@ -160,6 +159,7 @@
             <uimessage code="mirebalais.dispensing.dispensing"/>
         </h2>
     </ifMode>
+
     <table id="who-where-when-view">
         <tr>
 
@@ -179,8 +179,6 @@
                     <span><encounterDate id="encounterDate" default="today" /></span>
                 </td>
             </includeIf>
-
-
 
             <includeIf velocityTest="($user.hasRole('Application Role: pharmacist') || $user.hasRole('Application Role: pharmacyAide') || $user.hasRole('Application Role: pharmacyManager'))  and !$user.hasRole('Application Role: sysAdmin')">
                 <div style="display:none">
@@ -211,6 +209,7 @@
             </includeIf>
         </tr>
     </table>
+
     <div id="typePrescription" class="two-columns">
         <div>
             <label>
