@@ -15,11 +15,6 @@
 <htmlform formUuid="54E29E26-123E-4137-8F26-91D8227C1D5B" formName="Check-In"
           formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="2.0">
     <style>
-        .encounter-summary-container {
-            font-size: 1em;
-            font-weight: normal;
-        }
-
         form input[type="radio"], .form input[type="radio"] {
             float: none;
             display: inline-block;
@@ -30,62 +25,37 @@
         }
     </style>
 
-    <macros>
-
-    </macros>
-
     <!-- START ENTER/EDIT VERSION OF THE FORM -->
     <ifMode mode="VIEW" include="false">
 
-        <script type="text/javascript">
-
-            jq(function() {
-
-            // hack to make the datepicker show when the form is opened
-            getField('encounterDate.value').datepicker('show');
-
-            });
-
-        </script>
-
-        <div class="hidden">
-            <fieldset class="required">
-                    <!-- TODO: will need to make this not-hidden if we ever support multiple Visit Locations on a single server -->
-                    <encounterLocation type="hidden" default="SessionAttribute:emrContext.sessionLocationId" required="true" tags="Check-In Location"/>
-            </fieldset>
-        </div>
-
         <section id="checkin" sectionTag="section" headerStyle="title" headerCode="mirebalais.retrospectiveCheckin.label">
 
-            <fieldset class="required">
-                <legend>
-                    <uimessage code="mirebalais.retrospectiveCheckin.checkinDate.label"/>
-                </legend>
-                <h3>
-                    <uimessage code="mirebalais.retrospectiveCheckin.checkinDate.label"/>
-                </h3>
-
-                <p class="left">
-                    <encounterDate id="encounterDate" showTime="false" default="now"/>
-                </p>
+            <fieldset field-separator=", ">
+                <legend><uimessage code="pihcore.details"/></legend>
+                <h3><uimessage code="pihcore.details"/></h3>
+                <subform path="configuration/pih/subforms/encounter-provider-location-date.xml">
+                    <label subform-parameter="encounter-provider-label">
+                        <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
+                    </label>
+                    <span subform-parameter="encounter-provider-widget">
+                        <encounterProviderAndRole default="currentUser"
+                                                  encounterRole="cbfe0b9d-9923-404c-941b-f048adc8cdc0"
+                                                  required="true"/>
+                    </span>
+                    <label subform-parameter="encounter-location-label">
+                        <uimessage code="mirebalais.retrospectiveCheckin.location.label"/>
+                    </label>
+                    <span subform-parameter="encounter-location-widget">
+                        <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
+                                           tags="Check-In Location"/>
+                    </span>
+                    <label subform-parameter="encounter-date-label">
+                        <uimessage code="mirebalais.retrospectiveCheckin.checkinDate.label"/>
+                    </label>
+                </subform>
             </fieldset>
 
-            <fieldset class="required">
-                <legend>
-                    <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
-                </legend>
-                <h3>
-                    <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
-                </h3>
-
-                <p class="left">
-                    <encounterProviderAndRole default="currentUser" encounterRole="cbfe0b9d-9923-404c-941b-f048adc8cdc0"
-                                              required="true"/>
-                </p>
-            </fieldset>
-
-
-            <fieldset class="required type-of-visit-question">
+           <fieldset class="required type-of-visit-question">
                 <legend>
                     <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
                 </legend>
