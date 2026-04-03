@@ -71,15 +71,20 @@
         width: 95%;
         }
 
-        .five-columns, .four-columns, .three-columns, .two-columns {
+        .five-columns, .four-columns, .three-columns{
         display: table;
         height: 100%;
         width: 100%;
         }
 
+        .two-columns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        }
+
         .two-columns > div {
-        display: table-cell;
-        width: 50%;
+        width: 48%;
         }
 
         .two-columns {
