@@ -222,7 +222,7 @@
 
                                 <obs conceptId="PIH:2889" answerConceptId="PIH:OTHER"
                                      style="checkbox" toggle="other"
-                                     showCommentField="true" commentFieldLabel="(please specify other diagnoses)"/>
+                                     showCommentField="true" commentFieldLabel="(please specify other diagnosis)"/>
                             </div>
                         </div>
 
