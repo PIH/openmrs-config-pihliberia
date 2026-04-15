@@ -1,0 +1,1425 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<htmlform id="primary-care-exam-form"
+          formUuid="b34b71f4-03f1-11e5-8418-1697f925ec7b"
+          formName="Examen physique"
+          formVersion="1.0">
+
+    <style type="text/css">
+        <ifMode mode="VIEW" include="false">
+
+            #data-collection {
+                display: inline-block;
+                width: 58%;
+                vertical-align: top;
+            }
+
+            #primary-care-exam input[type="checkbox"] {
+                margin: 0px 5px;  /* changed values to vertical, horizontal */
+                top:5px;          /* added to offset the checkbox position to line up */
+            }
+
+            .section-container-color {
+                background: #F2F2F2;
+                box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+                padding: 10px 5px 10px 15px;
+                line-height: 1.5em; /*add this for vertical spacing between elements*/
+            }
+
+           - .section {
+                width: 100%;
+           }
+
+            .section-container input[type="checkbox"] {
+                margin: 0px 5px; /* changed values to vertical, horizontal */
+                top:5px;         /* added to offset the checkbox position to line up */
+            }
+
+            form input[type="radio"], .form input[type="radio"] {
+                float: none;
+                display: inline-block;
+            }
+
+            .in-line label {
+                display: inline-block;
+            }
+
+            .section-container label { /*new definition to override labels inside section-containers*/
+                margin: 0px;
+            }
+
+            .two-columns {
+                column-count: 2;
+                -webkit-column-count: 2;
+                -moz-column-count: 2;
+            }
+
+            .five-columns, .four-columns, .three-columns, .two-columns-n {
+                display: table;
+                height: 100%;
+                width: 100%;
+            }
+
+            .two-columns-n > div {
+                display: table-cell;
+                width: 50%;
+            }
+
+            .three-columns > div {
+                display: table-cell;
+                width: 33%;
+            }
+
+            .narrow {
+                width: 200px;
+            }
+        </ifMode>
+    </style>
+
+    <style type="text/css">
+        <ifMode mode="VIEW" include="true">
+
+            #primary-care-exam-form legend {
+                display: none;
+            }
+
+            #primary-care-exam-form fieldset {
+                margin: 0px;
+                border: 0px;
+                padding: 0px;
+            }
+
+            #primary-care-exam-form fieldset h3 {
+                font-size: 1em;
+                width: 200px;
+                display: inline-block;
+                margin: 0px;
+                margin-right: 10px;
+                color: #3E3E3E;
+                vertical-align: top;
+            }
+
+            #primary-care-exam-form fieldset p {
+                vertical-align: top;
+                display: inline-block;
+                float: none;
+            }
+
+            #primary-care-exam-form fieldset .left {
+                vertical-align: top;
+                display: inline-block;
+                float: none;
+            }
+
+            #primary-care-exam-form .title {
+                display: none;
+            }
+
+            #primary-care-exam-form .encounter-date {
+                display: none;
+            }
+
+            #primary-care-exam-form .encounter-provider {
+                display: none;
+            }
+
+            #primary-care-exam-form .encounter-location {
+                display: none;
+            }
+
+            #primary-care-exam-form .comment-label {
+                display: none;
+            }
+            #primary-care-exam-form .comment-field {
+                display: block;
+                margin-left: 215px;
+            }
+            #primary-care-exam-form br {
+                display: none;
+            }
+        </ifMode>
+    </style>
+
+    <!-- Pediatrics only content, hidden by default, shown (via above javascript) if pediatrics visit -->
+    <!-- Note that I'm just hiding the content so that the viewing via HtmlFormEncounterController.encounterSchemaViaJson will still work in VIEW mode with no visit informatin present -->
+<!--    <excludeIf velocityTest="$visit.getVisitAttribute('Visit Template') == 'pedsInitialOutpatient' || $visit.getVisitAttribute('Visit Template') == 'pedsFollowupOutpatient'" >
+        <script type="text/javascript">
+            jq(function() {
+                NavigatorController.getQuestionById('gross-motor-skills-exam').hide();
+                NavigatorController.getQuestionById('fine-motor-skills-exam').hide();
+                NavigatorController.getQuestionById('language-development-evaluation').hide();
+                NavigatorController.getQuestionById('social-skills-evaluation').hide();
+            });
+        </script>
+    </excludeIf>-->
+
+    <ifMode mode="VIEW" include="false">
+        <h3>
+            <uimessage code="pihcore.exam.title"/>
+        </h3>
+
+        <script type="text/javascript">
+            jq(document).ready(function() {
+
+
+            jq('.normalObs').change(function(event) {
+                // get the Obs checkbox value
+                var firstCheckbox = jq(this).children(":checkbox:first").prop('checked');
+                if (firstCheckbox == true) {
+                    var parentDiv = jq(this).closest('.exam');
+                    if (parentDiv != null) {
+                      jq(parentDiv).find('.abnormalObs').each(function(index, element) {
+                            jq(this).children(":checkbox:first").prop('checked', false);
+                       });
+                    }
+                }
+            });
+
+            jq('.abnormalObs').change(function(event) {
+                var firstCheckbox = jq(this).children(":checkbox:first").prop('checked');
+                if (firstCheckbox == true) {
+                    var parentDiv = jq(this).closest('.exam');
+                    if (parentDiv != null) {
+                        jq(parentDiv).find('.normalObs').each(function(index, element) {
+                            jq(this).children(":checkbox:first").prop('checked', false);
+                        });
+                    }
+                }
+            });
+
+            // handlers for next and submit buttons, see nextAndSubmitButtons.js
+            setUpNextAndSubmitButtons();
+
+            });
+        </script>
+    </ifMode>
+
+    <ifMode mode="VIEW" include="true">
+        <script type="text/javascript">
+            jq(document).ready(function() {
+                hideIfEmpty(".section-container-color");
+            });
+        </script>
+    </ifMode>
+
+    <ifMode mode="VIEW" include="false">
+        <div class="shortcuts">
+            |
+            <a href="#general">
+                <uimessage code="pihcore.exam.general_exam"/>
+            </a>
+            |
+            <a href="#skin">
+                <uimessage code="pihcore.exam.skin_exam"/>
+            </a>
+            |
+            <a href="#heent">
+                <uimessage code="pihcore.exam.heent_exam"/>
+            </a>
+            |
+            <a href="#lymph">
+                <uimessage code="pihcore.exam.lymph_exam"/>
+            </a>
+            |
+            <a href="#cardio">
+                <uimessage code="pihcore.exam.cardiac_exam"/>
+            </a>
+            |
+            <a href="#chest">
+                <uimessage code="pihcore.exam.chest_exam"/>
+            </a>
+            |
+            <a href="#abs">
+                <uimessage code="pihcore.exam.abdominal_exam"/>
+            </a>
+            |
+            <!-- Hide urogenital section for ObGyn or PMTCT -->
+            <includeIf velocityTest="!($encounter.encounterType.uuid == 'd83e98fd-dc7b-420f-aa3f-36f648b4483d' || $encounter.encounterType.uuid == '584124b9-1f10-4757-ba09-91fc9075af92' || $encounter.encounterType.uuid == '95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5')">
+
+            <a href="#uro">
+                    <uimessage code="pihcore.exam.urogenital_exam"/>
+                </a>
+                |
+            </includeIf>
+
+            <!-- Show separate urology and gyno sections for ObGyn, PMTCT Intake, or PMTCT Followup -->
+            <includeIf velocityTest="$encounter.encounterType.uuid == 'd83e98fd-dc7b-420f-aa3f-36f648b4483d' || $encounter.encounterType.uuid == '584124b9-1f10-4757-ba09-91fc9075af92' || $encounter.encounterType.uuid == '95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5'">
+                <a href="#urology">
+                    <uimessage code="pihcore.exam.urology_exam"/>
+                </a>
+                |
+                <a href="#gynecology">
+                    <uimessage code="pihcore.exam.gynecology_exam"/>
+                </a>
+                |
+            </includeIf>
+            <!-- Females only -->
+            <includeIf velocityTest="$patient.gender == 'F' ">
+                <a href="#women">
+                    <uimessage code="pihcore.exam.obstetrical_exam"/>
+                </a>
+                |
+            </includeIf>
+
+            <!-- Show postpartum section for ObGyn or PMTCT -->
+            <includeIf velocityTest="$encounter.encounterType.uuid == 'd83e98fd-dc7b-420f-aa3f-36f648b4483d' || $encounter.encounterType.uuid == '584124b9-1f10-4757-ba09-91fc9075af92' || $encounter.encounterType.uuid == '95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5'">
+                <a href="#postpartum">
+                    <uimessage code="pihcore.postnatal"/>
+                </a>
+                |
+            </includeIf>
+
+            <a href="#mental">
+                <uimessage code="pihcore.exam.mental_exam"/>
+            </a>
+            |
+            <a href="#neuro">
+                <uimessage code="pihcore.exam.neuro_exam"/>
+            </a>
+            |
+            <!-- peds only questions -->
+            <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &lt; 15">
+                <a href="#peds">
+                    <uimessage code="pihcore.exam.pedsDevelopment.title"/>
+                </a>
+                |
+            </includeIf>
+
+            <a href="#musculo">
+                <uimessage code="pihcore.exam.musculoskeletal_exam"/>
+            </a>
+            |
+
+            <a href="#other">
+                <uimessage code="pihcore.exam.other_exam"/>
+            </a>
+            |
+        </div>
+    </ifMode>
+
+    <div class="physical-exam">
+        <div id="general" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.general_exam.title"/>
+            </b>
+
+            <div class="two-columns-n exam">
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs class="{normAb}" style="checkbox"
+                                     conceptId="PIH:GENERAL EXAM FINDINGS"
+                                     answerConceptId="{answer}" />
+                            </p>
+                        </template>
+                        <render normAb="normalObs" answer="CIEL:1115" comment="normal" />
+                        <render normAb="abnormalObs" answer="PIH:CACHECTIC" />
+                        <render normAb="abnormalObs" answer="CIEL:115115" comment="obesity"/>
+                        <render normAb="abnormalObs" answer="CIEL:159439" comment="distress"/>
+                    </repeat>
+
+                    <p>
+                        <obs class="abnormalObs" conceptId="PIH:GENERAL EXAM FINDINGS"
+                             answerConceptId="PIH:OTHER NON-CODED" style="checkbox" showCommentField="true"
+                             commentFieldLabel="" />
+                    </p>
+                </div>
+
+                <div>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                        <p>
+                            <obs conceptId="CIEL:163042" rows="5" cols="45" id="general-exam-comments"/>
+                        </p>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p/>
+
+        <div id="skin" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.skin_exam.title"/>
+            </b>
+
+            <div class="two-columns-n exam">
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs class="{normAb}" style="checkbox"
+                                     conceptId="PIH:SKIN EXAM FINDINGS"
+                                     answerConceptId="{answer}" />
+                            </p>
+                        </template>
+                        <render normAb="normalObs" answer="CIEL:1115" comment="normal" />
+                        <render normAb="abnormalObs" answer="CIEL:512" comment="RASH" />
+                        <render normAb="abnormalObs" answer="CIEL:5245" comment="pallor"/>
+                    </repeat>
+
+                    <p>
+                        <obs class="abnormalObs" conceptId="PIH:SKIN EXAM FINDINGS" answerConceptId="PIH:OTHER NON-CODED"
+                             style="checkbox" showCommentField="true" commentFieldLabel="" />
+                    </p>
+                </div>
+
+                <div>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                        <p>
+                            <obs conceptId="PIH:SKIN EXAM COMMENT" rows="5" cols="45"/>
+                        </p>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p/>
+
+        <div id="heent" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.heent_exam.title"/>
+            </b>
+
+            <div class="two-columns-n exam">
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs class="{normAb}" style="checkbox"
+                                     conceptId="PIH:HEENT EXAM FINDINGS"
+                                     answerConceptId="{answer}" />
+                            </p>
+                        </template>
+                        <render normAb="normalObs" answer="PIH:NORMAL" />
+                        <render normAb="abnormalObs" answer="PIH:PALE CONJUNCTIVA" comment="pale conjunctiva" />
+                        <render normAb="abnormalObs" answer="PIH:ICTERIC SCLERA" comment="icteric sclera"/>
+                        <render normAb="abnormalObs" answer="PIH:GOITER" comment="goiter"/>
+                    </repeat>
+
+                    <p>
+                        <obs class="abnormalObs" conceptId="PIH:HEENT EXAM FINDINGS" answerConceptId="PIH:OTHER NON-CODED"
+                             style="checkbox" showCommentField="true" commentFieldLabel=""/>
+                    </p>
+                </div>
+                <div>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                        <p>
+                            <obs conceptId="CIEL:163045" rows="5" cols="45"/>
+                        </p>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p/>
+
+        <div id="lymph" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.lymph_exam.title"/>
+            </b>
+
+            <div class="two-columns-n exam">
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs class="{normAb}" style="checkbox"
+                                     conceptId="CIEL:1121"
+                                     answerConceptId="{answer}" />
+                            </p>
+                        </template>
+                        <render normAb="normalObs" answer="PIH:NORMAL" />
+                        <render normAb="abnormalObs" answer="CIEL:148058" comment="Axillary lymphadenopathy" />
+                        <render normAb="abnormalObs" answer="CIEL:145802" comment="Cervical lymphadenopathy"/>
+                        <render normAb="abnormalObs" answer="CIEL:137155" comment="Inguinal lymphadenopathy"/>
+                    </repeat>
+
+                    <p>
+                        <obs class="abnormalObs" conceptId="CIEL:1121" answerConceptId="PIH:OTHER NON-CODED"
+                             style="checkbox"
+                             showCommentField="true" commentFieldLabel=""/>
+                    </p>
+                </div>
+                <div>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                        <p>
+                            <obs conceptId="PIH:11572" rows="5" cols="45"/>
+                        </p>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p/>
+
+        <div id="cardio" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.cardiac_exam.title"/>
+            </b>
+
+            <div class="two-columns-n exam">
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs class="{switch}" conceptId="CIEL:1124"
+                                     answerConceptId="{finding}" style="checkbox"/>
+                            </p>
+                        </template>
+                        <render finding="CIEL:1115"       name="Normal"        switch="normalObs" />
+                        <render finding="CIEL:562"        name="cardiacMurmur" switch="abnormalObs" />
+                        <render finding="PIH:TACHYCARDIA" name="tachycardia"   switch="abnormalObs" />
+                    </repeat>
+
+                    <p>
+                        <obs class="abnormalObs" conceptId="CIEL:1124" answerConceptId="CIEL:5622"
+                             style="checkbox" showCommentField="true" commentFieldLabel=""/>
+                    </p>
+                </div>
+                <div>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                            <obs conceptId="CIEL:163046" rows="5" cols="45"/>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p/>
+
+        <div id="chest" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.chest_exam.title"/>
+            </b>
+
+            <div class="two-columns-n exam">
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs class="{normAb}" style="checkbox"
+                                     conceptId="PIH:CHEST EXAM FINDINGS"
+                                     answerConceptId="{answer}" />
+                            </p>
+                        </template>
+                        <render normAb="normalObs" answer="CIEL:1115" comment="normal" />
+                        <render normAb="abnormalObs" answer="PIH:CREPITATIONS" comment="crepitations" />
+                        <render normAb="abnormalObs" answer="PIH:WHEEZE" comment="wheeze"/>
+                        <render normAb="abnormalObs" answer="CIEL:132975" comment="Noisy breathing"/>
+                    </repeat>
+
+                    <p>
+                        <obs class="abnormalObs" conceptId="PIH:CHEST EXAM FINDINGS"
+                             answerConceptId="CIEL:5622" style="checkbox" showCommentField="true" commentFieldLabel=""/>
+                    </p>
+                </div>
+
+                <div>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                        <obs conceptId="CIEL:160689" rows="5" cols="45"/>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p/>
+
+        <div id="abs" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.abdominal_exam.title"/>
+            </b>
+
+            <div class="two-columns-n exam">
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs class="{normAb}" style="checkbox"
+                                     conceptId="PIH:ABDOMINAL EXAM FINDINGS"
+                                     answerConceptId="{answer}" />
+                            </p>
+                        </template>
+                        <render normAb="normalObs" answer="CIEL:1115" comment="normal" />
+                        <render normAb="abnormalObs" answer="CIEL:110136" comment="increase abdominal size" />
+                        <render normAb="abnormalObs" answer="PIH:SPLENOMEGALY" comment="splenomegalyr"/>
+                        <render normAb="abnormalObs" answer="PIH:HEPATOMEGALY" comment="hepatomegalyr"/>
+                        <render normAb="abnormalObs" answer="PIH:ASCITES" comment="ascites"/>
+                    </repeat>
+
+                    <p>
+                        <obs class="abnormalObs" conceptId="PIH:ABDOMINAL EXAM FINDINGS"
+                             answerConceptId="PIH:OTHER NON-CODED" style="checkbox" showCommentField="true"
+                             commentFieldLabel=""/>
+                    </p>
+                </div>
+
+                <div>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                            <obs conceptId="CIEL:160947" rows="7" cols="45"/>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p/>
+
+        <!-- Hide urogenital section for ObGyn or PMTCT -->
+        <includeIf velocityTest="!($encounter.encounterType.uuid == 'd83e98fd-dc7b-420f-aa3f-36f648b4483d' || $encounter.encounterType.uuid == '584124b9-1f10-4757-ba09-91fc9075af92' || $encounter.encounterType.uuid == '95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5')">
+            <div id="uro" class="section-container-color">
+                <b>
+                    <uimessage code="pihcore.exam.urogenital_exam.title"/>
+                </b>
+
+                <div class="two-columns-n exam">
+                    <div>
+                        <repeat>
+                            <template>
+                                <p>
+                                    <obs class="{normAb}" style="checkbox"
+                                         conceptId="PIH:UROGENITAL EXAM FINDINGS"
+                                         answerConceptId="{answer}" />
+                                </p>
+                            </template>
+                            <render normAb="normalObs" answer="CIEL:1115" comment="normal" />
+                            <render normAb="abnormalObs" answer="CIEL:120939" comment="Candidiasis" />
+                            <render normAb="abnormalObs" answer="CIEL:864" comment="Genital ulcers"/>
+                            <render normAb="abnormalObs" answer="PIH:GENITAL DISCHARGE" comment="Genital discharge"/>
+                        </repeat>
+
+                        <p>
+                            <obs class="abnormalObs" conceptId="PIH:UROGENITAL EXAM FINDINGS"
+                                 answerConceptId="CIEL:5622" style="checkbox" showCommentField="true" commentFieldLabel=""/>
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="comment-label">
+                            <uimessage code="pihcore.exam.comment"/>
+                        </p>
+
+                        <p class="comment-field">
+                            <obs conceptId="CIEL:163047" rows="5" cols="45"/>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </includeIf>
+
+        <!-- Show separate urology and gyno sections for ObGyn, PMTCT Intake, or PMTCT Followup -->
+        <includeIf velocityTest="$encounter.encounterType.uuid == 'd83e98fd-dc7b-420f-aa3f-36f648b4483d' || $encounter.encounterType.uuid == '584124b9-1f10-4757-ba09-91fc9075af92' || $encounter.encounterType.uuid == '95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5'">
+
+            <div id="urology" class="section-container-color">
+                <b>
+                    <uimessage code="pihcore.exam.urology_exam.title"/>
+                </b>
+
+                <div class="two-columns-n exam">
+                    <div>
+                        <repeat>
+                            <template>
+                                <p>
+                                    <obs class="{switch}" conceptId="PIH:13228"
+                                         answerConceptId="{finding}" style="checkbox"/>
+                                </p>
+                            </template>
+                            <render finding="CIEL:1115"   name="Normal"    switch="normalObs" />
+                            <render finding="CIEL:118771" name="Dysuria"   switch="abnormalObs" />
+                            <render finding="CIEL:840"    name="Hematuria" switch="abnormalObs" />
+                            <render finding="CIEL:129510" name="Polyuria"  switch="abnormalObs" />
+                        </repeat>
+
+                        <p>
+                            <obs class="abnormalObs" conceptId="PIH:13228"
+                                 answerConceptId="CIEL:5622" style="checkbox" showCommentField="true" commentFieldLabel=""/>
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="comment-label">
+                            <uimessage code="pihcore.exam.comment"/>
+                        </p>
+
+                        <p class="comment-field">
+                            <obs conceptId="PIH:13230" rows="5" cols="45"/>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <p/>
+
+            <div id="gynecology" class="section-container-color">
+                <b>
+                    <uimessage code="pihcore.exam.gynecology_exam.title"/>
+                </b>
+
+                <div class="two-columns-n exam">
+                    <div>
+                        <repeat>
+                            <template>
+                                <p>
+                                    <obs class="{switch}" conceptId="PIH:13229"
+                                         answerConceptId="{finding}" style="checkbox"/>
+                                </p>
+                            </template>
+                            <render finding="CIEL:1115"   name="Normal"     switch="normalObs" />
+                            <render finding="CIEL:146512" name="GenCandid"  switch="abnormalObs" />
+                            <render finding="CIEL:120147" name="Condyloma"  switch="abnormalObs" />
+                            <render finding="CIEL:118784" name="CervDyspl"  switch="abnormalObs" />
+                            <render finding="CIEL:165162" name="BadSmell"   switch="abnormalObs" />
+                        </repeat>
+
+                        <repeat>
+                            <template>
+                                <p>
+                                    <obs class="{switch}" conceptId="PIH:13229"
+                                         answerConceptId="{finding}" answerCode="pihcore.specExam.{name}"
+                                         style="checkbox"/>
+                                </p>
+                            </template>
+                            <render finding="CIEL:116995" name="cervicitis" switch="abnormalObs" />
+                        </repeat>
+
+                        <repeat>
+                            <template>
+                                <p>
+                                    <obs class="{switch}" conceptId="PIH:13229"
+                                         answerConceptId="{finding}" style="checkbox"/>
+                                </p>
+                            </template>
+                            <render finding="CIEL:147967" name="Bartholini" switch="abnormalObs" />
+                            <render finding="CIEL:864"    name="GenUlcer"   switch="abnormalObs" />
+                        </repeat>
+
+                        <p>
+                            <obs class="abnormalObs" conceptId="PIH:13229"
+                                 answerConceptId="CIEL:5622" style="checkbox" showCommentField="true" commentFieldLabel=""/>
+                        </p>
+                    </div>
+                    <div>
+                        <label>
+                            <uimessage code="pihcore.via.long"/>
+                        </label>
+                        <p class="in-line">
+                            <obs conceptId="CIEL:162816" style="radio"
+                                 answerConceptIds="CIEL:1115,CIEL:164808,CIEL:116031"
+                                 answerSeparator=""/>
+                        </p>
+
+                        <!-- Cryotherapy of lesion of cervix -->
+                        <p>
+                            <obsgroup groupingConceptId="CIEL:1938" showIfEmpty="false">
+                                <span class="small hidden">
+                                    <!-- NOTE: Using 6 so it doesn't conflict with the other procedures -->
+                                    <obs conceptId="CIEL:1937" defaultValue="6"></obs>
+                                </span>
+                                <obs conceptId="CIEL:1651" style="checkbox"
+                                     answerConceptId="CIEL:162812" />
+                            </obsgroup>
+                        </p>
+
+                        <p>
+                            <!-- PAP test performed -->
+                            <obs conceptId="CIEL:163952" style="checkbox"
+                                 answerConceptId="CIEL:1267"
+                                 answerCode="pihcore.papTestPerformed" />
+                        </p>
+
+                        <p class="in-line">
+                            <label>
+                                <uimessage code="pihcore.stiSuspected"/>?
+                            </label>
+                            <obs conceptId="CIEL:161558" style="radio"
+                                 answerConceptIds="CIEL:1065,CIEL:1066"
+                                 answerSeparator=""/>
+                        </p>
+
+                        <repeat>
+                            <template>
+                                <p>
+                                    <obs class="{switch}" conceptId="PIH:14365"
+                                         answerConceptId="{finding}"
+                                         style="checkbox"/>
+                                </p>
+                            </template>
+                            <render finding="CIEL:120733" name="Chlamydia" />
+                            <render finding="CIEL:117767" name="Gonorrhea" />
+                            <render finding="CIEL:117829" name="Genital herpes" />
+                            <render finding="CIEL:111759" name="hepB" />
+                            <render finding="CIEL:1213"   name="HPV"   />
+                            <render finding="CIEL:117146" name="Trichomoniasis"   />
+                            <render finding="CIEL:148002" name="Bacterial vaginosis (BV)"   />
+                        </repeat>
+
+                        <p class="comment-label">
+                            <uimessage code="pihcore.exam.comment"/>
+                        </p>
+
+                        <p class="comment-field">
+                            <obs conceptId="PIH:13231" rows="4" cols="45"/>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </includeIf>
+        <p/>
+
+        <!-- Women's Health only -->
+        <includeIf velocityTest="$patient.gender == 'F' ">
+
+            <ifMode mode="VIEW" include="false">
+                <script type="text/javascript">
+
+                    jq(function() {
+
+                        var hasValue = function(element) {
+                            return jq(element).find('.fetus-name input').val();
+                        };
+
+                        var hideOtherFetus = function() {
+                            jq('#fetus-2').hide();
+                            jq('#fetus-3').hide();
+                            jq('#fetus-4').hide();
+                        };
+
+                        if (!hasValue('#fetus-2') &amp;&amp; !hasValue('#fetus-3') &amp;&amp; !hasValue('#fetus-4')) {
+                        hideOtherFetus();
+                        jq('#show-more-fetus-button').show();
+                        }
+
+                        jq('#show-more-fetus-button').click(function() {
+                            jq('.fetus').show();
+                            jq('#show-more-fetus-button').hide();
+                            jq('#show-less-fetus-button').show();
+                        });
+
+                        jq('#show-less-fetus-button').click(function() {
+                            hideOtherFetus();
+                            jq('#show-less-fetus-button').hide();
+                            jq('#show-more-fetus-button').show();
+                        });
+
+                    })
+
+                </script>
+            </ifMode>
+
+            <div id="women" class="section-container-color">
+                <b>
+                    <uimessage code="pihcore.exam.obstetrical_exam.title"/>
+                </b>
+
+                <div class="two-columns-n in-line">
+                    <div>
+                        <label>
+                            <uimessage code="pihcore.fundalHeight"/>
+                        </label>
+                        <obs conceptId="CIEL:1439" showUnits="true"/>
+                    </div>
+                    <div>
+                        <label>
+                            <uimessage code="pihcore.uterineContractions"/>
+                        </label>
+                        <obs conceptId="CIEL:163750" style="radio"
+                             answerConceptIds="CIEL:163747,CIEL:163748"
+                             answerCodes="pihcore.absent.plural,pihcore.present.plural" />
+                        <obs conceptId="CIEL:160968" placeholder="comment"/>
+                    </div>
+                </div>
+
+                <repeat with="['1'],['2'],['3'],['4']">
+                    <span id="fetus-{0}" class="fetus">
+                        <obsgroup groupingConceptId="CIEL:165381" showIfEmpty="false">
+                            <h6>------- {0} -------</h6>
+
+                            <div class="three-columns in-line">
+                                <div>
+                                    <label>
+                                        <uimessage code="pihcore.fetalPresentation"/>
+                                    </label>
+                                    <obs id="fetus-presentation-{0}" conceptId="CIEL:160090"
+                                         answerConceptIds="CIEL:160091,CIEL:164148,PIH:13224,CIEL:146922,CIEL:139814,
+                             CIEL:118388,CIEL:164149,CIEL:164150,CIEL:115808,CIEL:112259,CIEL:144433,CIEL:113617,
+                             CIEL:5622"/>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        <uimessage code="pihcore.fetalPosition"/>
+                                    </label>
+                                    <br/>
+                                    <obs id="fetus-position-{0}"
+                                         conceptId="CIEL:163749" style="radio"
+                                         answerConceptIds="CIEL:5141,CIEL:5139" />
+                                </div>
+
+                                <div>
+                                    <label>
+                                        <uimessage code="pihcore.fetalHeartRate"/>
+                                    </label>
+                                    <obs id="fetus-hr-{0}" conceptId="CIEL:1440"
+                                         showUnits="true" />
+                                </div>
+                            </div>
+                        </obsgroup>
+                    </span>
+                </repeat>
+                <button id="show-more-fetus-button" type="button" style="display:none">
+                    <uimessage code="pihcore.showMore"/>
+                </button>
+                <button id="show-less-fetus-button" type="button" style="display:none">
+                    <uimessage code="pihcore.showLess"/>
+                </button>
+            </div>
+
+            <p/>
+        </includeIf>
+
+        <p/>
+
+        <!-- Show postpartum section for ObGyn or PMTCT -->
+        <includeIf velocityTest="$encounter.encounterType.uuid == 'd83e98fd-dc7b-420f-aa3f-36f648b4483d' || $encounter.encounterType.uuid == '584124b9-1f10-4757-ba09-91fc9075af92' || $encounter.encounterType.uuid == '95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5'">
+            <div id="postpartum" class="section-container-color">
+                <b>
+                    <uimessage code="pihcore.exam.postpartum_exam.title"/>
+                </b>
+
+                <div class="two-columns-n exam">
+                    <div>
+                        <p class="in-line">
+                            <!-- Lochia type/color -->
+                            <label>
+                                <uimessage code="pihcore.lochiaType" />
+                            </label>
+                            <br/>
+                            <obs conceptId="CIEL:159721" style="radio"
+                                 answerConceptIds="CIEL:159722,CIEL:159724,CIEL:159723"
+                                 answerCodes="pihcore.lochia.rubra,pihcore.lochia.serosa,pihcore.lochia.alba"/>
+                            <br/>
+
+                            <!-- Lochia odor -->
+                            <label>
+                                <uimessage code="pihcore.lochiaOdor" />
+                            </label>
+                            <obs conceptId="PIH:14062" style="radio"
+                                 answerConceptIds="CIEL:1115,CIEL:159846" />
+                            <br/>
+
+                            <!-- Lochia quantity -->
+                            <label>
+                                <uimessage code="pihcore.lochiaQuant" />
+                            </label>
+                            <obs conceptId="CIEL:167042" style="radio"
+                                 answerConceptIds="PIH:12270,CIEL:1363,CIEL:1364"
+                                 answerCodes="+,++,+++" />
+
+
+                            <div class="exam">
+                                <!-- Postpartum hemorrhage -->
+                                <obs conceptId="CIEL:230" style="checkbox"
+                                     answerConceptId="CIEL:1065"
+                                     answerCode="pihcore.postpartumHemorrhage" />
+                            </div>
+                        </p>
+
+
+                        <!-- Pads used -->
+                        <p class="in-line">
+                            <label>
+                                <uimessage code="pihcore.numberPads" />
+                            </label>
+                            <obsgroup groupingConceptId="CIEL:166896" showIfEmpty="false">
+                                <obs conceptId="CIEL:166895" />
+                                <obs conceptId="PIH:TIME UNITS" style="radio"
+                                     answerConceptIds="CIEL:1822,CIEL:1072"
+                                     answerCodes="pihcore.perHour,pihcore.perDay"/>
+                            </obsgroup>
+                        </p>
+
+                        <!-- Resumed sex -->
+                        <p class="in-line">
+                            <label>
+                                <uimessage code="pihcore.restartSex" />
+                            </label>
+                            <obs conceptId="CIEL:167043" style="radio"
+                                 answerConceptIds="CIEL:1065,CIEL:1066"/>
+                        </p>
+
+                        <p class="in-line">
+                            <label>
+                                <uimessage code="pihcore.uterusInvolution" />
+                            </label>
+                            <obs id="involution" conceptId="CIEL:167038" style="radio"
+                                 answerConceptIds="CIEL:1115,CIEL:1116">
+                                <controls>
+                                    <when value="CIEL:1116" thenDisplay="#abnormal-involution" />
+                                </controls>
+                            </obs>
+
+                            <div id="abnormal-involution">
+                                <label>
+                                    <uimessage code="pihcore.ifAbnormal" />,
+                                </label>
+                                <!-- Uterus level from umbilicus during postpartum involution -->
+                                <obs conceptId="PIH:14063" showUnits="true" />
+                                <label>
+                                    <uimessage code="pihcore.umbilMeasure" />
+                                </label>
+                            </div>
+                        </p>
+
+                        <p class="in-line">
+                            <label>
+                                <uimessage code="pihcore.uterusPalpation" />
+                            </label>
+                            <br/>
+                            <obs conceptId="CIEL:167035" style="radio"
+                                 answerConceptIds="CIEL:167036,CIEL:167037"
+                                 answerCodes="pihcore.sensitiveUterus,pihcore.nonSensitiveUterus"/>
+                        </p>
+
+                        <p class="comment-label">
+                            <uimessage code="pihcore.exam.comment"/>
+                        </p>
+
+                        <p class="comment-field">
+                            <obs conceptId="PIH:14053" rows="5" cols="45"/>
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="exam">
+                            <label>
+                                <uimessage code="pihcore.csWoundStatus" />
+                            </label>
+
+                            <repeat>
+                                <template>
+                                    <p>
+                                        <obs conceptId="CIEL:162128" style="checkbox"
+                                             answerConceptId="{csState}"
+                                             answerCode="pihcore.{csName}"  />
+                                    </p>
+                                </template>
+                                <render csState="CIEL:162130" csName="clean"  />
+                                <render csState="CIEL:441"    csName="dressed"  />
+                                <render csState="CIEL:151596" csName="redress"  />
+                                <render csState="CIEL:162129" csName="healingIntact"  />
+                                <render csState="CIEL:150632" csName="abscess"  />
+                                <render csState="CIEL:163799" csName="openWoundEdges"  />
+                                <render csState="CIEL:1175"   csName="na"  />
+                                <render csState="CIEL:5622"   csName="other"  />
+                            </repeat>
+                        </p>
+
+                        <!-- Perineum -->
+                        <p class="in-line">
+                            <!-- Perineum intact -->
+                            <label>
+                                <uimessage code="pihcore.perineumIntact" />
+                            </label>
+                            <obs conceptId="CIEL:160089" style="radio"
+                                 answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1175"/>
+
+                            <br/>
+                            <!-- Perineum wound -->
+                            <label>
+                                <uimessage code="pihcore.perineumWoundInfection" />
+                            </label>
+                            <br/>
+                            <obs conceptId="PIH:14065" style="radio"
+                                 answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1175"/>
+
+                        </p>
+                        <div class="exam">
+                            <label>
+                                <uimessage code="pihcore.breast" />
+                            </label>
+                            <repeat>
+                                <template>
+                                    <p>
+                                        <obs conceptId="CIEL:159780" style="checkbox"
+                                             answerConceptId="{finding}" answerCode="pihcore.{name}"  />
+                                    </p>
+                                </template>
+                                <render finding="PIH:14061"   name="goodMilk"  />
+                                <render finding="CIEL:140103" name="crackNip"  />
+                                <render finding="CIEL:118620" name="engorgedBreast"  />
+                                <render finding="CIEL:115914" name="mastitis"  />
+                                <render finding="CIEL:115099" name="breastAbscess"  />
+                            </repeat>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </includeIf>
+
+        <p/>
+
+        <div id="mental" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.mental_exam.title"/>
+            </b>
+
+            <div class="two-columns-n exam">
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs class="{normAb}" style="checkbox"
+                                     conceptId="CIEL:163043"
+                                     answerConceptId="{answer}" />
+                            </p>
+                        </template>
+                        <render normAb="normalObs" answer="CIEL:1115" comment="normal" />
+                        <render normAb="abnormalObs" answer="PIH:DEPRESSION" comment="depression" />
+                    </repeat>
+
+                    <p>
+                        <obs class="abnormalObs" conceptId="CIEL:163043" answerConceptId="PIH:OTHER NON-CODED"
+                             style="checkbox"
+                             showCommentField="true" commentFieldLabel=""/>
+                    </p>
+                </div>
+
+                <div>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                        <obs conceptId="CIEL:163044" rows="5" cols="45"/>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <p/>
+
+        <div id="neuro" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.neuro_exam.title"/>
+            </b>
+
+            <div class="two-columns-n exam">
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs class="{normAb}" style="checkbox"
+                                     conceptId="PIH:NEUROLOGIC EXAM FINDINGS"
+                                     answerConceptId="{answer}" />
+                            </p>
+                        </template>
+                        <render normAb="normalObs" answer="CIEL:1115" comment="normal" />
+                        <render normAb="abnormalObs" answer="CIEL:5226" comment="weakness" />
+                        <render normAb="abnormalObs" answer="PIH:NUMBNESS" comment="numbness"/>
+                        <render normAb="abnormalObs" answer="CIEL:117655" comment="hemiplegia"/>
+                        <render normAb="abnormalObs" answer="CIEL:130843" comment="paraplegia"/>
+                    </repeat>
+
+                    <p>
+                        <obs class="abnormalObs" conceptId="PIH:NEUROLOGIC EXAM FINDINGS"
+                             answerConceptId="CIEL:5622"
+                             style="checkbox" showCommentField="true" commentFieldLabel=""/>
+                    </p>
+                </div>
+
+                <div>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                        <obs conceptId="PIH:11570" rows="5" cols="45"/>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <p/>
+
+        <div id="reflex" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.peripheral_reflex_exam.title"/>
+            </b>
+
+            <div class="exam">
+                <p>
+                    <obs class="normalObs" conceptId="CIEL:160623"
+                         answerConceptId="CIEL:1115" style="checkbox"/>
+                </p>
+                <p>
+                    <obs class="abnormalObs" conceptId="CIEL:160623"
+                         answerConceptId="CIEL:1116" style="checkbox"/>
+                </p>
+                <p>
+                    <obs class="abnormalObs" conceptId="CIEL:160623"
+                         answerConceptId="CIEL:5622"
+                         style="checkbox" showCommentField="true" commentFieldLabel=""/>
+                </p>
+
+            </div>
+        </div>
+
+        <p/>
+
+        <!-- Pediatrics only exam:  patients under 15 years old -->
+        <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &lt; 15">
+            <div id="peds" class="section-container-color">
+                <b>
+                    <uimessage code="pihcore.exam.pedsDevelopment.title"/>
+                </b>
+
+                <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &lt; 6">
+                    <p class="in-line">
+                        <label>
+                            <uimessage code="pihcore.exam.denverTest"/>
+                        </label>
+                        <obs conceptId="CIEL:166081" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066"/>
+                    </p>
+                </includeIf>
+
+                <div id="gross">
+                    <b>
+                        <uimessage code="pihcore.exam.gross_motor_skills_exam.title"/>
+                    </b>
+
+                    <div class="two-columns-n exam">
+                        <div>
+                            <p>
+                                <obs class="normalObs" conceptId="PIH:GROSS MOTOR SKILLS EVALUATION"
+                                     answerConceptId="PIH:NORMAL" style="checkbox"/>
+                            </p>
+                            <p>
+                                <obs class="abnormalObs" conceptId="PIH:GROSS MOTOR SKILLS EVALUATION"
+                                     answerConceptId="PIH:ABNORMAL" style="checkbox"/>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="comment-label">
+                                <uimessage code="pihcore.exam.comment"/>
+
+                                <obs conceptId="PIH:Gross Motor Skills Evaluation (text)" rows="2" cols="45"/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="fine">
+                    <b>
+                        <uimessage code="pihcore.exam.fine_motor_skills_exam.title"/>
+                    </b>
+
+                    <div class="two-columns-n exam">
+                        <div>
+                            <p>
+                                <obs class="normalObs" conceptId="PIH:FINE MOTOR SKILLS EVALUATION"
+                                     answerConceptId="PIH:NORMAL"
+                                     style="checkbox"/>
+                            </p>
+                            <p>
+                                <obs class="abnormalObs" conceptId="PIH:FINE MOTOR SKILLS EVALUATION"
+                                     answerConceptId="PIH:ABNORMAL" style="checkbox"/>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="comment-label">
+                                <uimessage code="pihcore.exam.comment"/>
+                                <obs conceptId="PIH:Fine Motor Skills Evaluation (text)" rows="2" cols="45"/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="lang">
+                    <b>
+                        <uimessage code="pihcore.exam.language_development_evaluation.title"/>
+                    </b>
+
+                    <div class="two-columns-n exam">
+                        <div>
+                            <p>
+                                <obs class="normalObs" conceptId="PIH:LANGUAGE DEVELOPMENT EVALUATION"
+                                     answerConceptId="PIH:NORMAL" style="checkbox"/>
+                            </p>
+                            <p>
+                                <obs class="abnormalObs" conceptId="PIH:LANGUAGE DEVELOPMENT EVALUATION"
+                                     answerConceptId="PIH:ABNORMAL" style="checkbox"/>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="comment-label">
+                                <uimessage code="pihcore.exam.comment"/>
+                                <obs conceptId="PIH:Language Development Evaluation (text)" rows="2" cols="45"/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="social">
+                    <b>
+                        <uimessage code="pihcore.exam.social_skills_evaluation.title"/>
+                    </b>
+
+                    <div class="two-columns-n exam">
+                        <div>
+                            <p>
+                                <obs class="normalObs" conceptId="PIH:SOCIAL SKILLS EVALUATION" answerConceptId="PIH:NORMAL"
+                                     style="checkbox"/>
+                            </p>
+                            <p>
+                                <obs class="abnormalObs" conceptId="PIH:SOCIAL SKILLS EVALUATION"
+                                     answerConceptId="PIH:ABNORMAL"
+                                     style="checkbox"/>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="comment-label">
+                                <uimessage code="pihcore.exam.comment"/>
+                                <obs conceptId="PIH:Social Skills Evaluation (text)" rows="2" cols="45"/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p/>
+        </includeIf>
+
+        <div id="musculo" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.musculoskeletal_exam.title"/>
+            </b>
+
+            <div class="two-columns-n exam">
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs class="{normAb}" style="checkbox"
+                                     conceptId="PIH:MUSCULOSKELETAL EXAM FINDINGS"
+                                     answerConceptId="{answer}" />
+                            </p>
+                        </template>
+                        <render normAb="normalObs" answer="CIEL:1115" comment="normal" />
+                        <render normAb="abnormalObs" answer="PIH:MUSCLE TENDERNESS" comment="muscle tenderness" />
+                        <render normAb="abnormalObs" answer="CIEL:118697" comment="effusion of joint"/>
+                        <render normAb="abnormalObs" answer="CIEL:162509" comment="Cold extremities"/>
+                        <render normAb="abnormalObs" answer="CIEL:163411" comment="foot ulcer"/>
+                        <render normAb="abnormalObs" answer="CIEL:460" comment="Edema"/>
+                        <render normAb="abnormalObs" answer="CIEL:118729" comment="Lower leg edema"/>
+                    </repeat>
+
+                    <p class="in-line">
+                        Pitting:
+                        <obs class="abnormalObs" conceptId="CIEL:130166"
+                             answerConceptIds="CIEL:165598,CIEL:165599,CIEL:165600"
+                             answerLabels="+1,+2,+3" style="radio" answerSeparator=""/>
+                    </p>
+                    <p>
+                        <obs class="abnormalObs" conceptId="PIH:MUSCULOSKELETAL EXAM FINDINGS"
+                             answerConceptId="CIEL:5622" style="checkbox" showCommentField="true" commentFieldLabel=""/>
+                    </p>
+                </div>
+                <div>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                        <obs conceptId="CIEL:163048" rows="12" cols="45"/>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p/>
+
+        <div id="other" class="section-container-color">
+            <b>
+                <uimessage code="pihcore.exam.other_exam.title"/>
+            </b>
+
+            <div class="two-columns-n exam">
+                <div>
+                    <p class="in-line">
+                        <uimessage code="pihcore.exam.tannerstage"/>
+                        <obs conceptId="PIH:5310" style="radio" answerSeparator=""
+                             answerConceptIds="CIEL:160771,CIEL:160774,CIEL:160778,CIEL:160782,PIH:11931"
+                             answerLabels="I,II,III,IV,V"/>
+                    </p>
+                </div>
+                <div>
+                    <p class="comment-label">
+                        <uimessage code="pihcore.exam.comment"/>
+                    </p>
+
+                    <p class="comment-field">
+                            <obs conceptId="PIH:PHYSICAL SYSTEM COMMENT" rows="5" cols="60"/>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br/>
+
+    <ifMode mode="VIEW" include="false">
+        <div id="buttons">
+            <button id="next" type="button" class="submitButton confirm right">
+                <uimessage code="emr.next"/>
+                <i class="icon-spinner icon-spin icon-2x" style="display: none; margin-left: 10px;"></i>
+            </button>
+            <button id="submit" class="submitButton confirm right">
+                <uimessage code="mirebalais.save"/>
+                <i class="icon-spinner icon-spin icon-2x" style="display: none; margin-left: 10px;"></i>
+            </button>
+            <button id="cancel" type="button" class="cancel">
+                <uimessage code="emr.cancel"/>
+            </button>
+        </div>
+    </ifMode>
+
+</htmlform>
