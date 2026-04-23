@@ -46,6 +46,24 @@
             -moz-column-count: 2;
         }
 
+        .inline-label {
+        margin-right: 10px;
+        }
+
+        .field {
+        break-inside: avoid;
+        margin-bottom: 25px;
+        }
+
+        .field:first-child {
+        margin-top: 10px;
+        }
+
+        .field label {
+        display: block;
+        margin-bottom: 5px;
+        }
+
         p.radio > * {
             display: inline;
             float: none !important;
@@ -78,6 +96,11 @@
        - .section {
         width: 100%;
         }
+
+        .side-by-side label {
+        display: inline-block;
+        }
+
     </style>
 
 
@@ -158,18 +181,97 @@
         </h1>
     </ifMode>
 
-    <!-- Show chief complaint if encounter type is NOT NCD Intake -->
-    <includeIf velocityTest="$encounter.encounterType.uuid != 'ae06d311-1866-455b-8a64-126a9bd74171'" >
-        <section id="chiefComplaint" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="pihcore.chiefComplaint.title">
-            <div class="section-container">
-                <p>
-                    <obs conceptId="CIEL:160531" style="textarea" id="chief-complaint"/>
-                </p>
-            </div>
-        </section>
-    </includeIf>
+    <!-- Referral Section -->
+    <!-- only show these sections if encounter type is NCD Intake -->
+    <!--<includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
+    </includeIf>-->
+    <section id="referralIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.refer.title">
+        <div class="section-container">
+            <p>
+                <obs conceptId="PIH:Type of referring service"
+                     answerConceptId="PIH:SELF-REFER"
+                     answerCode="pihcore.selfRefer"
+                     style="checkbox"/>
+            </p>
 
+            <p>
+                <label>
+                    <uimessage code="pihcore.refer.date"/>
+                </label>
+                <obs conceptId="CIEL:163181" allowTime="false"/>
+            </p>
+
+            <div class="two-columns">
+                <p>
+                    <strong>
+                        <uimessage code="pihcore.refer.internal"/>
+                    </strong>
+
+                    <repeat>
+                        <template>
+                            <obs conceptId="PIH:Type of referring service"
+                                 style="checkbox"
+                                 answerConceptId="{point}" answerCode="{message}"/>
+                        </template>
+
+                        <render point="CIEL:165018" message="pihcore.location.idClinic" comment="ID clinic"/>
+                        <render point="PIH:ANTENATAL CLINIC" message="pihcore.location.maternal"
+                                comment="Womens Health clinic"/>
+                        <render point="PIH:PRIMARY CARE CLINIC" message="pihcore.location.primary"
+                                comment="Primary care"/>
+                        <render point="CIEL:163558" message="pihcore.location.mentalHealth"
+                                comment="Mental health clinic"/>
+                        <render point="CIEL:160449" message="pihcore.testLocation.surgery" comment="Surgery dept"/>
+                        <render point="CIEL:160448" message="pihcore.location.intMed" comment="Internal medicine"/>
+                        <render point="CIEL:165048" message="pihcore.testLocation.pedWard" comment="Pediatrics"/>
+                        <render point="CIEL:160473" message="pihcore.location.ed" comment="Emergency"/>
+                    </repeat>
+
+                    <obs conceptId="PIH:Type of referring service" style="checkbox"
+                         answerConceptId="PIH:OTHER" commentFieldLabel=""/>
+                </p>
+
+                <p>
+                    <strong>
+                        <uimessage code="pihcore.refer.external"/>
+                    </strong>
+                    <obs conceptId="PIH:Type of referring service" style="checkbox"
+                         answerConceptId="PIH:11956" commentFieldLabel=""/>
+                    <obs conceptId="PIH:Type of referring service" style="checkbox"
+                         answerConceptId="PIH:Non-ZL supported site" commentFieldLabel=""/>
+                </p>
+
+                <p>
+                    <strong>
+                        <uimessage code="pihcore.refer.community"/>
+                    </strong>
+
+                    <obs conceptId="PIH:Type of referring service" style="checkbox"
+                         answerConceptId="CIEL:1555"/>
+                    <obs conceptId="PIH:Type of referring service" style="checkbox"
+                         answerConceptId="PIH:11965"/>
+                </p>
+
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chief complaint -->
+    <!-- Show chief complaint if encounter type is NOT NCD Intake -->
+    <includeIf velocityTest="$encounter.encounterType.uuid != 'ae06d311-1866-455b-8a64-126a9bd74171'">
+    <section id="chiefComplaint" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.chiefComplaint.title">
+        <div class="section-container">
+            <p>
+                <obs conceptId="CIEL:160531" style="textarea" id="chief-complaint"/>
+            </p>
+        </div>
+    </section>
+
+    <!-- Presenting history -->
     <section id="complaint" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.history.presentingHistory.title">
         <div class="section-container">
@@ -178,84 +280,9 @@
             </p>
         </div>
     </section>
-
-    <!-- only show these sections if encounter type is NCD Intake -->
-    <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
-        <section id="referralIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="pihcore.refer.title">
-            <div class="section-container">
-                <p>
-                    <obs conceptId="PIH:Type of referring service"
-                         answerConceptId="PIH:SELF-REFER"
-                         answerCode="pihcore.selfRefer"
-                         style="checkbox"/>
-                </p>
-
-                <p>
-                    <label>
-                        <uimessage code="pihcore.refer.date"/>
-                    </label>
-                    <obs conceptId="CIEL:163181" allowTime="false"/>
-                </p>
-
-                <div class="two-columns">
-                    <p>
-                        <strong>
-                            <uimessage code="pihcore.refer.internal"/>
-                        </strong>
-
-                        <repeat>
-                            <template>
-                                <obs conceptId="PIH:Type of referring service"
-                                     style="checkbox"
-                                     answerConceptId="{point}" answerCode="{message}"/>
-                            </template>
-
-                            <render point="CIEL:165018" message="pihcore.location.idClinic" comment="ID clinic"/>
-                            <render point="PIH:ANTENATAL CLINIC" message="pihcore.location.maternal"
-                                    comment="Womens Health clinic"/>
-                            <render point="PIH:PRIMARY CARE CLINIC" message="pihcore.location.primary"
-                                    comment="Primary care"/>
-                            <render point="CIEL:163558" message="pihcore.location.mentalHealth"
-                                    comment="Mental health clinic"/>
-                            <render point="CIEL:160449" message="pihcore.testLocation.surgery" comment="Surgery dept"/>
-                            <render point="CIEL:160448" message="pihcore.location.intMed" comment="Internal medicine"/>
-                            <render point="CIEL:165048" message="pihcore.testLocation.pedWard" comment="Pediatrics"/>
-                            <render point="CIEL:160473" message="pihcore.location.ed" comment="Emergency"/>
-                        </repeat>
-
-                        <obs conceptId="PIH:Type of referring service" style="checkbox"
-                             answerConceptId="PIH:OTHER" commentFieldLabel=""/>
-                    </p>
-
-                    <p>
-                        <strong>
-                            <uimessage code="pihcore.refer.external"/>
-                        </strong>
-                        <obs conceptId="PIH:Type of referring service" style="checkbox"
-                             answerConceptId="PIH:11956" commentFieldLabel=""/>
-                        <obs conceptId="PIH:Type of referring service" style="checkbox"
-                             answerConceptId="PIH:Non-ZL supported site" commentFieldLabel=""/>
-                    </p>
-
-                    <p>
-                        <strong>
-                            <uimessage code="pihcore.refer.community"/>
-                        </strong>
-
-                        <obs conceptId="PIH:Type of referring service" style="checkbox"
-                             answerConceptId="CIEL:1555"/>
-                        <obs conceptId="PIH:Type of referring service" style="checkbox"
-                             answerConceptId="PIH:11965"/>
-                    </p>
-
-                    <br/>
-                    <br/>
-                </div>
-            </div>
-        </section>
     </includeIf>
 
+    <!-- Family history Section -->
     <section id="family-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="zl.consultNote.familyHistory.title">
         <div class="section-container">
@@ -283,16 +310,21 @@
         </div>
     </section>
 
+    <!-- Medical history Section -->
     <section id="patient-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="zl.consultNote.patientHistory.title">
+             headerCode="Medical History">
         <div class="section-container-color">
             <!-- ANTECEDENTS PERSONNELS / HABITUDES -->
+
+                <h5>
+                    <uimessage code="Past Medical History"/>
+                </h5>
 
             <div class="two-columns">
                 <!-- Allergy is intentionally ommitted because it should be handled in more detail through the Allergy UI -->
                 <pastMedicalHistoryCheckbox concept="PIH:ASTHMA"/>
                 <pastMedicalHistoryCheckbox concept="PIH:HEART DISEASE" specify="true" class="medicalHistoryText patientHistory" />
-                <pastMedicalHistoryCheckbox concept="PIH:SURGERY" specify="true" class="medicalHistoryText patientHistory"/>
+                <!--<pastMedicalHistoryCheckbox concept="PIH:SURGERY" specify="true" class="medicalHistoryText patientHistory"/>-->
                 <pastMedicalHistoryCheckbox concept="PIH:Traumatic Injury" specify="true" class="medicalHistoryText patientHistory"/>
                 <!-- TODO paper form has Surgery/Trauma. verify splitting okay -->
                 <pastMedicalHistoryCheckbox concept="PIH:EPILEPSY"/>
@@ -323,16 +355,188 @@
                 <pastMedicalHistoryCheckbox concept="PIH:Eclampsia" />
             </includeIf>
         </div>
+        <br/>
+
+        <!-- Surgical -->
+        <div class="section-container-color">
+            <h5>
+                <uimessage code="Surgical History"/>
+            </h5>
+
+            <div class="two-columns">
+                <span groupingConceptId="PIH:SURGERY">
+
+                    <label class="inline">
+                        Have you ever had surgery?
+                    </label> &amp;nbsp&amp;nbsp
+                    <span class="=list-inline">
+                        <obs id="surgery-toggle" conceptId="PIH:13119" style="radio" answerConceptIds="PIH:YES,PIH:NO"
+                             answerCodes="Yes,No" class="list-inline">
+                            <control>
+                                <when value="PIH:YES" thenDisplay="#surgery-details"/>
+                            </control>
+                        </obs>
+                    </span>
+
+                    <span id="surgery-details">
+                        <label>
+                            Surgery procedure:
+                        </label>
+                        <obs conceptId="PIH:10483" class="list-inline" size="30"/>
+                    </span>
+                    <br/>
+
+                    <label class="inline">
+                        Any surgery complications?
+                    </label>
+                    <span class="list-inline">
+                        <obs conceptId="PIH:7881" style="radio" answerConceptIds="PIH:YES,PIH:NO"
+                             answerCodes="Yes,No" class="list-inline"/>
+                    </span>
+                    <br/>
+
+                    <label class="inline">
+                        Any blood transfusion:
+                    </label>
+                    <span class="list-inline">
+                        <obs conceptId="PIH:1063" style="radio" answerConceptIds="PIH:YES,PIH:NO"
+                             answerCodes="Yes,No" class="list-inline"/>
+                    </span>
+                    <br/>
+
+                    <label class="inline">
+                        Date of Procedure:
+                    </label>
+                    <span class="list-inline">
+                        <obs conceptId="PIH:13769" class="list-inline" allowFutureDates="false"/>
+                    </span>
+                </span>
+            </div>
+        </div>
+        <br/>
+
+        <!-- OBGYN History -->
+        <div class="section-container-color">
+        <h5>
+            <uimessage code="OB/ GYN History"/>
+        </h5>
+
+        <div class="two-columns">
+
+            <!-- Menopause question -->
+            <label class="inline">
+                Is the patient post menopausal?
+            </label> &amp;nbsp&amp;nbsp
+            <span class="=list-inline">
+                <obs id="meno-toggle" conceptId="PIH:14188" style="radio" answerConceptIds="PIH:YES,PIH:NO"
+                     class="list-inline">
+                    <controls>
+                        <when value="PIH:YES" thenDisplay="#meno-date"/>
+                        <when value="PIH:NO" thenDisplay="#lmp-section"/>
+                    </controls>
+                </obs>
+            </span>
+
+            <!-- Menopause details -->
+            <span id="meno-date">
+                <label>
+                    Date of Menopause:
+                </label>
+                <obs conceptId="PIH:7538" class="list-inline" allowFutureDates="false"/>
+            </span>
+            <br/>
+
+            <label class="inline">
+                Age at Menopause:
+            </label>
+            <span class="list-inline">
+                <obs conceptId="PIH:14189" class="list-inline" allowFutureDates="false"/>
+            </span>
+            <br/>
+
+            <label class="inline">
+                Last Menstrual Period (LMP):
+            </label>
+            <span class="list-inline">
+                <obs conceptId="CIEL:1427" class="list-inline" allowFutureDates="false"/>
+            </span>
+        </div>
+
+        <div class="two-columns">
+
+            <div class="field">
+                <label>
+                    Gravida (G)
+                </label>
+                <obs conceptId="CIEL:5624"/>
+            </div>
+
+            <div class="field">
+                <label>
+                    Parity (P)
+                </label>
+                <obs conceptId="CIEL:1053"/>
+            </div>
+
+            <div class="field">
+                <label>
+                    Abortus (A)
+                </label>
+                <obs conceptId="CIEL:1823" required="true"/>
+            </div>
+
+            <div class="field">
+                <label>
+                    Living (L)
+                </label>
+                <obs conceptId="CIEL:1825" required="true"/>
+            </div>
+        </div>
+
+            <label class="inline">
+                Number of C-Section:
+            </label>
+            <span class="list-inline">
+                <obs conceptId="PIH:7011" class="list-inline"/>
+            </span>
+        </div>
+        <br/>
+
+        <!-- Allergies History -->
+        <div class="section-container-color">
+            <h5>
+                <uimessage code="Allergies  History"/>
+            </h5>
+            <label class="inline">
+                Any allergy?
+            </label> &amp;nbsp&amp;nbsp
+            <span class="list-inline">
+                <obs id="medication-reaction" conceptId="CIEL:165273" style="radio"
+                     answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
+                    <controls>
+                        <when value="PIH:YES" thenDisplay="#medication-side-effect"/>
+                    </controls>
+                </obs>
+            </span>
+            <br/>
+            <span id="medication-side-effect">
+                <label>
+                    Explain
+                </label>
+                <obs conceptId="CIEL:164377" style="textarea"/>
+            </span>
+        </div>
+
     </section>
 
-    <!-- only show these sections if encounter type is NCD Intake AND the patient is < 12 years old-->
+    <!-- only show these sections if encounter type is NCD Intake AND the patient is < 12 years old
     <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171' &amp;&amp; $patient.age &lt; 12 " >
         <section id="birth-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="pihcore.birth-history" >
             <div class="section-container">
                 <div class="two-columns" >
                     <p>
-                        <!-- Term of birth:  premie, at term, post date -->
+                        Term of birth:  premie, at term, post date
                         <obsgroup groupingConceptId="CIEL:1633" >
                             <obs conceptId="CIEL:1628"
                                  answerConceptIds="CIEL:1860,CIEL:1395,CIEL:113600"
@@ -355,17 +559,17 @@
                         </label>
                         <span class="small">
                             <field>
-                                <!-- ToDo: Fix units to show on the right-side of the box - not the next line -->
+                                ToDo: Fix units to show on the right-side of the box - not the next line
                                 <obs conceptId="CIEL:5916" showUnits="false" />
                             </field>
                         </span>
                     </p>
 
                     <p>
-                        <!-- Mother's disease during pregnancy -->
+                        Mother's disease during pregnancy
                         <pastMedicalHistoryCheckbox concept="CIEL:118203" label="pihcore.momDiseaseDuringPregnancy"
                                                     specify="true" class="medicalHistoryText patientHistory"/>
-                        <!-- Neonatal disease -->
+                         Neonatal disease
                         <pastMedicalHistoryCheckbox concept="CIEL:115374"
                                                     specify="true" class="medicalHistoryText patientHistory"/>
                     </p>
@@ -373,9 +577,9 @@
                 </div>
             </div>
         </section>
-    </includeIf>
+    </includeIf> -->
 
-    <section id="patient-blood-type" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+    <!-- <section id="patient-blood-type" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.lab.blood_type">
         <div class="section-container">
             <p class="radio" >
@@ -387,14 +591,14 @@
                  answerCodes="A+,A-,B+,B-,O+,O-,AB+,AB-" style="radio"/>
             </p>
         </div>
-    </section>
+    </section> -->
 
-    <!-- only show these sections if encounter type is NCD Intake -->
+    <!-- only show these sections if encounter type is NCD Intake
     <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'" >
         <section id="habits" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="pihcore.habits">
             <div class="section-container">
-                <!-- Tobacco use -->
+                Tobacco use
                 <p class="radio">
                     <label><uimessage code="pihcore.habits.smoking"/>:</label>
                     <obs conceptId="CIEL:163731" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452" style="radio"/>
@@ -403,7 +607,7 @@
                    <obs conceptId="PIH:11949" />
                 </p>
 
-                <!-- Secondhand smoke exposure -->
+                Secondhand smoke exposure
                 <p class="radio">
                     <label><uimessage code="pihcore.habits.secondhandSmoke"/>:</label>
                     <obs conceptId="CIEL:152721" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452" style="radio"/>
@@ -411,7 +615,7 @@
             </div>
 
             <div class="section-container">
-                <!-- Alcohol use -->
+                 Alcohol use
                 <p class="radio">
                     <label><uimessage code="pihcore.habits.alcohol"/>:</label>
                     <obs conceptId="CIEL:159449" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452" style="radio"/>
@@ -419,7 +623,7 @@
             </div>
 
             <div class="section-container">
-                <!-- Drug use -->
+                Drug use
                 <p class="radio">
                     <label><uimessage code="pihcore.habits.drugs"/>:</label>
                     <obs conceptId="CIEL:162556" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452" style="radio"/>
@@ -429,10 +633,114 @@
                 </p>
             </div>
         </section>
-    </includeIf>
+    </includeIf> -->
+
+    <!-- only show these sections if encounter type is NCD Intake -->
+    <!--<includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
+    </includeIf>-->
+
+    <!-- Lifestyle Questions  -->
+    <section id="lifestyle-questions" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.ncd.lifestyle.title">
+        <div class="section-container">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label class="inline">
+                                Does the patient smoke?:
+                            </label>
+                            <span class="list-inline">
+                                <obs id="patient-currently-smokes" conceptId="CIEL:163731" style="radio"
+                                     answerConceptIds="PIH:IN THE PAST,PIH:CURRENTLY,PIH:NEVER,PIH:unknown"
+                                     answerSeparator="">
+                                    <controls>
+                                        <when value="PIH:CURRENTLY" thenDisplay="#type-of-tobacco-product"/>
+                                    </controls>
+                                </obs>
+                            </span>
+                            <br/>
+
+                            <span id="type-of-tobacco-product" class="list-inline">
+                                <label>
+                                    Type of tobacco product:
+                                </label>
+                                <obs conceptId="CIEL:159377" style="radio"
+                                     answerConceptIds="CIEL:159379, CIEL:159378, CIEL:159380"
+                                     answerLabels="Cigarette, Tobacco, Shisha"/>
+                                <br/>
+
+                                <label>
+                                    How many cigs or tobacco per day?
+                                </label>
+                                <obs conceptId="CIEL:1546" class="inline" style="radio"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="inline">
+                                Does the patient drink alcohol?:
+                            </label>
+
+                            <span class="list-inline">
+                                <obs id="patient-currently-drinks" conceptId="CIEL:159449" style="radio"
+                                     answerConceptIds="PIH:IN THE PAST,PIH:CURRENTLY,PIH:NEVER,PIH:unknown"
+                                     answerSeparator="">
+                                    <controls>
+                                        <when value="PIH:CURRENTLY" thenDisplay="#num-type-of-alcohol-product"/>
+                                    </controls>
+                                </obs>
+                            </span>
+                            <br/>
+
+                            <span id="num-type-of-alcohol-product" class="list-inline">
+                                <label>
+                                    Type of alcohol?:
+                                </label>
+                                <obs id="type-of-alcohol-product" conceptId="CIEL:159453" style="radio">
+                                    <controls>
+                                        <when value="CIEL:159454" thenDisplay="#num-of-traditional-litres-per-day"/>
+                                        <when value="CIEL:159455" thenDisplay="#num-of-modern-bottles-per-day"/>
+                                    </controls>
+                                </obs>
+                                <br/>
+
+                                <span id="num-of-traditional-litres-per-day" class="inline">
+                                    <label style="width: auto;">
+                                        How many traditional liters per day?
+                                    </label>
+                                    <obs conceptId="PIH:6135" class="inline"/>
+                                </span>
+                                <br/>
+
+                                <span id="num-of-modern-bottles-per-day" class="inline">
+                                    <label style="width: auto;">
+                                        How many modern bottles per day?
+                                    </label>
+                                    <obs conceptId="PIH:6136" class="inline"/>
+                                </span>
+
+                                <tr>
+                                    <td>
+                                        <label>
+                                            Document any other relevant history:
+                                        </label>
+                                        <obs id="other-relevant-history" conceptId="CIEL:160632"
+                                             answerConceptId="CIEL:160741"
+                                             style="textarea"/>
+                                    </td>
+                                </tr>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
     <!-- ToDo: Create one family planning section.  There is one for Outpatient and another for NCD (and HIV) -->
-    <!-- Show sexual activities if encounter type is Adult Intake (Followup?) -->
+    <!-- Show sexual activities if encounter type is Adult Intake (Followup?)
     <includeIf
             velocityTest="$encounter.encounterType.uuid == '27d3a180-031b-11e6-a837-0800200c9a66' || $encounter.encounterType.uuid == '27d3a181-031b-11e6-a837-0800200c9a66'">
         <section id="sexual-activities" sectionTag="fieldset" headerTag="legend" headerStyle="title"
@@ -460,9 +768,10 @@
 
             </div>
         </section>
-    </includeIf>
+    </includeIf> -->
 
     <!-- Show sexual activities/family planning - if encounter type is NCD Intake -->
+    <!--
     <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
         <section id="sexual-activities" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="pihcore.sexualReproHistory.label">
@@ -477,8 +786,8 @@
                                 });
                             </script>
                         </ifMode>
-                    <p>
-                        <!-- Pregnant -->
+                    <p> -->
+                        <!-- Pregnant
                         <obs conceptId="CIEL:5272" toggle="pregnant"
                              answerConceptId="CIEL:1065"
                              answerCode="pihcore.pregnancy.status"
@@ -486,16 +795,16 @@
 
                         <div class="two-columns">
                             <div id="pregnant">
-                                <p>
-                                    <!-- LMP -->
+                                <p>-->
+                                    <!-- LMP
                                     <label>
                                         <uimessage code="pihcore.pregnancy.lastPeriod"/>
                                     </label>
                                     <obs id="lastPeriodDate" conceptId="CIEL:1427"/>
-                                </p>
+                                </p>-->
 
+                                <!-- DPA
                                 <p>
-                                    <!-- DPA -->
                                     <label>
                                         <uimessage code="pihcore.pregnancy.dueDate"/>
                                     </label>
@@ -521,9 +830,9 @@
                                     <span id='calculated-edd' class="calculated-edd value"></span>
                                 </span>
                             </div>
-                        </div>
+                        </div>-->
 
-                        <!-- Breastfeeding -->
+                        <!-- Breastfeeding
                         <obs conceptId="CIEL:5632"
                              answerConceptId="PIH:YES" answerCode="pihcore.breastfeeding"
                              style="checkbox"/>
@@ -594,7 +903,195 @@
                 </table>
             </div>
         </section>
-    </includeIf>
+    </includeIf> -->
+
+    <!-- Social History -->
+    <!-- only show these sections if encounter type is NCD Intake -->
+    <!--<includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
+    </includeIf>-->
+    <section id="social-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.ncd.social.history.title">
+        <div class="section-container">
+            <table>
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <label class="inline">
+                                Based on the Patient current condition,
+                                can the Patient work for an income?
+                            </label>
+                            <span class="list-inline">
+                                <obs id="money-source-while-sick" conceptId="PIH:12615"
+                                     answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" labelText=""
+                                     style="radio" answerSeparator=""/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="inline">
+                                With whom do you live?
+                            </label>
+                            &amp;nbsp
+                            <span>
+                                <obs conceptId="CIEL:167224" class="inline"/>
+                            </span>
+                            <label class="inline">
+                                Number of people living in the house?
+                            </label>
+                            &amp;nbsp
+                            <span>
+                                <obs conceptId="CIEL:1731" class="inline"/>
+                            </span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transportation to clinic today
+                        </td>
+                        <td>
+                            <repeat>
+                                <template>
+                                    <span class="inline">
+                                        <obs conceptId="PIH:975"
+                                             style="checkbox"
+                                             answerConceptId="{concept}"
+                                             labelText="{label}" answerLabel=""/>
+                                    </span>
+                                </template>
+
+                                <render concept="PIH:WALKING" label="Walk"/>
+                                <render concept="PIH:MOTORBIKE" label="Motorbike"/>
+                                <render concept="PIH:CAR" label="Taxi"/>
+                                <render concept="PIH:MINI BUS" label="Bus"/>
+                            </repeat>
+                            <br/>
+                            <span class="inline">
+                                <obsgroup groupingConceptId="PIH:12736">
+                                    <label class="inline">
+                                        Time to travel to clinic
+                                    </label>&amp;nbsp
+
+                                    <span class="inline">
+                                        <obs id="clinic-travel-time" conceptId="CIEL:159471"/>
+                                    </span>
+
+                                    <span class="list-inline">
+                                        <obs id="clinic-travel-time-unit" conceptId="CIEL:1732"
+                                             answerConceptIds="CIEL:1733,CIEL:1822,CIEL:1072,CIEL:1073"
+                                             style="radio"/>
+                                    </span>
+                                </obsgroup>
+                            </span>
+                            <br/>
+                            <span class="inline">
+                                <label class="inline">
+                                    Cost of transport (round-trip) to clinic
+                                </label> &amp;nbsp
+                                <obs id="transportation-cost" conceptId="PIH:TRANSPORTATION COST"
+                                     class="first-label-inline"/>
+                                <label class="inline">LD</label>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="inline">
+                                How many times do you eat a day (not only rice but any small thing you eat to
+                                survive)?
+                            </label>
+                            &amp;nbsp
+                            <span>
+                                <obs conceptId="CIEL:165591" class="inline"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>
+                                Document any other pertinent social information:
+                            </label>
+                            <obs id="other-relevant-history" conceptId="CIEL:160632"
+                                 answerConceptId="CIEL:160741"
+                                 style="textarea"/>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Medications section -->
+    <section id="ncd-meds" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.visitNote.plan.medication">
+        <div class="section-container toggle">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <uimessage code="pihcore.visitNote.plan.name"/>
+                        </th>
+                        <th colspan="2">
+                            <uimessage code="pihcore.visitNote.plan.dose"/>
+                        </th>
+                        <th>
+                            <uimessage code="pihcore.drug.route"/>
+                        </th>
+                        <th>
+                            <uimessage code="pihcore.visitNote.plan.frequency"/>
+                        </th>
+                        <th colspan="2">
+                            <uimessage code="pihcore.visitNote.plan.duration"/>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <repeat with="['1'],['2'],['3'],['4'],['5'],['6'],['7']">
+                        <tr id="medication-{0}" class="medication">
+                            <obsgroup groupingConceptId="PIH:Prescription construct">
+                                <td id="{0}-rx">
+                                    <obs id="{0}-rx-name" class="medication-name" conceptId="CIEL:1282"
+                                         style="autocomplete" answerClasses="Drug"/>
+                                </td>
+                                <td id="{0}-rx-dose">
+                                    <obs id="dose-{0}" class="doseInput" conceptId="CIEL:160856"/>
+                                </td>
+                                <td id="{0}-rx-dose-unit">
+                                    <obs id="{0}-doseUnit" class="doseInput select-arrow"
+                                         conceptId="PIH:Dosing units coded"
+                                         answerConceptIds="CIEL:161553,CIEL:162263,CIEL:1608,CIEL:1513"
+                                         answerCodes="pihcore.visitNote.plan.medication.units.mg,pihcore.visitNote.plan.medication.units.mL,pihcore.visitNote.plan.medication.units.capsule,pihcore.visitNote.plan.medication.units.tablet"/>
+                                </td>
+                                <td id="{name}-rx-route">
+                                    <obs id="route-{name}" class="route select-arrow"
+                                         conceptId="PIH:12651"
+                                         answerConceptIds="CIEL:160240,CIEL:160242,CIEL:160243,CIEL:160245"
+                                         answerLabels="Oral,IV,IM,SubQ"/>
+                                </td>
+                                <td id="{0}-rx-frequency">
+                                    <obs id="{0}-frequencyCoded" class="frequency select-arrow"
+                                         conceptId="CIEL:160855"
+                                         answerConceptIds=
+                                                 "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:PRN,PIH:STAT,PIH:OTHER"
+                                         answerCodes="QD,BID,TID,QID,STAT,PRN,pihcore.visitNote.plan.other"/>
+                                </td>
+                                <td id="{name}-rx-duration">
+                                    <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
+                                </td>
+                                <td id="{name}-rx-duration-unit">
+                                    <obs id="durationUnit-{name}" class="duration-unit select-arrow"
+                                         conceptId="PIH:TIME UNITS"
+                                         answerConceptIds="CIEL:1822,CIEL:1072,CIEL:1073,CIEL:1074"/>
+                                </td>
+                            </obsgroup>
+                        </tr>
+                    </repeat>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
     <section id="previous-hospital" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="zl.consultNote.previousHospitalization.title">
@@ -708,26 +1205,35 @@
         </div>
     </section>
 
+    <!--
     <section id="current-medications" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="zl.consultNote.currentMedications.title">
         <div class="section-container">
-            <!-- Médicaments actuels -->
+            Médicaments actuels
             <p>
                 <obs conceptId="PIH:CURRENT MEDICATIONS" style="textarea"/>
             </p>
         </div>
-    </section>
+    </section> -->
 
+    <!--
     <section id="diagnostic-tests-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="zl.consultNote.diagnosticTestsHistory.title">
         <div class="section-container">
-            <!-- Examens paracliniques déjà effectués, Résultats, Date -->
+            Examens paracliniques déjà effectués, Résultats, Date
             <p>
                 <label>
                     <uimessage code="zl.consultNote.diagnosticTestsHistory.comment"/>
                 </label>
                 <obs conceptId="PIH:DIAGNOSTIC TESTS HISTORY" style="textarea"/>
             </p>
+        </div>
+    </section> -->
+
+    <section sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.visitNote.clinicalNotes">
+        <div class="section-container">
+            <obs conceptId="CIEL:161011" style="textarea" />
         </div>
     </section>
 
