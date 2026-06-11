@@ -101,6 +101,56 @@
         display: inline-block;
         }
 
+        .section-container input[type=text].hasDatepicker {
+        width: 120px !important;
+        min-width: 120px;
+        }
+
+
+        .section-container input[type=text] {
+        width: 150px;
+        display: inline-block;
+
+        .checkbox-item {
+        display: inline-block;
+        margin-right: 15px;
+        white-space: nowrap;
+
+        .gp-fields {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        }
+
+        .gp-fields .field {
+        width: auto !important;
+        min-width: unset !important;
+        }
+
+        .gp-fields .field input,
+        .gp-fields input,
+        .gp-fields .field select,
+        .gp-fields .field textarea {
+        width: 50px !important;
+        min-width: 50px !important;
+        padding: 4px !important;
+
+        .two-columns-new {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        }
+
+        .two-columns-new .column-item {
+        width: 48%; /* Adjust to 45% if you want more middle spacing */
+        margin-bottom: 15px;
+        vertical-align: top;
+        padding: 5px;
+        box-sizing: border-box;
+        }
+
     </style>
 
 
@@ -190,17 +240,17 @@
         <div class="section-container">
             <p>
                 <obs conceptId="PIH:Type of referring service"
-                     answerConceptId="PIH:SELF-REFER"
+                     answerConceptId="PIH:SELF-REFER" answerLabel="Has patient walked in or came willingly"
                      answerCode="pihcore.selfRefer"
                      style="checkbox"/>
             </p>
 
-            <p>
-                <label>
+            <span class="first-label-inline">
+                <label class="inline">
                     <uimessage code="pihcore.refer.date"/>
                 </label>
-                <obs conceptId="CIEL:163181" allowTime="false"/>
-            </p>
+                <obs conceptId="CIEL:163181" allowTime="false" class="inline"/>
+            </span>
 
             <div class="two-columns">
                 <p>
@@ -214,32 +264,37 @@
                                  style="checkbox"
                                  answerConceptId="{point}" answerCode="{message}"/>
                         </template>
-
-                        <render point="CIEL:165018" message="pihcore.location.idClinic" comment="ID clinic"/>
-                        <render point="PIH:ANTENATAL CLINIC" message="pihcore.location.maternal"
-                                comment="Womens Health clinic"/>
-                        <render point="PIH:PRIMARY CARE CLINIC" message="pihcore.location.primary"
-                                comment="Primary care"/>
-                        <render point="CIEL:163558" message="pihcore.location.mentalHealth"
-                                comment="Mental health clinic"/>
-                        <render point="CIEL:160449" message="pihcore.testLocation.surgery" comment="Surgery dept"/>
-                        <render point="CIEL:160448" message="pihcore.location.intMed" comment="Internal medicine"/>
-                        <render point="CIEL:165048" message="pihcore.testLocation.pedWard" comment="Pediatrics"/>
-                        <render point="CIEL:160473" message="pihcore.location.ed" comment="Emergency"/>
+                        <render point="PIH:ANTENATAL CLINIC" message="pihcore.location.maternal"/>
+                        <render point="CIEL:160448" message="pihcore.location.med.ward"/>
+                        <render point="CIEL:163558" message="pihcore.location.mentalHealth"/>
+                        <render point="CIEL:165048" message="pihcore.testLocation.pedWard"/>
+                        <render point="CIEL:160473" message="pihcore.location.ed"/>
+                        <render point="PIH:14905" message="TB/HIV clinic"/>
+                        <render point="PIH:14904" message="NCD clinic"/>
                     </repeat>
 
                     <obs conceptId="PIH:Type of referring service" style="checkbox"
                          answerConceptId="PIH:OTHER" commentFieldLabel=""/>
                 </p>
+                <br/>
 
                 <p>
                     <strong>
-                        <uimessage code="pihcore.refer.external"/>
+                        Other PIH site
                     </strong>
+                    <repeat>
+                        <template>
+                            <obs conceptId="PIH:Type of referring service" style="checkbox"
+                                 answerConceptId="{point}" answerCode="{message}"/>
+                        </template>
+                        <render point="PIH:12866" message="Pleebo Health Center"/>
+                        <render point="PIH:21459" message="Boniken Clinic"/>
+                        <render point="PIH:21463" message="Edith Wallace"/>
+                    </repeat>
+                    <br/>
+
                     <obs conceptId="PIH:Type of referring service" style="checkbox"
-                         answerConceptId="PIH:11956" commentFieldLabel=""/>
-                    <obs conceptId="PIH:Type of referring service" style="checkbox"
-                         answerConceptId="PIH:Non-ZL supported site" commentFieldLabel=""/>
+                         answerConceptId="PIH:Non-ZL supported site" commentFieldLabel="" size="10"/>
                 </p>
 
                 <p>
@@ -250,11 +305,10 @@
                     <obs conceptId="PIH:Type of referring service" style="checkbox"
                          answerConceptId="CIEL:1555"/>
                     <obs conceptId="PIH:Type of referring service" style="checkbox"
-                         answerConceptId="PIH:11965"/>
+                         answerConceptId="PIH:14495"/>
+                    <obs conceptId="PIH:Type of referring service" style="checkbox"
+                         answerConceptId="PIH:14645"/>
                 </p>
-
-                <br/>
-                <br/>
             </div>
         </div>
     </section>
@@ -282,43 +336,15 @@
     </section>
     </includeIf>
 
-    <!-- Family history Section -->
-    <section id="family-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="zl.consultNote.familyHistory.title">
-        <div class="section-container">
-            <!-- ANTECEDENTS HEREDO-COLLATERAUX -->
-            <familyHistoryRelativeCheckboxes concept="PIH:ASTHMA" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
-            <familyHistoryRelativeCheckboxes concept="PIH:HEART DISEASE" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
-            <familyHistoryRelativeCheckboxes concept="PIH:DIABETES" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
-            <familyHistoryRelativeCheckboxes concept="PIH:EPILEPSY" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
-            <familyHistoryRelativeCheckboxes concept="CIEL:117635" comment="Hémoglobinopathie"
-                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
-            <familyHistoryRelativeCheckboxes concept="PIH:HYPERTENSION" label="pihcore.medicalhistory.hypertension"
-                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
-            <familyHistoryRelativeCheckboxes concept="PIH:TUBERCULOSIS" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
-            <br/>
-            <familyHistoryRelativeCheckboxes id="familyCancer" class="medicalHistoryText famHistory"
-                                             concept="CIEL:116031" label="Cancer"
-                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"
-                                             specify="true"/>
-
-            <br/>
-            <familyHistoryRelativeCheckboxes id="familyOther" class="medicalHistoryText famHistory"
-                                             concept="PIH:OTHER" code="pihcore.other"
-                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"
-                                             specify="true"/>
-        </div>
-    </section>
-
     <!-- Medical history Section -->
     <section id="patient-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Medical History">
+             headerCode="Past Medical History">
         <div class="section-container-color">
             <!-- ANTECEDENTS PERSONNELS / HABITUDES -->
 
-                <h5>
-                    <uimessage code="Past Medical History"/>
-                </h5>
+            <h2>
+                <uimessage code="Medical History"/>
+            </h2>
 
             <div class="two-columns">
                 <!-- Allergy is intentionally ommitted because it should be handled in more detail through the Allergy UI -->
@@ -359,150 +385,237 @@
 
         <!-- Surgical -->
         <div class="section-container-color">
-            <h5>
+
+            <h2>
                 <uimessage code="Surgical History"/>
-            </h5>
+            </h2>
 
-            <div class="two-columns">
-                <span groupingConceptId="PIH:SURGERY">
+            <!-- Main question -->
+            <label class="inline">
+                Have you ever had any operation before?
+            </label>
 
-                    <label class="inline">
-                        Have you ever had surgery?
-                    </label> &amp;nbsp&amp;nbsp
-                    <span class="=list-inline">
-                        <obs id="surgery-toggle" conceptId="PIH:13119" style="radio" answerConceptIds="PIH:YES,PIH:NO"
-                             answerCodes="Yes,No" class="list-inline">
-                            <control>
-                                <when value="PIH:YES" thenDisplay="#surgery-details"/>
-                            </control>
-                        </obs>
-                    </span>
+            <span class="list-inline">
+                <obs id="surgery-toggle" conceptId="PIH:13119" style="radio"
+                     answerConceptIds="PIH:YES,PIH:NO" answerCodes="Yes,No">
 
-                    <span id="surgery-details">
-                        <label>
-                            Surgery procedure:
-                        </label>
-                        <obs conceptId="PIH:10483" class="list-inline" size="30"/>
-                    </span>
-                    <br/>
+                    <control>
+                        <when value="PIH:YES" thenDisplay="#surgery-block"/>
+                    </control>
+                </obs>
+            </span>
 
-                    <label class="inline">
-                        Any surgery complications?
-                    </label>
-                    <span class="list-inline">
-                        <obs conceptId="PIH:7881" style="radio" answerConceptIds="PIH:YES,PIH:NO"
-                             answerCodes="Yes,No" class="list-inline"/>
-                    </span>
-                    <br/>
+            <!-- Surgery details-->
+            <div id="surgery-block" style="display:none;">
 
-                    <label class="inline">
-                        Any blood transfusion:
-                    </label>
-                    <span class="list-inline">
-                        <obs conceptId="PIH:1063" style="radio" answerConceptIds="PIH:YES,PIH:NO"
-                             answerCodes="Yes,No" class="list-inline"/>
-                    </span>
-                    <br/>
+                <obsgroup groupingConceptId="PIH:10492" showIfEmpty="false">
 
-                    <label class="inline">
-                        Date of Procedure:
-                    </label>
-                    <span class="list-inline">
-                        <obs conceptId="PIH:13769" class="list-inline" allowFutureDates="false"/>
-                    </span>
-                </span>
+                    <strong>
+                        Surgery procedure:
+                    </strong>
+
+                    <div class="two-columns-new">
+                        <repeat>
+                            <template>
+                                <div class="column-item">
+                                    <span class="{expression}">
+                                        <obs conceptId="PIH:10484" style="checkbox" answerConceptId="{point}"
+                                             answerCode="{message}"
+                                             toggle="{id: '{message}-htn-dx-ynu', style: 'hide'}"/>
+                                    </span>
+
+                                    <!-- Date of procedure -->
+                                    <div class="list-inline-radios" id="{message}-htn-dx-ynu">
+                                        <span class="first-label-inline">
+                                            <label class="inline">
+                                                Date of Procedure
+                                            </label>
+                                            <obs conceptId="CIEL:160715" allowFutureDates="false"
+                                                 class="inline"/>
+                                        </span>
+                                    </div>
+
+                                    <!-- Complications -->
+                                    <div class="list-inline-radios" id="{message}-htn-dx-ynu">
+                                        <label class="inline">
+                                            Did you have any problems after the operation?
+                                        </label>
+                                        <obs conceptId="PIH:7881" style="radio" answerConceptIds="PIH:YES,PIH:NO"
+                                             answerCodes="Yes,No" class="list-inline"/>
+                                        <hr/>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <render point="PIH:8815" message="Appendectomy"/>
+                            <render point="PIH:8628" message="Cataract_Surgery"/>
+                            <render point="PIH:21172" message="Herniorrhaphy"/>
+                            <render point="PIH:8718" message="Hydrocelectomy"/>
+                            <render point="PIH:9479" message="Hysterectomy"/>
+                            <render point="PIH:21481" message="Laparotomy"/>
+                            <render point="PIH:8839" message="Mastectomy"/>
+                            <render point="PIH:20149" message="Nephrectomy"/>
+                            <render point="PIH:9803" message="Prostatectomy"/>
+                            <render point="PIH:8658" message="Splenectomy"/>
+                            <render point="PIH:8639" message="Thyroidectomy"/>
+                            <render point="PIH:8639" message="Thyroidectomy"/>
+
+                        </repeat>
+                    </div>
+
+                    <!-- Other procedure -->
+                    <obs conceptId="PIH:7887"
+                         style="checkbox" answerConceptId="PIH:6625" commentFieldLabel=" "
+                         commentFieldSize=" " class="inline"/>
+                </obsgroup>
             </div>
+            <br/>
+
+            <!-- Blood transfusion history -->
+            <label class="inline">
+                Have you ever received blood before?
+            </label>
+
+            <span class="list-inline">
+                <obs conceptId="PIH:1063" style="radio" answerConceptIds="PIH:YES,PIH:NO"
+                     answerCodes="Yes,No"/>
+            </span>
         </div>
         <br/>
 
         <!-- OBGYN History -->
         <div class="section-container-color">
-        <h5>
-            <uimessage code="OB/ GYN History"/>
-        </h5>
 
-        <div class="two-columns">
+            <h2>
+                <uimessage code="OB/GYN History"/>
+            </h2>
 
-            <!-- Menopause question -->
-            <label class="inline">
-                Is the patient post menopausal?
-            </label> &amp;nbsp&amp;nbsp
-            <span class="=list-inline">
-                <obs id="meno-toggle" conceptId="PIH:14188" style="radio" answerConceptIds="PIH:YES,PIH:NO"
-                     class="list-inline">
-                    <controls>
-                        <when value="PIH:YES" thenDisplay="#meno-date"/>
-                        <when value="PIH:NO" thenDisplay="#lmp-section"/>
-                    </controls>
-                </obs>
-            </span>
+            <div class="two-columns">
 
-            <!-- Menopause details -->
-            <span id="meno-date">
-                <label>
-                    Date of Menopause:
+                <!-- Menopause question -->
+                <label class="inline">
+                    Have your monthly periods stopped completely?
                 </label>
-                <obs conceptId="PIH:7538" class="list-inline" allowFutureDates="false"/>
+
+                <span class="list-inline">
+                    <obs id="meno-toggle"
+                         conceptId="PIH:14188"
+                         style="radio"
+                         answerConceptIds="PIH:YES,PIH:NO">
+
+                        <control>
+                            <when value="PIH:YES" thenDisplay="#meno-date, #age-meno"/>
+                            <when value="PIH:NO" thenDisplay="#lmp-section"/>
+                        </control>
+
+                    </obs>
+                </span>
+
+                <!-- Menopause details -->
+                <div id="meno-date" style="display:none;">
+                    <span class="first-label-inline">
+                        <label class="inline">
+                            When did you last see your monthly period?
+                        </label>
+                        <obs conceptId="PIH:7538" allowFutureDates="false" class="inline"/>
+                    </span>
+                </div>
+
+                <br/>
+
+                <div id="age-meno" style="display:none;">
+                    <span class="first-label-inline">
+                        <label class="inline">
+                            Age at Menopause:
+                        </label>
+                        <obs conceptId="PIH:14189" class="inline"/>
+                    </span>
+                </div>
+
+                <br/>
+
+                <!-- LMP -->
+                <div id="lmp-section" style="display:none;">
+                    <span class="first-label-inline">
+                        <label class="inline">
+                            Last Menstrual Period (LMP):
+                        </label>
+                        <obs conceptId="CIEL:1427" allowFutureDates="false" class="inline"/>
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- GPAL Section -->
+            <div class="two-columns gp-fields">
+
+                <div class="field">
+                    <label>Gravida (G)</label>
+                    <obs conceptId="CIEL:5624"/>
+                </div>
+
+                <div class="field">
+                    <label>Parity (P)</label>
+                    <obs conceptId="CIEL:1053"/>
+                </div>
+
+                <div class="field">
+                    <label>Abortus (A)</label>
+                    <obs conceptId="CIEL:1823" required="true"/>
+                </div>
+
+                <div class="field">
+                    <label>Living (L)</label>
+                    <obs conceptId="CIEL:1825" required="true"/>
+                </div>
+            </div>
+
+            <span class="first-label-inline">
+                <label class="inline">
+                    Number of C-Section:
+                </label>
+                <obs conceptId="PIH:7011" class="inline"/>
             </span>
             <br/>
-
-            <label class="inline">
-                Age at Menopause:
-            </label>
-            <span class="list-inline">
-                <obs conceptId="PIH:14189" class="list-inline" allowFutureDates="false"/>
-            </span>
             <br/>
 
-            <label class="inline">
-                Last Menstrual Period (LMP):
-            </label>
-            <span class="list-inline">
-                <obs conceptId="CIEL:1427" class="list-inline" allowFutureDates="false"/>
-            </span>
-        </div>
+            <!-- Obstetric complications -->
+            <strong>
+                OB/GYN complication
+            </strong>
 
-        <div class="two-columns">
+            <div class="two-columns">
+                <repeat>
+                    <template>
+                        <span class="checkbox-item">
+                            <obs conceptId="PIH:20542"
+                                 style="checkbox"
+                                 answerConceptId="{concept}"
+                                 answerCode="{name}"/>
+                        </span>
+                    </template>
 
-            <div class="field">
+                    <render concept="CIEL:228" name="Haemorrhage"/>
+                    <render concept="CIEL:117399" name="Hypertensive disorder"/>
+                    <render concept="CIEL:145047" name="Infection"/>
+                    <render concept="CIEL:116128" name="Malaria"/>
+                    <render concept="CIEL:115491" name="Multiple gestation"/>
+                    <render concept="CIEL:111633" name="UTI"/>
+                    <render concept="CIEL:117703" name="Sickle-cell anaemia"/>
+                    <render concept="CIEL:112416" name="Threatened abortion"/>
+                    <render concept="CIEL:118256" name="Foetal distress"/>
+                    <render concept="CIEL:5622" name="Other"/>
+
+                </repeat>
                 <label>
-                    Gravida (G)
+                    <uimessage code="zl.ifOtherSpecify"/>
                 </label>
-                <obs conceptId="CIEL:5624"/>
+                <obs conceptId="PIH:14679"/>
             </div>
-
-            <div class="field">
-                <label>
-                    Parity (P)
-                </label>
-                <obs conceptId="CIEL:1053"/>
-            </div>
-
-            <div class="field">
-                <label>
-                    Abortus (A)
-                </label>
-                <obs conceptId="CIEL:1823" required="true"/>
-            </div>
-
-            <div class="field">
-                <label>
-                    Living (L)
-                </label>
-                <obs conceptId="CIEL:1825" required="true"/>
-            </div>
-        </div>
-
-            <label class="inline">
-                Number of C-Section:
-            </label>
-            <span class="list-inline">
-                <obs conceptId="PIH:7011" class="list-inline"/>
-            </span>
         </div>
         <br/>
 
-        <!-- Allergies History -->
+        <!-- Allergies History
         <div class="section-container-color">
             <h5>
                 <uimessage code="Allergies  History"/>
@@ -525,8 +638,36 @@
                 </label>
                 <obs conceptId="CIEL:164377" style="textarea"/>
             </span>
-        </div>
+        </div>-->
 
+    </section>
+
+    <!-- Family history Section -->
+    <section id="family-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="zl.consultNote.familyHistory.title">
+        <div class="section-container">
+            <!-- ANTECEDENTS HEREDO-COLLATERAUX -->
+            <familyHistoryRelativeCheckboxes concept="PIH:ASTHMA" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:HEART DISEASE" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:DIABETES" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:EPILEPSY" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
+            <familyHistoryRelativeCheckboxes concept="CIEL:117635" comment="Hémoglobinopathie"
+                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:HYPERTENSION" label="pihcore.medicalhistory.hypertension"
+                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
+            <familyHistoryRelativeCheckboxes concept="PIH:TUBERCULOSIS" relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"/>
+            <br/>
+            <familyHistoryRelativeCheckboxes id="familyCancer" class="medicalHistoryText famHistory"
+                                             concept="CIEL:116031" label="Cancer"
+                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"
+                                             specify="true"/>
+
+            <br/>
+            <familyHistoryRelativeCheckboxes id="familyOther" class="medicalHistoryText famHistory"
+                                             concept="PIH:OTHER" code="pihcore.other"
+                                             relatives="PIH:FATHER,PIH:MOTHER,PIH:SIBLING,PIH:OTHER"
+                                             specify="true"/>
+        </div>
     </section>
 
     <!-- only show these sections if encounter type is NCD Intake AND the patient is < 12 years old
@@ -970,7 +1111,7 @@
                             <span class="inline">
                                 <obsgroup groupingConceptId="PIH:12736">
                                     <label class="inline">
-                                        Time to travel to clinic
+                                        Time to travel to clinic:
                                     </label>&amp;nbsp
 
                                     <span class="inline">
@@ -987,7 +1128,7 @@
                             <br/>
                             <span class="inline">
                                 <label class="inline">
-                                    Cost of transport (round-trip) to clinic
+                                    Cost of transport (round-trip) to clinic:
                                 </label> &amp;nbsp
                                 <obs id="transportation-cost" conceptId="PIH:TRANSPORTATION COST"
                                      class="first-label-inline"/>
@@ -999,13 +1140,53 @@
                         <td colspan="2">
                             <label class="inline">
                                 How many times do you eat a day (not only rice but any small thing you eat to
-                                survive)?
+                                survive)?:
                             </label>
                             &amp;nbsp
                             <span>
                                 <obs conceptId="CIEL:165591" class="inline"/>
                             </span>
                         </td>
+                        <tr>
+                            <td colspan="2">
+                                <label class="inline">
+                                    <uimessage code="Sexually active now/recently"/>
+                                </label>
+                                <span class="list-inline">
+                                    <obs conceptId="CIEL:160109" style="radio"
+                                         answerConceptIds="CIEL:1065,CIEL:1066" class="inline"/>
+                                </span>
+                                <br/>
+                                <br/>
+                                <label class="inline">
+                                    How many partners do you have?
+                                </label>
+                                <span class="list-inline">
+                                    <obs conceptId="CIEL:167168" style="radio"
+                                         answerConceptIds="CIEL:1065,CIEL:1066"
+                                         answerCodes="One partner,Multiple partners" class="inline"/>
+                                </span>
+                                <br/>
+                                <br/>
+                                <label class="inline">
+                                 Level of education
+                                </label>
+                                <span class="list-inline">
+                                    <obs conceptId="CIEL:1712" style="radio"
+                                         answerConceptIds="CIEL:1107,CIEL:1713,CIEL:1714,CIEL:160130,CIEL:159785"
+                                         answerCodes="Primary school, Secondary school, Vocational training, University" class="inline"/>
+                                </span>
+                                <br/>
+                                <label class="inline">
+                                    Able to read and write
+                                </label>
+                                <span class="list-inline">
+                                    <obs conceptId="CIEL:166855" style="radio"
+                                         answerConceptIds="CIEL:1065,CIEL:1066"
+                                         answerCodes="Yes, No" class="inline"/>
+                                </span>
+                            </td>
+                        </tr>
                     </tr>
                     <tr>
                         <td colspan="2">
@@ -1023,73 +1204,9 @@
         </div>
     </section>
 
-    <!-- Medications section -->
-    <section id="ncd-meds" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.visitNote.plan.medication">
-        <div class="section-container toggle">
-            <table>
-                <thead>
-                    <tr>
-                        <th>
-                            <uimessage code="pihcore.visitNote.plan.name"/>
-                        </th>
-                        <th colspan="2">
-                            <uimessage code="pihcore.visitNote.plan.dose"/>
-                        </th>
-                        <th>
-                            <uimessage code="pihcore.drug.route"/>
-                        </th>
-                        <th>
-                            <uimessage code="pihcore.visitNote.plan.frequency"/>
-                        </th>
-                        <th colspan="2">
-                            <uimessage code="pihcore.visitNote.plan.duration"/>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <repeat with="['1'],['2'],['3'],['4'],['5'],['6'],['7']">
-                        <tr id="medication-{0}" class="medication">
-                            <obsgroup groupingConceptId="PIH:Prescription construct">
-                                <td id="{0}-rx">
-                                    <obs id="{0}-rx-name" class="medication-name" conceptId="CIEL:1282"
-                                         style="autocomplete" answerClasses="Drug"/>
-                                </td>
-                                <td id="{0}-rx-dose">
-                                    <obs id="dose-{0}" class="doseInput" conceptId="CIEL:160856"/>
-                                </td>
-                                <td id="{0}-rx-dose-unit">
-                                    <obs id="{0}-doseUnit" class="doseInput select-arrow"
-                                         conceptId="PIH:Dosing units coded"
-                                         answerConceptIds="CIEL:161553,CIEL:162263,CIEL:1608,CIEL:1513"
-                                         answerCodes="pihcore.visitNote.plan.medication.units.mg,pihcore.visitNote.plan.medication.units.mL,pihcore.visitNote.plan.medication.units.capsule,pihcore.visitNote.plan.medication.units.tablet"/>
-                                </td>
-                                <td id="{name}-rx-route">
-                                    <obs id="route-{name}" class="route select-arrow"
-                                         conceptId="PIH:12651"
-                                         answerConceptIds="CIEL:160240,CIEL:160242,CIEL:160243,CIEL:160245"
-                                         answerLabels="Oral,IV,IM,SubQ"/>
-                                </td>
-                                <td id="{0}-rx-frequency">
-                                    <obs id="{0}-frequencyCoded" class="frequency select-arrow"
-                                         conceptId="CIEL:160855"
-                                         answerConceptIds=
-                                                 "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:PRN,PIH:STAT,PIH:OTHER"
-                                         answerCodes="QD,BID,TID,QID,STAT,PRN,pihcore.visitNote.plan.other"/>
-                                </td>
-                                <td id="{name}-rx-duration">
-                                    <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
-                                </td>
-                                <td id="{name}-rx-duration-unit">
-                                    <obs id="durationUnit-{name}" class="duration-unit select-arrow"
-                                         conceptId="PIH:TIME UNITS"
-                                         answerConceptIds="CIEL:1822,CIEL:1072,CIEL:1073,CIEL:1074"/>
-                                </td>
-                            </obsgroup>
-                        </tr>
-                    </repeat>
-                </tbody>
-            </table>
+    <section id="previous-hospital" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Review of System">
+        <div class="section-container">
         </div>
     </section>
 
@@ -1229,13 +1346,6 @@
             </p>
         </div>
     </section> -->
-
-    <section sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.visitNote.clinicalNotes">
-        <div class="section-container">
-            <obs conceptId="CIEL:161011" style="textarea" />
-        </div>
-    </section>
 
     <ifMode mode="VIEW" include="false">
         <div id="buttons">
