@@ -3,152 +3,35 @@
 
     <style type="text/css">
 
-        form fieldset {
-            display: block;
+        .five-columns, .four-columns, .three-columns, .two-columns {
+            display: table;
+            height: 100%;
+            width: 100%;
         }
 
-        .family-history-item .label {
-            display: inline-block;
-            width: 250px;
-        }
-        .family-history-item .relative {
-            display: inline-block;
-            width: 120px;
+        .two-columns > div {
+            display: table-cell;
+            width: 50%;
         }
 
-        .section-header {
-            margin-top: 1.5em;
+        .four-columns > div {
+            display: table-cell;
+            width: 25%;
         }
-
-        .past-medical-history-item {
-        }
-
-        .past-medical-history-item input[type=checkbox] {
-            float: none;
-            vertical-align: middle;
-        }
-
-        .past-medical-history-item input[type=text] {
-            min-width: 200px;
-            display: inline !important;
-            vertical-align: middle;
-            padding: 1px 10px;
-        }
-
-        .past-medical-history-item > span, .past-medical-history-item > label {
-            display: inline !important;
-            vertical-align: middle;
-        }
-
-        .two-columns {
-            column-count: 2;
-            -webkit-column-count: 2;
-            -moz-column-count: 2;
-        }
-
-        .inline-label {
-        margin-right: 10px;
-        }
-
-        .field {
-        break-inside: avoid;
-        margin-bottom: 25px;
-        }
-
-        .field:first-child {
-        margin-top: 10px;
-        }
-
-        .field label {
-        display: block;
-        margin-bottom: 5px;
-        }
-
-        p.radio > * {
-            display: inline;
-            float: none !important;
-            min-width: initial;
-        }
-
-        .section-container {
-        background: #F2F2F2;
-        box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-        padding: 10px 5px 10px 15px;
-        line-height: 1.5em; /*add this for vertical spacing between elements*/
-        }
-
-        .section-container-color {
-        background: #F2F2F2;
-        box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-        padding: 10px 5px 10px 15px;
-        line-height: 1.5em; /*add this for vertical spacing between elements*/
-        }
-
-        .section-container input[type="checkbox"] {
-        margin: 0px 5px; /*changed values to vertical, horizontal*/
-        top:5px; /*added to offset the checkbox position to line up*/
-        }
-
-        .section-container label { /*new definition to override labels inside section-containers*/
-        margin: 0px;
-        }
-
-       - .section {
-        width: 100%;
-        }
-
-        .side-by-side label {
-        display: inline-block;
-        }
-
-        .section-container input[type=text].hasDatepicker {
-        width: 120px !important;
-        min-width: 120px;
-        }
-
-
-        .section-container input[type=text] {
-        width: 150px;
-        display: inline-block;
-
-        .checkbox-item {
-        display: inline-block;
-        margin-right: 15px;
-        white-space: nowrap;
-
-        .gp-fields {
-        display: flex;
-        gap: 10px;
-        align-items: flex-end;
-        flex-wrap: wrap;
-        }
-
-        .gp-fields .field {
-        width: auto !important;
-        min-width: unset !important;
-        }
-
-        .gp-fields .field input,
-        .gp-fields input,
-        .gp-fields .field select,
-        .gp-fields .field textarea {
-        width: 50px !important;
-        min-width: 50px !important;
-        padding: 4px !important;
 
         .two-columns-new {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
         }
 
         .two-columns-new .column-item {
-        width: 48%; /* Adjust to 45% if you want more middle spacing */
-        margin-bottom: 15px;
-        vertical-align: top;
-        padding: 5px;
-        box-sizing: border-box;
+            width: 48%; /* Adjust to 45% if you want more middle spacing */
+            margin-bottom: 15px;
+            vertical-align: top;
+            padding: 5px;
+            box-sizing: border-box;
         }
 
     </style>
@@ -232,9 +115,6 @@
     </ifMode>
 
     <!-- Referral Section -->
-    <!-- only show these sections if encounter type is NCD Intake -->
-    <!--<includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
-    </includeIf>-->
     <section id="referralIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.refer.title">
         <div class="section-container">
@@ -251,12 +131,14 @@
                 </label>
                 <obs conceptId="CIEL:163181" allowTime="false" class="inline"/>
             </span>
+            <br/>
 
             <div class="two-columns">
-                <p>
+                <div>
                     <strong>
                         <uimessage code="pihcore.refer.internal"/>
                     </strong>
+                    <br/>
 
                     <repeat>
                         <template>
@@ -275,13 +157,13 @@
 
                     <obs conceptId="PIH:Type of referring service" style="checkbox"
                          answerConceptId="PIH:OTHER" commentFieldLabel=""/>
-                </p>
-                <br/>
+                </div>
 
-                <p>
+                <div>
                     <strong>
                         Other PIH site
                     </strong>
+                    <br/>
                     <repeat>
                         <template>
                             <obs conceptId="PIH:Type of referring service" style="checkbox"
@@ -291,24 +173,25 @@
                         <render point="PIH:21459" message="Boniken Clinic"/>
                         <render point="PIH:21463" message="Edith Wallace"/>
                     </repeat>
-                    <br/>
 
+                    <!-- Non-PIH facility -->
                     <obs conceptId="PIH:Type of referring service" style="checkbox"
-                         answerConceptId="PIH:Non-ZL supported site" commentFieldLabel="" size="10"/>
-                </p>
+                         answerConceptId="PIH:8856" commentFieldLabel="" size="10"/>
+                    <br/><br/>
 
-                <p>
-                    <strong>
-                        <uimessage code="pihcore.refer.community"/>
-                    </strong>
+                    <p>
+                        <strong>
+                            <uimessage code="pihcore.refer.community"/>
+                        </strong>
 
-                    <obs conceptId="PIH:Type of referring service" style="checkbox"
-                         answerConceptId="CIEL:1555"/>
-                    <obs conceptId="PIH:Type of referring service" style="checkbox"
-                         answerConceptId="PIH:14495"/>
-                    <obs conceptId="PIH:Type of referring service" style="checkbox"
-                         answerConceptId="PIH:14645"/>
-                </p>
+                        <obs conceptId="PIH:Type of referring service" style="checkbox"
+                             answerConceptId="CIEL:1555"/>
+                        <obs conceptId="PIH:Type of referring service" style="checkbox"
+                             answerConceptId="PIH:14495"/>
+                        <obs conceptId="PIH:Type of referring service" style="checkbox"
+                             answerConceptId="PIH:14645" answerCode="CHV (Community Health Volunteer)"/>
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -316,30 +199,30 @@
     <!-- Chief complaint -->
     <!-- Show chief complaint if encounter type is NOT NCD Intake -->
     <includeIf velocityTest="$encounter.encounterType.uuid != 'ae06d311-1866-455b-8a64-126a9bd74171'">
-    <section id="chiefComplaint" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.chiefComplaint.title">
-        <div class="section-container">
-            <p>
-                <obs conceptId="CIEL:160531" style="textarea" id="chief-complaint"/>
-            </p>
-        </div>
-    </section>
+        <section id="chiefComplaint" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="pihcore.chiefComplaint.title">
+            <div class="section-container">
+                <p>
+                    <obs conceptId="CIEL:160531" style="textarea" id="chief-complaint"/>
+                </p>
+            </div>
+        </section>
 
-    <!-- Presenting history -->
-    <section id="complaint" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.history.presentingHistory.title">
-        <div class="section-container">
-            <p>
-                <obs conceptId="PIH:PRESENTING HISTORY" style="textarea" id="presenting-history"/>
-            </p>
-        </div>
-    </section>
+        <!-- Presenting history -->
+        <section id="complaint" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="pihcore.history.presentingHistory.title">
+            <div class="section-container">
+                <p>
+                    <obs conceptId="PIH:PRESENTING HISTORY" style="textarea" id="presenting-history"/>
+                </p>
+            </div>
+        </section>
     </includeIf>
 
     <!-- Medical history Section -->
     <section id="patient-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Past Medical History">
-        <div class="section-container-color">
+        <div class="section-container">
             <!-- ANTECEDENTS PERSONNELS / HABITUDES -->
 
             <h2>
@@ -347,34 +230,41 @@
             </h2>
 
             <div class="two-columns">
-                <!-- Allergy is intentionally ommitted because it should be handled in more detail through the Allergy UI -->
-                <pastMedicalHistoryCheckbox concept="PIH:ASTHMA"/>
-                <pastMedicalHistoryCheckbox concept="PIH:HEART DISEASE" specify="true" class="medicalHistoryText patientHistory" />
-                <!--<pastMedicalHistoryCheckbox concept="PIH:SURGERY" specify="true" class="medicalHistoryText patientHistory"/>-->
-                <pastMedicalHistoryCheckbox concept="PIH:Traumatic Injury" specify="true" class="medicalHistoryText patientHistory"/>
-                <!-- TODO paper form has Surgery/Trauma. verify splitting okay -->
-                <pastMedicalHistoryCheckbox concept="PIH:EPILEPSY"/>
-                <pastMedicalHistoryCheckbox concept="CIEL: 117635" comment="Hemoglobinopathy" specify="true"
-                                            class="medicalHistoryText patientHistory"/>
-                <pastMedicalHistoryCheckbox concept="PIH:HYPERTENSION" label="pihcore.medicalhistory.hypertension"/>
-                <pastMedicalHistoryCheckbox concept="PIH:DIABETES"/>
-                <pastMedicalHistoryCheckbox concept="CIEL:138405" label="pihcore.lab.hiv.title"/>
-                <pastMedicalHistoryCheckbox concept="PIH:SEXUALLY TRANSMITTED INFECTION" label="pihcore.medicalhistory.sti"
-                                            specify="true" class="medicalHistoryText patientHistory"/>
-                <!-- TODO explicit options for common STIs -->
-                <pastMedicalHistoryCheckbox concept="CIEL:143849" comment="Congenital malformations"
-                                            specify="true" class="medicalHistoryText patientHistory"/>
-                <pastMedicalHistoryCheckbox concept="PIH:MALNUTRITION"/>
-                <pastMedicalHistoryCheckbox concept="PIH:MEASLES"/>
-                <pastMedicalHistoryCheckbox concept="PIH:TUBERCULOSIS"/>
-                <pastMedicalHistoryCheckbox concept="PIH:VARICELLA"/>
-                <pastMedicalHistoryCheckbox concept="PIH:Diphtheria"/>
-                <pastMedicalHistoryCheckbox concept="PIH:ACUTE RHEUMATIC FEVER" label="pihcore.acuteRheumaticFever.abbrev"/>
-                <pastMedicalHistoryCheckbox concept="CIEL:117703" />
-                <pastMedicalHistoryCheckbox concept="CIEL:165623" label="COVID-19" />
-                <pastMedicalHistoryCheckbox concept="PIH:OTHER" code="pihcore.other" specify="true" class="medicalHistoryText patientHistory"/>
+                <div>
+                    <!-- Allergy is intentionally omitted because it should be handled in more detail through the Allergy UI -->
+                    <pastMedicalHistoryCheckbox concept="PIH:ASTHMA"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:HEART DISEASE" specify="true" class="medicalHistoryText patientHistory" />
+                    <!--<pastMedicalHistoryCheckbox concept="PIH:SURGERY" specify="true" class="medicalHistoryText patientHistory"/>-->
+                    <pastMedicalHistoryCheckbox concept="PIH:Traumatic Injury" specify="true" class="medicalHistoryText patientHistory"/>
+                    <!-- TODO paper form has Surgery/Trauma. verify splitting okay -->
+                    <pastMedicalHistoryCheckbox concept="PIH:EPILEPSY"/>
+                    <pastMedicalHistoryCheckbox concept="CIEL: 117635" comment="Hemoglobinopathy" specify="true"
+                                                class="medicalHistoryText patientHistory"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:HYPERTENSION" label="pihcore.medicalhistory.hypertension"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:DIABETES"/>
+                    <pastMedicalHistoryCheckbox concept="CIEL:138405" label="pihcore.lab.hiv.title"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:SEXUALLY TRANSMITTED INFECTION" label="pihcore.medicalhistory.sti"
+                                                specify="true" class="medicalHistoryText patientHistory"/>
+                    <!-- TODO explicit options for common STIs -->
+                </div>
+                <div>
+                    <pastMedicalHistoryCheckbox concept="CIEL:143849" comment="Congenital malformations"
+                                                specify="true" class="medicalHistoryText patientHistory"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:MALNUTRITION"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:MEASLES"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:TUBERCULOSIS"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:VARICELLA"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:Diphtheria"/>
+                    <pastMedicalHistoryCheckbox concept="PIH:ACUTE RHEUMATIC FEVER" label="pihcore.acuteRheumaticFever.abbrev"/>
+                    <pastMedicalHistoryCheckbox concept="CIEL:117703" />
+                    <pastMedicalHistoryCheckbox concept="CIEL:165623" label="COVID-19" />
+                    <pastMedicalHistoryCheckbox concept="PIH:OTHER" code="pihcore.other" specify="true" class="medicalHistoryText patientHistory"/>
+
+                </div>
+
             </div>
-            <!-- only show these diseases if encounter type is NCD Intake -->
+
+            <!-- only show these diseases if female -->
             <includeIf velocityTest="$patient.gender == 'F' ">
                 <pastMedicalHistoryCheckbox concept="CIEL:113859" />
                 <pastMedicalHistoryCheckbox concept="PIH:47" />
@@ -397,7 +287,7 @@
 
             <span class="list-inline">
                 <obs id="surgery-toggle" conceptId="PIH:13119" style="radio"
-                     answerConceptIds="PIH:YES,PIH:NO" answerCodes="Yes,No">
+                     answerConceptIds="PIH:YES,PIH:NO" answerCodes="yes,no">
 
                     <control>
                         <when value="PIH:YES" thenDisplay="#surgery-block"/>
@@ -408,24 +298,24 @@
             <!-- Surgery details-->
             <div id="surgery-block" style="display:none;">
 
-                <obsgroup groupingConceptId="PIH:10492" showIfEmpty="false">
+                <strong>
+                    Surgery procedure:
+                </strong>
 
-                    <strong>
-                        Surgery procedure:
-                    </strong>
-
-                    <div class="two-columns-new">
-                        <repeat>
-                            <template>
+                <!-- ToDo:  Should there be 2 columns here? -->
+                <div class="two-columns-xx">
+                    <repeat>
+                        <template>
+                            <obsgroup groupingConceptId="PIH:10492" showIfEmpty="false">
                                 <div class="column-item">
                                     <span class="{expression}">
                                         <obs conceptId="PIH:10484" style="checkbox" answerConceptId="{point}"
                                              answerCode="{message}"
-                                             toggle="{id: '{message}-htn-dx-ynu', style: 'hide'}"/>
+                                             toggle="{id: '{msg}-htn-dx-ynu', style: 'hide'}"/>
                                     </span>
 
                                     <!-- Date of procedure -->
-                                    <div class="list-inline-radios" id="{message}-htn-dx-ynu">
+                                    <div class="list-inline-radios" id="{msg}-htn-dx-ynu">
                                         <span class="first-label-inline">
                                             <label class="inline">
                                                 Date of Procedure
@@ -436,38 +326,37 @@
                                     </div>
 
                                     <!-- Complications -->
-                                    <div class="list-inline-radios" id="{message}-htn-dx-ynu">
+                                    <div class="list-inline-radios" id="{msg}-htn-dx-ynu">
                                         <label class="inline">
                                             Did you have any problems after the operation?
                                         </label>
                                         <obs conceptId="PIH:7881" style="radio" answerConceptIds="PIH:YES,PIH:NO"
-                                             answerCodes="Yes,No" class="list-inline"/>
+                                             answerCodes="yes,no" class="list-inline"/>
                                         <hr/>
                                     </div>
                                 </div>
-                            </template>
+                            </obsgroup>
+                        </template>
 
-                            <render point="PIH:8815" message="Appendectomy"/>
-                            <render point="PIH:8628" message="Cataract_Surgery"/>
-                            <render point="PIH:21172" message="Herniorrhaphy"/>
-                            <render point="PIH:8718" message="Hydrocelectomy"/>
-                            <render point="PIH:9479" message="Hysterectomy"/>
-                            <render point="PIH:21481" message="Laparotomy"/>
-                            <render point="PIH:8839" message="Mastectomy"/>
-                            <render point="PIH:20149" message="Nephrectomy"/>
-                            <render point="PIH:9803" message="Prostatectomy"/>
-                            <render point="PIH:8658" message="Splenectomy"/>
-                            <render point="PIH:8639" message="Thyroidectomy"/>
-                            <render point="PIH:8639" message="Thyroidectomy"/>
+                        <render point="PIH:8815"  message="Appendectomy" msg="appy"/>
+                        <render point="PIH:8628"  message="Cataract Surgery" msg="cat"/>
+                        <render point="PIH:21172" message="Herniorrhaphy" msg="herni"/>
+                        <render point="PIH:8718"  message="Hydrocelectomy" msg="hydro"/>
+                        <render point="PIH:9479"  message="Hysterectomy" msg="hyst"/>
+                        <render point="PIH:21481" message="Laparotomy" msg="lapor"/>
+                        <render point="PIH:8839"  message="Mastectomy" msg="mast"/>
+                        <render point="PIH:20149" message="Nephrectomy" msg="neph"/>
+                        <render point="PIH:9803"  message="Prostatectomy" msg="prost"/>
+                        <render point="PIH:8658"  message="Splenectomy" msg="splen"/>
+                        <render point="PIH:8639"  message="Thyroidectomy" msg="thyro"/>
+                    </repeat>
+                </div>
 
-                        </repeat>
-                    </div>
-
-                    <!-- Other procedure -->
-                    <obs conceptId="PIH:7887"
-                         style="checkbox" answerConceptId="PIH:6625" commentFieldLabel=" "
-                         commentFieldSize=" " class="inline"/>
-                </obsgroup>
+                <!-- Other procedure -->
+                <label>
+                    Additional surgery comments
+                </label>
+                <obs conceptId="PIH:6625" style="textarea" />
             </div>
             <br/>
 
@@ -478,38 +367,54 @@
 
             <span class="list-inline">
                 <obs conceptId="PIH:1063" style="radio" answerConceptIds="PIH:YES,PIH:NO"
-                     answerCodes="Yes,No"/>
+                     answerCodes="yes,no"/>
             </span>
         </div>
         <br/>
 
+        <includeIf velocityTest="$patient.gender == 'F' ">
         <!-- OBGYN History -->
-        <div class="section-container-color">
+        <div class="section-container">
 
             <h2>
                 <uimessage code="OB/GYN History"/>
             </h2>
 
             <div class="two-columns">
+                <div>
+                    <!-- Menopause question -->
+                    <label class="inline">
+                        Have your monthly periods stopped completely?
+                    </label>
+                    <span class="list-inline">
+                        <obs id="meno-toggle"
+                             conceptId="PIH:14188"
+                             style="radio"
+                             answerConceptIds="PIH:YES,PIH:NO"
+                             answerCodes="yes,no">
 
-                <!-- Menopause question -->
-                <label class="inline">
-                    Have your monthly periods stopped completely?
-                </label>
+                            <control>
+                                <when value="PIH:YES" thenDisplay="#meno-date, #age-meno"/>
+                                <when value="PIH:NO" thenDisplay="#lmp-section"/>
+                            </control>
 
-                <span class="list-inline">
-                    <obs id="meno-toggle"
-                         conceptId="PIH:14188"
-                         style="radio"
-                         answerConceptIds="PIH:YES,PIH:NO">
+                        </obs>
+                    </span>
+                </div>
+                <div>
+                    <!-- LMP -->
+                    <div id="lmp-section" style="display:none;">
+                        <span class="first-label-inline">
+                            <label class="inline">
+                                Last Menstrual Period (LMP):
+                            </label>
+                            <obs conceptId="CIEL:1427" allowFutureDates="false" class="inline"/>
+                        </span>
+                    </div>
+                </div>
+            </div>
 
-                        <control>
-                            <when value="PIH:YES" thenDisplay="#meno-date, #age-meno"/>
-                            <when value="PIH:NO" thenDisplay="#lmp-section"/>
-                        </control>
-
-                    </obs>
-                </span>
+            <div class="two-columns">
 
                 <!-- Menopause details -->
                 <div id="meno-date" style="display:none;">
@@ -517,11 +422,10 @@
                         <label class="inline">
                             When did you last see your monthly period?
                         </label>
-                        <obs conceptId="PIH:7538" allowFutureDates="false" class="inline"/>
+                        <!-- Last date of normal menstruation (start of menopause)-->
+                        <obs conceptId="CIEL:166079" allowFutureDates="false" class="inline"/>
                     </span>
                 </div>
-
-                <br/>
 
                 <div id="age-meno" style="display:none;">
                     <span class="first-label-inline">
@@ -531,23 +435,11 @@
                         <obs conceptId="PIH:14189" class="inline"/>
                     </span>
                 </div>
-
-                <br/>
-
-                <!-- LMP -->
-                <div id="lmp-section" style="display:none;">
-                    <span class="first-label-inline">
-                        <label class="inline">
-                            Last Menstrual Period (LMP):
-                        </label>
-                        <obs conceptId="CIEL:1427" allowFutureDates="false" class="inline"/>
-                    </span>
-                </div>
-
             </div>
+            <br/><br/>
 
             <!-- GPAL Section -->
-            <div class="two-columns gp-fields">
+            <div class="four-columns gp-fields">
 
                 <div class="field">
                     <label>Gravida (G)</label>
@@ -568,6 +460,7 @@
                     <label>Living (L)</label>
                     <obs conceptId="CIEL:1825" required="true"/>
                 </div>
+
             </div>
 
             <span class="first-label-inline">
@@ -585,35 +478,46 @@
             </strong>
 
             <div class="two-columns">
-                <repeat>
-                    <template>
-                        <span class="checkbox-item">
+                <div>
+                    <repeat>
+                        <template>
                             <obs conceptId="PIH:20542"
                                  style="checkbox"
                                  answerConceptId="{concept}"
                                  answerCode="{name}"/>
-                        </span>
-                    </template>
+                        </template>
 
-                    <render concept="CIEL:228" name="Haemorrhage"/>
-                    <render concept="CIEL:117399" name="Hypertensive disorder"/>
-                    <render concept="CIEL:145047" name="Infection"/>
-                    <render concept="CIEL:116128" name="Malaria"/>
-                    <render concept="CIEL:115491" name="Multiple gestation"/>
-                    <render concept="CIEL:111633" name="UTI"/>
-                    <render concept="CIEL:117703" name="Sickle-cell anaemia"/>
-                    <render concept="CIEL:112416" name="Threatened abortion"/>
-                    <render concept="CIEL:118256" name="Foetal distress"/>
-                    <render concept="CIEL:5622" name="Other"/>
+                        <render concept="CIEL:228" name="Haemorrhage"/>
+                        <render concept="CIEL:117399" name="Hypertensive disorder"/>
+                        <render concept="CIEL:145047" name="Infection"/>
+                        <render concept="CIEL:116128" name="Malaria"/>
+                        <render concept="CIEL:115491" name="Multiple gestation"/>
+                    </repeat>
+                </div>
+                <div>
+                    <repeat>
+                        <template>
+                            <obs conceptId="PIH:20542"
+                                 style="checkbox"
+                                 answerConceptId="{concept}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render concept="CIEL:111633" name="UTI"/>
+                        <render concept="CIEL:117703" name="Sickle-cell anaemia"/>
+                        <render concept="CIEL:112416" name="Threatened abortion"/>
+                        <render concept="CIEL:118256" name="Foetal distress"/>
+                        <render concept="CIEL:5622" name="Other"/>
+                    </repeat>
+                    <label>
+                        <uimessage code="zl.ifOtherSpecify"/>
+                    </label>
+                    <obs conceptId="PIH:14679"/>
+                </div>
 
-                </repeat>
-                <label>
-                    <uimessage code="zl.ifOtherSpecify"/>
-                </label>
-                <obs conceptId="PIH:14679"/>
             </div>
         </div>
         <br/>
+        </includeIf>
 
         <!-- Allergies History
         <div class="section-container-color">
@@ -775,10 +679,6 @@
             </div>
         </section>
     </includeIf> -->
-
-    <!-- only show these sections if encounter type is NCD Intake -->
-    <!--<includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
-    </includeIf>-->
 
     <!-- Lifestyle Questions  -->
     <section id="lifestyle-questions" sectionTag="fieldset" headerTag="legend" headerStyle="title"
@@ -1047,9 +947,6 @@
     </includeIf> -->
 
     <!-- Social History -->
-    <!-- only show these sections if encounter type is NCD Intake -->
-    <!--<includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'">
-    </includeIf>-->
     <section id="social-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.ncd.social.history.title">
         <div class="section-container">
@@ -1058,12 +955,14 @@
                     <tr>
                         <td colspan="2">
                             <label class="inline">
-                                Based on the Patient current condition,
-                                can the Patient work for an income?
+                                Based on the patient current condition,
+                                can the patient work for an income?
                             </label>
                             <span class="list-inline">
                                 <obs id="money-source-while-sick" conceptId="PIH:12615"
-                                     answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN" labelText=""
+                                     answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN"
+                                     answerCodes="yes,no,unknown"
+                                     labelText=""
                                      style="radio" answerSeparator=""/>
                             </span>
                         </td>
@@ -1154,7 +1053,8 @@
                                 </label>
                                 <span class="list-inline">
                                     <obs conceptId="CIEL:160109" style="radio"
-                                         answerConceptIds="CIEL:1065,CIEL:1066" class="inline"/>
+                                         answerConceptIds="CIEL:1065,CIEL:1066"
+                                         answerCodes="yes,no" class="inline"/>
                                 </span>
                                 <br/>
                                 <br/>
@@ -1183,7 +1083,7 @@
                                 <span class="list-inline">
                                     <obs conceptId="CIEL:166855" style="radio"
                                          answerConceptIds="CIEL:1065,CIEL:1066"
-                                         answerCodes="Yes, No" class="inline"/>
+                                         answerCodes="yes,no" class="inline"/>
                                 </span>
                             </td>
                         </tr>

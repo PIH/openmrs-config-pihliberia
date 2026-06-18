@@ -1,1 +1,290 @@
-../liberia.css
+/**
+    I *believe* we symlink a single liberia.css in both the global directory and the top-level
+    style directory so that it is included globally, *but* can also be referenced on forms
+ */
+
+header {
+    background: linear-gradient(top, #003466 50%, #BF0002 50%);
+    background: -moz-linear-gradient(top, #003466 50%, #BF0002 50%);
+    background: -webkit-linear-gradient(top, #003466 50%, #BF0002 50%);
+    background: -o-linear-gradient(top, #003466 50%, #BF0002 50%);
+    background: -ms-linear-gradient(top, #003466 50%, #BF0002 50%);
+}
+
+.sub-form, .sub-form fieldset {
+    font-size: 14px;
+    padding: 0;
+}
+
+span.obs-field > select {
+    min-width: 0;
+}
+
+.mh-intervention {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+}
+
+.list-inline label, .list-inline input[type="radio"], .list-inline span {
+    display: inline-block;
+    float: none;
+}
+
+.list-inline label:first-child {
+    width: 220px;
+}
+
+span.symptom-present {
+    float: right;
+}
+
+.ep-exposure-row span, .ep-exposure-row label {
+    display: inline-block;
+}
+
+.ep-exposure-row span:first-child label:first-child, .complication-name {
+    width: 150px;
+    padding-left: 5px;
+}
+
+.ep-compexp-duration-span, .ep-compexp-duration-unit {
+    padding-left: 20px;
+}
+
+.ep-exposure-duration-span label:first-child {
+    width: 90px !important;
+}
+
+.ep-pif-sym-find {
+    width: 50%;
+}
+
+.ep-trigger-sym-find {
+    width: 65%;
+}
+
+.ep-mh-sym-find {
+    width: 70%;
+}
+
+.ep-mh-section {
+    display: inline-block;
+    width: 100%;
+}
+
+.ep-mh-seizure-type {
+    width: 40%;
+    float: left;
+}
+
+.ep-mh-med-history {
+    width: 60%;
+    float: right;
+}
+
+.inline {
+    display: inline-block;
+    margin-right: 11px;
+}
+
+.icon-arrow-down::before {
+    content: "\f103";
+    float: right;
+    right: 0;
+    bottom: 20px;
+    position: relative;
+    font-size: 32px;
+}
+
+.icon-arrow-up::before {
+    content: "\f102";
+    float: right;
+    right: 0;
+    bottom: 20px;
+    position: relative;
+    font-size: 32px;
+}
+
+#mh-epilepsy-section legend {
+    font-weight: bold;
+}
+
+#mh-epilepsy-section fieldset {
+    border: 1px solid #e5e1e1;
+    padding-bottom: 5px;
+}
+
+.first-label-inline label, .first-label-inline input[type="text"] {
+    display: inline-block;
+}
+
+span.tb-symptom-name {
+    width: 30%;
+    display: inline-block;
+}
+
+.referral-community {
+    width: 45%;
+    float: left;
+}
+
+.referral-internal {
+    width: 45%;
+    float: right;
+}
+
+.block {
+    display: block;
+}
+
+.inline-45 {
+    display: inline-block;
+    margin-right: 11px;
+    width: 45%;
+}
+
+.custom-error {
+    color: #ff6666;
+    font-size: 1.1em;
+    display: block;
+}
+
+form fieldset {
+    display: block;
+}
+
+.family-history-item .label {
+    display: inline-block;
+    width: 250px;
+}
+
+.family-history-item .relative {
+    display: inline-block;
+    width: 120px;
+}
+
+.section-header {
+    margin-top: 1.5em;
+}
+
+.past-medical-history-item {
+}
+
+.past-medical-history-item input[type=checkbox] {
+    float: none;
+    vertical-align: middle;
+}
+
+.past-medical-history-item input[type=text] {
+    min-width: 200px;
+    display: inline !important;
+    vertical-align: middle;
+    padding: 1px 10px;
+}
+
+.past-medical-history-item > span, .past-medical-history-item > label {
+    display: inline !important;
+    vertical-align: middle;
+}
+
+.two-columns {
+    column-count: 2;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+}
+
+.inline-label {
+    margin-right: 10px;
+}
+
+.field {
+    break-inside: avoid;
+    margin-bottom: 25px;
+}
+
+.field:first-child {
+    margin-top: 10px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+p.radio > * {
+    display: inline;
+    float: none !important;
+    min-width: initial;
+}
+
+.section-container {
+    background: #F2F2F2;
+    box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+    padding: 10px 5px 10px 15px;
+    line-height: 1.5em; /*add this for vertical spacing between elements*/
+}
+
+.section-container-color {
+    background: #F2F2F2;
+    box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+    padding: 10px 5px 10px 15px;
+    line-height: 1.5em; /*add this for vertical spacing between elements*/
+}
+
+.section-container input[type="checkbox"] {
+    margin: 0px 5px; /*changed values to vertical, horizontal*/
+    top: 5px; /*added to offset the checkbox position to line up*/
+}
+
+.section-container label { /*new definition to override labels inside section-containers*/
+    margin: 0px;
+}
+
+.section {
+    width: 100%;
+}
+
+.side-by-side label {
+    display: inline-block;
+}
+
+.section-container input[type=text].hasDatepicker {
+    width: 120px !important;
+    min-width: 120px;
+}
+
+
+.section-container input[type=text] {
+    width: 150px;
+    display: inline-block;
+}
+
+.checkbox-item {
+    display: inline-block;
+    margin-right: 15px;
+    white-space: nowrap;
+}
+
+.gp-fields {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.gp-fields .field {
+    width: auto !important;
+    min-width: unset !important;
+}
+
+.gp-fields .field input,
+.gp-fields input,
+.gp-fields .field select,
+.gp-fields .field textarea {
+    width: 50px !important;
+    min-width: 50px !important;
+    padding: 4px !important;
+}
+
+/*some other styles*/
