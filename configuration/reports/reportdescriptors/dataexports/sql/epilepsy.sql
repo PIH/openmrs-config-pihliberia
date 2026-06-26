@@ -34,7 +34,7 @@ provider(encounter_id)
 FROM encounter 
 WHERE encounter_type=@enctype
 AND DATE(encounter_datetime) >= @startDate AND DATE(encounter_datetime) <= @endDate
-;
+AND voided = 0;
 
 -- onset date
 UPDATE epilepsy_export s INNER JOIN obs o 
@@ -96,14 +96,12 @@ FROM (SELECT
       FROM epilepsy_export,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id ASC, encounter_id ASC, encounter_datetime ASC
+            ORDER BY patient_id ASC, encounter_datetime ASC, encounter_id ASC
         ) index_asc );
 
 UPDATE epilepsy_export t
 INNER JOIN temp_encounter_index_asc tsia ON tsia.patient_id = t.patient_id AND tsia.encounter_id = t.encounter_id
 SET t.index_asc = tsia.index_asc;
-
-
 
 DROP TEMPORARY TABLE IF EXISTS temp_encounter_index_desc;
 CREATE TEMPORARY TABLE temp_encounter_index_desc
@@ -122,14 +120,12 @@ FROM (SELECT
       FROM epilepsy_export,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id ASC, encounter_id ASC, encounter_datetime ASC
+            ORDER BY patient_id ASC, encounter_datetime DESC, encounter_id DESC
         ) index_desc );
 
 UPDATE epilepsy_export t
 INNER JOIN temp_encounter_index_desc tsia ON tsia.patient_id = t.patient_id AND tsia.encounter_id = t.encounter_id
 SET t.index_desc = tsia.index_desc;
-
-
 
 SELECT
 emr_id,

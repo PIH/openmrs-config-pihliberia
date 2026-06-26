@@ -1,4 +1,4 @@
-use openmrs;
+SET @locale = 'en';
 set @program_id = program('Mental Health');
 SELECT encounter_type_id INTO @mh_intake_enc FROM encounter_type WHERE uuid = 'fccd53c2-f802-439b-a7a2-2d680bd8b81b';
 set @identifier_type ='0bc545e0-f401-11e4-b939-0800200c9a66';
@@ -85,7 +85,7 @@ FROM (SELECT
                     (SELECT @u:= 0) AS u
             ORDER BY patient_id, date_enrolled ASC
         ) index_ascending );
---         
+
 CREATE INDEX tmhia ON temp_mh_patients_index_asc(patient_id);
 update temp_mh_patients tmhp
 inner join temp_mh_patients_index_asc tmhia on tmhp.enrollment_id = tmhia.enrollment_id
@@ -110,7 +110,7 @@ FROM (SELECT
                     (SELECT @u:= 0) AS u
             ORDER BY patient_id DESC, date_enrolled DESC
         ) index_descending );
---         
+
 CREATE INDEX tmhia ON temp_mh_patients_index_desc(patient_id);
 update temp_mh_patients tmhp
 inner join temp_mh_patients_index_desc tmhia on tmhp.enrollment_id = tmhia.enrollment_id
@@ -137,8 +137,7 @@ set @counseling_plan = CONCEPT_FROM_MAPPING('PIH', '14479');
 UPDATE temp_mh_patients tmh
 INNER JOIN temp_obs o ON tmh.patient_id = o.person_id
 AND o.concept_id = @counseling_plan
-SET tmh.counseling_plan = o.value_text
-WHERE o.value_text = 0;
+SET tmh.counseling_plan = o.value_text;
 
 set @mh_diagnoses = concept_from_mapping('PIH','7942');
 DROP temporary table IF EXISTS temp_mh_dx_set;
