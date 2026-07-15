@@ -142,6 +142,7 @@ span.tb-symptom-name {
 }
 
 form fieldset {
+    min-width: 90%;
     display: block;
 }
 

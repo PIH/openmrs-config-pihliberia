@@ -25,35 +25,10 @@
 
     <style type="text/css">
 
-        .narrow {
-            width: 200px;
-        }
-
         .field-error {
             color: #ff6666;
             font-size: 1.1em;
             display: block;
-        }
-
-        .two-columns-old {
-            column-count: 2;
-            -webkit-column-count: 2;
-            -moz-column-count: 2;
-        }
-
-        .five-columns, .four-columns, .three-columns, .two-columns {
-            display: table;
-            height: 100%;
-            width: 100%;
-        }
-
-        .two-columns > div {
-            display: table-cell;
-            width: 50%;
-        }
-
-        .side-by-side label {
-            display: inline-block;
         }
 
         .simple-form-ui input {
@@ -65,87 +40,20 @@
             display: block;
         }
 
-        #calculated-waist-hip-ratio {
-            font-weight: bold;
-            font-size: 1.4em;
-        }
-
-        .encounter-summary-container #calculated-ratio {
-            font-size: 1em;
-            font-weight: normal;
-        }
-
-        #encounterDate input {
-            min-width: 15%
-        }
-
         .half-size-text {
             color: #ff6666;
             font-size: 50%;
             display: block;
         }
 
-        .section-container {
-            background: #F2F2F2;
-            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-            padding: 10px 5px 10px 15px;
-            line-height: 1.5em; /*add this for vertical spacing between elements*/
-        }
-
-        .section-container input[type="checkbox"] {
-            margin: 0px 5px; /*changed values to vertical, horizontal*/
-            top:5px; /*added to offset the checkbox position to line up*/
-        }
-
-        .section-container label { /*new definition to override labels inside section-containers*/
-            margin: 0px;
-        }
-
-        - .section {
-            width: 100%;
-        }
-
         textarea {
             width: 95%;
-        }
-
-        span.obs-field > select {
-            min-width: 0;
-        }
-
-        .mh-intervention {
-            -webkit-column-count: 1;
-            -moz-column-count: 1;
-            column-count: 1;
-        }
-
-        .list-inline label, .list-inline input[type="radio"], .list-inline span{
-            display: inline-block;
-            float: none;
-        }
-
-        .list-inline label:first-child {
-            width: 220px;
-        }
-
-        span.symptom-present {
-            float: right;
         }
 
         #data-collection {
             display: inline-block;
             width: 58%;
             vertical-align: top;
-        }
-
-        #encounter-diagnoses-target {
-            display: inline-block;
-            width: 40%;
-            vertical-align: top;
-        }
-
-        #encounter-diagnoses-app {
-            margin-bottom: 20px;
         }
 
     </style>
@@ -451,8 +359,8 @@
                             <obs id="frequencyCoded-{name}" class="frequency select-arrow"
                                  conceptId="PIH:Drug frequency for HUM"
                                  answerConceptIds=
-                                         "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:OM,PIH:ON"
-                                 answerCodes="QD,BID,TID,QID,OM,ON"/>
+                                         "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:OM,PIH:ON,PIH:STAT"
+                                 answerCodes="QD,BID,TID,QID,OM,ON,STAT"/>
                         </td>
                         <td id="{name}-rx-duration" align="right">
                             <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
@@ -548,7 +456,7 @@
         </controls>
     </obs>
 
-    <div id="show-interventions" class="two-columns-old">
+    <div id="show-interventions" class="two-columns-without-divs">
         <repeat with="
                             ['CIEL:165486','Supportive Psychotherapy'],
                             ['PIH:Psychotherapy'],

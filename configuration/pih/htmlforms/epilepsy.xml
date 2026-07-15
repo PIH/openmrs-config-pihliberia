@@ -21,25 +21,10 @@
     <redirectOnSave url="/pihcore/visit/visit.page?patient={{patient.id}}&amp;encounter={{encounter.id}}#/overview"/>
 
     <style type="text/css">
-        .narrow {
-            width: 200px;
-        }
-
         .field-error {
             color: #ff6666;
             font-size: 1.1em;
             display: block;
-        }
-
-        .three-columns, .two-columns {
-            display: table;
-            height: 100%;
-            width: 100%;
-        }
-
-        .two-columns > div {
-            display: table-cell;
-            width: 50%;
         }
 
         .simple-form-ui input {
@@ -62,51 +47,12 @@
             display: block;
         }
 
-        .section-container {
-            background: #F2F2F2;
-            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-            padding: 10px 5px 10px 15px;
-            line-height: 1.5em; /*add this for vertical spacing between elements*/
-        }
-
-        .section-container input[type="checkbox"] {
-            margin: 0px 5px; /*changed values to vertical, horizontal*/
-            top:5px; /*added to offset the checkbox position to line up*/
-        }
-
-        .section-container label { /*new definition to override labels inside section-containers*/
-            margin: 0px;
-        }
-
-        - .section {
-            width: 100%;
-        }
-
         textarea {
             width: 95%;
         }
 
         span.obs-field > select {
-        min-width: 0;
-        }
-
-        .list-inline label, .list-inline input[type="radio"], .list-inline span,
-        .list-inline-wide label, .list-inline-wide input[type="radio"], .list-inline-wide span,
-        .list-inline-extra-wide label, .list-inline-extra-wide input[type="radio"], .list-inline-extra-wide span {
-            display: inline-block;
-            float: none;
-        }
-
-        .list-inline label:first-child {
-            width: 220px;
-        }
-
-        .list-inline-wide label:first-child {
-            width: 320px;
-        }
-
-        .list-inline-extra-wide label:first-child {
-            width: 420px;
+            min-width: 0;
         }
 
         span.symptom-present {
@@ -413,8 +359,8 @@
                                     <obs id="frequencyCoded-{name}" class="frequency select-arrow"
                                          conceptId="PIH:Drug frequency for HUM"
                                          answerConceptIds=
-                                                 "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:OM,PIH:ON"
-                                         answerCodes="QD,BID,TID,QID,OM,ON"/>
+                                                 "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:OM,PIH:ON,PIH:STAT"
+                                         answerCodes="QD,BID,TID,QID,OM,ON,STAT"/>
                                 </td>
                                 <td id="{name}-rx-duration" align="right">
                                     <obs id="duration-{name}" class="duration doseInput" conceptId="CIEL:159368"/>
