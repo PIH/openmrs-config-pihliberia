@@ -7,17 +7,17 @@ on:
 
 jobs:
   # All four site profiles share almost all configuration, so we build a single seed image
-  # (from harper-demo) and reuse it across every site's .env file rather than seeding each
-  # one separately. If a site's data ever diverges enough to need its own seed, add a
-  # dedicated job here following this same shape.
-  harper-demo:
+  # (from kouka, the default profile) and reuse it across every site's .env file rather than
+  # seeding each one separately. If a site's data ever diverges enough to need its own seed,
+  # add a dedicated job here following this same shape.
+  kouka:
     if: github.repository_owner == 'PIH'
     concurrency:
-      group: build-seeded-images-harper-demo-${{ github.ref }}
+      group: build-seeded-images-kouka-${{ github.ref }}
       cancel-in-progress: true
     uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
     with:
       image_name: partnersinhealth/pihliberia-emr
-      site: harper-demo
-      pih_config: liberia,liberia-harper,liberia-harper-demo
+      site: kouka
+      pih_config: liberia,liberia-harper,liberia-harper-kouka
     secrets: inherit
