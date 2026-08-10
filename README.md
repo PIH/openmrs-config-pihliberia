@@ -26,8 +26,8 @@ Component versions are defined in `distro/pom.xml` and resolved into `distro/ope
 
 | Site | PIH Config |
 |---|---|
+| `kouka` (default) | `liberia,liberia-harper,liberia-harper-kouka` |
 | `harper-demo` | `liberia,liberia-harper,liberia-harper-demo` |
-| `kouka` | `liberia,liberia-harper,liberia-harper-kouka` |
 | `jjdossen` | `liberia,liberia-harper,liberia-harper-jjdossen` |
 | `pleebo` | `liberia,liberia-pleebo` |
 
@@ -45,25 +45,25 @@ Because this file is found in the distribution repository, it is assumed that th
 that `openmrs-docker` commands are running from the root of the distribution repository — it sets `DISTRO_SOURCE_DIR`
 to this location. If you're using it as an example for running elsewhere, you may need to change or remove that.
 
-To use the example environment file for `harper-demo` to get up and running with a new instance:
+To use the example environment file for `kouka` (the default profile) to get up and running with a new instance:
 
 ```bash
-source harper-demo.env
-openmrs-docker create harper-demo
-openmrs-docker harper-demo initialize # Optional, but speeds up initial startup
-openmrs-docker harper-demo start
-openmrs-docker harper-demo wait  # Tails logs until OpenMRS is ready, then exits
+source kouka.env
+openmrs-docker create kouka
+openmrs-docker kouka initialize # Optional, but speeds up initial startup
+openmrs-docker kouka start
+openmrs-docker kouka wait  # Tails logs until OpenMRS is ready, then exits
 ```
 
 Once created, day-to-day commands only need the instance name:
 
 ```bash
-openmrs-docker harper-demo stop
-openmrs-docker harper-demo logs
-openmrs-docker harper-demo destroy
+openmrs-docker kouka stop
+openmrs-docker kouka logs
+openmrs-docker kouka destroy
 ```
 
-The same pattern applies to `kouka.env`, `jjdossen.env`, and `pleebo.env` — substitute the instance name accordingly.
+The same pattern applies to `harper-demo.env`, `jjdossen.env`, and `pleebo.env` — substitute the instance name accordingly.
 
 ### OpenMRS SDK (`openmrs-sdk`)
 
@@ -75,7 +75,7 @@ openmrs-sdk <command> <server-id>
 
 **Example — first-time setup:**
 ```bash
-PIH_CONFIG=liberia,liberia-harper,liberia-harper-demo openmrs-sdk create pihliberia
+PIH_CONFIG=liberia,liberia-harper,liberia-harper-kouka openmrs-sdk create pihliberia
 openmrs-sdk run pihliberia
 ```
 
