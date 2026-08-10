@@ -93,6 +93,6 @@ CI is handled by GitHub Actions. On every push to `master`, the [Build and deplo
 2. Builds and pushes a multi-platform Docker image (amd64 + arm64) to Docker Hub at [`partnersinhealth/pihliberia-emr`](https://hub.docker.com/r/partnersinhealth/pihliberia-emr), tagged with both `latest` and the Maven project version.
 3. Fires the existing Bamboo `kouka` deploy trigger, exactly as the legacy `deploy.yml` workflow did.
 
-A separate [Build seeded images](.github/workflows/build-seeded-images.yml) workflow runs nightly and publishes pre-initialized seed images to Docker Hub for all four sites (`partnersinhealth/pihliberia-emr-seed-harper-demo`, `-seed-kouka`, `-seed-jjdossen`, `-seed-pleebo`).
+A separate [Build seeded images](.github/workflows/build-seeded-images.yml) workflow runs nightly and publishes a single pre-initialized seed image to Docker Hub, built from the `harper-demo` profile (`partnersinhealth/pihliberia-emr-seed-harper-demo`). All four sites share almost all configuration, so every site's `.env` file reuses this one seed image rather than each maintaining its own — see the comment in each `.env` file if a given site's data ever diverges enough to need a dedicated seed.
 
 A separate [Update Versions](.github/workflows/update-versions.yml) workflow runs hourly and automatically commits any available snapshot dependency updates to `master`.
