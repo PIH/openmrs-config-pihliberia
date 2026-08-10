@@ -26,10 +26,7 @@ Component versions are defined in `distro/pom.xml` and resolved into `distro/ope
 
 | Site | PIH Config |
 |---|---|
-| `harper-demo` | `liberia,liberia-harper,liberia-harper-demo` |
 | `kouka` | `liberia,liberia-harper,liberia-harper-kouka` |
-| `jjdossen` | `liberia,liberia-harper,liberia-harper-jjdossen` |
-| `pleebo` | `liberia,liberia-pleebo` |
 
 ## Developer Guide
 
@@ -45,25 +42,23 @@ Because this file is found in the distribution repository, it is assumed that th
 that `openmrs-docker` commands are running from the root of the distribution repository — it sets `DISTRO_SOURCE_DIR`
 to this location. If you're using it as an example for running elsewhere, you may need to change or remove that.
 
-To use the example environment file for `harper-demo` to get up and running with a new instance:
+To use the example environment file for `kouka` to get up and running with a new instance:
 
 ```bash
-source harper-demo.env
-openmrs-docker create harper-demo
-openmrs-docker harper-demo initialize # Optional, but speeds up initial startup
-openmrs-docker harper-demo start
-openmrs-docker harper-demo wait  # Tails logs until OpenMRS is ready, then exits
+source kouka.env
+openmrs-docker create kouka
+openmrs-docker kouka initialize # Optional, but speeds up initial startup
+openmrs-docker kouka start
+openmrs-docker kouka wait  # Tails logs until OpenMRS is ready, then exits
 ```
 
 Once created, day-to-day commands only need the instance name:
 
 ```bash
-openmrs-docker harper-demo stop
-openmrs-docker harper-demo logs
-openmrs-docker harper-demo destroy
+openmrs-docker kouka stop
+openmrs-docker kouka logs
+openmrs-docker kouka destroy
 ```
-
-The same pattern applies to `kouka.env`, `jjdossen.env`, and `pleebo.env` — substitute the instance name accordingly.
 
 ### OpenMRS SDK (`openmrs-sdk`)
 
@@ -75,7 +70,7 @@ openmrs-sdk <command> <server-id>
 
 **Example — first-time setup:**
 ```bash
-PIH_CONFIG=liberia,liberia-harper,liberia-harper-demo openmrs-sdk create pihliberia
+PIH_CONFIG=liberia,liberia-harper,liberia-harper-kouka openmrs-sdk create pihliberia
 openmrs-sdk run pihliberia
 ```
 
@@ -93,6 +88,6 @@ CI is handled by GitHub Actions. On every push to `master`, the [Build and deplo
 2. Builds and pushes a multi-platform Docker image (amd64 + arm64) to Docker Hub at [`partnersinhealth/pihliberia-emr`](https://hub.docker.com/r/partnersinhealth/pihliberia-emr), tagged with both `latest` and the Maven project version.
 3. Fires the existing Bamboo `kouka` deploy trigger, exactly as the legacy `deploy.yml` workflow did.
 
-A separate [Build seeded images](.github/workflows/build-seeded-images.yml) workflow runs nightly and publishes pre-initialized seed images to Docker Hub for all four sites (`partnersinhealth/pihliberia-emr-seed-harper-demo`, `-seed-kouka`, `-seed-jjdossen`, `-seed-pleebo`).
+A separate [Build seeded images](.github/workflows/build-seeded-images.yml) workflow runs nightly and publishes a pre-initialized seed image to Docker Hub for `kouka` (`partnersinhealth/pihliberia-emr-seed-kouka`).
 
 A separate [Update Versions](.github/workflows/update-versions.yml) workflow runs hourly and automatically commits any available snapshot dependency updates to `master`.
