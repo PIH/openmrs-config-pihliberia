@@ -79,6 +79,10 @@ openmrs-sdk run <server-id>
 
 #### Updating a server with the latest distribution (war, modules, owas, config, frontend)
 
+> [!NOTE]
+> For those who are familiar with previously running `./pihemrDeploy.sh` from `openmrs-distro-pihemr`,
+> this is the equivalent of that, with the addition that this will also update the configuration and frontend.
+
 ```bash
 openmrs-sdk update <server-id>
 ```
@@ -86,7 +90,12 @@ openmrs-sdk update <server-id>
 #### Updating only the configuration of a server
 
 Unlike a full update, this only updates the configuration files and is intended to be faster, suitable for 
-more rapid iteration of content changes for testing:
+more rapid iteration of content changes for testing.
+
+> [!NOTE]
+> For those who are familiar with previously running `./install.sh` from `openmrs-config-pihliberia`, this is the 
+> equivalent of that, with the exception that this will not automatically build in local changes to `openmrs-config-pihemr`.
+> One will first need to run a `mvn clean install` in `openmrs-config-pihemr` to incorporate local changes from it.
 
 ```bash
 openmrs-sdk update-config <server-id>
