@@ -6,10 +6,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  # All four site profiles share almost all configuration, so we build a single seed image
-  # (from kouka, the default profile) and reuse it across every site's .env file rather than
-  # seeding each one separately. If a site's data ever diverges enough to need its own seed,
-  # add a dedicated job here following this same shape.
+  harper-demo:
+    if: github.repository_owner == 'PIH'
+    concurrency:
+      group: build-seeded-images-harper-demo-${{ github.ref }}
+      cancel-in-progress: true
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
+    with:
+      image_name: partnersinhealth/pihliberia-emr
+      site: harper-demo
+      pih_config: liberia,liberia-harper,liberia-harper-demo
+    secrets: inherit
+
   kouka:
     if: github.repository_owner == 'PIH'
     concurrency:
@@ -20,4 +28,28 @@ jobs:
       image_name: partnersinhealth/pihliberia-emr
       site: kouka
       pih_config: liberia,liberia-harper,liberia-harper-kouka
+    secrets: inherit
+
+  jjdossen:
+    if: github.repository_owner == 'PIH'
+    concurrency:
+      group: build-seeded-images-jjdossen-${{ github.ref }}
+      cancel-in-progress: true
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
+    with:
+      image_name: partnersinhealth/pihliberia-emr
+      site: jjdossen
+      pih_config: liberia,liberia-harper,liberia-harper-jjdossen
+    secrets: inherit
+
+  pleebo:
+    if: github.repository_owner == 'PIH'
+    concurrency:
+      group: build-seeded-images-pleebo-${{ github.ref }}
+      cancel-in-progress: true
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
+    with:
+      image_name: partnersinhealth/pihliberia-emr
+      site: pleebo
+      pih_config: liberia,liberia-pleebo
     secrets: inherit
