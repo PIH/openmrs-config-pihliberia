@@ -1,0 +1,55 @@
+name: Build seeded images
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  harper-demo:
+    if: github.repository_owner == 'PIH'
+    concurrency:
+      group: build-seeded-images-harper-demo-${{ github.ref }}
+      cancel-in-progress: true
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
+    with:
+      image_name: partnersinhealth/pihliberia-emr
+      site: harper-demo
+      pih_config: liberia,liberia-harper,liberia-harper-demo
+    secrets: inherit
+
+  kouka:
+    if: github.repository_owner == 'PIH'
+    concurrency:
+      group: build-seeded-images-kouka-${{ github.ref }}
+      cancel-in-progress: true
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
+    with:
+      image_name: partnersinhealth/pihliberia-emr
+      site: kouka
+      pih_config: liberia,liberia-harper,liberia-harper-kouka
+    secrets: inherit
+
+  jjdossen:
+    if: github.repository_owner == 'PIH'
+    concurrency:
+      group: build-seeded-images-jjdossen-${{ github.ref }}
+      cancel-in-progress: true
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
+    with:
+      image_name: partnersinhealth/pihliberia-emr
+      site: jjdossen
+      pih_config: liberia,liberia-harper,liberia-harper-jjdossen
+    secrets: inherit
+
+  pleebo:
+    if: github.repository_owner == 'PIH'
+    concurrency:
+      group: build-seeded-images-pleebo-${{ github.ref }}
+      cancel-in-progress: true
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/build-seeded-image.yml@main
+    with:
+      image_name: partnersinhealth/pihliberia-emr
+      site: pleebo
+      pih_config: liberia,liberia-pleebo
+    secrets: inherit
