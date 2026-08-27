@@ -308,14 +308,12 @@
                         <template>
                             <obsgroup groupingConceptId="PIH:10492" showIfEmpty="false">
                                 <div class="column-item">
-                                    <span class="{expression}">
-                                        <obs conceptId="PIH:10484" style="checkbox" answerConceptId="{point}"
-                                             answerCode="{message}"
-                                             toggle="{id: '{msg}-htn-dx-ynu', style: 'hide'}"/>
-                                    </span>
+                                    <obs conceptId="PIH:10484" style="checkbox" answerConceptId="{point}"
+                                         answerCode="{message}"
+                                         toggle="{id: '{msg}-surgery-detail', style: 'hide'}"/>
 
-                                    <!-- Date of procedure -->
-                                    <div class="list-inline-radios" id="{msg}-htn-dx-ynu">
+                                    <div class="list-inline-radios" id="{msg}-surgery-detail">
+                                        <!-- Date of procedure -->
                                         <span class="first-label-inline">
                                             <label class="inline">
                                                 Date of Procedure
@@ -323,10 +321,8 @@
                                             <obs conceptId="CIEL:160715" allowFutureDates="false"
                                                  class="inline"/>
                                         </span>
-                                    </div>
 
-                                    <!-- Complications -->
-                                    <div class="list-inline-radios" id="{msg}-htn-dx-ynu">
+                                        <!-- Complications -->
                                         <label class="inline">
                                             Did you have any problems after the operation?
                                         </label>
@@ -473,48 +469,48 @@
             <br/>
 
             <!-- Obstetric complications -->
-            <strong>
-                OB/GYN complication
-            </strong>
+            <fieldset class="obgyn-complications">
+                <legend>OB/GYN complication</legend>
 
-            <div class="two-columns">
-                <div>
-                    <repeat>
-                        <template>
-                            <obs conceptId="PIH:20542"
-                                 style="checkbox"
-                                 answerConceptId="{concept}"
-                                 answerCode="{name}"/>
-                        </template>
+                <div class="two-columns">
+                    <div>
+                        <repeat>
+                            <template>
+                                <obs conceptId="PIH:20542"
+                                     style="checkbox"
+                                     answerConceptId="{concept}"
+                                     answerCode="{name}"/>
+                            </template>
 
-                        <render concept="CIEL:228" name="Haemorrhage"/>
-                        <render concept="CIEL:117399" name="Hypertensive disorder"/>
-                        <render concept="CIEL:145047" name="Infection"/>
-                        <render concept="CIEL:116128" name="Malaria"/>
-                        <render concept="CIEL:115491" name="Multiple gestation"/>
-                    </repeat>
+                            <render concept="CIEL:228" name="Haemorrhage"/>
+                            <render concept="CIEL:117399" name="Hypertensive disorder"/>
+                            <render concept="CIEL:145047" name="Infection"/>
+                            <render concept="CIEL:116128" name="Malaria"/>
+                            <render concept="CIEL:115491" name="Multiple gestation"/>
+                        </repeat>
+                    </div>
+                    <div>
+                        <repeat>
+                            <template>
+                                <obs conceptId="PIH:20542"
+                                     style="checkbox"
+                                     answerConceptId="{concept}"
+                                     answerCode="{name}"/>
+                            </template>
+                            <render concept="CIEL:111633" name="UTI"/>
+                            <render concept="CIEL:117703" name="Sickle-cell anaemia"/>
+                            <render concept="CIEL:112416" name="Threatened abortion"/>
+                            <render concept="CIEL:118256" name="Foetal distress"/>
+                            <render concept="CIEL:5622" name="Other"/>
+                        </repeat>
+                        <label>
+                            <uimessage code="zl.ifOtherSpecify"/>
+                        </label>
+                        <obs conceptId="PIH:14679"/>
+                    </div>
+
                 </div>
-                <div>
-                    <repeat>
-                        <template>
-                            <obs conceptId="PIH:20542"
-                                 style="checkbox"
-                                 answerConceptId="{concept}"
-                                 answerCode="{name}"/>
-                        </template>
-                        <render concept="CIEL:111633" name="UTI"/>
-                        <render concept="CIEL:117703" name="Sickle-cell anaemia"/>
-                        <render concept="CIEL:112416" name="Threatened abortion"/>
-                        <render concept="CIEL:118256" name="Foetal distress"/>
-                        <render concept="CIEL:5622" name="Other"/>
-                    </repeat>
-                    <label>
-                        <uimessage code="zl.ifOtherSpecify"/>
-                    </label>
-                    <obs conceptId="PIH:14679"/>
-                </div>
-
-            </div>
+            </fieldset>
         </div>
         <br/>
         </includeIf>
@@ -546,7 +542,7 @@
 
     </section>
 
-    <!-- Family history Section -->
+    <!-- Family History Section -->
     <section id="family-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="zl.consultNote.familyHistory.title">
         <div class="section-container">
@@ -574,6 +570,7 @@
         </div>
     </section>
 
+    <!-- Birth History Section -->
     <!-- only show these sections if encounter type is NCD Intake AND the patient is < 12 years old
     <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171' &amp;&amp; $patient.age &lt; 12 " >
         <section id="birth-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
@@ -624,6 +621,7 @@
         </section>
     </includeIf> -->
 
+    <!-- Patient Blood Type Section -->
     <!-- <section id="patient-blood-type" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.lab.blood_type">
         <div class="section-container">
@@ -638,6 +636,7 @@
         </div>
     </section> -->
 
+    <!-- Habit Section -->
     <!-- only show these sections if encounter type is NCD Intake
     <includeIf velocityTest="$encounter.encounterType.uuid == 'ae06d311-1866-455b-8a64-126a9bd74171'" >
         <section id="habits" sectionTag="fieldset" headerTag="legend" headerStyle="title"
@@ -680,7 +679,7 @@
         </section>
     </includeIf> -->
 
-    <!-- Lifestyle Questions  -->
+    <!-- Lifestyle Questions Section -->
     <section id="lifestyle-questions" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.ncd.lifestyle.title">
         <div class="section-container">
@@ -767,7 +766,7 @@
                                         <label>
                                             Document any other relevant history:
                                         </label>
-                                        <obs id="other-relevant-history" conceptId="CIEL:160632"
+                                        <obs id="other-life-style-relevant-history" conceptId="CIEL:160632"
                                              answerConceptId="CIEL:160741"
                                              style="textarea"/>
                                     </td>
@@ -1046,54 +1045,54 @@
                                 <obs conceptId="CIEL:165591" class="inline"/>
                             </span>
                         </td>
-                        <tr>
-                            <td colspan="2">
-                                <label class="inline">
-                                    <uimessage code="Sexually active now/recently"/>
-                                </label>
-                                <span class="list-inline">
-                                    <obs conceptId="CIEL:160109" style="radio"
-                                         answerConceptIds="CIEL:1065,CIEL:1066"
-                                         answerCodes="yes,no" class="inline"/>
-                                </span>
-                                <br/>
-                                <br/>
-                                <label class="inline">
-                                    How many partners do you have?
-                                </label>
-                                <span class="list-inline">
-                                    <obs conceptId="CIEL:167168" style="radio"
-                                         answerConceptIds="CIEL:1065,CIEL:1066"
-                                         answerCodes="One partner,Multiple partners" class="inline"/>
-                                </span>
-                                <br/>
-                                <br/>
-                                <label class="inline">
-                                 Level of education
-                                </label>
-                                <span class="list-inline">
-                                    <obs conceptId="CIEL:1712" style="radio"
-                                         answerConceptIds="CIEL:1107,CIEL:1713,CIEL:1714,CIEL:160130,CIEL:159785"
-                                         answerCodes="Primary school, Secondary school, Vocational training, University" class="inline"/>
-                                </span>
-                                <br/>
-                                <label class="inline">
-                                    Able to read and write
-                                </label>
-                                <span class="list-inline">
-                                    <obs conceptId="CIEL:166855" style="radio"
-                                         answerConceptIds="CIEL:1065,CIEL:1066"
-                                         answerCodes="yes,no" class="inline"/>
-                                </span>
-                            </td>
-                        </tr>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="inline">
+                                <uimessage code="Sexually active now/recently"/>
+                            </label>
+                            <span class="list-inline">
+                                <obs conceptId="CIEL:160109" style="radio"
+                                     answerConceptIds="CIEL:1065,CIEL:1066"
+                                     answerCodes="yes,no" class="inline"/>
+                            </span>
+                            <br/>
+                            <br/>
+                            <label class="inline">
+                                How many partners do you have?
+                            </label>
+                            <span class="list-inline">
+                                <obs conceptId="CIEL:167168" style="radio"
+                                     answerConceptIds="CIEL:1065,CIEL:1066"
+                                     answerCodes="One partner,Multiple partners" class="inline"/>
+                            </span>
+                            <br/>
+                            <br/>
+                            <label class="inline">
+                             Level of education
+                            </label>
+                            <span class="list-inline">
+                                <obs conceptId="CIEL:1712" style="radio"
+                                     answerConceptIds="CIEL:1107,CIEL:1713,CIEL:1714,CIEL:160130,CIEL:159785"
+                                     answerCodes="Primary school, Secondary school, Vocational training, University" class="inline"/>
+                            </span>
+                            <br/>
+                            <label class="inline">
+                                Able to read and write
+                            </label>
+                            <span class="list-inline">
+                                <obs conceptId="CIEL:166855" style="radio"
+                                     answerConceptIds="CIEL:1065,CIEL:1066"
+                                     answerCodes="yes,no" class="inline"/>
+                            </span>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="2">
                             <label>
                                 Document any other pertinent social information:
                             </label>
-                            <obs id="other-relevant-history" conceptId="CIEL:160632"
+                            <obs id="other-relevant-social-history" conceptId="CIEL:160632"
                                  answerConceptId="CIEL:160741"
                                  style="textarea"/>
 
@@ -1104,30 +1103,16 @@
         </div>
     </section>
 
-    <section id="previous-hospital" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+    <!-- Review of System Section -->
+    <section id="previous-hospitalization" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Review of System">
         <div class="section-container">
-            <div class="two-columns">
-                <div>
 
-                    <div style="margin-bottom: 10px;">
-                        <strong>
-                            Cardiovascular
-                        </strong>
-                        <select id="select-cardiovascular" onchange="toggleSystem('cardiovascular')">
-                            <option value="hide">--
-                                Select
-                                --
-                            </option>
-                            <option value="show">
-                                Show
-                            </option>
-                            <option value="hide">
-                                Hide
-                            </option>
-                        </select>
-                    </div>
-                    <div id="content-cardiovascular" style="display: none;">
+            <div class="toggle-div">
+                <uimessage code="Cardiovascular"/>
+            </div>
+            <div class="collapsible-content">
+                <div>
                     <repeat>
                         <template>
                             <obs conceptId="PIH:1124" style="checkbox"
@@ -1144,39 +1129,148 @@
                         <render acID="125166" name="Syncope"/>
                         <render acID="111017" name="Presyncope/ lightheadedness"/>
                     </repeat>
+
                     <obs conceptId="PIH:1124" style="checkbox"
                          answerConceptId=" PIH:13761" answerLabel="Other cardiovascular (comment)"
                          commentFieldLabel=" "/>
-                    </div>
-                    <br/>
+                </div>
+            </div>
+        </div>
 
-                    <strong>
-                        Respiratory
-                    </strong>
-                    <br/>
+        <div class="section-container">
+            <div class="toggle-div">
+                <uimessage code="Constitutional"/>
+            </div>
+            <div class="collapsible-content">
+                <div>
                     <repeat>
                         <template>
-                            <obs conceptId="PIH:1123" style="checkbox"
+                            <obs conceptId="PIH:1119" style="checkbox"
                                  answerConceptId="CIEL:{acID}"
                                  answerCode="{name}"/>
                         </template>
-                        <render acID="141600" name="Shortness of breath"/>
-                        <render acID="143264" name="Cough"/>
-                        <render acID="5957" name="Productive cough"/>
-                        <render acID="138905" name="Hemoptysis"/>
-                        <render acID="5209" name="Wheezing"/>
-                        <render acID="126318" name="Snoring"/>
-                        <render acID="170838" name="Witnessed apneas"/>
+                        <render acID="140238" name="Fever"/>
+                        <render acID="871" name="Chills"/>
+                        <render acID="133027" name="Night sweats"/>
+                        <render acID="140501" name="Fatigue"/>
+                        <render acID="832" name="Weight loss"/>
+                        <render acID="5226" name="Weakness"/>
+                        <render acID="116743" name="Insomnia"/>
                     </repeat>
-                    <obs conceptId="PIH:1123" style="checkbox"
-                         answerConceptId=" PIH:13758" answerLabel="Other respiratory (comment)"
-                         commentFieldLabel=" "/>
-                    <br/>
 
-                    <strong>
-                        Gynecologic
-                    </strong>
-                    <br/>
+                    <obs conceptId="PIH:1119" style="checkbox"
+                         answerConceptId=" PIH:5622" answerLabel="Other Constitutional (comment)"
+                         commentFieldLabel=" "/>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="toggle-div">
+                <uimessage code="Endocrine"/>
+            </div>
+            <div class="collapsible-content">
+                <div>
+                    <repeat>
+                        <template>
+                            <obs conceptId="PIH:21630" style="checkbox"
+                                 answerConceptId="CIEL:{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="136669" name="Heat intolerance"/>
+                        <render acID="136670" name="Cold intolerance"/>
+                        <render acID="129510" name="Polyuria"/>
+                        <render acID="118483" name="Polyphagia"/>
+                        <render acID="5544" name="Weight gain"/>
+                        <render acID="832" name="Weight loss"/>
+                        <render acID="121681" name="Hair loss"/>
+                        <render acID="138166" name="Excess hair growth"/>
+                        <render acID="170829" name="Skin changes"/>
+                        <render acID="145759" name="Voice changes"/>
+                    </repeat>
+
+                    <obs conceptId="PIH:21630" style="checkbox"
+                         answerConceptId=" PIH:13764" answerLabel="Other endocrine (comment)"
+                         commentFieldLabel=" "/>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="toggle-div">
+                <uimessage code="Gastrointestinal"/>
+            </div>
+            <div class="collapsible-content">
+                <div>
+                    <repeat>
+                        <template>
+                            <obs conceptId="PIH:1125" style="checkbox"
+                                 answerConceptId="CIEL:{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="151" name="Abdominal pain"/>
+                        <render acID="5978" name="Nausea"/>
+                        <render acID="122983" name="Vomiting"/>
+                        <render acID="142412" name="Diarrhea"/>
+                        <render acID="996" name="Constipation"/>
+                        <render acID="139059" name="Heartburn"/>
+                        <render acID="1293" name="Reflux"/>
+                        <render acID="118789" name="Dysphagia"/>
+                        <render acID="6031" name="Decreased appetite"/>
+                        <render acID="139006" name="Hematemesis"/>
+                        <render acID="134394" name="Melaena"/>
+                        <render acID="117671" name="Hematochezia"/>
+                        <render acID="150919" name="Bloating"/>
+                        <render acID="170845" name="Early satiety"/>
+                        <render acID="149043" name="Change in bowel habits"/>
+                        <render acID="136443" name="Jaundice"/>
+                    </repeat>
+
+                    <obs conceptId="PIH:1125" style="checkbox"
+                         answerConceptId=" PIH:13757" answerLabel="Other gastrointestinal (comment)"
+                         commentFieldLabel=" "/>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="toggle-div">
+                <uimessage code="Genitourinary"/>
+            </div>
+            <div class="collapsible-content">
+                <div>
+                    <repeat>
+                        <template>
+                            <obs conceptId="PIH:1126" style="checkbox"
+                                 answerConceptId="CIEL:{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="118771" name="Dysuria"/>
+                        <render acID="137593" name="Urinary frequency"/>
+                        <render acID="159253" name="Urinary urgency"/>
+                        <render acID="840" name="Hematuria"/>
+                        <render acID="864" name="Genital lesions"/>
+                        <render acID="111636" name="Urinary incontinence"/>
+                        <render acID="152288" name="Perineal pain"/>
+                        <render acID="142247" name="Penile discharge"/>
+                        <render acID="116123" name="Erectile dysfunction"/>
+                        <render acID="131030" name="Testicular pain"/>
+                        <render acID="125203" name="Scrotal swelling"/>
+                    </repeat>
+
+                    <obs conceptId="PIH:1126" style="checkbox"
+                         answerConceptId=" PIH:13759" answerLabel="Other genitourinary (comment)"
+                         commentFieldLabel=" "/>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="toggle-div">
+                <uimessage code="Gynecologic"/>
+            </div>
+            <div class="collapsible-content">
+                <div>
                     <repeat>
                         <template>
                             <obs conceptId="PIH:13229" style="checkbox"
@@ -1195,15 +1289,20 @@
                         <render acID="146931" name="Breast mass / Breast Lump"/>
                         <render acID="142248" name="Nipple discharge"/>
                     </repeat>
+
                     <obs conceptId="PIH:13229" style="checkbox"
                          answerConceptId=" PIH:13231" answerLabel="Other gynecological (comment)"
                          commentFieldLabel=" "/>
-                    <br/>
+                </div>
+            </div>
+        </div>
 
-                    <strong>
-                        Musculoskeletal
-                    </strong>
-                    <br/>
+        <div class="section-container">
+            <div class="toggle-div">
+                <uimessage code="Musculoskeletal"/>
+            </div>
+            <div class="collapsible-content">
+                <div>
                     <repeat>
                         <template>
                             <obs conceptId="PIH:1128" style="checkbox"
@@ -1226,12 +1325,16 @@
                     <obs conceptId="PIH:1128" style="checkbox"
                          answerConceptId="PIH:10481" answerLabel="Other musculoskeletal (comment)"
                          commentFieldLabel=" "/>
-                    <br/>
+                </div>
+            </div>
+        </div>
 
-                    <strong>
-                        Neurologic
-                    </strong>
-                    <br/>
+        <div class="section-container">
+            <div class="toggle-div">
+                <uimessage code="Neurologic"/>
+            </div>
+            <div class="collapsible-content">
+                <div>
                     <repeat>
                         <template>
                             <obs conceptId="PIH:1129" style="checkbox"
@@ -1257,112 +1360,39 @@
                     <obs conceptId="PIH:1129" style="checkbox"
                          answerConceptId=" PIH:13765" answerLabel="Other neurologic (comment)"
                          commentFieldLabel=" "/>
-                    <br/>
-                </div>
-
-                <div>
-                    <strong>
-                        Gastrointestinal
-                    </strong>
-                    <br/>
-                    <repeat>
-                        <template>
-                            <obs conceptId="PIH:1125" style="checkbox"
-                                 answerConceptId="CIEL:{acID}"
-                                 answerCode="{name}"/>
-                        </template>
-                        <render acID="151" name="Abdominal pain"/>
-                        <render acID="5978" name="Nausea"/>
-                        <render acID="122983" name="Vomiting"/>
-                        <render acID="142412" name="Diarrhea"/>
-                        <render acID="996" name="Constipation"/>
-                        <render acID="139059" name="Heartburn"/>
-                        <render acID="1293" name="Reflux"/>
-                        <render acID="118789" name="Dysphagia"/>
-                        <render acID="6031" name="Decreased appetite"/>
-                        <render acID="139006" name="Hematemesis"/>
-                        <render acID="134394" name="Melaena"/>
-                        <render acID="117671" name="Hematochezia"/>
-                        <render acID="150919" name="Bloating"/>
-                        <render acID="170845" name="Early satiety"/>
-                        <render acID="149043" name="Change in bowel habits"/>
-                        <render acID="136443" name="Jaundice"/>
-                    </repeat>
-                    <obs conceptId="PIH:1125" style="checkbox"
-                         answerConceptId=" PIH:13757" answerLabel="Other gastrointestinal (comment)"
-                         commentFieldLabel=" "/>
-                    <br/>
-
-                    <strong>
-                        Genitourinary
-                    </strong>
-                    <br/>
-                    <repeat>
-                        <template>
-                            <obs conceptId="PIH:1126" style="checkbox"
-                                 answerConceptId="CIEL:{acID}"
-                                 answerCode="{name}"/>
-                        </template>
-                        <render acID="118771" name="Dysuria"/>
-                        <render acID="137593" name="Urinary frequency"/>
-                        <render acID="159253" name="Urinary urgency"/>
-                        <render acID="840" name="Hematuria"/>
-                        <render acID="864" name="Genital lesions"/>
-                        <render acID="111636" name="Urinary incontinence"/>
-                        <render acID="152288" name="Perineal pain"/>
-                        <render acID="142247" name="Penile discharge"/>
-                        <render acID="116123" name="Erectile dysfunction"/>
-                        <render acID="131030" name="Testicular pain"/>
-                        <render acID="125203" name="Scrotal swelling"/>
-                    </repeat>
-                    <obs conceptId="PIH:1126" style="checkbox"
-                         answerConceptId=" PIH:13759" answerLabel="Other genitourinary (comment)"
-                         commentFieldLabel=" "/>
-                    <br/>
-
-                    <strong>
-                        Endocrine
-                    </strong>
-                    <br/>
-                    <repeat>
-                        <template>
-                            <obs conceptId="PIH:21630" style="checkbox"
-                                 answerConceptId="CIEL:{acID}"
-                                 answerCode="{name}"/>
-                        </template>
-                        <render acID="136669" name="Heat intolerance"/>
-                        <render acID="136670" name="Cold intolerance"/>
-                        <render acID="129510" name="Polyuria"/>
-                        <render acID="118483" name="Polyphagia"/>
-                        <render acID="5544" name="Weight gain"/>
-                        <render acID="832" name="Weight loss"/>
-                        <render acID="121681" name="Hair loss"/>
-                        <render acID="138166" name="Excess hair growth"/>
-                        <render acID="170829" name="Skin changes"/>
-                        <render acID="145759" name="Voice changes"/>
-                    </repeat>
-                    <obs conceptId="PIH:21630" style="checkbox"
-                         answerConceptId=" PIH:13764" answerLabel="Other endocrine (comment)"
-                         commentFieldLabel=" "/>
-                    <br/>
-
-
                 </div>
             </div>
         </div>
-    </section>
-    <script>
-        function toggleSystem(systemName) {
-        var selectElement = document.getElementById('select-' + systemName);
-        var contentElement = document.getElementById('content-' + systemName);
 
-        if (selectElement.value === 'show') {
-        contentElement.style.display = 'block';
-        } else {
-        contentElement.style.display = 'none';
-        }
-        }
-    </script>
+        <div class="section-container">
+            <div class="toggle-div">
+                <uimessage code="Respiratory"/>
+            </div>
+            <div class="collapsible-content">
+                <div>
+                    <repeat>
+                        <template>
+                            <obs conceptId="PIH:1123" style="checkbox"
+                                 answerConceptId="CIEL:{acID}"
+                                 answerCode="{name}"/>
+                        </template>
+                        <render acID="141600" name="Shortness of breath"/>
+                        <render acID="143264" name="Cough"/>
+                        <render acID="5957" name="Productive cough"/>
+                        <render acID="138905" name="Hemoptysis"/>
+                        <render acID="5209" name="Wheezing"/>
+                        <render acID="126318" name="Snoring"/>
+                        <render acID="170838" name="Witnessed apneas"/>
+                    </repeat>
+
+                    <obs conceptId="PIH:1123" style="checkbox"
+                         answerConceptId=" PIH:13758" answerLabel="Other respiratory (comment)"
+                         commentFieldLabel=" "/>
+                </div>
+            </div>
+        </div>
+
+    </section>
 
     <section id="previous-hospital" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="zl.consultNote.previousHospitalization.title">

@@ -247,4 +247,17 @@ p.radio > * {
     padding: 4px !important;
 }
 
+.toggle-div {
+    cursor: pointer;
+    background-color: #003F5E;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+.collapsible-content {
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    max-height: 0;
+}
+
 /*some other styles*/
