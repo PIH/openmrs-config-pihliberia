@@ -1,0 +1,16 @@
+name: Smoke tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  kouka:
+    if: github.repository_owner == 'PIH'
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/execute-pihemr-smoke-tests.yml@main
+    with:
+      image_name: partnersinhealth/pihliberia-emr
+      instance_name: kouka
+      pih_config: liberia,liberia-harper,liberia-harper-kouka
+      seed_image_name: partnersinhealth/pihliberia-emr-seed-liberia
+      suite: liberia
+    secrets: inherit
