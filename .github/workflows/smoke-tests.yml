@@ -1,0 +1,14 @@
+name: Smoke tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  liberia:
+    if: github.repository_owner == 'PIH'
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/smoke-test.yml@main
+    with:
+      image_name: partnersinhealth/pihliberia-emr
+      pih_config: liberia
+      suite: liberia
+    secrets: inherit
