@@ -3,22 +3,6 @@
 
     <style type="text/css">
 
-        .five-columns, .four-columns, .three-columns, .two-columns {
-            display: table;
-            height: 100%;
-            width: 100%;
-        }
-
-        .two-columns > div {
-            display: table-cell;
-            width: 50%;
-        }
-
-        .four-columns > div {
-            display: table-cell;
-            width: 25%;
-        }
-
         .two-columns-new {
             display: flex;
             flex-wrap: wrap;
@@ -1121,6 +1105,7 @@
                         </template>
                         <render acID="120749" name="Chest pain"/>
                         <render acID="124665" name="Chest tightness"/>
+                        <render acID="130987" name="Palpatations"/>
                         <render acID="136522" name="Irregular heartbeat"/>
                         <render acID="141599" name="Dyspnea on exertion"/>
                         <render acID="131689" name="Orthopnea"/>
@@ -1153,6 +1138,7 @@
                         <render acID="871" name="Chills"/>
                         <render acID="133027" name="Night sweats"/>
                         <render acID="140501" name="Fatigue"/>
+                        <render acID="116130" name="Malaise"/>
                         <render acID="832" name="Weight loss"/>
                         <render acID="5226" name="Weakness"/>
                         <render acID="116743" name="Insomnia"/>
@@ -1181,8 +1167,8 @@
                         <render acID="136670" name="Cold intolerance"/>
                         <render acID="129510" name="Polyuria"/>
                         <render acID="118483" name="Polyphagia"/>
-                        <render acID="5544" name="Weight gain"/>
-                        <render acID="832" name="Weight loss"/>
+                        <render acID="5544"   name="Weight gain"/>
+                        <render acID="832"    name="Weight loss"/>
                         <render acID="121681" name="Hair loss"/>
                         <render acID="138166" name="Excess hair growth"/>
                         <render acID="170829" name="Skin changes"/>
@@ -1265,37 +1251,40 @@
             </div>
         </div>
 
-        <div class="section-container">
-            <div class="toggle-div">
-                <uimessage code="Gynecologic"/>
-            </div>
-            <div class="collapsible-content">
-                <div>
-                    <repeat>
-                        <template>
-                            <obs conceptId="PIH:13229" style="checkbox"
-                                 answerConceptId="CIEL:{acID}"
-                                 answerCode="{name}"/>
-                        </template>
-                        <render acID="131034" name="Pelvic pain"/>
-                        <render acID="123395" name="Vaginal discharge"/>
-                        <render acID="128311" name="Vaginal itching"/>
-                        <render acID="150802" name="Abnormal vaginal bleeding"/>
-                        <render acID="127" name="Dysmenorrhea"/>
-                        <render acID="141615" name="Dyspareunia"/>
-                        <render acID="148989" name="Amenorrhea"/>
-                        <render acID="134349" name="Hot flashes"/>
-                        <render acID="131021" name="Breast pain / Mastodynia"/>
-                        <render acID="146931" name="Breast mass / Breast Lump"/>
-                        <render acID="142248" name="Nipple discharge"/>
-                    </repeat>
+        <!-- only show these diseases if female -->
+        <includeIf velocityTest="$patient.gender == 'F' ">
+            <div class="section-container">
+                <div class="toggle-div">
+                    <uimessage code="Gynecologic"/>
+                </div>
+                <div class="collapsible-content">
+                    <div>
+                        <repeat>
+                            <template>
+                                <obs conceptId="PIH:13229" style="checkbox"
+                                     answerConceptId="CIEL:{acID}"
+                                     answerCode="{name}"/>
+                            </template>
+                            <render acID="131034" name="Pelvic pain"/>
+                            <render acID="123395" name="Vaginal discharge"/>
+                            <render acID="128311" name="Vaginal itching"/>
+                            <render acID="150802" name="Abnormal vaginal bleeding"/>
+                            <render acID="127" name="Dysmenorrhea"/>
+                            <render acID="141615" name="Dyspareunia"/>
+                            <render acID="148989" name="Amenorrhea"/>
+                            <render acID="134349" name="Hot flashes"/>
+                            <render acID="131021" name="Breast pain / Mastodynia"/>
+                            <render acID="146931" name="Breast mass / Breast Lump"/>
+                            <render acID="142248" name="Nipple discharge"/>
+                        </repeat>
 
-                    <obs conceptId="PIH:13229" style="checkbox"
-                         answerConceptId=" PIH:13231" answerLabel="Other gynecological (comment)"
-                         commentFieldLabel=" "/>
+                        <obs conceptId="PIH:13229" style="checkbox"
+                             answerConceptId=" PIH:13231" answerLabel="Other gynecological (comment)"
+                             commentFieldLabel=" "/>
+                    </div>
                 </div>
             </div>
-        </div>
+        </includeIf>
 
         <div class="section-container">
             <div class="toggle-div">
@@ -1303,6 +1292,9 @@
             </div>
             <div class="collapsible-content">
                 <div>
+                    <obs conceptId="PIH:1128" style="checkbox" answerConceptId="PIH:80" answerCode="Joint pain"/>
+                    <obs conceptId="PIH:1128" style="checkbox" answerConceptId="PIH:5312" answerCode="Joint swelling"/>
+
                     <repeat>
                         <template>
                             <obs conceptId="PIH:1128" style="checkbox"
@@ -1316,8 +1308,6 @@
                         <render acID="5108" name="Gait difficulty"/>
                     </repeat>
 
-                    <obs conceptId="PIH:1128" style="checkbox" answerConceptId="PIH:80" answerCode="Joint pain"/>
-                    <obs conceptId="PIH:1128" style="checkbox" answerConceptId="PIH:5312" answerCode="Joint swelling"/>
                     <obs conceptId="PIH:1128" style="checkbox" answerConceptId="PIH:456" answerCode="Back pain"/>
                     <obs conceptId="PIH:1128" style="checkbox" answerConceptId="PIH:7335"
                          answerCode="Limited range of motion"/>
@@ -1378,9 +1368,10 @@
                         </template>
                         <render acID="141600" name="Shortness of breath"/>
                         <render acID="143264" name="Cough"/>
-                        <render acID="5957" name="Productive cough"/>
+                        <render acID="5957"   name="Productive cough"/>
                         <render acID="138905" name="Hemoptysis"/>
-                        <render acID="5209" name="Wheezing"/>
+                        <render acID="5209"   name="Wheezing"/>
+                        <render acID="130051" name="Pleuritic chest pain"/>
                         <render acID="126318" name="Snoring"/>
                         <render acID="170838" name="Witnessed apneas"/>
                     </repeat>
